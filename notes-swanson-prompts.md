@@ -74,8 +74,18 @@ Done: provenance header added, synthesis updated with the standard-MinSet theore
 - STILL RUNNING: a647a0be4ff625a3c (Zañudo-Yang-Albert — agent created papers/Zañudo_2016_Structure-basedControlComplexNetworks/ i.e. the 2016 PLoS Comp Bio / arXiv 1605.08415 version, not PNAS 2017; other 2 agents already cross-ref it so the dir exists on disk).
 - NONE committed yet — commit all 3 (or 4) papers/ dirs + index.md + cross-ref edits in one commit once Zañudo agent finishes.
 
+### Round 3 (2026-05-12 cont.): "go go go make all fixes and improvements"
+Q is ACTIVELY editing the repo in parallel — MinSet solver work (commits bfe7ae8/faa8a6d/f1543e6/c8b98dc/ee2a43b/e5724d8 + uncommitted cli.py change adding `exact-cutting` seed method). My commits interleave cleanly (different files). Be careful NOT to touch graph_analysis.py / cli.py / anything seed/MinSet-solver-related.
+
+DECISION on compute_kernel self-loop "bug": NOT fixing it. Line 88 excludes self-loops (`target != node`) so a word appearing only in its own gloss gets peeled out of the Kernel. Whether self-loops belong in the Kernel is a SEMANTIC MODELING decision (1-node self-loop = forced FVS member by std defn, but the dict-graph papers may deliberately exclude gloss self-loops as parsing artifacts) — I haven't verified what Massé/V-L do, and Q is editing this exact area. Flagged to Q, left alone.
+
+DONE this round so far:
+- Committed bio papers (6a931a8, pushed).
+- Cleaned up src/meanings/spectral_analysis.py: added SCCEigenvector dataclass (was returning list[dict[str,object]] → pyright noise + clunky indexing), updated call site + scripts/spectral_report.py + tests/test_spectral_analysis.py to use attrs not dict-keys, added to __all__, removed unused `deque` import, rewrote the confused half-corrected orientation docstring. `uv run pytest` → 10 passed.
+- LAUNCHED 4 background agents: af242e58f214a5470 = psycholinguistic regressions (Yoneda/PF empirical legs → reports/psycholinguistic-regression-findings.md + scripts/psycholinguistic_regression.py); a78d96229295735d3 = paper Liu-Slotine-Barabási 2011 Nature "Controllability of complex networks"; af122daf195d41291 = paper Mochizuki-Saito 2010 "informative nodes" (J Theor Biol); a46ad51649a269e51 = paper Gates-Rocha 2016 Sci Rep "Control...requires both structure and dynamics". All told to stay out of src/.
+
 ### Next step
-Wait for Part I + Zañudo. Then: commit all 3 papers/ additions in one commit (`Add FVS-control biology papers to collection`), push, summarize to Q. DONE after that unless Q redirects. Pending separately: compute_kernel self-loop bug fix; the now-unblocked psycholinguistic regressions for swanson-4/5; chasing the leads (Liu observability 2013, Foias-Prodi, later FVS-control).
+Commit the spectral_analysis cleanup. Wait for the 4 agents. Commit their outputs (papers/ additions; regression report+script). Fold regression results into reports/swanson-synthesis.md (Yoneda/PF sections — turn "blocked on data" into "result is X"). Summarize to Q. (compute_kernel: still flagged, not fixed — Q's call.)
 
 ### Note for future agents
 The "research-papers" plugin skills are available here; `papers/` follows that convention (`notes.md`/`abstract.md`/`description.md`/`citations.md` per paper, `papers/index.md`). PDFs and PNGs are gitignored.

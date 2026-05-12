@@ -54,8 +54,8 @@ def test_scc_local_eigenvectors_finds_the_cycle():
     adj = _cycle3()
     blocks = scc_local_eigenvectors(adj, set(adj), min_size=2)
     assert len(blocks) == 1
-    assert blocks[0]["size"] == 3
-    assert set(blocks[0]["scores"]) == {"a", "b", "c"}
+    assert blocks[0].size == 3
+    assert set(blocks[0].scores) == {"a", "b", "c"}
 
 
 def test_degree_null_and_overlap_helpers():

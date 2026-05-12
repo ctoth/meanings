@@ -14,23 +14,22 @@ Pure-Python (no numpy dependency in this environment). Provides:
 Edge convention in this repo: ``u -> v`` means "u occurs in the definition of
 v" (the *defining -> defined* / *forward* orientation). Hence:
 
-* ``orientation="forward"`` (a.k.a. authority / downstream-use PageRank):
-  importance flows from a definer to the words it helps define -- a node scores
-  high when *important words use it as a definer*... no: it scores high when it
-  is *pointed at by important nodes*, i.e. when it is a definitional **sink**.
-  This measures *dependency on already-important definers*.
-* ``orientation="reverse"`` (PageRank on the transposed graph): importance flows
-  from a defined word back to the words that define it -- a node scores high
-  when *it occurs in the definitions of many / important words*. This measures
-  *definitional productivity / downstream use* and is the eigenvector
+* ``orientation="forward"`` -- authority PageRank on the digraph: a node scores
+  high when it is *pointed at by high-scoring nodes*, i.e. when it is a
+  definitional **sink** that important words depend on. On the OEWN graph the
+  top of this ranking is leaf-like proper nouns, so it is the *wrong* object for
+  "foundational vocabulary".
+* ``orientation="reverse"`` -- PageRank on the transposed graph: a node scores
+  high when it *occurs in the definitions of many / high-scoring words*. This
+  measures *definitional productivity / downstream use* and is the eigenvector
   relaxation of the feedback-vertex heuristic ``choose_feedback_vertex``, which
-  maximises ``internal_out + internal_in``.
+  maximises ``internal_out + internal_in``; on the OEWN graph its top is the
+  abstract genus vocabulary (``act``, ``part``, ``body``, ``small``, ...).
 """
 from __future__ import annotations
 
 import math
 import random
-from collections import deque
 from dataclasses import dataclass, field
 
 from meanings.graph_analysis import (
@@ -42,6 +41,7 @@ from meanings.graph_analysis import (
 
 __all__ = [
     "SpectralResult",
+    "SCCEigenvector",
     "perron_scores",
     "scc_local_eigenvectors",
     "degree_rank_scores",
@@ -67,6 +67,20 @@ class SpectralResult:
     iterations: int
     scope_nodes: int
     notes: dict[str, object] = field(default_factory=dict)
+
+
+@dataclass(slots=True)
+class SCCEigenvector:
+    """Un-damped Perron eigenvector of one strongly connected component.
+
+    ``scores`` sum to 1 within this block; cross-block magnitudes are NOT
+    comparable.
+    """
+    scores: dict[str, float]
+    dominant_eigenvalue: float
+    size: int
+    converged: bool
+    iterations: int
 
 
 # --------------------------------------------------------------------------- #
@@ -232,12 +246,14 @@ def perron_scores(
         merged: dict[str, float] = {}
         lam_max = 0.0
         for blk in local:
-            merged.update(blk["scores"])
-            lam_max = max(lam_max, blk["dominant_eigenvalue"])
-        return SpectralResult(merged, orientation, component_policy, None, lam_max, all(b["converged"] for b in local),
-                              max((b["iterations"] for b in local), default=0), sum(len(b["scores"]) for b in local),
+            merged.update(blk.scores)
+            lam_max = max(lam_max, blk.dominant_eigenvalue)
+        return SpectralResult(merged, orientation, component_policy, None, lam_max,
+                              all(b.converged for b in local),
+                              max((b.iterations for b in local), default=0),
+                              sum(b.size for b in local),
                               notes={"scc_count": len(sccs), "nontrivial_scc_count": len(nontrivial),
-                                     "per_scc": [{"size": len(b["scores"]), "lambda": b["dominant_eigenvalue"]} for b in local]})
+                                     "per_scc": [{"size": b.size, "lambda": b.dominant_eigenvalue} for b in local]})
 
     raise ValueError(f"unknown component_policy {component_policy!r}")
 
@@ -249,26 +265,25 @@ def scc_local_eigenvectors(
     min_size: int = 2,
     iters: int = 800,
     tol: float = 1e-13,
-) -> list[dict[str, object]]:
+) -> list[SCCEigenvector]:
     """Un-damped Perron eigenvector inside each nontrivial SCC of ``adjacency``.
 
     ``adjacency`` is taken as already-oriented (the caller decides forward vs
-    reverse). Each returned dict has ``scores`` (sum-1 within that block),
-    ``dominant_eigenvalue``, ``size``, ``converged``, ``iterations``. Blocks are
-    returned largest first. Cross-block magnitudes are NOT comparable.
+    reverse). Blocks are returned largest first; cross-block magnitudes are NOT
+    comparable.
     """
     sub = induced_subgraph(nodes, adjacency)
     sccs = strongly_connected_components(nodes, sub)
-    out: list[dict[str, object]] = []
+    out: list[SCCEigenvector] = []
     for comp in sccs:
         is_loop = len(comp) >= min_size or any(u in sub.get(u, ()) for u in comp)
         if not is_loop:
             continue
         comp_adj = induced_subgraph(comp, sub)
         scores, lam, conv, used = _power_iteration_eigenvector(list(comp), comp_adj, iters, tol)
-        out.append({"scores": scores, "dominant_eigenvalue": lam, "size": len(comp),
-                    "converged": conv, "iterations": used})
-    out.sort(key=lambda b: b["size"], reverse=True)  # type: ignore[arg-type, return-value]
+        out.append(SCCEigenvector(scores=scores, dominant_eigenvalue=lam, size=len(comp),
+                                  converged=conv, iterations=used))
+    out.sort(key=lambda b: b.size, reverse=True)
     return out
 
 

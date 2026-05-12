@@ -254,9 +254,9 @@ def main():
     }
     # a few small-SCC examples (reverse-oriented eigenvectors)
     out["small_scc_examples_reverse"] = [
-        {"size": b["size"], "lambda": b["dominant_eigenvalue"],
+        {"size": b.size, "lambda": b.dominant_eigenvalue,
          "members": [{"node": nd, "label": build.labels.get(nd, nd), "score": sc}
-                     for nd, sc in sorted(b["scores"].items(), key=lambda kv: kv[1], reverse=True)[:6]]}
+                     for nd, sc in sorted(b.scores.items(), key=lambda kv: kv[1], reverse=True)[:6]]}
         for b in local_rev[1:6]  # skip the giant one
     ]
     out["kernel_scc_size_histogram"] = dict(sorted(Counter(len(c) for c in analysis.kernel_sccs).items()))
