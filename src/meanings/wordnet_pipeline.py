@@ -125,6 +125,52 @@ def top_seed_nodes(
     return [(labels.get(node, node), score) for node, score in ranked]
 
 
+def candidate_seed_id(analysis: KernelAnalysis) -> str:
+    result = analysis.minset_result
+    return f"{result.method}:n{len(result.nodes)}:r{result.residual_cyclic_scc_count}"
+
+
+def minset_json_summary(analysis: KernelAnalysis) -> dict[str, object]:
+    result = analysis.minset_result
+    return {
+        "seed_exact": result.exact,
+        "seed_lower_bound": result.lower_bound,
+        "seed_upper_bound": result.upper_bound,
+        "scc_exact_count": result.scc_exact_count,
+        "scc_heuristic_count": result.scc_heuristic_count,
+        "timeout_count": 0,
+        "solver_runtime_seconds": result.runtime_seconds,
+        "candidate_seed_id": candidate_seed_id(analysis),
+        "seed_scc_results": [
+            {
+                "method": item.method,
+                "component_size": item.component_size,
+                "seed_count": item.seed_count,
+                "exact": item.exact,
+                "lower_bound": item.lower_bound,
+                "upper_bound": item.upper_bound,
+                "residual_cyclic_scc_count": item.residual_cyclic_scc_count,
+            }
+            for item in result.scc_results
+        ],
+    }
+
+
+def extend_minset_markdown(lines: list[str], analysis: KernelAnalysis) -> None:
+    result = analysis.minset_result
+    lower_bound = "`unknown`" if result.lower_bound is None else f"`{result.lower_bound}`"
+    lines.extend(
+        [
+            f"- Candidate seed exact: `{'yes' if result.exact else 'no'}`",
+            f"- Candidate seed lower bound: {lower_bound}",
+            f"- Candidate seed upper bound: `{result.upper_bound}`",
+            f"- Solver SCCs exact / heuristic: `{result.scc_exact_count}` / `{result.scc_heuristic_count}`",
+            f"- Solver runtime: `{result.runtime_seconds:.3f}` seconds",
+            f"- Candidate seed id: `{candidate_seed_id(analysis)}`",
+        ]
+    )
+
+
 def build_lemma_graph(lexicon_id: str = "oewn:2024") -> LemmaGraphBuild:
     lexicon = load_lexicon(lexicon_id)
     nodes = {normalize_lemma(word.lemma()) for word in lexicon.words()}
@@ -363,10 +409,9 @@ def render_lemma_markdown_report(
         f"- Satellite size (kernel minus source-SCC Core): `{len(analysis.satellite_nodes)}`",
         f"- Fast cycle-hitting seed size: `{seed_size}` ({seed_size / total_nodes:.2%}; {seed_size / max(kernel_size, 1):.2%} of kernel)",
         f"- Residual cyclic SCCs after bounded heuristic: `{analysis.residual_cyclic_scc_count}`",
-        "",
-        "## Largest Kernel SCCs",
-        "",
     ]
+    extend_minset_markdown(lines, analysis)
+    lines.extend(["", "## Largest Kernel SCCs", ""])
     for index, size in enumerate(largest_sccs, start=1):
         lines.append(f"- SCC `{index}`: `{size}` nodes")
 
@@ -430,6 +475,7 @@ def write_lemma_json_summary(
         "top_seed_nodes": top_seed_nodes(analysis.seed_nodes, build.adjacency, top_n),
         "top_degrees": top_degree_nodes(build.adjacency, top_n),
     }
+    payload.update(minset_json_summary(analysis))
     json_path.write_text(json.dumps(payload, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
 
 
@@ -470,6 +516,9 @@ def render_paper_wordnet_markdown_report(
         f"- Satellite size (kernel minus source-SCC Core): `{len(analysis.satellite_nodes)}`",
         f"- Candidate seed size: `{seed_size}` ({seed_size / total_nodes:.2%}; {seed_size / max(kernel_size, 1):.2%} of kernel)",
         f"- Residual cyclic SCCs after seed method: `{analysis.residual_cyclic_scc_count}`",
+    ]
+    extend_minset_markdown(lines, analysis)
+    lines.extend([
         "",
         "## Vincent-Lamarre WordNet Reference",
         "",
@@ -481,7 +530,7 @@ def render_paper_wordnet_markdown_report(
         "",
         "## Resolution Stats",
         "",
-    ]
+    ])
     for key, value in resolution_stats.items():
         lines.append(f"- `{key}`: `{value}`")
 
@@ -568,6 +617,7 @@ def write_paper_wordnet_json_summary(
         "top_seed_nodes": top_seed_nodes(analysis.seed_nodes, build.adjacency, top_n, labels=build.labels),
         "top_degrees": top_degree_nodes(build.adjacency, top_n, labels=build.labels),
     }
+    payload.update(minset_json_summary(analysis))
     if annotations is not None:
         payload["annotation_sources"] = annotations.sources
         payload["annotation_coverage"] = annotation_coverage(build.nodes, annotations)
@@ -612,6 +662,9 @@ def render_synset_markdown_report(
         f"- Satellite size (kernel minus source-SCC Core): `{len(analysis.satellite_nodes)}`",
         f"- Fast cycle-hitting seed size: `{seed_size}` ({seed_size / total_nodes:.2%}; {seed_size / max(kernel_size, 1):.2%} of kernel)",
         f"- Residual cyclic SCCs after bounded heuristic: `{analysis.residual_cyclic_scc_count}`",
+    ]
+    extend_minset_markdown(lines, analysis)
+    lines.extend([
         "",
         "## Resolution Stats",
         "",
@@ -626,7 +679,7 @@ def render_synset_markdown_report(
         "",
         "## Largest Kernel SCCs",
         "",
-    ]
+    ])
     for index, size in enumerate(largest_sccs, start=1):
         lines.append(f"- SCC `{index}`: `{size}` nodes")
 
@@ -701,6 +754,7 @@ def write_synset_json_summary(
         "top_seed_nodes": top_seed_nodes(analysis.seed_nodes, build.adjacency, top_n, labels=build.labels),
         "top_degrees": top_degree_nodes(build.adjacency, top_n, labels=build.labels),
     }
+    payload.update(minset_json_summary(analysis))
     candidate_matches = max(build.resolution_stats["candidate_matches"], 1)
     resolved = (
         build.resolution_stats["resolved_same_pos_unique"]
@@ -800,6 +854,10 @@ def write_layers(export_layers_path: Path | None, analysis: KernelAnalysis) -> N
     export_layers_path.parent.mkdir(parents=True, exist_ok=True)
     payload = {
         "seed_method": analysis.seed_method,
+        "seed_exact": analysis.minset_result.exact,
+        "seed_lower_bound": analysis.minset_result.lower_bound,
+        "seed_upper_bound": analysis.minset_result.upper_bound,
+        "candidate_seed_id": candidate_seed_id(analysis),
         "residual_cyclic_scc_count": analysis.residual_cyclic_scc_count,
         "layer_histogram": analysis.layer_histogram,
         "layer_by_node": dict(sorted(analysis.layer_by_node.items())),
