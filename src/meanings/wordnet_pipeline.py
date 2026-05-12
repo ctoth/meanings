@@ -132,6 +132,9 @@ def candidate_seed_id(analysis: KernelAnalysis) -> str:
 
 def minset_json_summary(analysis: KernelAnalysis) -> dict[str, object]:
     result = analysis.minset_result
+    method_counts = Counter(item.method for item in result.scc_results)
+    exact_component_sizes = Counter(item.component_size for item in result.scc_results if item.exact)
+    heuristic_component_sizes = Counter(item.component_size for item in result.scc_results if not item.exact)
     return {
         "seed_exact": result.exact,
         "seed_lower_bound": result.lower_bound,
@@ -141,18 +144,9 @@ def minset_json_summary(analysis: KernelAnalysis) -> dict[str, object]:
         "timeout_count": 0,
         "solver_runtime_seconds": result.runtime_seconds,
         "candidate_seed_id": candidate_seed_id(analysis),
-        "seed_scc_results": [
-            {
-                "method": item.method,
-                "component_size": item.component_size,
-                "seed_count": item.seed_count,
-                "exact": item.exact,
-                "lower_bound": item.lower_bound,
-                "upper_bound": item.upper_bound,
-                "residual_cyclic_scc_count": item.residual_cyclic_scc_count,
-            }
-            for item in result.scc_results
-        ],
+        "seed_scc_method_counts": dict(sorted(method_counts.items())),
+        "seed_exact_component_size_histogram": dict(sorted(exact_component_sizes.items())),
+        "seed_heuristic_component_size_histogram": dict(sorted(heuristic_component_sizes.items())),
     }
 
 
