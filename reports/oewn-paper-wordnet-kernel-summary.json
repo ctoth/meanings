@@ -5,17 +5,17 @@
   "resource_id": "oewn",
   "node_count": 160010,
   "edge_count": 677823,
-  "kernel_node_count": 12853,
-  "kernel_fraction": 0.08032622961064934,
-  "kernel_scc_count": 3841,
-  "source_scc_count": 286,
-  "core_node_count": 288,
-  "satellite_node_count": 12565,
+  "kernel_node_count": 18151,
+  "kernel_fraction": 0.11343666020873695,
+  "kernel_scc_count": 9139,
+  "source_scc_count": 508,
+  "core_node_count": 510,
+  "satellite_node_count": 17641,
   "core_policy": "source-union",
   "seed_method": "exact-small-greedy",
-  "seed_node_count": 2370,
-  "seed_fraction_total": 0.014811574276607712,
-  "seed_fraction_kernel": 0.18439274877460515,
+  "seed_node_count": 5044,
+  "seed_fraction_total": 0.031523029810636836,
+  "seed_fraction_kernel": 0.2778910252878629,
   "residual_cyclic_scc_count": 0,
   "largest_kernel_scc_sizes": [
     8138,
@@ -30,70 +30,70 @@
     5
   ],
   "layer_histogram": {
-    "0": 2370,
-    "1": 1614,
-    "2": 1009,
-    "3": 768,
-    "4": 573,
-    "5": 499,
-    "6": 413,
-    "7": 342,
-    "8": 276,
-    "9": 265,
-    "10": 241,
-    "11": 208,
-    "12": 195,
-    "13": 161,
-    "14": 166,
-    "15": 147,
-    "16": 136,
-    "17": 135,
-    "18": 112,
-    "19": 120,
-    "20": 109,
-    "21": 110,
-    "22": 113,
-    "23": 103,
-    "24": 104,
-    "25": 90,
-    "26": 96,
-    "27": 91,
-    "28": 85,
-    "29": 74,
-    "30": 72,
-    "31": 81,
-    "32": 65,
-    "33": 88,
-    "34": 91,
-    "35": 91,
-    "36": 87,
-    "37": 80,
-    "38": 96,
-    "39": 130,
-    "40": 128,
-    "41": 115,
-    "42": 97,
-    "43": 87,
-    "44": 43,
-    "45": 30,
-    "46": 29,
-    "47": 41,
-    "48": 58,
-    "49": 81,
-    "50": 66,
-    "51": 52,
-    "52": 56,
-    "53": 50,
-    "54": 52,
-    "55": 52,
-    "56": 45,
-    "57": 41,
-    "58": 38,
-    "59": 33,
-    "60": 24,
-    "61": 17,
-    "62": 8,
-    "63": 3,
+    "0": 5044,
+    "1": 1888,
+    "2": 1177,
+    "3": 902,
+    "4": 658,
+    "5": 581,
+    "6": 510,
+    "7": 444,
+    "8": 353,
+    "9": 320,
+    "10": 283,
+    "11": 256,
+    "12": 239,
+    "13": 191,
+    "14": 206,
+    "15": 189,
+    "16": 164,
+    "17": 170,
+    "18": 140,
+    "19": 151,
+    "20": 143,
+    "21": 137,
+    "22": 133,
+    "23": 127,
+    "24": 134,
+    "25": 127,
+    "26": 134,
+    "27": 132,
+    "28": 116,
+    "29": 96,
+    "30": 89,
+    "31": 110,
+    "32": 108,
+    "33": 112,
+    "34": 130,
+    "35": 122,
+    "36": 111,
+    "37": 101,
+    "38": 129,
+    "39": 172,
+    "40": 177,
+    "41": 168,
+    "42": 135,
+    "43": 120,
+    "44": 70,
+    "45": 50,
+    "46": 38,
+    "47": 52,
+    "48": 77,
+    "49": 115,
+    "50": 91,
+    "51": 76,
+    "52": 93,
+    "53": 82,
+    "54": 79,
+    "55": 65,
+    "56": 67,
+    "57": 69,
+    "58": 53,
+    "59": 58,
+    "60": 46,
+    "61": 24,
+    "62": 12,
+    "63": 4,
     "64": 1
   },
   "resolution_stats": {
@@ -423,18 +423,18 @@
   },
   "seed_exact": false,
   "seed_lower_bound": null,
-  "seed_upper_bound": 2370,
-  "scc_exact_count": 1380,
+  "seed_upper_bound": 5044,
+  "scc_exact_count": 4054,
   "scc_heuristic_count": 872,
   "timeout_count": 0,
-  "solver_runtime_seconds": 75.76838860000134,
-  "candidate_seed_id": "exact-small-greedy:n2370:r0",
+  "solver_runtime_seconds": 61.53054459999839,
+  "candidate_seed_id": "exact-small-greedy:n5044:r0",
   "seed_scc_method_counts": {
-    "exact-small": 1380,
+    "exact-small": 4054,
     "greedy": 872
   },
   "seed_exact_component_size_histogram": {
-    "1": 475,
+    "1": 3149,
     "2": 717,
     "3": 131,
     "4": 33,
@@ -1349,16 +1349,16 @@
   "component_annotation_summary": {
     "rest": {
       "frequency": {
-        "count": 36918,
-        "mean": 2.6326394791802197
+        "count": 33920,
+        "mean": 2.5812191625312964
       },
       "concreteness": {
-        "count": 30156,
-        "mean": 3.155886722376973
+        "count": 27668,
+        "mean": 3.1171186930750325
       },
       "age_of_acquisition": {
-        "count": 27003,
-        "mean": 11.00978308376847
+        "count": 24585,
+        "mean": 11.155633013300793
       },
       "imageability": {
         "count": 0,
@@ -1367,16 +1367,16 @@
     },
     "kernel": {
       "frequency": {
-        "count": 9468,
-        "mean": 3.498209826364921
+        "count": 12466,
+        "mean": 3.429959965934289
       },
       "concreteness": {
-        "count": 8416,
-        "mean": 3.125931558935361
+        "count": 10904,
+        "mean": 3.2311371973587675
       },
       "age_of_acquisition": {
-        "count": 7311,
-        "mean": 9.11928583107646
+        "count": 9729,
+        "mean": 9.22058111727824
       },
       "imageability": {
         "count": 0,
@@ -1385,16 +1385,16 @@
     },
     "core": {
       "frequency": {
-        "count": 240,
-        "mean": 3.3462478946495016
+        "count": 330,
+        "mean": 3.3269712121449766
       },
       "concreteness": {
-        "count": 223,
-        "mean": 2.7795515695067268
+        "count": 301,
+        "mean": 2.8905980066445185
       },
       "age_of_acquisition": {
-        "count": 137,
-        "mean": 9.114248737226276
+        "count": 211,
+        "mean": 9.168945710900474
       },
       "imageability": {
         "count": 0,
@@ -1403,16 +1403,16 @@
     },
     "satellites": {
       "frequency": {
-        "count": 9228,
-        "mean": 3.502162022248287
+        "count": 12136,
+        "mean": 3.432760418204434
       },
       "concreteness": {
-        "count": 8193,
-        "mean": 3.1353594531917492
+        "count": 10603,
+        "mean": 3.2408044892954826
       },
       "age_of_acquisition": {
-        "count": 7174,
-        "mean": 9.119382023139114
+        "count": 9518,
+        "mean": 9.221725797961756
       },
       "imageability": {
         "count": 0,
@@ -1421,16 +1421,16 @@
     },
     "seed": {
       "frequency": {
-        "count": 1739,
-        "mean": 3.9188700335227242
+        "count": 3120,
+        "mean": 3.6134942995396138
       },
       "concreteness": {
-        "count": 1451,
-        "mean": 3.227146795313577
+        "count": 2529,
+        "mean": 3.520660340055358
       },
       "age_of_acquisition": {
-        "count": 1304,
-        "mean": 8.100891084355828
+        "count": 2446,
+        "mean": 8.640623284955028
       },
       "imageability": {
         "count": 0,

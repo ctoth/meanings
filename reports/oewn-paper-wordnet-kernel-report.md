@@ -11,19 +11,19 @@
 
 - Total lemma/POS nodes: `160010`
 - Total directed edges: `677823`
-- Kernel nodes: `12853` (8.03%)
-- Kernel SCC count: `3841`
-- Source SCCs inside kernel: `286`
-- Core size (union of source SCCs): `288`
-- Satellite size (kernel minus source-SCC Core): `12565`
-- Candidate seed size: `2370` (1.48%; 18.44% of kernel)
+- Kernel nodes: `18151` (11.34%)
+- Kernel SCC count: `9139`
+- Source SCCs inside kernel: `508`
+- Core size (union of source SCCs): `510`
+- Satellite size (kernel minus source-SCC Core): `17641`
+- Candidate seed size: `5044` (3.15%; 27.79% of kernel)
 - Residual cyclic SCCs after seed method: `0`
 - Candidate seed exact: `no`
 - Candidate seed lower bound: `unknown`
-- Candidate seed upper bound: `2370`
-- Solver SCCs exact / heuristic: `1380` / `872`
-- Solver runtime: `75.768` seconds
-- Candidate seed id: `exact-small-greedy:n2370:r0`
+- Candidate seed upper bound: `5044`
+- Solver SCCs exact / heuristic: `4054` / `872`
+- Solver runtime: `61.531` seconds
+- Candidate seed id: `exact-small-greedy:n5044:r0`
 
 ## Vincent-Lamarre WordNet Reference
 
@@ -57,70 +57,70 @@
 
 ## Layer Histogram
 
-- Layer `0`: `2370` nodes
-- Layer `1`: `1614` nodes
-- Layer `2`: `1009` nodes
-- Layer `3`: `768` nodes
-- Layer `4`: `573` nodes
-- Layer `5`: `499` nodes
-- Layer `6`: `413` nodes
-- Layer `7`: `342` nodes
-- Layer `8`: `276` nodes
-- Layer `9`: `265` nodes
-- Layer `10`: `241` nodes
-- Layer `11`: `208` nodes
-- Layer `12`: `195` nodes
-- Layer `13`: `161` nodes
-- Layer `14`: `166` nodes
-- Layer `15`: `147` nodes
-- Layer `16`: `136` nodes
-- Layer `17`: `135` nodes
-- Layer `18`: `112` nodes
-- Layer `19`: `120` nodes
-- Layer `20`: `109` nodes
-- Layer `21`: `110` nodes
-- Layer `22`: `113` nodes
-- Layer `23`: `103` nodes
-- Layer `24`: `104` nodes
-- Layer `25`: `90` nodes
-- Layer `26`: `96` nodes
-- Layer `27`: `91` nodes
-- Layer `28`: `85` nodes
-- Layer `29`: `74` nodes
-- Layer `30`: `72` nodes
-- Layer `31`: `81` nodes
-- Layer `32`: `65` nodes
-- Layer `33`: `88` nodes
-- Layer `34`: `91` nodes
-- Layer `35`: `91` nodes
-- Layer `36`: `87` nodes
-- Layer `37`: `80` nodes
-- Layer `38`: `96` nodes
-- Layer `39`: `130` nodes
-- Layer `40`: `128` nodes
-- Layer `41`: `115` nodes
-- Layer `42`: `97` nodes
-- Layer `43`: `87` nodes
-- Layer `44`: `43` nodes
-- Layer `45`: `30` nodes
-- Layer `46`: `29` nodes
-- Layer `47`: `41` nodes
-- Layer `48`: `58` nodes
-- Layer `49`: `81` nodes
-- Layer `50`: `66` nodes
-- Layer `51`: `52` nodes
-- Layer `52`: `56` nodes
-- Layer `53`: `50` nodes
-- Layer `54`: `52` nodes
-- Layer `55`: `52` nodes
-- Layer `56`: `45` nodes
-- Layer `57`: `41` nodes
-- Layer `58`: `38` nodes
-- Layer `59`: `33` nodes
-- Layer `60`: `24` nodes
-- Layer `61`: `17` nodes
-- Layer `62`: `8` nodes
-- Layer `63`: `3` nodes
+- Layer `0`: `5044` nodes
+- Layer `1`: `1888` nodes
+- Layer `2`: `1177` nodes
+- Layer `3`: `902` nodes
+- Layer `4`: `658` nodes
+- Layer `5`: `581` nodes
+- Layer `6`: `510` nodes
+- Layer `7`: `444` nodes
+- Layer `8`: `353` nodes
+- Layer `9`: `320` nodes
+- Layer `10`: `283` nodes
+- Layer `11`: `256` nodes
+- Layer `12`: `239` nodes
+- Layer `13`: `191` nodes
+- Layer `14`: `206` nodes
+- Layer `15`: `189` nodes
+- Layer `16`: `164` nodes
+- Layer `17`: `170` nodes
+- Layer `18`: `140` nodes
+- Layer `19`: `151` nodes
+- Layer `20`: `143` nodes
+- Layer `21`: `137` nodes
+- Layer `22`: `133` nodes
+- Layer `23`: `127` nodes
+- Layer `24`: `134` nodes
+- Layer `25`: `127` nodes
+- Layer `26`: `134` nodes
+- Layer `27`: `132` nodes
+- Layer `28`: `116` nodes
+- Layer `29`: `96` nodes
+- Layer `30`: `89` nodes
+- Layer `31`: `110` nodes
+- Layer `32`: `108` nodes
+- Layer `33`: `112` nodes
+- Layer `34`: `130` nodes
+- Layer `35`: `122` nodes
+- Layer `36`: `111` nodes
+- Layer `37`: `101` nodes
+- Layer `38`: `129` nodes
+- Layer `39`: `172` nodes
+- Layer `40`: `177` nodes
+- Layer `41`: `168` nodes
+- Layer `42`: `135` nodes
+- Layer `43`: `120` nodes
+- Layer `44`: `70` nodes
+- Layer `45`: `50` nodes
+- Layer `46`: `38` nodes
+- Layer `47`: `52` nodes
+- Layer `48`: `77` nodes
+- Layer `49`: `115` nodes
+- Layer `50`: `91` nodes
+- Layer `51`: `76` nodes
+- Layer `52`: `93` nodes
+- Layer `53`: `82` nodes
+- Layer `54`: `79` nodes
+- Layer `55`: `65` nodes
+- Layer `56`: `67` nodes
+- Layer `57`: `69` nodes
+- Layer `58`: `53` nodes
+- Layer `59`: `58` nodes
+- Layer `60`: `46` nodes
+- Layer `61`: `24` nodes
+- Layer `62`: `12` nodes
+- Layer `63`: `4` nodes
 - Layer `64`: `1` nodes
 
 ## Top Candidate Seed Nodes
