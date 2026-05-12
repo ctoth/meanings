@@ -68,6 +68,38 @@ IDIOM_KEYWORDS = (
     "colloquial expression",
 )
 
+SHORT_TOKEN_LEXICAL_WHITELIST = frozenset(
+    {
+        "am",
+        "an",
+        "as",
+        "at",
+        "ax",
+        "axe",
+        "be",
+        "by",
+        "do",
+        "go",
+        "he",
+        "if",
+        "in",
+        "is",
+        "it",
+        "me",
+        "my",
+        "no",
+        "of",
+        "on",
+        "or",
+        "ox",
+        "so",
+        "to",
+        "up",
+        "us",
+        "we",
+    }
+)
+
 ABBREVIATION_RE = re.compile(r"\b(abbreviation|acronym|initialism|short for)\b", re.IGNORECASE)
 CHEMICAL_FORMULA_RE = re.compile(r"\b[A-Z][a-z]?\d*(?:[A-Z][a-z]?\d*)+\b")
 
@@ -88,6 +120,10 @@ def _case_pattern(surface: str) -> str:
     if letters[:1].isupper() and letters[1:].islower():
         return "title"
     return "mixed"
+
+
+def is_short_token_whitelisted(lemma: str) -> bool:
+    return normalize_lemma(lemma) in SHORT_TOKEN_LEXICAL_WHITELIST
 
 
 def classify_lexicality(
@@ -119,6 +155,10 @@ def classify_lexicality(
         reasons.append("gloss.abbreviation")
         return LexicalityClassification(LexicalityTag.ABBREVIATION, tuple(reasons))
 
+    if token_length <= 3 and case_pattern != "lower":
+        reasons.append("surface.short_token_case_rejected")
+        return LexicalityClassification(LexicalityTag.SYMBOL_CODE, tuple(reasons))
+
     if case_pattern in {"upper", "mixed"} and token_length <= 5:
         reasons.append("surface.code_case")
         return LexicalityClassification(LexicalityTag.SYMBOL_CODE, tuple(reasons))
@@ -139,9 +179,12 @@ def classify_lexicality(
         reasons.append("surface.single_character")
         return LexicalityClassification(LexicalityTag.SYMBOL_CODE, tuple(reasons))
 
-    if token_length <= 3 and pos == "n":
-        reasons.append("surface.short_noun_unreviewed")
-        return LexicalityClassification(LexicalityTag.UNCERTAIN, tuple(reasons))
+    if token_length <= 3:
+        if normalized in SHORT_TOKEN_LEXICAL_WHITELIST:
+            reasons.append("surface.short_token_whitelist")
+            return LexicalityClassification(LexicalityTag.LEXICAL_WORD, tuple(reasons))
+        reasons.append("surface.short_token_unlisted")
+        return LexicalityClassification(LexicalityTag.SYMBOL_CODE, tuple(reasons))
 
     if _contains_any(gloss, TECHNICAL_KEYWORDS):
         reasons.append("gloss.technical_domain")
