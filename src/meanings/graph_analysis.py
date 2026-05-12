@@ -82,10 +82,19 @@ def strongly_connected_components(nodes: set[str], adjacency: Adjacency) -> list
 
 
 def compute_kernel(nodes: set[str], adjacency: Adjacency) -> set[str]:
+    """Iteratively strip nodes with no outgoing edge into the surviving set.
+
+    What remains is the set of nodes that can reach a cycle -- the recursively
+    irreducible part of the definition graph. A self-loop ``u -> u`` counts as a
+    cycle: a word that appears in its own definition is irreducible by itself,
+    so such a node is never stripped (a 1-node feedback vertex set member). This
+    matches how :mod:`meanings.loop_analysis` and ``residual_cyclic_scc_count``
+    already treat self-loops; ``compute_kernel`` used to silently exclude them.
+    """
     rev = reverse_adjacency(nodes, adjacency)
     remaining = set(nodes)
     live_out = {
-        node: sum(1 for target in adjacency.get(node, set()) if target != node and target in nodes)
+        node: sum(1 for target in adjacency.get(node, set()) if target in nodes)
         for node in nodes
     }
     queue = deque(node for node, out_degree in live_out.items() if out_degree == 0)
@@ -95,9 +104,9 @@ def compute_kernel(nodes: set[str], adjacency: Adjacency) -> set[str]:
             continue
         remaining.remove(node)
         for parent in rev.get(node, set()):
-            if parent not in remaining:
+            if parent not in remaining or parent == node:
                 continue
-            if parent != node and node in adjacency.get(parent, set()):
+            if node in adjacency.get(parent, set()):
                 live_out[parent] -= 1
                 if live_out[parent] == 0:
                     queue.append(parent)
