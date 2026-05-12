@@ -9,7 +9,9 @@ import wn
 
 from meanings.annotations import AnnotationStore, annotation_coverage, component_annotation_summary, load_annotation_csvs
 from meanings.graph_analysis import Adjacency, KernelAnalysis, analyze_kernel
+from meanings.identity_clusters import identity_cluster_for_form
 from meanings.lexical_graph import LexicalGraphBuild
+from meanings.lexicality import classify_oewn_sense
 from meanings.normalize import content_tokens, extract_lemma_candidates, normalize_lemma
 
 
@@ -29,6 +31,17 @@ class SynsetGraphBuild:
     adjacency: Adjacency
     labels: dict[str, str]
     pos_by_node: dict[str, str]
+    resolution_stats: dict[str, int]
+
+
+@dataclass(slots=True)
+class SenseLevelGraphBuild:
+    lexicon_id: str
+    nodes: set[str]
+    adjacency: Adjacency
+    labels: dict[str, str]
+    pos_by_node: dict[str, str]
+    node_metadata: dict[str, dict[str, object]]
     resolution_stats: dict[str, int]
 
 
@@ -285,6 +298,131 @@ def build_synset_graph(lexicon_id: str = "oewn:2024") -> SynsetGraphBuild:
         adjacency=adjacency,
         labels=labels,
         pos_by_node=pos_by_node,
+        resolution_stats=resolution_stats,
+    )
+
+
+def build_sense_level_paper_wordnet_graph(lexicon_id: str = "oewn:2024") -> SenseLevelGraphBuild:
+    lexicon = load_lexicon(lexicon_id)
+    nodes: set[str] = set()
+    adjacency: Adjacency = {}
+    labels: dict[str, str] = {}
+    pos_by_node: dict[str, str] = {}
+    node_metadata: dict[str, dict[str, object]] = {}
+    definition_by_node: dict[str, str] = {}
+    signature_by_node: dict[str, set[str]] = {}
+    context_by_node: dict[str, set[str]] = {}
+    lemma_by_node: dict[str, str] = {}
+    lemma_index: dict[str, set[str]] = {}
+    lemma_pos_index: dict[tuple[str, str], set[str]] = {}
+
+    for word in lexicon.words():
+        lemma = normalize_lemma(word.lemma())
+        for sense in word.senses():
+            synset = sense.synset()
+            definition = synset.definition()
+            if not definition:
+                continue
+            node = sense.id
+            nodes.add(node)
+            adjacency[node] = set()
+            pos_by_node[node] = synset.pos
+            definition_by_node[node] = definition
+            context_by_node[node] = set(content_tokens(definition))
+            signature = set(content_tokens(definition))
+            signature.add(lemma)
+            for synset_word in synset.words():
+                signature.update(normalize_lemma(synset_word.lemma()).split("_"))
+            signature_by_node[node] = signature
+            lemma_by_node[node] = lemma
+            lemma_index.setdefault(lemma, set()).add(node)
+            lemma_pos_index.setdefault((lemma, synset.pos), set()).add(node)
+
+            lexicality = classify_oewn_sense(word, synset)
+            variant = identity_cluster_for_form(lemma)
+            ic_id = variant.ic_id if variant is not None else f"ic:{lemma}"
+            labels[node] = f"{lemma} [{synset.pos}] :: {truncate_text(definition)}"
+            node_metadata[node] = {
+                "sense_id": sense.id,
+                "source_synset": synset.id,
+                "lemma": lemma,
+                "form": word.lemma(),
+                "pos": synset.pos,
+                "definition": definition,
+                "lexicality": lexicality.tag.value,
+                "lexicality_reasons": list(lexicality.reasons),
+                "ic_id": ic_id,
+            }
+
+    resolution_stats = {
+        "candidate_matches": 0,
+        "resolved_same_pos_unique": 0,
+        "resolved_global_unique": 0,
+        "resolved_same_pos_overlap": 0,
+        "resolved_global_overlap": 0,
+        "ambiguous_skipped": 0,
+        "self_reference_skipped": 0,
+        "unresolved_skipped": 0,
+    }
+
+    lemma_set = set(lemma_index)
+    for target_node, definition in definition_by_node.items():
+        target_pos = pos_by_node[target_node]
+        target_context = context_by_node[target_node]
+        for candidate in extract_lemma_candidates(definition, lemma_set):
+            resolution_stats["candidate_matches"] += 1
+            blocked_tokens = set(candidate.split("_"))
+            had_self_reference = target_node in lemma_index.get(candidate, set())
+
+            same_pos_choices = lemma_pos_index.get((candidate, target_pos), set()) - {target_node}
+            if len(same_pos_choices) == 1:
+                source_node = next(iter(same_pos_choices))
+                adjacency[source_node].add(target_node)
+                resolution_stats["resolved_same_pos_unique"] += 1
+                continue
+            if len(same_pos_choices) > 1:
+                source_node = choose_best_candidate(
+                    same_pos_choices,
+                    target_context,
+                    signature_by_node,
+                    blocked_tokens,
+                )
+                if source_node is not None:
+                    adjacency[source_node].add(target_node)
+                    resolution_stats["resolved_same_pos_overlap"] += 1
+                    continue
+                resolution_stats["ambiguous_skipped"] += 1
+                continue
+
+            all_choices = lemma_index.get(candidate, set()) - {target_node}
+            if len(all_choices) == 1:
+                source_node = next(iter(all_choices))
+                adjacency[source_node].add(target_node)
+                resolution_stats["resolved_global_unique"] += 1
+            elif all_choices:
+                source_node = choose_best_candidate(
+                    all_choices,
+                    target_context,
+                    signature_by_node,
+                    blocked_tokens,
+                )
+                if source_node is not None:
+                    adjacency[source_node].add(target_node)
+                    resolution_stats["resolved_global_overlap"] += 1
+                else:
+                    resolution_stats["ambiguous_skipped"] += 1
+            elif had_self_reference:
+                resolution_stats["self_reference_skipped"] += 1
+            else:
+                resolution_stats["unresolved_skipped"] += 1
+
+    return SenseLevelGraphBuild(
+        lexicon_id=lexicon_id,
+        nodes=nodes,
+        adjacency=adjacency,
+        labels=labels,
+        pos_by_node=pos_by_node,
+        node_metadata=node_metadata,
         resolution_stats=resolution_stats,
     )
 
