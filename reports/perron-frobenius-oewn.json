@@ -4,81 +4,81 @@
     "edges": 677823
   },
   "kernel": {
-    "kernel": 12853,
-    "core": 288,
-    "satellites": 12565,
-    "seed": 2370,
+    "kernel": 18151,
+    "core": 510,
+    "satellites": 17641,
+    "seed": 5044,
     "largest_kernel_scc": 8138,
     "dominant_eigenvalue_largest_kernel_scc": 3.744334950888941
   },
   "pagerank_topK_overlap": {
     "100": {
-      "in_kernel": 17,
+      "in_kernel": 100,
       "in_core": 0,
-      "in_seed": 11,
-      "frac_kernel": 0.17,
-      "frac_seed": 0.11
+      "in_seed": 94,
+      "frac_kernel": 1.0,
+      "frac_seed": 0.94
     },
     "500": {
-      "in_kernel": 112,
+      "in_kernel": 498,
       "in_core": 0,
-      "in_seed": 72,
-      "frac_kernel": 0.224,
-      "frac_seed": 0.144
+      "in_seed": 458,
+      "frac_kernel": 0.996,
+      "frac_seed": 0.916
     },
     "1000": {
-      "in_kernel": 153,
+      "in_kernel": 998,
       "in_core": 0,
-      "in_seed": 99,
-      "frac_kernel": 0.153,
-      "frac_seed": 0.099
+      "in_seed": 944,
+      "frac_kernel": 0.998,
+      "frac_seed": 0.944
     },
     "2370": {
-      "in_kernel": 403,
-      "in_core": 0,
-      "in_seed": 232,
-      "frac_kernel": 0.170042194092827,
-      "frac_seed": 0.09789029535864979
+      "in_kernel": 1434,
+      "in_core": 38,
+      "in_seed": 1254,
+      "frac_kernel": 0.6050632911392405,
+      "frac_seed": 0.529113924050633
     },
     "5000": {
-      "in_kernel": 664,
-      "in_core": 0,
-      "in_seed": 360,
-      "frac_kernel": 0.1328,
-      "frac_seed": 0.072
+      "in_kernel": 1880,
+      "in_core": 38,
+      "in_seed": 1547,
+      "frac_kernel": 0.376,
+      "frac_seed": 0.3094
     },
     "12853": {
-      "in_kernel": 1219,
-      "in_core": 0,
-      "in_seed": 539,
-      "frac_kernel": 0.09484167120516611,
-      "frac_seed": 0.04193573484789543
+      "in_kernel": 2874,
+      "in_core": 38,
+      "in_seed": 2066,
+      "frac_kernel": 0.22360538395705282,
+      "frac_seed": 0.1607406831090018
     }
   },
   "mean_pagerank_by_component": {
     "all": 6.249609399412536e-06,
-    "rest": 6.2255983948573244e-06,
-    "kernel": 6.524517000543102e-06,
-    "core": 4.807829281039541e-06,
-    "satellites": 6.563864876644736e-06,
-    "seed": 8.857443720689117e-06,
-    "non_seed_kernel": 5.997088179905303e-06
+    "rest": 5.993452003711507e-06,
+    "kernel": 8.251605542696772e-06,
+    "core": 7.2852023192686e-06,
+    "satellites": 8.279544188122109e-06,
+    "seed": 1.4265851862341373e-05,
+    "non_seed_kernel": 5.937127902024815e-06
   },
   "seed_pagerank_rank_percentiles": {
-    "min": 16,
-    "p25": 14915,
-    "median": 48115,
-    "p75": 91846,
+    "min": 0,
+    "p25": 2400,
+    "median": 16961,
+    "p75": 60142,
     "max": 154388,
-    "n_in_top_2370": 232
+    "n_in_top_2370": 1254
   },
-  "layer_vs_neglog_pagerank_pearson_kernel": -0.12994554442011033,
-  "layer_vs_pagerank_spearman_kernel": -0.1513016522134596,
-  "pagerank_vs_indegree_spearman_full": 0.4015646124483301,
-  "pagerank_vs_outdegree_spearman_full": 0.17833240318581678,
-  "perron_scc_vs_indegree_scc_spearman": 0.7825188564683494,
-  "perron_scc_vs_pagerank_scc_spearman": 0.563809037554716,
-  "perron_scc_vs_pagerank_full_spearman": 0.30068219292460896,
+  "layer_vs_neglog_pagerank_pearson_kernel": 0.10357709767181761,
+  "layer_vs_pagerank_spearman_kernel": 0.15127160710237297,
+  "pagerank_vs_indegree_spearman_full": 0.40156461244835717,
+  "pagerank_vs_outdegree_spearman_full": 0.17833240318584387,
+  "perron_scc_vs_indegree_scc_spearman": 0.7825188564572167,
+  "perron_scc_vs_pagerank_scc_spearman": 0.5638090283257569,
+  "perron_scc_vs_pagerank_full_spearman": 0.30068213435578517,
   "seed_nodes_in_largest_scc": 1461,
   "perron_topK_in_seed": {
     "50": {
@@ -109,43 +109,43 @@
       "pagerank": 0.00016915721384632383,
       "indeg": 5,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "palaquium_gutta::n",
       "label": "palaquium_gutta [n] :: one of several East Indian trees yielding gutta-percha of the getah t...",
-      "pagerank": 0.00015414498315786327,
+      "pagerank": 0.0001541449831578633,
       "indeg": 6,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "coelogyne::n",
       "label": "coelogyne [n] :: any of various orchids of the genus Coelogyne with: clusters of fragr...",
-      "pagerank": 0.00013934911327363443,
+      "pagerank": 0.0001393491132736344,
       "indeg": 17,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "niobe::n",
       "label": "niobe [n] :: (Greek mythology) the daughter of Tantalus whose boasting about her c...",
-      "pagerank": 0.00010951345321546277,
+      "pagerank": 0.00010951345321546279,
       "indeg": 11,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "crusade::v",
@@ -153,54 +153,54 @@
       "pagerank": 0.00010826157431951282,
       "indeg": 11,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "laocoon::n",
       "label": "laocoon [n] :: (Greek mythology) the priest of Apollo who warned the Trojans to bewa...",
-      "pagerank": 0.00010344889831048628,
+      "pagerank": 0.00010344889831048625,
       "indeg": 15,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "regression_coefficient::n",
       "label": "regression_coefficient [n] :: when the regression line is linear (y = ax + b) the regression coeffi...",
-      "pagerank": 0.00010109672037367255,
+      "pagerank": 0.00010109672037367256,
       "indeg": 13,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "kwell::n",
       "label": "kwell [n] :: a preparation of lindane (trade name Kwell) that is used to kill lice...",
-      "pagerank": 0.00010032119508093745,
+      "pagerank": 0.00010032119508093749,
       "indeg": 9,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "barber::v",
       "label": "barber [v] :: perform the services of a barber: cut the hair and/or beard of",
-      "pagerank": 9.722115941698765e-05,
+      "pagerank": 9.722115941698766e-05,
       "indeg": 6,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "brattice::v",
@@ -208,10 +208,10 @@
       "pagerank": 9.503284924745049e-05,
       "indeg": 3,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "countersink::v",
@@ -219,32 +219,32 @@
       "pagerank": 8.81639608170469e-05,
       "indeg": 6,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "orlon::n",
       "label": "orlon [n] :: an acrylic fiber or the lightweight crease-resistant fabric made with...",
-      "pagerank": 8.588414493937577e-05,
+      "pagerank": 8.588414493937582e-05,
       "indeg": 5,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "aluminium_nitrate::n",
       "label": "aluminium_nitrate [n] :: a salt of aluminium and nitric acid, existing normally as a crystalli...",
-      "pagerank": 8.575344254015303e-05,
+      "pagerank": 8.575344254015305e-05,
       "indeg": 10,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "braille::v",
@@ -252,21 +252,21 @@
       "pagerank": 8.415906885074557e-05,
       "indeg": 2,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "ninja::n",
       "label": "ninja [n] :: a member of the ninja who were trained in martial arts and hired for...",
-      "pagerank": 8.372269748909974e-05,
+      "pagerank": 8.372269748909976e-05,
       "indeg": 9,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "anion_exchange_resin::n",
@@ -274,14 +274,14 @@
       "pagerank": 8.355800814004941e-05,
       "indeg": 4,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
-      "node": "sociopath::n",
-      "label": "sociopath [n] :: someone with a sociopathic personality; a person with an antisocial p...",
+      "node": "psychopath::n",
+      "label": "psychopath [n] :: someone with a sociopathic personality; a person with an antisocial p...",
       "pagerank": 8.260171114279766e-05,
       "indeg": 7,
       "outdeg": 2,
@@ -291,8 +291,8 @@
       "layer": 0
     },
     {
-      "node": "psychopath::n",
-      "label": "psychopath [n] :: someone with a sociopathic personality; a person with an antisocial p...",
+      "node": "sociopath::n",
+      "label": "sociopath [n] :: someone with a sociopathic personality; a person with an antisocial p...",
       "pagerank": 8.260171114279766e-05,
       "indeg": 7,
       "outdeg": 2,
@@ -318,26 +318,26 @@
       "pagerank": 8.143174373402855e-05,
       "indeg": 5,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "foot_joint::n",
       "label": "foot_joint [n] :: A foot joint is the last of the three sections of the Western concert...",
-      "pagerank": 8.087723756997237e-05,
+      "pagerank": 8.087723756997238e-05,
       "indeg": 3,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "jezebel::n",
       "label": "jezebel [n] :: wife of Ahab who was king of Israel; according to the Old Testament s...",
-      "pagerank": 8.006208169434544e-05,
+      "pagerank": 8.006208169434547e-05,
       "indeg": 17,
       "outdeg": 1,
       "in_kernel": true,
@@ -348,13 +348,13 @@
     {
       "node": "pat::v",
       "label": "pat [v] :: pat or squeeze fondly or playfully, especially under the chin",
-      "pagerank": 7.979308457732061e-05,
+      "pagerank": 7.979308457732062e-05,
       "indeg": 5,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "bellerophon::n",
@@ -373,32 +373,32 @@
       "pagerank": 7.774053879247003e-05,
       "indeg": 3,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "derange::v",
       "label": "derange [v] :: derange mentally, throw out of mental balance; make insane",
-      "pagerank": 7.683318068200308e-05,
+      "pagerank": 7.683318068200307e-05,
       "indeg": 6,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "paternity_leave::n",
       "label": "paternity_leave [n] :: A paternity leave is a parental leave that a father can take after th...",
-      "pagerank": 7.660201164547118e-05,
+      "pagerank": 7.660201164547116e-05,
       "indeg": 7,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "understudy::v",
@@ -406,10 +406,10 @@
       "pagerank": 7.569031977051663e-05,
       "indeg": 3,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "leach::v",
@@ -417,15 +417,15 @@
       "pagerank": 7.547354561630785e-05,
       "indeg": 3,
       "outdeg": 1,
-      "in_kernel": false,
+      "in_kernel": true,
       "in_core": false,
-      "in_seed": false,
-      "layer": null
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "electra::n",
       "label": "electra [n] :: (Greek mythology) the daughter of Agamemnon and Clytemnestra; persuad...",
-      "pagerank": 7.43873595977093e-05,
+      "pagerank": 7.438735959770931e-05,
       "indeg": 11,
       "outdeg": 1,
       "in_kernel": true,
@@ -478,7 +478,7 @@
     {
       "node": "kainite::n",
       "label": "kainite [n] :: a white mineral consisting of magnesium sulphate and potassium chlori...",
-      "perron": 0.001436490845958905,
+      "perron": 0.0014364908459589048,
       "indeg_scc": 8,
       "indeg_full": 8,
       "in_core": false,
@@ -488,7 +488,7 @@
     {
       "node": "pitressin::n",
       "label": "pitressin [n] :: hormone secreted by the posterior pituitary gland (trade name Pitress...",
-      "perron": 0.001348916299025463,
+      "perron": 0.0013489162990254632,
       "indeg_scc": 15,
       "indeg_full": 16,
       "in_core": false,
@@ -498,7 +498,7 @@
     {
       "node": "vasopressin::n",
       "label": "vasopressin [n] :: hormone secreted by the posterior pituitary gland (trade name Pitress...",
-      "perron": 0.001348916299025463,
+      "perron": 0.0013489162990254632,
       "indeg_scc": 15,
       "indeg_full": 16,
       "in_core": false,
@@ -508,7 +508,7 @@
     {
       "node": "vasoconstrictor::n",
       "label": "vasoconstrictor [n] :: any agent that causes a narrowing of an opening of a blood vessel: co...",
-      "perron": 0.0013285721111253915,
+      "perron": 0.0013285721111253917,
       "indeg_scc": 13,
       "indeg_full": 13,
       "in_core": false,
@@ -528,7 +528,7 @@
     {
       "node": "sodium::n",
       "label": "sodium [n] :: a silvery soft waxy metallic element of the alkali metal group; occur...",
-      "perron": 0.0012673679093946728,
+      "perron": 0.001267367909394673,
       "indeg_scc": 17,
       "indeg_full": 17,
       "in_core": false,
@@ -538,7 +538,7 @@
     {
       "node": "magnesium::n",
       "label": "magnesium [n] :: a light silver-white ductile bivalent metallic element; in pure form...",
-      "perron": 0.0012588151364521236,
+      "perron": 0.0012588151364521234,
       "indeg_scc": 18,
       "indeg_full": 18,
       "in_core": false,
@@ -548,7 +548,7 @@
     {
       "node": "coniferophytina::n",
       "label": "coniferophytina [n] :: cone-bearing gymnosperms dating from the Carboniferous period; most a...",
-      "perron": 0.0012475419435078283,
+      "perron": 0.001247541943507828,
       "indeg_scc": 16,
       "indeg_full": 16,
       "in_core": false,
@@ -558,7 +558,7 @@
     {
       "node": "liver::n",
       "label": "liver [n] :: large and complicated reddish-brown glandular organ located in the up...",
-      "perron": 0.001245758351713088,
+      "perron": 0.0012457583517130884,
       "indeg_scc": 21,
       "indeg_full": 22,
       "in_core": false,
@@ -568,7 +568,7 @@
     {
       "node": "feldspar::n",
       "label": "feldspar [n] :: any of a group of hard crystalline minerals that consist of aluminum...",
-      "perron": 0.001212222857672334,
+      "perron": 0.0012122228576723338,
       "indeg_scc": 8,
       "indeg_full": 8,
       "in_core": false,
@@ -576,24 +576,24 @@
       "layer": 0
     },
     {
-      "node": "k_lor::n",
-      "label": "k_lor [n] :: salt of potassium (KCl) (trade names K-Dur 20, Kaochlor and K-lor and...",
-      "perron": 0.001137057810645358,
-      "indeg_scc": 10,
-      "indeg_full": 10,
-      "in_core": false,
-      "in_seed": true,
-      "layer": 0
-    },
-    {
       "node": "potassium_chloride::n",
       "label": "potassium_chloride [n] :: salt of potassium (KCl) (trade names K-Dur 20, Kaochlor and K-lor and...",
-      "perron": 0.001137057810645358,
+      "perron": 0.0011370578106453578,
       "indeg_scc": 10,
       "indeg_full": 10,
       "in_core": false,
       "in_seed": false,
       "layer": 16
+    },
+    {
+      "node": "k_lor::n",
+      "label": "k_lor [n] :: salt of potassium (KCl) (trade names K-Dur 20, Kaochlor and K-lor and...",
+      "perron": 0.0011370578106453578,
+      "indeg_scc": 10,
+      "indeg_full": 10,
+      "in_core": false,
+      "in_seed": true,
+      "layer": 0
     },
     {
       "node": "brewing::n",
@@ -608,7 +608,7 @@
     {
       "node": "carnallite::n",
       "label": "carnallite [n] :: a white or reddish mineral consisting of hydrous chlorides of potassi...",
-      "perron": 0.0010798710591122514,
+      "perron": 0.001079871059112251,
       "indeg_scc": 8,
       "indeg_full": 8,
       "in_core": false,
@@ -618,7 +618,7 @@
     {
       "node": "ph::n",
       "label": "ph [n] :: (from potential of Hydrogen) the logarithm of the reciprocal of hydro...",
-      "perron": 0.0010793459560891469,
+      "perron": 0.001079345956089147,
       "indeg_scc": 17,
       "indeg_full": 17,
       "in_core": false,
@@ -628,7 +628,7 @@
     {
       "node": "silicon::n",
       "label": "silicon [n] :: a tetravalent nonmetallic element; next to oxygen it is the most abun...",
-      "perron": 0.001069023930945536,
+      "perron": 0.0010690239309455363,
       "indeg_scc": 11,
       "indeg_full": 11,
       "in_core": false,
@@ -638,7 +638,7 @@
     {
       "node": "knee::n",
       "label": "knee [n] :: hinge joint in the human leg connecting the tibia and fibula with the...",
-      "perron": 0.001061728931352012,
+      "perron": 0.0010617289313520119,
       "indeg_scc": 9,
       "indeg_full": 9,
       "in_core": false,
@@ -658,7 +658,7 @@
     {
       "node": "sylvite::n",
       "label": "sylvite [n] :: a mineral consisting of native potassium chloride; an important ore o...",
-      "perron": 0.0010616172740389408,
+      "perron": 0.0010616172740389406,
       "indeg_scc": 8,
       "indeg_full": 8,
       "in_core": false,
@@ -688,7 +688,7 @@
     {
       "node": "mucus::n",
       "label": "mucus [n] :: protective secretion of the mucous membranes; in the gut it lubricate...",
-      "perron": 0.001006201129993509,
+      "perron": 0.0010062011299935092,
       "indeg_scc": 16,
       "indeg_full": 16,
       "in_core": false,
@@ -698,7 +698,7 @@
     {
       "node": "exodus::n",
       "label": "exodus [n] :: the second book of the Old Testament: tells of the departure of the I...",
-      "perron": 0.0009588446983575234,
+      "perron": 0.0009588446983575233,
       "indeg_scc": 11,
       "indeg_full": 11,
       "in_core": false,
@@ -718,7 +718,7 @@
     {
       "node": "blastula::n",
       "label": "blastula [n] :: early stage of an embryo produced by cleavage of an ovum; a liquid-fi...",
-      "perron": 0.0009106461948828995,
+      "perron": 0.0009106461948828994,
       "indeg_scc": 15,
       "indeg_full": 15,
       "in_core": false,
@@ -728,7 +728,7 @@
     {
       "node": "wolframite::n",
       "label": "wolframite [n] :: a mineral consisting of iron and manganese tungstate in crystalline f...",
-      "perron": 0.0009044270337375716,
+      "perron": 0.0009044270337375715,
       "indeg_scc": 12,
       "indeg_full": 12,
       "in_core": false,
@@ -747,7 +747,7 @@
     {
       "node": "stops::n",
       "label": "stops [n] :: a gambling card game in which chips are placed on the ace and king an...",
-      "pagerank_scc": 0.0036078727910759524,
+      "pagerank_scc": 0.0036078727910759537,
       "in_core": false,
       "in_seed": true
     },
@@ -775,35 +775,35 @@
     {
       "node": "gastrulation::n",
       "label": "gastrulation [n] :: the process in which a gastrula develops from a blastula by the inwar...",
-      "pagerank_scc": 0.0024563508056111155,
+      "pagerank_scc": 0.0024563508056111164,
       "in_core": false,
       "in_seed": false
     },
     {
       "node": "gastrula::n",
       "label": "gastrula [n] :: double-walled stage of the embryo resulting from invagination of the...",
-      "pagerank_scc": 0.00235544358696248,
+      "pagerank_scc": 0.0023554435869624795,
       "in_core": false,
       "in_seed": true
     },
     {
       "node": "alkaline_metal::n",
       "label": "alkaline_metal [n] :: any of the monovalent metals of group I of the periodic table (lithiu...",
-      "pagerank_scc": 0.0023034163857513523,
+      "pagerank_scc": 0.002303416385751352,
       "in_core": false,
       "in_seed": true
     },
     {
       "node": "alkali_metal::n",
       "label": "alkali_metal [n] :: any of the monovalent metals of group I of the periodic table (lithiu...",
-      "pagerank_scc": 0.0023034163857513523,
+      "pagerank_scc": 0.002303416385751352,
       "in_core": false,
       "in_seed": true
     },
     {
       "node": "sacrament::n",
       "label": "sacrament [n] :: a formal religious ceremony conferring a specific grace on those who...",
-      "pagerank_scc": 0.0021736583076235718,
+      "pagerank_scc": 0.0021736583076235713,
       "in_core": false,
       "in_seed": true
     },
@@ -824,7 +824,7 @@
     {
       "node": "exodus::n",
       "label": "exodus [n] :: the second book of the Old Testament: tells of the departure of the I...",
-      "pagerank_scc": 0.0020934423925776592,
+      "pagerank_scc": 0.0020934423925776597,
       "in_core": false,
       "in_seed": true
     },
@@ -852,35 +852,35 @@
     {
       "node": "hypertensin::n",
       "label": "hypertensin [n] :: any of several vasoconstrictor substances (trade name Hypertensin) th...",
-      "pagerank_scc": 0.001980204090721344,
+      "pagerank_scc": 0.0019802040907213442,
       "in_core": false,
       "in_seed": true
     },
     {
       "node": "angiotensin::n",
       "label": "angiotensin [n] :: any of several vasoconstrictor substances (trade name Hypertensin) th...",
-      "pagerank_scc": 0.001980204090721344,
+      "pagerank_scc": 0.0019802040907213442,
       "in_core": false,
       "in_seed": true
     },
     {
       "node": "argyrodite::n",
       "label": "argyrodite [n] :: a rare steel-grey mineral consisting of silver and germanium and sulfur",
-      "pagerank_scc": 0.0019513173342753038,
+      "pagerank_scc": 0.0019513173342753042,
       "in_core": false,
       "in_seed": false
     },
     {
       "node": "bile::n",
       "label": "bile [n] :: a digestive juice secreted by the liver and stored in the gallbladder...",
-      "pagerank_scc": 0.0019198346534507141,
+      "pagerank_scc": 0.0019198346534507144,
       "in_core": false,
       "in_seed": true
     },
     {
       "node": "semiconductor::n",
       "label": "semiconductor [n] :: a substance as germanium or silicon whose electrical conductivity is...",
-      "pagerank_scc": 0.0019137427872194376,
+      "pagerank_scc": 0.0019137427872194378,
       "in_core": false,
       "in_seed": true
     },
@@ -894,28 +894,28 @@
     {
       "node": "potassium::n",
       "label": "potassium [n] :: a light soft silver-white metallic element of the alkali metal group;...",
-      "pagerank_scc": 0.0016994679657777127,
+      "pagerank_scc": 0.0016994679657777122,
       "in_core": false,
       "in_seed": true
     },
     {
       "node": "granite::n",
       "label": "granite [n] :: plutonic igneous rock having visibly crystalline texture; generally c...",
-      "pagerank_scc": 0.0016729819460858956,
+      "pagerank_scc": 0.0016729819460858954,
       "in_core": false,
       "in_seed": true
     },
     {
       "node": "nickel::n",
       "label": "nickel [n] :: a hard malleable ductile silvery metallic element that is resistant t...",
-      "pagerank_scc": 0.0016400190148498698,
+      "pagerank_scc": 0.0016400190148498702,
       "in_core": false,
       "in_seed": true
     },
     {
       "node": "wisdom::n",
       "label": "wisdom [n] :: an Apocryphal book consisting mainly of a meditation on wisdom; altho...",
-      "pagerank_scc": 0.0016078203221874053,
+      "pagerank_scc": 0.0016078203221874055,
       "in_core": false,
       "in_seed": true
     },
@@ -929,21 +929,21 @@
     {
       "node": "ice_rink::n",
       "label": "ice_rink [n] :: a rink with a floor of ice for ice hockey or ice skating",
-      "pagerank_scc": 0.0015828041963259275,
+      "pagerank_scc": 0.0015828041963259277,
       "in_core": false,
       "in_seed": false
     },
     {
       "node": "pitressin::n",
       "label": "pitressin [n] :: hormone secreted by the posterior pituitary gland (trade name Pitress...",
-      "pagerank_scc": 0.001568392584821394,
+      "pagerank_scc": 0.0015683925848213936,
       "in_core": false,
       "in_seed": true
     },
     {
       "node": "vasopressin::n",
       "label": "vasopressin [n] :: hormone secreted by the posterior pituitary gland (trade name Pitress...",
-      "pagerank_scc": 0.001568392584821394,
+      "pagerank_scc": 0.0015683925848213936,
       "in_core": false,
       "in_seed": false
     }
@@ -961,14 +961,14 @@
       "label": "large [n] :: a garment size for a large person",
       "degree_score": 3500,
       "pagerank_full": 4.768667801458195e-06,
-      "pagerank_rank": 145193
+      "pagerank_rank": 145194
     },
     {
       "node": "white::n",
       "label": "white [n] :: a person of European descent with a light-skinned or pale complexion",
       "degree_score": 2079,
       "pagerank_full": 5.6576675507569115e-06,
-      "pagerank_rank": 63180
+      "pagerank_rank": 63179
     },
     {
       "node": "can::n",
@@ -982,14 +982,14 @@
       "label": "born [n] :: British nuclear physicist (born in Germany) honored for his contribut...",
       "degree_score": 1546,
       "pagerank_full": 6.997835456881988e-06,
-      "pagerank_rank": 28245
+      "pagerank_rank": 28246
     },
     {
       "node": "plant::n",
       "label": "plant [n] :: buildings for carrying on industrial labor",
       "degree_score": 1504,
       "pagerank_full": 4.785287138385365e-06,
-      "pagerank_rank": 142196
+      "pagerank_rank": 142194
     },
     {
       "node": "form::n",
@@ -1017,7 +1017,7 @@
       "label": "part [n] :: something determined in relation to something that includes it",
       "degree_score": 1354,
       "pagerank_full": 4.768252977454948e-06,
-      "pagerank_rank": 145245
+      "pagerank_rank": 145243
     },
     {
       "node": "common::n",
@@ -1031,14 +1031,14 @@
       "label": "english [n] :: an Indo-European language belonging to the West Germanic branch; the...",
       "degree_score": 1265,
       "pagerank_full": 4.914908363129816e-06,
-      "pagerank_rank": 121247
+      "pagerank_rank": 121248
     },
     {
       "node": "body::n",
       "label": "body [n] :: the entire physical structure of an organism (an animal, plant, or hu...",
       "degree_score": 1260,
       "pagerank_full": 4.834272735439745e-06,
-      "pagerank_rank": 134011
+      "pagerank_rank": 134010
     },
     {
       "node": "city::n",
@@ -1062,18 +1062,18 @@
       "pagerank_rank": 145020
     },
     {
+      "node": "water::n",
+      "label": "water [n] :: binary compound that occurs at room temperature as a clear colorless...",
+      "degree_score": 1095,
+      "pagerank_full": 6.5786553180696584e-06,
+      "pagerank_rank": 36046
+    },
+    {
       "node": "various::a",
       "label": "various [a] :: of many different kinds purposefully arranged but lacking any uniformity",
       "degree_score": 1095,
       "pagerank_full": 7.112504367753038e-06,
       "pagerank_rank": 26532
-    },
-    {
-      "node": "water::n",
-      "label": "water [n] :: binary compound that occurs at room temperature as a clear colorless...",
-      "degree_score": 1095,
-      "pagerank_full": 6.578655318069659e-06,
-      "pagerank_rank": 36047
     },
     {
       "node": "found::n",
@@ -1090,18 +1090,18 @@
       "pagerank_rank": 92084
     },
     {
-      "node": "several::a",
-      "label": "several [a] :: (used with count nouns) of an indefinite number more than 2 or 3 but...",
-      "degree_score": 1068,
-      "pagerank_full": 4.863912817564066e-06,
-      "pagerank_rank": 129101
-    },
-    {
       "node": "first::n",
       "label": "first [n] :: the first or highest in an ordering or series",
       "degree_score": 1068,
       "pagerank_full": 4.923141173953914e-06,
       "pagerank_rank": 120057
+    },
+    {
+      "node": "several::a",
+      "label": "several [a] :: (used with count nouns) of an indefinite number more than 2 or 3 but...",
+      "degree_score": 1068,
+      "pagerank_full": 4.863912817564066e-06,
+      "pagerank_rank": 129101
     },
     {
       "node": "make::v",
@@ -1122,7 +1122,7 @@
       "label": "central [n] :: a workplace that serves as a telecommunications facility where lines...",
       "degree_score": 1004,
       "pagerank_full": 5.254756776876281e-06,
-      "pagerank_rank": 86621
+      "pagerank_rank": 86620
     },
     {
       "node": "many::a",
@@ -1136,7 +1136,7 @@
       "label": "group [n] :: any number of entities (members) considered as a unit",
       "degree_score": 967,
       "pagerank_full": 4.735342098229477e-06,
-      "pagerank_rank": 151798
+      "pagerank_rank": 151797
     },
     {
       "node": "spoken::a",
@@ -1150,7 +1150,7 @@
       "label": "native [n] :: an indigenous person who was born in a particular place",
       "degree_score": 931,
       "pagerank_full": 4.850748688225212e-06,
-      "pagerank_rank": 131226
+      "pagerank_rank": 131228
     },
     {
       "node": "th::n",
@@ -1161,7 +1161,7 @@
     }
   ],
   "kernel_scc_size_histogram": {
-    "1": 3148,
+    "1": 8446,
     "2": 570,
     "8138": 1,
     "4": 23,
@@ -1171,6 +1171,6 @@
     "6": 3,
     "10": 1
   },
-  "kernel_scc_count": 3841,
-  "source_scc_count": 286
+  "kernel_scc_count": 9139,
+  "source_scc_count": 508
 }

@@ -6,122 +6,122 @@
     "graph_type": "paper-wordnet"
   },
   "kernel": {
-    "kernel": 12853,
-    "core": 288,
-    "satellites": 12565,
-    "seed": 2370,
-    "kernel_sccs": 3841,
-    "source_sccs": 286,
+    "kernel": 18151,
+    "core": 510,
+    "satellites": 17641,
+    "seed": 5044,
+    "kernel_sccs": 9139,
+    "source_sccs": 508,
     "largest_kernel_scc": 8138,
     "residual_cyclic_scc_count": 0,
     "n_layers": 65,
-    "perron_lambda_largest_scc_forward": 3.7443349508889763,
+    "perron_lambda_largest_scc_forward": 3.7443349508889767,
     "perron_lambda_largest_scc_reverse": 3.7443349508890478,
-    "nontrivial_kernel_sccs_reverse": 823
+    "nontrivial_kernel_sccs_reverse": 3497
   },
   "comparisons_on_kernel": {
     "reverse_pagerank_full": {
-      "spearman_vs_fvs_degree_score_kernel": 0.31618783380088306,
-      "spearman_vs_seed_membership_kernel": 0.10600000116989046,
-      "spearman_vs_core_membership_kernel": 0.0441897875058753,
-      "spearman_vs_indegree_kernel": -0.1940837712433261,
-      "spearman_vs_outdegree_kernel": 0.7457438651888353,
-      "spearman_vs_layer_shallowness_kernel": 0.25777024562411394,
-      "overlap@50_vs_fvs_degree_score": 0.25,
-      "overlap@100_vs_fvs_degree_score": 0.2422360248447205,
-      "overlap@200_vs_fvs_degree_score": 0.29449838187702265,
-      "overlap@500_vs_fvs_degree_score": 0.34048257372654156,
-      "overlap@1000_vs_fvs_degree_score": 0.37362637362637363,
-      "overlap@2370_vs_fvs_degree_score": 0.36796536796536794,
-      "seed_recall@100": 0.03417721518987342,
+      "spearman_vs_fvs_degree_score_kernel": 0.3707664539211724,
+      "spearman_vs_seed_membership_kernel": -0.18302475850932776,
+      "spearman_vs_core_membership_kernel": 0.07327180078680942,
+      "spearman_vs_indegree_kernel": -0.2089546872197388,
+      "spearman_vs_outdegree_kernel": 0.7974595429447664,
+      "spearman_vs_layer_shallowness_kernel": 0.0037366584431568098,
+      "overlap@50_vs_fvs_degree_score": 0.20481927710843373,
+      "overlap@100_vs_fvs_degree_score": 0.20481927710843373,
+      "overlap@200_vs_fvs_degree_score": 0.2618296529968454,
+      "overlap@500_vs_fvs_degree_score": 0.31926121372031663,
+      "overlap@1000_vs_fvs_degree_score": 0.3679890560875513,
+      "overlap@2370_vs_fvs_degree_score": 0.37271937445699393,
+      "seed_recall@100": 0.01605868358445678,
       "seed_precision@100": 0.81,
-      "seed_recall@500": 0.13924050632911392,
+      "seed_recall@500": 0.0654242664551943,
       "seed_precision@500": 0.66,
-      "seed_recall@1000": 0.2291139240506329,
+      "seed_recall@1000": 0.10765265662172879,
       "seed_precision@1000": 0.543,
-      "seed_recall@2370": 0.3679324894514768,
+      "seed_recall@2370": 0.17287866772402855,
       "seed_precision@2370": 0.3679324894514768
     },
     "forward_pagerank_full": {
-      "spearman_vs_fvs_degree_score_kernel": 0.2487066418148175,
-      "spearman_vs_seed_membership_kernel": 0.2763944893223832,
-      "spearman_vs_core_membership_kernel": -0.22907072976103535,
-      "spearman_vs_indegree_kernel": 0.5303458388678152,
-      "spearman_vs_outdegree_kernel": -0.2821482995157446,
-      "spearman_vs_layer_shallowness_kernel": -0.1566279821095575,
+      "spearman_vs_fvs_degree_score_kernel": 0.004215320778998872,
+      "spearman_vs_seed_membership_kernel": 0.4890595538680561,
+      "spearman_vs_core_membership_kernel": -0.14422094926903528,
+      "spearman_vs_indegree_kernel": 0.4295481621063599,
+      "spearman_vs_outdegree_kernel": -0.4409522336293417,
+      "spearman_vs_layer_shallowness_kernel": 0.1413457190188623,
       "overlap@50_vs_fvs_degree_score": 0.0,
       "overlap@100_vs_fvs_degree_score": 0.0,
       "overlap@200_vs_fvs_degree_score": 0.0,
-      "overlap@500_vs_fvs_degree_score": 0.006036217303822937,
-      "overlap@1000_vs_fvs_degree_score": 0.035732780942516834,
-      "overlap@2370_vs_fvs_degree_score": 0.13560134163871587,
-      "seed_recall@100": 0.025738396624472575,
-      "seed_precision@100": 0.61,
-      "seed_recall@500": 0.11814345991561181,
-      "seed_precision@500": 0.56,
-      "seed_recall@1000": 0.2,
-      "seed_precision@1000": 0.474,
-      "seed_recall@2370": 0.3881856540084388,
-      "seed_precision@2370": 0.3881856540084388
+      "overlap@500_vs_fvs_degree_score": 0.0,
+      "overlap@1000_vs_fvs_degree_score": 0.0005002501250625312,
+      "overlap@2370_vs_fvs_degree_score": 0.05053191489361702,
+      "seed_recall@100": 0.018636003172085646,
+      "seed_precision@100": 0.94,
+      "seed_recall@500": 0.09119746233148295,
+      "seed_precision@500": 0.92,
+      "seed_recall@1000": 0.18754956383822363,
+      "seed_precision@1000": 0.946,
+      "seed_recall@2370": 0.35943695479777954,
+      "seed_precision@2370": 0.7649789029535865
     },
     "perron_largest_scc_reverse": {
-      "spearman_vs_fvs_degree_score_kernel": 0.40392622645628057,
-      "spearman_vs_seed_membership_kernel": 0.27404911554241884,
+      "spearman_vs_fvs_degree_score_kernel": 0.39661718959520753,
+      "spearman_vs_seed_membership_kernel": 0.2740493881074483,
       "spearman_vs_core_membership_kernel": null,
-      "spearman_vs_indegree_kernel": -0.03087336065366526,
-      "spearman_vs_outdegree_kernel": 0.40483045158722963,
-      "spearman_vs_layer_shallowness_kernel": 0.2844984325851992,
-      "overlap@50_vs_fvs_degree_score": 0.26582278481012656,
-      "overlap@100_vs_fvs_degree_score": 0.2422360248447205,
-      "overlap@200_vs_fvs_degree_score": 0.28205128205128205,
-      "overlap@500_vs_fvs_degree_score": 0.3123359580052493,
-      "overlap@1000_vs_fvs_degree_score": 0.3413816230717639,
-      "overlap@2370_vs_fvs_degree_score": 0.38031450203843914,
-      "seed_recall@100": 0.036286919831223625,
+      "spearman_vs_indegree_kernel": -0.030873309633333484,
+      "spearman_vs_outdegree_kernel": 0.4048306169224567,
+      "spearman_vs_layer_shallowness_kernel": 0.2844986525802341,
+      "overlap@50_vs_fvs_degree_score": 0.2345679012345679,
+      "overlap@100_vs_fvs_degree_score": 0.20481927710843373,
+      "overlap@200_vs_fvs_degree_score": 0.2345679012345679,
+      "overlap@500_vs_fvs_degree_score": 0.29198966408268734,
+      "overlap@1000_vs_fvs_degree_score": 0.32714001327140013,
+      "overlap@2370_vs_fvs_degree_score": 0.37910968868199013,
+      "seed_recall@100": 0.01704996034892942,
       "seed_precision@100": 0.86,
-      "seed_recall@500": 0.12995780590717299,
+      "seed_recall@500": 0.06106264869151467,
       "seed_precision@500": 0.616,
-      "seed_recall@1000": 0.21054852320675105,
+      "seed_recall@1000": 0.09892942109436954,
       "seed_precision@1000": 0.499,
-      "seed_recall@2370": 0.34135021097046414,
+      "seed_recall@2370": 0.1603885804916733,
       "seed_precision@2370": 0.34135021097046414
     },
     "perron_largest_scc_forward": {
-      "spearman_vs_fvs_degree_score_kernel": 0.4452023511589789,
-      "spearman_vs_seed_membership_kernel": 0.11928982872866192,
+      "spearman_vs_fvs_degree_score_kernel": 0.39480299839696575,
+      "spearman_vs_seed_membership_kernel": 0.11929003322153206,
       "spearman_vs_core_membership_kernel": null,
-      "spearman_vs_indegree_kernel": 0.7612068136487488,
-      "spearman_vs_outdegree_kernel": 0.055277169010985915,
-      "spearman_vs_layer_shallowness_kernel": -0.16776106721893763,
+      "spearman_vs_indegree_kernel": 0.7612068140385638,
+      "spearman_vs_outdegree_kernel": 0.05527734364389361,
+      "spearman_vs_layer_shallowness_kernel": -0.16776102534379372,
       "overlap@50_vs_fvs_degree_score": 0.0,
       "overlap@100_vs_fvs_degree_score": 0.005025125628140704,
-      "overlap@200_vs_fvs_degree_score": 0.023017902813299233,
-      "overlap@500_vs_fvs_degree_score": 0.06496272630457935,
-      "overlap@1000_vs_fvs_degree_score": 0.13895216400911162,
-      "overlap@2370_vs_fvs_degree_score": 0.3170325090302862,
-      "seed_recall@100": 0.021940928270042195,
+      "overlap@200_vs_fvs_degree_score": 0.017811704834605598,
+      "overlap@500_vs_fvs_degree_score": 0.0582010582010582,
+      "overlap@1000_vs_fvs_degree_score": 0.12296462661426165,
+      "overlap@2370_vs_fvs_degree_score": 0.2897959183673469,
+      "seed_recall@100": 0.010309278350515464,
       "seed_precision@100": 0.52,
-      "seed_recall@500": 0.0839662447257384,
+      "seed_recall@500": 0.0394528152260111,
       "seed_precision@500": 0.398,
-      "seed_recall@1000": 0.1388185654008439,
+      "seed_recall@1000": 0.06522601110229977,
       "seed_precision@1000": 0.329,
-      "seed_recall@2370": 0.2468354430379747,
+      "seed_recall@2370": 0.11597938144329897,
       "seed_precision@2370": 0.2468354430379747
     }
   },
   "full_graph": {
-    "reverse_pagerank_vs_indegree_spearman": -0.0472056084933752,
-    "reverse_pagerank_vs_outdegree_spearman": 0.9949516989941342,
-    "forward_pagerank_vs_indegree_spearman": 0.3960567562556863,
-    "forward_pagerank_vs_outdegree_spearman": -0.02817306104056028,
-    "reverse_vs_forward_pagerank_spearman": -0.02719259965063912,
-    "reverse_pagerank_vs_total_degree_spearman": 0.5110897652387992
+    "reverse_pagerank_vs_indegree_spearman": -0.0472055406681833,
+    "reverse_pagerank_vs_outdegree_spearman": 0.9949515236130293,
+    "forward_pagerank_vs_indegree_spearman": 0.3960567562557098,
+    "forward_pagerank_vs_outdegree_spearman": -0.02817306065353005,
+    "reverse_vs_forward_pagerank_spearman": -0.027192112249477825,
+    "reverse_pagerank_vs_total_degree_spearman": 0.5110894806646995
   },
   "null_models": {
-    "reverse_pagerank_real_vs_randomized_edge_spearman": 0.521152345212377,
-    "reverse_pagerank_real_vs_degree_total_spearman": 0.6785338626148215,
-    "randomized_edge_null_vs_degree_total_spearman": 0.5179893443033435,
-    "layer_shallowness_real_vs_shuffled_spearman": 0.00047513956718289637,
+    "reverse_pagerank_real_vs_randomized_edge_spearman": 0.612793735368529,
+    "reverse_pagerank_real_vs_degree_total_spearman": 0.6920986748100668,
+    "randomized_edge_null_vs_degree_total_spearman": 0.6117953631351484,
+    "layer_shallowness_real_vs_shuffled_spearman": -0.002387740460999668,
     "comment": "real reverse-PageRank should track degree+structure; the randomized-edge null keeps every node's in/out degree, so residual correlation = pure degree, and the gap real-vs-null minus real-vs-degree is the structural signal."
   },
   "watch_words": {
@@ -207,9 +207,9 @@
         "node": "small::r"
       },
       "large": {
-        "best_rank": 14442,
+        "best_rank": 14433,
         "of": 160010,
-        "percentile": 9.026,
+        "percentile": 9.02,
         "node": "large::r"
       },
       "white": {
@@ -231,21 +231,21 @@
         "node": "body::v"
       },
       "water": {
-        "best_rank": 36047,
+        "best_rank": 36046,
         "of": 160010,
-        "percentile": 22.528,
+        "percentile": 22.527,
         "node": "water::n"
       },
       "part": {
-        "best_rank": 127924,
+        "best_rank": 127926,
         "of": 160010,
-        "percentile": 79.948,
+        "percentile": 79.949,
         "node": "part::r"
       },
       "form": {
-        "best_rank": 30683,
+        "best_rank": 30682,
         "of": 160010,
-        "percentile": 19.176,
+        "percentile": 19.175,
         "node": "form::n"
       },
       "act": {
@@ -261,13 +261,13 @@
         "node": "various::a"
       },
       "born": {
-        "best_rank": 28246,
+        "best_rank": 28245,
         "of": 160010,
-        "percentile": 17.653,
+        "percentile": 17.652,
         "node": "born::n"
       },
       "english": {
-        "best_rank": 121248,
+        "best_rank": 121247,
         "of": 160010,
         "percentile": 75.775,
         "node": "english::n"
@@ -355,9 +355,9 @@
         "node": "small::a"
       },
       "large": {
-        "best_rank": 1377,
+        "best_rank": 1376,
         "of": 8138,
-        "percentile": 16.921,
+        "percentile": 16.908,
         "node": "large::a"
       },
       "white": {
@@ -385,9 +385,9 @@
         "node": "water::n"
       },
       "part": {
-        "best_rank": 2112,
+        "best_rank": 2113,
         "of": 8138,
-        "percentile": 25.952,
+        "percentile": 25.965,
         "node": "part::r"
       },
       "form": {
@@ -423,75 +423,75 @@
     },
     "fvs_degree_score_kernel": {
       "small": {
-        "best_rank": 4,
-        "of": 12853,
-        "percentile": 0.031,
+        "best_rank": 2,
+        "of": 18151,
+        "percentile": 0.011,
         "node": "small::n"
       },
       "large": {
-        "best_rank": 7,
-        "of": 12853,
-        "percentile": 0.054,
+        "best_rank": 5,
+        "of": 18151,
+        "percentile": 0.028,
         "node": "large::n"
       },
       "white": {
-        "best_rank": 27,
-        "of": 12853,
-        "percentile": 0.21,
+        "best_rank": 15,
+        "of": 18151,
+        "percentile": 0.083,
         "node": "white::n"
       },
       "plant": {
-        "best_rank": 14,
-        "of": 12853,
-        "percentile": 0.109,
+        "best_rank": 8,
+        "of": 18151,
+        "percentile": 0.044,
         "node": "plant::n"
       },
       "body": {
-        "best_rank": 2,
-        "of": 12853,
-        "percentile": 0.016,
+        "best_rank": 6,
+        "of": 18151,
+        "percentile": 0.033,
         "node": "body::n"
       },
       "water": {
-        "best_rank": 6,
-        "of": 12853,
-        "percentile": 0.047,
+        "best_rank": 11,
+        "of": 18151,
+        "percentile": 0.061,
         "node": "water::n"
       },
       "part": {
-        "best_rank": 1,
-        "of": 12853,
-        "percentile": 0.008,
+        "best_rank": 4,
+        "of": 18151,
+        "percentile": 0.022,
         "node": "part::n"
       },
       "form": {
-        "best_rank": 5,
-        "of": 12853,
-        "percentile": 0.039,
+        "best_rank": 10,
+        "of": 18151,
+        "percentile": 0.055,
         "node": "form::n"
       },
       "act": {
         "best_rank": 0,
-        "of": 12853,
+        "of": 18151,
         "percentile": 0.0,
         "node": "act::n"
       },
       "various": {
-        "best_rank": 8,
-        "of": 12853,
-        "percentile": 0.062,
+        "best_rank": 3,
+        "of": 18151,
+        "percentile": 0.017,
         "node": "various::a"
       },
       "born": {
-        "best_rank": 70,
-        "of": 12853,
-        "percentile": 0.545,
+        "best_rank": 93,
+        "of": 18151,
+        "percentile": 0.512,
         "node": "born::n"
       },
       "english": {
-        "best_rank": 228,
-        "of": 12853,
-        "percentile": 1.774,
+        "best_rank": 230,
+        "of": 18151,
+        "percentile": 1.267,
         "node": "english::n"
       }
     }
@@ -501,121 +501,121 @@
       {
         "node": "situated::a",
         "label": "situated [a] :: situated in a particular spot or position",
-        "score": 0.01568224936190592,
+        "score": 0.015682249361905945,
         "indeg": 1,
         "outdeg": 124,
         "in_kernel": true,
         "in_core": true,
         "in_seed": true,
-        "fvs_score": 28,
+        "fvs_score": 29,
         "layer": 0
       },
       {
         "node": "act::n",
         "label": "act [n] :: a legal document codifying the result of deliberations of a committee...",
-        "score": 0.007648728090348976,
+        "score": 0.007648728090348961,
         "indeg": 5,
         "outdeg": 1441,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 305,
+        "fvs_score": 383,
         "layer": 0
       },
       {
         "node": "degree::n",
         "label": "degree [n] :: a position on a scale of intensity or amount or quality",
-        "score": 0.004819506386117995,
+        "score": 0.004819506386117992,
         "indeg": 5,
         "outdeg": 427,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 114,
+        "fvs_score": 122,
         "layer": 0
       },
       {
         "node": "time::n",
         "label": "time [n] :: an instance or single occasion for some event",
-        "score": 0.003589914174440645,
+        "score": 0.003589914174440642,
         "indeg": 4,
         "outdeg": 848,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 105,
+        "fvs_score": 132,
         "layer": 0
       },
       {
         "node": "event::n",
         "label": "event [n] :: something that happens at a given place and time",
-        "score": 0.00321361934217451,
+        "score": 0.003213619342174511,
         "indeg": 3,
         "outdeg": 203,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 49,
+        "fvs_score": 52,
         "layer": 0
       },
       {
         "node": "part::n",
         "label": "part [n] :: something determined in relation to something that includes it",
-        "score": 0.003103453053342195,
+        "score": 0.0031034530533421917,
         "indeg": 2,
         "outdeg": 1352,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 199,
+        "fvs_score": 231,
         "layer": 0
       },
       {
         "node": "place::n",
         "label": "place [n] :: a point located with respect to surface features of some region",
-        "score": 0.003030872282031821,
+        "score": 0.003030872282031823,
         "indeg": 5,
         "outdeg": 488,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 75,
+        "fvs_score": 88,
         "layer": 0
       },
       {
         "node": "can::n",
         "label": "can [n] :: airtight sealed metal container for food or drink or paint etc.",
-        "score": 0.002759113025734645,
+        "score": 0.002759113025734637,
         "indeg": 7,
         "outdeg": 1788,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 171,
+        "fvs_score": 212,
         "layer": 0
       },
       {
         "node": "quality::n",
         "label": "quality [n] :: an essential and distinguishing attribute of something or someone",
-        "score": 0.002710646707941632,
+        "score": 0.0027106467079416295,
         "indeg": 2,
         "outdeg": 1028,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 93,
+        "fvs_score": 101,
         "layer": 0
       },
       {
         "node": "quantity::n",
         "label": "quantity [n] :: how much there is or how many there are of something that you can qua...",
-        "score": 0.002698501042628701,
+        "score": 0.0026985010426286977,
         "indeg": 4,
         "outdeg": 285,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 67,
+        "fvs_score": 76,
         "layer": 0
       },
       {
@@ -627,27 +627,15 @@
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 80,
+        "fvs_score": 84,
         "layer": 0
       },
       {
         "node": "point::n",
         "label": "point [n] :: a geometric element that has position but no extension",
-        "score": 0.0025975386540443807,
+        "score": 0.002597538654044379,
         "indeg": 5,
         "outdeg": 414,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 32,
-        "layer": 0
-      },
-      {
-        "node": "relation::n",
-        "label": "relation [n] :: an abstraction belonging to or characteristic of two entities or part...",
-        "score": 0.0025875702977251943,
-        "indeg": 4,
-        "outdeg": 200,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
@@ -655,39 +643,51 @@
         "layer": 0
       },
       {
+        "node": "relation::n",
+        "label": "relation [n] :: an abstraction belonging to or characteristic of two entities or part...",
+        "score": 0.0025875702977251917,
+        "indeg": 4,
+        "outdeg": 200,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 47,
+        "layer": 0
+      },
+      {
         "node": "things::n",
         "label": "things [n] :: any movable possession (especially articles of clothing)",
-        "score": 0.002538498055494745,
+        "score": 0.0025384980554947452,
         "indeg": 3,
         "outdeg": 443,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 90,
+        "fvs_score": 97,
         "layer": 0
       },
       {
         "node": "distinguished::a",
         "label": "distinguished [a] :: (used of persons) standing above others in character or attainment or...",
-        "score": 0.0023198368972588983,
+        "score": 0.0023198368972588953,
         "indeg": 4,
         "outdeg": 203,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 26,
+        "fvs_score": 28,
         "layer": 0
       },
       {
         "node": "activity::n",
         "label": "activity [n] :: any specific behavior",
-        "score": 0.002226305785151003,
+        "score": 0.0022263057851510024,
         "indeg": 2,
         "outdeg": 356,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 78,
+        "fvs_score": 90,
         "layer": 0
       },
       {
@@ -699,55 +699,55 @@
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 118,
+        "fvs_score": 144,
         "layer": 0
       },
       {
         "node": "set_up::v",
         "label": "set_up [v] :: set up or found",
-        "score": 0.0021849606512410287,
+        "score": 0.002184960651241029,
         "indeg": 2,
         "outdeg": 38,
         "in_kernel": true,
         "in_core": true,
         "in_seed": true,
-        "fvs_score": 7,
+        "fvs_score": 8,
         "layer": 0
       },
       {
         "node": "certain::a",
         "label": "certain [a] :: definite but not specified or identified",
-        "score": 0.002165300481083649,
+        "score": 0.002165300481083643,
         "indeg": 3,
         "outdeg": 522,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 84,
+        "fvs_score": 105,
         "layer": 0
       },
       {
         "node": "determined::a",
         "label": "determined [a] :: characterized by great determination",
-        "score": 0.0020786945241581946,
+        "score": 0.0020786945241581907,
         "indeg": 2,
         "outdeg": 117,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 19,
+        "fvs_score": 21,
         "layer": 0
       },
       {
         "node": "amount::n",
         "label": "amount [n] :: a quantity of money",
-        "score": 0.0020739959815834997,
+        "score": 0.002073995981583499,
         "indeg": 2,
         "outdeg": 374,
         "in_kernel": true,
         "in_core": false,
         "in_seed": false,
-        "fvs_score": 48,
+        "fvs_score": 60,
         "layer": 1
       },
       {
@@ -759,67 +759,67 @@
         "in_kernel": true,
         "in_core": true,
         "in_seed": true,
-        "fvs_score": 5,
+        "fvs_score": 6,
         "layer": 0
       },
       {
         "node": "capable::a",
         "label": "capable [a] :: (usually followed by \u2018of\u2019) having capacity or ability",
-        "score": 0.0019621244041692592,
+        "score": 0.0019621244041692553,
         "indeg": 2,
         "outdeg": 703,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 101,
+        "fvs_score": 117,
         "layer": 0
       },
       {
         "node": "essential::n",
         "label": "essential [n] :: anything indispensable",
-        "score": 0.00195784309555579,
+        "score": 0.0019578430955557906,
         "indeg": 1,
         "outdeg": 98,
         "in_kernel": true,
         "in_core": false,
         "in_seed": false,
-        "fvs_score": 16,
+        "fvs_score": 18,
         "layer": 9
       },
       {
         "node": "superior::a",
         "label": "superior [a] :: of high or superior quality or performance",
-        "score": 0.0019502189916908062,
+        "score": 0.0019502189916908068,
         "indeg": 4,
         "outdeg": 22,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 8,
+        "fvs_score": 10,
         "layer": 0
       },
       {
         "node": "physical::a",
         "label": "physical [a] :: involving the body as distinguished from the mind or spirit",
-        "score": 0.0019277594325014292,
+        "score": 0.0019277594325014314,
         "indeg": 1,
         "outdeg": 375,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 74,
+        "fvs_score": 80,
         "layer": 0
       },
       {
         "node": "combination::n",
         "label": "combination [n] :: a collection of things that have been combined; an assemblage of sepa...",
-        "score": 0.001925631684253211,
+        "score": 0.0019256316842532098,
         "indeg": 6,
         "outdeg": 167,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 43,
+        "fvs_score": 51,
         "layer": 0
       },
       {
@@ -831,31 +831,31 @@
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 132,
+        "fvs_score": 221,
         "layer": 0
       },
       {
         "node": "position::n",
         "label": "position [n] :: the particular portion of space occupied by something",
-        "score": 0.001865801672619621,
+        "score": 0.0018658016726196174,
         "indeg": 3,
         "outdeg": 400,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 40,
+        "fvs_score": 47,
         "layer": 0
       },
       {
         "node": "body::n",
         "label": "body [n] :: the entire physical structure of an organism (an animal, plant, or hu...",
-        "score": 0.001851525147752924,
+        "score": 0.0018515251477529233,
         "indeg": 7,
         "outdeg": 1253,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 176,
+        "fvs_score": 215,
         "layer": 0
       }
     ],
@@ -863,14 +863,14 @@
       {
         "node": "magnificat::n",
         "label": "magnificat [n] :: (Luke) the canticle of the Virgin Mary (from Luke 1:46 beginning \u2018Mag...",
-        "score": 0.00016915721384632383,
+        "score": 0.00016915721384632386,
         "indeg": 5,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 4,
+        "layer": 0
       },
       {
         "node": "palaquium_gutta::n",
@@ -878,11 +878,11 @@
         "score": 0.00015414498315786325,
         "indeg": 6,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 5,
+        "layer": 0
       },
       {
         "node": "coelogyne::n",
@@ -890,59 +890,59 @@
         "score": 0.0001393491132736344,
         "indeg": 17,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 16,
+        "layer": 0
       },
       {
         "node": "niobe::n",
         "label": "niobe [n] :: (Greek mythology) the daughter of Tantalus whose boasting about her c...",
-        "score": 0.00010951345321546274,
+        "score": 0.00010951345321546277,
         "indeg": 11,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 10,
+        "layer": 0
       },
       {
         "node": "crusade::v",
         "label": "crusade [v] :: exert oneself continuously, vigorously, or obtrusively to gain an end...",
-        "score": 0.00010826157431951278,
+        "score": 0.00010826157431951282,
         "indeg": 11,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 10,
+        "layer": 0
       },
       {
         "node": "laocoon::n",
         "label": "laocoon [n] :: (Greek mythology) the priest of Apollo who warned the Trojans to bewa...",
-        "score": 0.00010344889831048625,
+        "score": 0.00010344889831048626,
         "indeg": 15,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 14,
+        "layer": 0
       },
       {
         "node": "regression_coefficient::n",
         "label": "regression_coefficient [n] :: when the regression line is linear (y = ax + b) the regression coeffi...",
-        "score": 0.00010109672037367252,
+        "score": 0.00010109672037367256,
         "indeg": 13,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 12,
+        "layer": 0
       },
       {
         "node": "kwell::n",
@@ -950,23 +950,23 @@
         "score": 0.00010032119508093746,
         "indeg": 9,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 8,
+        "layer": 0
       },
       {
         "node": "barber::v",
         "label": "barber [v] :: perform the services of a barber: cut the hair and/or beard of",
-        "score": 9.722115941698766e-05,
+        "score": 9.722115941698765e-05,
         "indeg": 6,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 5,
+        "layer": 0
       },
       {
         "node": "brattice::v",
@@ -974,23 +974,23 @@
         "score": 9.503284924745049e-05,
         "indeg": 3,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 2,
+        "layer": 0
       },
       {
         "node": "countersink::v",
         "label": "countersink [v] :: insert (a nail or screw below the surface, as into a countersink)",
-        "score": 8.81639608170469e-05,
+        "score": 8.816396081704687e-05,
         "indeg": 6,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 5,
+        "layer": 0
       },
       {
         "node": "orlon::n",
@@ -998,23 +998,23 @@
         "score": 8.588414493937582e-05,
         "indeg": 5,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 4,
+        "layer": 0
       },
       {
         "node": "aluminium_nitrate::n",
         "label": "aluminium_nitrate [n] :: a salt of aluminium and nitric acid, existing normally as a crystalli...",
-        "score": 8.575344254015305e-05,
+        "score": 8.575344254015303e-05,
         "indeg": 10,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 9,
+        "layer": 0
       },
       {
         "node": "braille::v",
@@ -1022,23 +1022,23 @@
         "score": 8.415906885074557e-05,
         "indeg": 2,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 1,
+        "layer": 0
       },
       {
         "node": "ninja::n",
         "label": "ninja [n] :: a member of the ninja who were trained in martial arts and hired for...",
-        "score": 8.372269748909977e-05,
+        "score": 8.372269748909976e-05,
         "indeg": 9,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 8,
+        "layer": 0
       },
       {
         "node": "anion_exchange_resin::n",
@@ -1046,16 +1046,16 @@
         "score": 8.355800814004941e-05,
         "indeg": 4,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 3,
+        "layer": 0
       },
       {
-        "node": "sociopath::n",
-        "label": "sociopath [n] :: someone with a sociopathic personality; a person with an antisocial p...",
-        "score": 8.260171114279769e-05,
+        "node": "psychopath::n",
+        "label": "psychopath [n] :: someone with a sociopathic personality; a person with an antisocial p...",
+        "score": 8.260171114279766e-05,
         "indeg": 7,
         "outdeg": 2,
         "in_kernel": true,
@@ -1065,9 +1065,9 @@
         "layer": 0
       },
       {
-        "node": "psychopath::n",
-        "label": "psychopath [n] :: someone with a sociopathic personality; a person with an antisocial p...",
-        "score": 8.260171114279769e-05,
+        "node": "sociopath::n",
+        "label": "sociopath [n] :: someone with a sociopathic personality; a person with an antisocial p...",
+        "score": 8.260171114279766e-05,
         "indeg": 7,
         "outdeg": 2,
         "in_kernel": true,
@@ -1079,7 +1079,7 @@
       {
         "node": "pegasus::n",
         "label": "pegasus [n] :: (Greek mythology) the immortal winged horse that sprang from the bloo...",
-        "score": 8.258907767116401e-05,
+        "score": 8.258907767116403e-05,
         "indeg": 17,
         "outdeg": 1,
         "in_kernel": true,
@@ -1094,11 +1094,11 @@
         "score": 8.143174373402855e-05,
         "indeg": 5,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 4,
+        "layer": 0
       },
       {
         "node": "foot_joint::n",
@@ -1106,16 +1106,16 @@
         "score": 8.087723756997238e-05,
         "indeg": 3,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 2,
+        "layer": 0
       },
       {
         "node": "jezebel::n",
         "label": "jezebel [n] :: wife of Ahab who was king of Israel; according to the Old Testament s...",
-        "score": 8.006208169434546e-05,
+        "score": 8.006208169434548e-05,
         "indeg": 17,
         "outdeg": 1,
         "in_kernel": true,
@@ -1130,16 +1130,16 @@
         "score": 7.979308457732062e-05,
         "indeg": 5,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 4,
+        "layer": 0
       },
       {
         "node": "bellerophon::n",
         "label": "bellerophon [n] :: (Greek mythology) a mythical hero of Corinth who performed miracles o...",
-        "score": 7.78777436111735e-05,
+        "score": 7.787774361117353e-05,
         "indeg": 10,
         "outdeg": 1,
         "in_kernel": true,
@@ -1154,35 +1154,35 @@
         "score": 7.774053879247003e-05,
         "indeg": 3,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 2,
+        "layer": 0
       },
       {
         "node": "derange::v",
         "label": "derange [v] :: derange mentally, throw out of mental balance; make insane",
-        "score": 7.683318068200309e-05,
+        "score": 7.683318068200307e-05,
         "indeg": 6,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 5,
+        "layer": 0
       },
       {
         "node": "paternity_leave::n",
         "label": "paternity_leave [n] :: A paternity leave is a parental leave that a father can take after th...",
-        "score": 7.660201164547116e-05,
+        "score": 7.660201164547115e-05,
         "indeg": 7,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 6,
+        "layer": 0
       },
       {
         "node": "understudy::v",
@@ -1190,11 +1190,11 @@
         "score": 7.569031977051663e-05,
         "indeg": 3,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 2,
+        "layer": 0
       },
       {
         "node": "leach::v",
@@ -1202,16 +1202,16 @@
         "score": 7.547354561630783e-05,
         "indeg": 3,
         "outdeg": 1,
-        "in_kernel": false,
+        "in_kernel": true,
         "in_core": false,
-        "in_seed": false,
-        "fvs_score": null,
-        "layer": null
+        "in_seed": true,
+        "fvs_score": 2,
+        "layer": 0
       },
       {
         "node": "electra::n",
         "label": "electra [n] :: (Greek mythology) the daughter of Agamemnon and Clytemnestra; persuad...",
-        "score": 7.438735959770927e-05,
+        "score": 7.438735959770928e-05,
         "indeg": 11,
         "outdeg": 1,
         "in_kernel": true,
@@ -1225,45 +1225,141 @@
       {
         "node": "can::n",
         "label": "can [n] :: airtight sealed metal container for food or drink or paint etc.",
-        "score": 0.008092259679616678,
+        "score": 0.008092259679616682,
         "indeg": 7,
         "outdeg": 1788,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 171,
+        "fvs_score": 212,
         "layer": 0
       },
       {
         "node": "act::n",
         "label": "act [n] :: a legal document codifying the result of deliberations of a committee...",
-        "score": 0.007711571062593262,
+        "score": 0.0077115710625932634,
         "indeg": 5,
         "outdeg": 1441,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 305,
+        "fvs_score": 383,
         "layer": 0
       },
       {
         "node": "degree::n",
         "label": "degree [n] :: a position on a scale of intensity or amount or quality",
-        "score": 0.007464348723571515,
+        "score": 0.0074643487235715135,
         "indeg": 5,
         "outdeg": 427,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 114,
+        "fvs_score": 122,
         "layer": 0
       },
       {
         "node": "extent::n",
         "label": "extent [n] :: the point or degree to which something extends",
-        "score": 0.006105289997534602,
+        "score": 0.0061052899975346,
         "indeg": 2,
         "outdeg": 210,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 84,
+        "layer": 0
+      },
+      {
+        "node": "quantity::n",
+        "label": "quantity [n] :: how much there is or how many there are of something that you can qua...",
+        "score": 0.004755004650561458,
+        "indeg": 4,
+        "outdeg": 285,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 76,
+        "layer": 0
+      },
+      {
+        "node": "things::n",
+        "label": "things [n] :: any movable possession (especially articles of clothing)",
+        "score": 0.004575134901623505,
+        "indeg": 3,
+        "outdeg": 443,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 97,
+        "layer": 0
+      },
+      {
+        "node": "part::n",
+        "label": "part [n] :: something determined in relation to something that includes it",
+        "score": 0.004447450616707783,
+        "indeg": 2,
+        "outdeg": 1352,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 231,
+        "layer": 0
+      },
+      {
+        "node": "quality::n",
+        "label": "quality [n] :: an essential and distinguishing attribute of something or someone",
+        "score": 0.004321077453481276,
+        "indeg": 2,
+        "outdeg": 1028,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 101,
+        "layer": 0
+      },
+      {
+        "node": "energy::n",
+        "label": "energy [n] :: the federal department responsible for maintaining a national energy...",
+        "score": 0.00382622803382566,
+        "indeg": 5,
+        "outdeg": 344,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 61,
+        "layer": 0
+      },
+      {
+        "node": "amount::n",
+        "label": "amount [n] :: a quantity of money",
+        "score": 0.003812486428857655,
+        "indeg": 2,
+        "outdeg": 374,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": false,
+        "fvs_score": 60,
+        "layer": 1
+      },
+      {
+        "node": "position::n",
+        "label": "position [n] :: the particular portion of space occupied by something",
+        "score": 0.003800948394488014,
+        "indeg": 3,
+        "outdeg": 400,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 47,
+        "layer": 0
+      },
+      {
+        "node": "physical::a",
+        "label": "physical [a] :: involving the body as distinguished from the mind or spirit",
+        "score": 0.003674585176621556,
+        "indeg": 1,
+        "outdeg": 375,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
@@ -1271,123 +1367,27 @@
         "layer": 0
       },
       {
-        "node": "quantity::n",
-        "label": "quantity [n] :: how much there is or how many there are of something that you can qua...",
-        "score": 0.004755004650561459,
-        "indeg": 4,
-        "outdeg": 285,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 67,
-        "layer": 0
-      },
-      {
-        "node": "things::n",
-        "label": "things [n] :: any movable possession (especially articles of clothing)",
-        "score": 0.004575134901623506,
-        "indeg": 3,
-        "outdeg": 443,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 90,
-        "layer": 0
-      },
-      {
-        "node": "part::n",
-        "label": "part [n] :: something determined in relation to something that includes it",
-        "score": 0.004447450616707781,
-        "indeg": 2,
-        "outdeg": 1352,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 199,
-        "layer": 0
-      },
-      {
-        "node": "quality::n",
-        "label": "quality [n] :: an essential and distinguishing attribute of something or someone",
-        "score": 0.004321077453481277,
-        "indeg": 2,
-        "outdeg": 1028,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 93,
-        "layer": 0
-      },
-      {
-        "node": "energy::n",
-        "label": "energy [n] :: the federal department responsible for maintaining a national energy...",
-        "score": 0.0038262280338256607,
-        "indeg": 5,
-        "outdeg": 344,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 52,
-        "layer": 0
-      },
-      {
-        "node": "amount::n",
-        "label": "amount [n] :: a quantity of money",
-        "score": 0.0038124864288576533,
-        "indeg": 2,
-        "outdeg": 374,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": false,
-        "fvs_score": 48,
-        "layer": 1
-      },
-      {
-        "node": "position::n",
-        "label": "position [n] :: the particular portion of space occupied by something",
-        "score": 0.0038009483944880136,
-        "indeg": 3,
-        "outdeg": 400,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 40,
-        "layer": 0
-      },
-      {
-        "node": "physical::a",
-        "label": "physical [a] :: involving the body as distinguished from the mind or spirit",
-        "score": 0.0036745851766215574,
-        "indeg": 1,
-        "outdeg": 375,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 74,
-        "layer": 0
-      },
-      {
         "node": "time::n",
         "label": "time [n] :: an instance or single occasion for some event",
-        "score": 0.0034855785785469994,
+        "score": 0.0034855785785470007,
         "indeg": 4,
         "outdeg": 848,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 105,
+        "fvs_score": 132,
         "layer": 0
       },
       {
         "node": "substance::n",
         "label": "substance [n] :: the real physical matter of which a person or thing consists",
-        "score": 0.0033817262467638236,
+        "score": 0.003381726246763823,
         "indeg": 4,
         "outdeg": 573,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 120,
+        "fvs_score": 149,
         "layer": 0
       },
       {
@@ -1399,43 +1399,43 @@
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 44,
+        "fvs_score": 46,
         "layer": 0
       },
       {
         "node": "word::n",
         "label": "word [n] :: the divine word of God; the second person in the Trinity (incarnate i...",
-        "score": 0.003333842425529876,
+        "score": 0.003333842425529875,
         "indeg": 6,
         "outdeg": 270,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 46,
+        "fvs_score": 49,
         "layer": 0
       },
       {
         "node": "form::n",
         "label": "form [n] :: the phonological or orthographic sound or appearance of a word that c...",
-        "score": 0.0031987140026077314,
+        "score": 0.0031987140026077296,
         "indeg": 8,
         "outdeg": 1478,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 152,
+        "fvs_score": 192,
         "layer": 0
       },
       {
         "node": "point::n",
         "label": "point [n] :: a geometric element that has position but no extension",
-        "score": 0.0031953429451812973,
+        "score": 0.0031953429451812986,
         "indeg": 5,
         "outdeg": 414,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 32,
+        "fvs_score": 40,
         "layer": 0
       },
       {
@@ -1447,49 +1447,49 @@
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 40,
+        "fvs_score": 47,
         "layer": 0
       },
       {
         "node": "parts::n",
         "label": "parts [n] :: the local environment",
-        "score": 0.0031288288312707165,
+        "score": 0.003128828831270716,
         "indeg": 2,
         "outdeg": 631,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 66,
+        "fvs_score": 87,
         "layer": 0
       },
       {
         "node": "human::n",
         "label": "human [n] :: any living or extinct member of the family Hominidae characterized by...",
-        "score": 0.003048775580957418,
+        "score": 0.003048775580957417,
         "indeg": 7,
         "outdeg": 416,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 58,
+        "fvs_score": 68,
         "layer": 0
       },
       {
         "node": "body::n",
         "label": "body [n] :: the entire physical structure of an organism (an animal, plant, or hu...",
-        "score": 0.0030436250736275653,
+        "score": 0.003043625073627564,
         "indeg": 7,
         "outdeg": 1253,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 176,
+        "fvs_score": 215,
         "layer": 0
       },
       {
         "node": "quantifier::n",
         "label": "quantifier [n] :: (logic) a word (such as \u2018some\u2019 or \u2018all\u2019 or \u2018no\u2019) that binds the varia...",
-        "score": 0.0029904613542975377,
+        "score": 0.0029904613542975373,
         "indeg": 5,
         "outdeg": 43,
         "in_kernel": true,
@@ -1501,85 +1501,85 @@
       {
         "node": "group::n",
         "label": "group [n] :: any number of entities (members) considered as a unit",
-        "score": 0.0029363359744120896,
+        "score": 0.0029363359744120883,
         "indeg": 3,
         "outdeg": 964,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 118,
+        "fvs_score": 144,
         "layer": 0
       },
       {
         "node": "metal::n",
         "label": "metal [n] :: any of several chemical elements that are usually shiny solids that c...",
-        "score": 0.002916602676838249,
+        "score": 0.0029166026768382473,
         "indeg": 9,
         "outdeg": 403,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 46,
+        "fvs_score": 54,
         "layer": 0
       },
       {
         "node": "living::n",
         "label": "living [n] :: the experience of being alive; the course of human events and activities",
-        "score": 0.0029102955514068857,
+        "score": 0.0029102955514068865,
         "indeg": 4,
         "outdeg": 617,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 68,
+        "fvs_score": 90,
         "layer": 0
       },
       {
         "node": "food::n",
         "label": "food [n] :: any substance that can be metabolized by an animal to give energy and...",
-        "score": 0.002854119783496199,
+        "score": 0.0028541197834961963,
         "indeg": 7,
         "outdeg": 778,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 80,
+        "fvs_score": 112,
         "layer": 0
       },
       {
         "node": "size::a",
         "label": "size [a] :: (used in combination) sized",
-        "score": 0.0028351207727728206,
+        "score": 0.002835120772772821,
         "indeg": 2,
         "outdeg": 108,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 30,
+        "fvs_score": 34,
         "layer": 0
       },
       {
         "node": "many::a",
         "label": "many [a] :: a quantifier that can be used with count nouns and is often preceded...",
-        "score": 0.002801168998108087,
+        "score": 0.0028011689981080868,
         "indeg": 6,
         "outdeg": 983,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 95,
+        "fvs_score": 132,
         "layer": 0
       },
       {
         "node": "large::n",
         "label": "large [n] :: a garment size for a large person",
-        "score": 0.0027876339673188135,
+        "score": 0.0027876339673188126,
         "indeg": 3,
         "outdeg": 3497,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 132,
+        "fvs_score": 221,
         "layer": 0
       }
     ],
@@ -1593,31 +1593,31 @@
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 27,
-        "layer": 0
-      },
-      {
-        "node": "alkali_metal::n",
-        "label": "alkali_metal [n] :: any of the monovalent metals of group I of the periodic table (lithiu...",
-        "score": 0.0020218599771219398,
-        "indeg": 9,
-        "outdeg": 19,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 16,
+        "fvs_score": 28,
         "layer": 0
       },
       {
         "node": "alkaline_metal::n",
         "label": "alkaline_metal [n] :: any of the monovalent metals of group I of the periodic table (lithiu...",
-        "score": 0.0020218599771219398,
+        "score": 0.0020218599771219393,
         "indeg": 9,
         "outdeg": 4,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
         "fvs_score": 10,
+        "layer": 0
+      },
+      {
+        "node": "alkali_metal::n",
+        "label": "alkali_metal [n] :: any of the monovalent metals of group I of the periodic table (lithiu...",
+        "score": 0.0020218599771219393,
+        "indeg": 9,
+        "outdeg": 19,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 16,
         "layer": 0
       },
       {
@@ -1635,7 +1635,7 @@
       {
         "node": "kainite::n",
         "label": "kainite [n] :: a white mineral consisting of magnesium sulphate and potassium chlori...",
-        "score": 0.0014364908459589421,
+        "score": 0.001436490845958942,
         "indeg": 8,
         "outdeg": 2,
         "in_kernel": true,
@@ -1647,7 +1647,7 @@
       {
         "node": "pitressin::n",
         "label": "pitressin [n] :: hormone secreted by the posterior pituitary gland (trade name Pitress...",
-        "score": 0.0013489162990254976,
+        "score": 0.0013489162990254979,
         "indeg": 16,
         "outdeg": 4,
         "in_kernel": true,
@@ -1659,7 +1659,7 @@
       {
         "node": "vasopressin::n",
         "label": "vasopressin [n] :: hormone secreted by the posterior pituitary gland (trade name Pitress...",
-        "score": 0.0013489162990254976,
+        "score": 0.0013489162990254979,
         "indeg": 16,
         "outdeg": 6,
         "in_kernel": true,
@@ -1683,43 +1683,43 @@
       {
         "node": "stops::n",
         "label": "stops [n] :: a gambling card game in which chips are placed on the ace and king an...",
-        "score": 0.0013060997078077198,
+        "score": 0.0013060997078077194,
         "indeg": 23,
         "outdeg": 44,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 26,
+        "fvs_score": 27,
         "layer": 0
       },
       {
         "node": "sodium::n",
         "label": "sodium [n] :: a silvery soft waxy metallic element of the alkali metal group; occur...",
-        "score": 0.001267367909394705,
+        "score": 0.0012673679093947057,
         "indeg": 17,
         "outdeg": 75,
         "in_kernel": true,
         "in_core": false,
         "in_seed": false,
-        "fvs_score": 24,
+        "fvs_score": 27,
         "layer": 20
       },
       {
         "node": "magnesium::n",
         "label": "magnesium [n] :: a light silver-white ductile bivalent metallic element; in pure form...",
-        "score": 0.001258815136452156,
+        "score": 0.0012588151364521557,
         "indeg": 18,
         "outdeg": 38,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 29,
+        "fvs_score": 31,
         "layer": 0
       },
       {
         "node": "coniferophytina::n",
         "label": "coniferophytina [n] :: cone-bearing gymnosperms dating from the Carboniferous period; most a...",
-        "score": 0.001247541943504267,
+        "score": 0.0012475419435042671,
         "indeg": 16,
         "outdeg": 4,
         "in_kernel": true,
@@ -1731,19 +1731,19 @@
       {
         "node": "liver::n",
         "label": "liver [n] :: large and complicated reddish-brown glandular organ located in the up...",
-        "score": 0.0012457583517131202,
+        "score": 0.0012457583517131205,
         "indeg": 22,
         "outdeg": 134,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 29,
+        "fvs_score": 34,
         "layer": 0
       },
       {
         "node": "feldspar::n",
         "label": "feldspar [n] :: any of a group of hard crystalline minerals that consist of aluminum...",
-        "score": 0.0012122228576723652,
+        "score": 0.0012122228576723654,
         "indeg": 8,
         "outdeg": 17,
         "in_kernel": true,
@@ -1791,7 +1791,7 @@
       {
         "node": "carnallite::n",
         "label": "carnallite [n] :: a white or reddish mineral consisting of hydrous chlorides of potassi...",
-        "score": 0.0010798710591122791,
+        "score": 0.001079871059112279,
         "indeg": 8,
         "outdeg": 8,
         "in_kernel": true,
@@ -1809,13 +1809,13 @@
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 20,
+        "fvs_score": 21,
         "layer": 0
       },
       {
         "node": "silicon::n",
         "label": "silicon [n] :: a tetravalent nonmetallic element; next to oxygen it is the most abun...",
-        "score": 0.0010690239309455636,
+        "score": 0.0010690239309455632,
         "indeg": 11,
         "outdeg": 15,
         "in_kernel": true,
@@ -1833,19 +1833,19 @@
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 17,
+        "fvs_score": 18,
         "layer": 0
       },
       {
         "node": "yeast::n",
         "label": "yeast [n] :: a commercial leavening agent containing yeast cells; used to raise th...",
-        "score": 0.0010616224345181117,
+        "score": 0.001061622434518112,
         "indeg": 10,
         "outdeg": 47,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 16,
+        "fvs_score": 18,
         "layer": 0
       },
       {
@@ -1861,21 +1861,9 @@
         "layer": 17
       },
       {
-        "node": "si_unit::n",
-        "label": "si_unit [n] :: a complete metric system of units of measurement for scientists; fund...",
-        "score": 0.0010252625266336315,
-        "indeg": 19,
-        "outdeg": 6,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 20,
-        "layer": 0
-      },
-      {
         "node": "si::n",
         "label": "si [n] :: a complete metric system of units of measurement for scientists; fund...",
-        "score": 0.0010252625266336315,
+        "score": 0.0010252625266336313,
         "indeg": 19,
         "outdeg": 2,
         "in_kernel": true,
@@ -1885,9 +1873,21 @@
         "layer": 46
       },
       {
+        "node": "si_unit::n",
+        "label": "si_unit [n] :: a complete metric system of units of measurement for scientists; fund...",
+        "score": 0.0010252625266336313,
+        "indeg": 19,
+        "outdeg": 6,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 21,
+        "layer": 0
+      },
+      {
         "node": "mucus::n",
         "label": "mucus [n] :: protective secretion of the mucous membranes; in the gut it lubricate...",
-        "score": 0.0010062011299935354,
+        "score": 0.001006201129993535,
         "indeg": 16,
         "outdeg": 34,
         "in_kernel": true,
@@ -1899,7 +1899,7 @@
       {
         "node": "exodus::n",
         "label": "exodus [n] :: the second book of the Old Testament: tells of the departure of the I...",
-        "score": 0.000958844698357548,
+        "score": 0.0009588446983575479,
         "indeg": 11,
         "outdeg": 11,
         "in_kernel": true,
@@ -1911,7 +1911,7 @@
       {
         "node": "hiroshima::n",
         "label": "hiroshima [n] :: a port city on the southwestern coast of Honshu in Japan; on August 6...",
-        "score": 0.0009153846821763811,
+        "score": 0.0009153846821763812,
         "indeg": 11,
         "outdeg": 3,
         "in_kernel": true,
@@ -1923,7 +1923,7 @@
       {
         "node": "blastula::n",
         "label": "blastula [n] :: early stage of an embryo produced by cleavage of an ovum; a liquid-fi...",
-        "score": 0.0009106461948829227,
+        "score": 0.0009106461948829228,
         "indeg": 15,
         "outdeg": 16,
         "in_kernel": true,
@@ -1935,7 +1935,7 @@
       {
         "node": "wolframite::n",
         "label": "wolframite [n] :: a mineral consisting of iron and manganese tungstate in crystalline f...",
-        "score": 0.0009044270337375948,
+        "score": 0.0009044270337375949,
         "indeg": 12,
         "outdeg": 4,
         "in_kernel": true,
@@ -1949,21 +1949,105 @@
       {
         "node": "act::n",
         "label": "act [n] :: a legal document codifying the result of deliberations of a committee...",
-        "score": 305,
+        "score": 383,
         "indeg": 5,
         "outdeg": 1441,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 305,
+        "fvs_score": 383,
+        "layer": 0
+      },
+      {
+        "node": "trade_name::n",
+        "label": "trade_name [n] :: a name given to a product or service",
+        "score": 261,
+        "indeg": 4,
+        "outdeg": 611,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": false,
+        "fvs_score": 261,
+        "layer": 1
+      },
+      {
+        "node": "small::n",
+        "label": "small [n] :: the slender part of the back",
+        "score": 259,
+        "indeg": 3,
+        "outdeg": 4878,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 259,
+        "layer": 0
+      },
+      {
+        "node": "various::a",
+        "label": "various [a] :: of many different kinds purposefully arranged but lacking any uniformity",
+        "score": 239,
+        "indeg": 6,
+        "outdeg": 1089,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 239,
         "layer": 0
       },
       {
         "node": "part::n",
         "label": "part [n] :: something determined in relation to something that includes it",
-        "score": 199,
+        "score": 231,
         "indeg": 2,
         "outdeg": 1352,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 231,
+        "layer": 0
+      },
+      {
+        "node": "large::n",
+        "label": "large [n] :: a garment size for a large person",
+        "score": 221,
+        "indeg": 3,
+        "outdeg": 3497,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 221,
+        "layer": 0
+      },
+      {
+        "node": "body::n",
+        "label": "body [n] :: the entire physical structure of an organism (an animal, plant, or hu...",
+        "score": 215,
+        "indeg": 7,
+        "outdeg": 1253,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 215,
+        "layer": 0
+      },
+      {
+        "node": "can::n",
+        "label": "can [n] :: airtight sealed metal container for food or drink or paint etc.",
+        "score": 212,
+        "indeg": 7,
+        "outdeg": 1788,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 212,
+        "layer": 0
+      },
+      {
+        "node": "plant::n",
+        "label": "plant [n] :: buildings for carrying on industrial labor",
+        "score": 199,
+        "indeg": 2,
+        "outdeg": 1502,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
@@ -1971,59 +2055,59 @@
         "layer": 0
       },
       {
-        "node": "body::n",
-        "label": "body [n] :: the entire physical structure of an organism (an animal, plant, or hu...",
-        "score": 176,
-        "indeg": 7,
-        "outdeg": 1253,
+        "node": "make::v",
+        "label": "make [v] :: engage in",
+        "score": 197,
+        "indeg": 1,
+        "outdeg": 1042,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 176,
-        "layer": 0
-      },
-      {
-        "node": "can::n",
-        "label": "can [n] :: airtight sealed metal container for food or drink or paint etc.",
-        "score": 171,
-        "indeg": 7,
-        "outdeg": 1788,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 171,
-        "layer": 0
-      },
-      {
-        "node": "small::n",
-        "label": "small [n] :: the slender part of the back",
-        "score": 162,
-        "indeg": 3,
-        "outdeg": 4878,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 162,
+        "fvs_score": 197,
         "layer": 0
       },
       {
         "node": "form::n",
         "label": "form [n] :: the phonological or orthographic sound or appearance of a word that c...",
-        "score": 152,
+        "score": 192,
         "indeg": 8,
         "outdeg": 1478,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 152,
+        "fvs_score": 192,
         "layer": 0
       },
       {
         "node": "water::n",
         "label": "water [n] :: binary compound that occurs at room temperature as a clear colorless...",
-        "score": 144,
+        "score": 184,
         "indeg": 13,
         "outdeg": 1082,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 184,
+        "layer": 0
+      },
+      {
+        "node": "substance::n",
+        "label": "substance [n] :: the real physical matter of which a person or thing consists",
+        "score": 149,
+        "indeg": 4,
+        "outdeg": 573,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 149,
+        "layer": 0
+      },
+      {
+        "node": "several::a",
+        "label": "several [a] :: (used with count nouns) of an indefinite number more than 2 or 3 but...",
+        "score": 144,
+        "indeg": 3,
+        "outdeg": 1065,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
@@ -2031,11 +2115,47 @@
         "layer": 0
       },
       {
-        "node": "large::n",
-        "label": "large [n] :: a garment size for a large person",
-        "score": 132,
+        "node": "group::n",
+        "label": "group [n] :: any number of entities (members) considered as a unit",
+        "score": 144,
         "indeg": 3,
-        "outdeg": 3497,
+        "outdeg": 964,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 144,
+        "layer": 0
+      },
+      {
+        "node": "white::n",
+        "label": "white [n] :: a person of European descent with a light-skinned or pale complexion",
+        "score": 135,
+        "indeg": 6,
+        "outdeg": 2073,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 135,
+        "layer": 0
+      },
+      {
+        "node": "known::a",
+        "label": "known [a] :: apprehended with certainty",
+        "score": 134,
+        "indeg": 2,
+        "outdeg": 653,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 134,
+        "layer": 0
+      },
+      {
+        "node": "time::n",
+        "label": "time [n] :: an instance or single occasion for some event",
+        "score": 132,
+        "indeg": 4,
+        "outdeg": 848,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
@@ -2043,11 +2163,47 @@
         "layer": 0
       },
       {
-        "node": "various::a",
-        "label": "various [a] :: of many different kinds purposefully arranged but lacking any uniformity",
-        "score": 122,
+        "node": "many::a",
+        "label": "many [a] :: a quantifier that can be used with count nouns and is often preceded...",
+        "score": 132,
         "indeg": 6,
-        "outdeg": 1089,
+        "outdeg": 983,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 132,
+        "layer": 0
+      },
+      {
+        "node": "treat::n",
+        "label": "treat [n] :: something considered choice to eat",
+        "score": 130,
+        "indeg": 3,
+        "outdeg": 463,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": false,
+        "fvs_score": 130,
+        "layer": 6
+      },
+      {
+        "node": "blood::n",
+        "label": "blood [n] :: the fluid (red in vertebrates) that is pumped through the body by the...",
+        "score": 129,
+        "indeg": 7,
+        "outdeg": 783,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 129,
+        "layer": 0
+      },
+      {
+        "node": "degree::n",
+        "label": "degree [n] :: a position on a scale of intensity or amount or quality",
+        "score": 122,
+        "indeg": 5,
+        "outdeg": 427,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
@@ -2055,47 +2211,59 @@
         "layer": 0
       },
       {
-        "node": "substance::n",
-        "label": "substance [n] :: the real physical matter of which a person or thing consists",
-        "score": 120,
+        "node": "capable::a",
+        "label": "capable [a] :: (usually followed by \u2018of\u2019) having capacity or ability",
+        "score": 117,
+        "indeg": 2,
+        "outdeg": 703,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 117,
+        "layer": 0
+      },
+      {
+        "node": "marked::a",
+        "label": "marked [a] :: strongly marked; easily noticeable",
+        "score": 115,
         "indeg": 4,
-        "outdeg": 573,
+        "outdeg": 631,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 120,
+        "fvs_score": 115,
         "layer": 0
       },
       {
-        "node": "group::n",
-        "label": "group [n] :: any number of entities (members) considered as a unit",
-        "score": 118,
-        "indeg": 3,
-        "outdeg": 964,
+        "node": "food::n",
+        "label": "food [n] :: any substance that can be metabolized by an animal to give energy and...",
+        "score": 112,
+        "indeg": 7,
+        "outdeg": 778,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 118,
+        "fvs_score": 112,
         "layer": 0
       },
       {
-        "node": "degree::n",
-        "label": "degree [n] :: a position on a scale of intensity or amount or quality",
-        "score": 114,
-        "indeg": 5,
-        "outdeg": 427,
+        "node": "more::n",
+        "label": "more [n] :: English statesman who opposed Henry VIII's divorce from Catherine of...",
+        "score": 109,
+        "indeg": 9,
+        "outdeg": 691,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 114,
+        "fvs_score": 109,
         "layer": 0
       },
       {
-        "node": "time::n",
-        "label": "time [n] :: an instance or single occasion for some event",
+        "node": "certain::a",
+        "label": "certain [a] :: definite but not specified or identified",
         "score": 105,
-        "indeg": 4,
-        "outdeg": 848,
+        "indeg": 3,
+        "outdeg": 522,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
@@ -2103,11 +2271,23 @@
         "layer": 0
       },
       {
-        "node": "capable::a",
-        "label": "capable [a] :: (usually followed by \u2018of\u2019) having capacity or ability",
+        "node": "cause::v",
+        "label": "cause [v] :: give rise to; cause to happen or occur, not always intentionally",
+        "score": 104,
+        "indeg": 6,
+        "outdeg": 456,
+        "in_kernel": true,
+        "in_core": false,
+        "in_seed": true,
+        "fvs_score": 104,
+        "layer": 0
+      },
+      {
+        "node": "quality::n",
+        "label": "quality [n] :: an essential and distinguishing attribute of something or someone",
         "score": 101,
         "indeg": 2,
-        "outdeg": 703,
+        "outdeg": 1028,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
@@ -2115,196 +2295,16 @@
         "layer": 0
       },
       {
-        "node": "plant::n",
-        "label": "plant [n] :: buildings for carrying on industrial labor",
-        "score": 97,
-        "indeg": 2,
-        "outdeg": 1502,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 97,
-        "layer": 0
-      },
-      {
-        "node": "many::a",
-        "label": "many [a] :: a quantifier that can be used with count nouns and is often preceded...",
-        "score": 95,
+        "node": "yellow::n",
+        "label": "yellow [n] :: yellow color or pigment; the chromatic color resembling the hue of su...",
+        "score": 98,
         "indeg": 6,
-        "outdeg": 983,
+        "outdeg": 1445,
         "in_kernel": true,
         "in_core": false,
         "in_seed": true,
-        "fvs_score": 95,
+        "fvs_score": 98,
         "layer": 0
-      },
-      {
-        "node": "several::a",
-        "label": "several [a] :: (used with count nouns) of an indefinite number more than 2 or 3 but...",
-        "score": 93,
-        "indeg": 3,
-        "outdeg": 1065,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 93,
-        "layer": 0
-      },
-      {
-        "node": "quality::n",
-        "label": "quality [n] :: an essential and distinguishing attribute of something or someone",
-        "score": 93,
-        "indeg": 2,
-        "outdeg": 1028,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 93,
-        "layer": 0
-      },
-      {
-        "node": "more::n",
-        "label": "more [n] :: English statesman who opposed Henry VIII's divorce from Catherine of...",
-        "score": 91,
-        "indeg": 9,
-        "outdeg": 691,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 91,
-        "layer": 0
-      },
-      {
-        "node": "marked::a",
-        "label": "marked [a] :: strongly marked; easily noticeable",
-        "score": 91,
-        "indeg": 4,
-        "outdeg": 631,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 91,
-        "layer": 0
-      },
-      {
-        "node": "things::n",
-        "label": "things [n] :: any movable possession (especially articles of clothing)",
-        "score": 90,
-        "indeg": 3,
-        "outdeg": 443,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 90,
-        "layer": 0
-      },
-      {
-        "node": "certain::a",
-        "label": "certain [a] :: definite but not specified or identified",
-        "score": 84,
-        "indeg": 3,
-        "outdeg": 522,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 84,
-        "layer": 0
-      },
-      {
-        "node": "feeling::n",
-        "label": "feeling [n] :: the experiencing of affective and emotional states",
-        "score": 84,
-        "indeg": 2,
-        "outdeg": 423,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 84,
-        "layer": 0
-      },
-      {
-        "node": "make::v",
-        "label": "make [v] :: engage in",
-        "score": 82,
-        "indeg": 1,
-        "outdeg": 1042,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 82,
-        "layer": 0
-      },
-      {
-        "node": "region::n",
-        "label": "region [n] :: the extended spatial location of something",
-        "score": 80,
-        "indeg": 3,
-        "outdeg": 611,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 80,
-        "layer": 0
-      },
-      {
-        "node": "food::n",
-        "label": "food [n] :: any substance that can be metabolized by an animal to give energy and...",
-        "score": 80,
-        "indeg": 7,
-        "outdeg": 778,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 80,
-        "layer": 0
-      },
-      {
-        "node": "extent::n",
-        "label": "extent [n] :: the point or degree to which something extends",
-        "score": 80,
-        "indeg": 2,
-        "outdeg": 210,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 80,
-        "layer": 0
-      },
-      {
-        "node": "white::n",
-        "label": "white [n] :: a person of European descent with a light-skinned or pale complexion",
-        "score": 80,
-        "indeg": 6,
-        "outdeg": 2073,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 80,
-        "layer": 0
-      },
-      {
-        "node": "activity::n",
-        "label": "activity [n] :: any specific behavior",
-        "score": 78,
-        "indeg": 2,
-        "outdeg": 356,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": true,
-        "fvs_score": 78,
-        "layer": 0
-      },
-      {
-        "node": "source::n",
-        "label": "source [n] :: the place where something begins, where it springs into being",
-        "score": 77,
-        "indeg": 1,
-        "outdeg": 576,
-        "in_kernel": true,
-        "in_core": false,
-        "in_seed": false,
-        "fvs_score": 77,
-        "layer": 1
       }
     ]
   },
@@ -2329,18 +2329,18 @@
           "score": 0.129331793710034
         },
         {
-          "node": "tenth::a",
-          "label": "tenth [a] :: coming next after the ninth and just before the eleventh in position",
-          "score": 0.11200461886989797
-        },
-        {
           "node": "sixth::a",
           "label": "sixth [a] :: coming next after the fifth and just before the seventh in position",
           "score": 0.11200461886989797
         },
         {
-          "node": "fifth::a",
-          "label": "fifth [a] :: coming next after the fourth and just before the sixth in position",
+          "node": "tenth::a",
+          "label": "tenth [a] :: coming next after the ninth and just before the eleventh in position",
+          "score": 0.11200461886989797
+        },
+        {
+          "node": "eleventh::a",
+          "label": "eleventh [a] :: coming next after the tenth and just before the twelfth in position",
           "score": 0.09467744402976182
         }
       ]
@@ -2355,11 +2355,6 @@
           "score": 0.2357022603955158
         },
         {
-          "node": "gasteromycetes::n",
-          "label": "gasteromycetes [n] :: fungi in which the hymenium is enclosed until after spores have matur...",
-          "score": 0.09763107293781752
-        },
-        {
           "node": "basidium::n",
           "label": "basidium [n] :: a small club-shaped structure typically bearing four basidiospores at...",
           "score": 0.09763107293781752
@@ -2370,50 +2365,19 @@
           "score": 0.09763107293781752
         },
         {
+          "node": "gasteromycetes::n",
+          "label": "gasteromycetes [n] :: fungi in which the hymenium is enclosed until after spores have matur...",
+          "score": 0.09763107293781752
+        },
+        {
           "node": "stinkhorn::n",
           "label": "stinkhorn [n] :: any of various ill-smelling brown-capped fungi of the order Phallales",
           "score": 0.09763107293781749
         },
         {
-          "node": "basidiomycetes::n",
-          "label": "basidiomycetes [n] :: large class of higher fungi coextensive with subdivision Basidiomycota",
+          "node": "phallales::n",
+          "label": "phallales [n] :: order of fungi comprising the stinkhorns and related forms whose matu...",
           "score": 0.09763107293781749
-        }
-      ]
-    },
-    {
-      "size": 6,
-      "lambda": 2.0431409156174665,
-      "members": [
-        {
-          "node": "niobite::n",
-          "label": "niobite [n] :: a black mineral that is an ore of niobium and tantalum",
-          "score": 0.2619137799307184
-        },
-        {
-          "node": "tantalum::n",
-          "label": "tantalum [n] :: a hard grey lustrous metallic element that is highly resistant to cor...",
-          "score": 0.24610037554626973
-        },
-        {
-          "node": "niobium::n",
-          "label": "niobium [n] :: a soft grey ductile metallic element used in alloys; occurs in niobit...",
-          "score": 0.16857440124588444
-        },
-        {
-          "node": "fergusonite::n",
-          "label": "fergusonite [n] :: a dark mineral consisting of oxides of yttrium and erbium and tantalu...",
-          "score": 0.12045198334833576
-        },
-        {
-          "node": "tantalite::n",
-          "label": "tantalite [n] :: a mineral consisting of tantalum oxide of iron and manganese that occ...",
-          "score": 0.12045198334833576
-        },
-        {
-          "node": "columbium::n",
-          "label": "columbium [n] :: a former name for niobium",
-          "score": 0.0825074765804558
         }
       ]
     },
@@ -2427,19 +2391,14 @@
           "score": 0.22074408460575132
         },
         {
-          "node": "cucumber::n",
-          "label": "cucumber [n] :: a melon vine of the genus Cucumis; cultivated from earliest times for...",
-          "score": 0.18082748660383857
-        },
-        {
           "node": "squash::n",
           "label": "squash [n] :: any of numerous annual trailing plants of the genus Cucurbita grown f...",
           "score": 0.18082748660383857
         },
         {
-          "node": "cucurbita::n",
-          "label": "cucurbita [n] :: type genus of the Cucurbitaceae",
-          "score": 0.1481289066923793
+          "node": "cucumber::n",
+          "label": "cucumber [n] :: a melon vine of the genus Cucumis; cultivated from earliest times for...",
+          "score": 0.18082748660383857
         },
         {
           "node": "melon_vine::n",
@@ -2447,9 +2406,50 @@
           "score": 0.1481289066923793
         },
         {
+          "node": "cucurbita::n",
+          "label": "cucurbita [n] :: type genus of the Cucurbitaceae",
+          "score": 0.1481289066923793
+        },
+        {
           "node": "cucurbitaceous::a",
           "label": "cucurbitaceous [a] :: of or relating to plants of the family Cucurbitaceae",
           "score": 0.121343128801813
+        }
+      ]
+    },
+    {
+      "size": 6,
+      "lambda": 2.043140915617467,
+      "members": [
+        {
+          "node": "niobite::n",
+          "label": "niobite [n] :: a black mineral that is an ore of niobium and tantalum",
+          "score": 0.26191377993071846
+        },
+        {
+          "node": "tantalum::n",
+          "label": "tantalum [n] :: a hard grey lustrous metallic element that is highly resistant to cor...",
+          "score": 0.24610037554626973
+        },
+        {
+          "node": "niobium::n",
+          "label": "niobium [n] :: a soft grey ductile metallic element used in alloys; occurs in niobit...",
+          "score": 0.16857440124588446
+        },
+        {
+          "node": "tantalite::n",
+          "label": "tantalite [n] :: a mineral consisting of tantalum oxide of iron and manganese that occ...",
+          "score": 0.12045198334833579
+        },
+        {
+          "node": "fergusonite::n",
+          "label": "fergusonite [n] :: a dark mineral consisting of oxides of yttrium and erbium and tantalu...",
+          "score": 0.12045198334833579
+        },
+        {
+          "node": "columbium::n",
+          "label": "columbium [n] :: a former name for niobium",
+          "score": 0.08250747658045582
         }
       ]
     },
@@ -2463,13 +2463,13 @@
           "score": 0.2687498678717852
         },
         {
-          "node": "sphalerite::n",
-          "label": "sphalerite [n] :: an ore that is the chief source of zinc; consists largely of zinc sul...",
+          "node": "wurtzite::n",
+          "label": "wurtzite [n] :: a brownish-black mineral consisting of zinc sulfide",
           "score": 0.19806226419516318
         },
         {
-          "node": "wurtzite::n",
-          "label": "wurtzite [n] :: a brownish-black mineral consisting of zinc sulfide",
+          "node": "sphalerite::n",
+          "label": "sphalerite [n] :: an ore that is the chief source of zinc; consists largely of zinc sul...",
           "score": 0.19806226419516318
         },
         {
@@ -2491,7 +2491,7 @@
     }
   ],
   "kernel_scc_size_histogram": {
-    "1": 3148,
+    "1": 8446,
     "2": 570,
     "3": 87,
     "4": 23,
