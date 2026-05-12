@@ -53,7 +53,7 @@ wheels = [
 [[package]]
 name = "formal-argumentation"
 version = "0.2.0"
-source = { git = "https://github.com/ctoth/argumentation?rev=8d28624#8d286242526f199f0ed336c8938faa741a225e33" }
+source = { git = "https://github.com/ctoth/argumentation?rev=4a1c31cc45a2a4a67b45a72941812e1098ba7018#4a1c31cc45a2a4a67b45a72941812e1098ba7018" }
 
 [[package]]
 name = "h11"
@@ -140,7 +140,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "formal-argumentation", git = "https://github.com/ctoth/argumentation?rev=8d28624" },
+    { name = "formal-argumentation", git = "https://github.com/ctoth/argumentation?rev=4a1c31cc45a2a4a67b45a72941812e1098ba7018" },
     { name = "openpyxl", specifier = ">=3.1.5" },
     { name = "pandas", specifier = ">=3.0.3" },
     { name = "scikit-learn", specifier = ">=1.8.0" },

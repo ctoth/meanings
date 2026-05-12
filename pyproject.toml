@@ -21,7 +21,7 @@ build-backend = "hatchling.build"
 package = true
 
 [tool.uv.sources]
-formal-argumentation = { git = "https://github.com/ctoth/argumentation", rev = "8d28624" }
+formal-argumentation = { git = "https://github.com/ctoth/argumentation", rev = "4a1c31cc45a2a4a67b45a72941812e1098ba7018" }
 
 [dependency-groups]
 dev = [
