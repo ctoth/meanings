@@ -56,6 +56,11 @@ version = "0.2.0"
 source = { git = "https://github.com/ctoth/argumentation?rev=4a1c31cc45a2a4a67b45a72941812e1098ba7018#4a1c31cc45a2a4a67b45a72941812e1098ba7018" }
 
 [[package]]
+name = "gunray"
+version = "0.1.0"
+source = { git = "https://github.com/ctoth/gunray?rev=df4580e1f4c3671159e057ade6d1411512196808#df4580e1f4c3671159e057ade6d1411512196808" }
+
+[[package]]
 name = "h11"
 version = "0.16.0"
 source = { registry = "https://pypi.org/simple" }
@@ -125,6 +130,7 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "formal-argumentation" },
+    { name = "gunray" },
     { name = "openpyxl" },
     { name = "pandas" },
     { name = "scikit-learn" },
@@ -141,6 +147,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "formal-argumentation", git = "https://github.com/ctoth/argumentation?rev=4a1c31cc45a2a4a67b45a72941812e1098ba7018" },
+    { name = "gunray", git = "https://github.com/ctoth/gunray?rev=df4580e1f4c3671159e057ade6d1411512196808" },
     { name = "openpyxl", specifier = ">=3.1.5" },
     { name = "pandas", specifier = ">=3.0.3" },
     { name = "scikit-learn", specifier = ">=1.8.0" },

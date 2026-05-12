@@ -5,6 +5,7 @@ description = "Lexical graph and dictionary kernel tooling."
 requires-python = ">=3.12"
 dependencies = [
   "formal-argumentation",
+  "gunray",
   "openpyxl>=3.1.5",
   "pandas>=3.0.3",
   "scikit-learn>=1.8.0",
@@ -22,6 +23,7 @@ package = true
 
 [tool.uv.sources]
 formal-argumentation = { git = "https://github.com/ctoth/argumentation", rev = "4a1c31cc45a2a4a67b45a72941812e1098ba7018" }
+gunray = { git = "https://github.com/ctoth/gunray", rev = "df4580e1f4c3671159e057ade6d1411512196808" }
 
 [dependency-groups]
 dev = [
