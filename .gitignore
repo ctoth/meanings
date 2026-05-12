@@ -8,3 +8,4 @@ unused-papers/
 .claude/
 *.log
 scratch/
+data/oewn-upgoer-sense-vocabulary.json
