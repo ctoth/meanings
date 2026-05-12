@@ -1,0 +1,14 @@
+{
+  "title": "Structure-based control of complex networks with nonlinear dynamics",
+  "authors": [
+    "Jorge G. T. Zañudo",
+    "Gang Yang",
+    "Réka Albert"
+  ],
+  "year": "2017",
+  "arxiv_id": "1605.08415",
+  "doi": "10.1073/pnas.1617387114",
+  "abstract": "What can we learn about controlling a system solely from its underlying network structure? Here we adapt a recently developed framework for control of networks governed by a broad class of nonlinear dynamics that includes the major dynamic models of biological, technological, and social processes. This feedback-based framework provides realizable node overrides that steer a system towards any of its natural long term dynamic behaviors, regardless of the specific functional forms and system parameters. We use this framework on several real networks, identify the topological characteristics that underlie the predicted node overrides, and compare its predictions to those of structural controllability in control theory. Finally, we demonstrate this framework's applicability in dynamic models of gene regulatory networks and identify nodes whose override is necessary for control in the general case, but not in specific model instances.",
+  "url": "http://arxiv.org/abs/1605.08415v3",
+  "pdf_url": "https://arxiv.org/pdf/1605.08415v3"
+}

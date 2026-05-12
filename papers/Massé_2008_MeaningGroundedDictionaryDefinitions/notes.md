@@ -146,6 +146,7 @@ This is the first paper in the collection that gives the exact graph formalism y
 ### Conceptual Links (not citation-based)
 - [[Picard_2013_HiddenStructureFunctionLexicon]] — sharpens this paper's kernel/minimal-grounding vocabulary into a differentiated functional anatomy.
 - [[Vincent-Lamarre_2014_LatentStructureDictionaries]] — broadens the same graph framework and gives the mature Kernel/Core/Satellites/MinSet picture.
+- [Structure-based control of complex networks with nonlinear dynamics](../Zañudo_2016_Structure-basedControlComplexNetworks/notes.md) — Zañudo, Yang & Albert show empirically that real networks (gene-regulatory, food webs) have a *tiny* feedback vertex set (1–18% of nodes) versus a huge maximum-matching driver set (75–96%); since this paper proves grounding sets ≡ FVS for definition digraphs, that is the cross-domain calibration for "a dictionary's grounding kernel is small," and it ties grounding to dynamics (the FVS controls the network's attractors for *any* nonlinearity).
 
 ### Cited By (in Collection)
 - [[Picard_2013_HiddenStructureFunctionLexicon]] — cites this as the earlier graph-theoretic grounding formalization.

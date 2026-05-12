@@ -1,0 +1,20 @@
+{
+  "title": "Dynamics and Control at Feedback Vertex Sets. I: Informative and Determining Nodes in Regulatory Networks",
+  "authors": [
+    "Bernold Fiedler",
+    "Atsushi Mochizuki",
+    "Gen Kurosawa",
+    "Daisuke Saito"
+  ],
+  "year": "2013",
+  "arxiv_id": null,
+  "doi": "10.1007/s10884-013-9312-7",
+  "abstract": "We consider systems of differential equations which model complex regulatory networks by a graph structure of dependencies. We show that the concepts of informative nodes (Mochizuki and Saito, J Theor Biol 266:323-335, 2010) and determining nodes (Foias and Temam, Math Comput 43:117-133, 1984) coincide with the notion of feedback vertex sets from graph theory. As a result we can determine the long-time dynamics of the entire network from observations on only a feedback vertex set. We also indicate how open loop control at a feedback vertex set, only, forces the remaining network to stably follow prescribed stable or unstable trajectories. We present three examples of biological networks which motivated this work: a specific gene regulatory network of ascidian cell differentiation (Imai et al., Science 312:1183-1187, 2006), a signal transduction network involving the epidermal growth factor in mammalian cells (Oda et al., Mol Syst Biol 1:1-17, 2005), and a mammalian gene regulatory network of circadian rhythms (Mirsky et al., Proc Natl Acad Sci USA 106:11107-11112, 2009). In each example the required observation set is much smaller than the entire network. For further details on biological aspects see the companion paper (Mochizuki et al., J Theor Biol, 2013, in press). The mathematical scope of our approach is not limited to biology. Therefore we also include many further examples to illustrate and discuss the broader mathematical aspects.",
+  "url": "https://doi.org/10.1007/s10884-013-9312-7",
+  "pdf_url": null,
+  "venue": "Journal of Dynamics and Differential Equations",
+  "venue_type": "journal",
+  "volume": "25",
+  "pages": "563-604",
+  "bibtex": "@Article{Fiedler2013DynamicsAC,\n author = {Bernold Fiedler and Atsushi Mochizuki and Gen Kurosawa and Daisuke Saito},\n journal = {Journal of Dynamics and Differential Equations},\n pages = {563--604},\n title = {Dynamics and Control at Feedback Vertex Sets. I: Informative and Determining Nodes in Regulatory Networks},\n volume = {25},\n doi = {10.1007/s10884-013-9312-7},\n year = {2013}\n}\n"
+}

@@ -1,0 +1,13 @@
+# Abstract
+
+## Original Text (Verbatim)
+
+What can we learn about controlling a system solely from its underlying network structure? Here we adapt a recently developed framework for control of networks governed by a broad class of nonlinear dynamics that includes the major dynamic models of biological, technological, and social processes. This feedback-based framework provides realizable node overrides that steer a system towards any of its natural long term dynamic behaviors, regardless of the specific functional forms and system parameters. We use this framework on several real networks, identify the topological characteristics that underlie the predicted node overrides, and compare its predictions to those of structural controllability in control theory. Finally, we demonstrate this framework's applicability in dynamic models of gene regulatory networks and identify nodes whose override is necessary for control in the general case, but not in specific model instances.
+
+**Significance:** Many biological, technological and social systems can be encoded as networks over which nonlinear dynamical processes such as cell signaling, information transmission, or opinion spreading take place. Despite many advances in network science we do not know to what extent the network architecture shapes our ability to control these nonlinear systems. Here we extend a recently developed control framework that addresses this question and apply it to real networks of diverse types. Our results highlight the crucial role of a network's feedback structure in determining robust control strategies, provide a dynamic-detail-independent benchmark for other control methods, and open up a new research direction in the control of complex networks with nonlinear dynamics.
+
+---
+
+## Our Interpretation
+
+Controlling a nonlinear-dynamic network to any of its natural attractors needs only override of its feedback vertex set (a node set hitting every directed cycle) plus its source nodes — a result independent of the specific equations. Empirically this control set is tiny for biological/gene-regulatory networks (1-18% of nodes) but the structural-controllability driver set for the same networks is huge (75-96%), with the relationship reversed for social/intra-organizational networks; the discrepancy is explained by how each method treats cycles. Relevant to `meanings` because the OEWN definition digraph sits in the biological-network regime (~1.5% FVS-seed vs ~74% matching drivers), so this paper is the cross-domain calibration for treating the lexical grounding set as a feedback vertex set.

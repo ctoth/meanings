@@ -1,0 +1,4 @@
+---
+tags: [network-control, feedback-vertex-set, structural-controllability, nonlinear-dynamics, graph-theory]
+---
+Adapts Fiedler–Mochizuki feedback vertex set control to networks with source nodes and proves that overriding the feedback vertex set plus source nodes drives any nonlinearly-dynamic network to any of its attractors regardless of functional form. Empirically the feedback-vertex-set control set is 1–18% of nodes for biological/gene-regulatory networks but the structural-controllability (maximum-matching) driver set is 75–96% for the same networks — the relationship reversed for social and intra-organizational networks — with cycle structure (SCC size, short cycles) explaining the gap. Directly relevant to the `meanings` OEWN definition-digraph work, whose ~1.5% FVS-seed vs ~74% matching-driver split places it squarely in this paper's biological-network regime.

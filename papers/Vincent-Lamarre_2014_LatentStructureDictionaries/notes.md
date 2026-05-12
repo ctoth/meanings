@@ -168,6 +168,7 @@ This is the central operational paper for building an English kernel. It gives t
 - [[Harnad_1990_SymbolGroundingProblem]] — this paper turns Harnad's grounding argument into a measurable graph problem but preserves the claim that graph closure alone is not meaning.
 - [[Massé_2008_MeaningGroundedDictionaryDefinitions]] — this paper scales and refines the earlier graph formalization from toy/prototype framing to multiple large dictionaries.
 - [[Picard_2013_HiddenStructureFunctionLexicon]] — this paper largely subsumes the earlier hidden-structure results and extends them with distance hierarchies and larger dictionary comparisons.
+- [Structure-based control of complex networks with nonlinear dynamics](../Zañudo_2016_Structure-basedControlComplexNetworks/notes.md) — MinSets here are feedback vertex sets; Zañudo–Yang–Albert show real networks split into a "biological regime" (FVS ≈ 1–18% of nodes ≪ maximum-matching driver set ≈ 75–96%) and a "social regime" with the ratio reversed. The OEWN definition graph's ~1.5%-FVS-seed vs ~74%-matching-driver numbers put it squarely in the biological regime, and the paper's FC theory makes the MinSet a *dynamical* control set, not just a structural cut.
 
 ### Cited By (in Collection)
 - (none found)
