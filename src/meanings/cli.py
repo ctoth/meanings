@@ -33,7 +33,7 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--seed-method",
-        choices=("bounded-scc", "exact-small-greedy"),
+        choices=("bounded-scc", "exact-small-greedy", "exact-cutting"),
         default="bounded-scc",
         help="Candidate seed extraction method",
     )
