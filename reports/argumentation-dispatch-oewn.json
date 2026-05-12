@@ -1,0 +1,316 @@
+{
+  "lexicon_id": "oewn:2024",
+  "graph_type": "paper_wordnet",
+  "node_count": 160010,
+  "edge_count": 677823,
+  "kernel": {
+    "node_count": 18151,
+    "scc_count": 9139,
+    "seed_node_count": 3620
+  },
+  "grounded": {
+    "full_graph_size": 5043,
+    "full_graph_seconds": 4.332320200002869,
+    "kernel_size": 468,
+    "kernel_seconds": 0.43742989999009296,
+    "method": "argumentation.dung.grounded_extension (linear worklist; scales to 160k nodes)"
+  },
+  "stable_dispatch": {
+    "stable_exists_kernel": false,
+    "dispatch_seconds": 13.404745899999398,
+    "scc_count": 9139,
+    "nontrivial_scc_count": 693,
+    "nontrivial_sat_count": 630,
+    "nontrivial_unsat_count": 63,
+    "self_loop_scc_count": 2804,
+    "trivial_singleton_scc_count": 5642,
+    "isomorphism_classes_solved": 41,
+    "cache_hits": 9098,
+    "iso_class_size_histogram_top": [
+      503,
+      35,
+      35,
+      32,
+      13,
+      11,
+      10,
+      9,
+      4,
+      4,
+      3,
+      3,
+      3,
+      2,
+      2,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "iso_class_count_by_multiplicity": {
+      "1": 24,
+      "2": 2,
+      "3": 3,
+      "4": 2,
+      "9": 1,
+      "10": 1,
+      "11": 1,
+      "13": 1,
+      "32": 1,
+      "35": 2,
+      "503": 1
+    },
+    "giant_scc_size": 8138,
+    "giant_scc_unsat": true,
+    "giant_scc_seconds": 12.959969200004707,
+    "giant_scc_method": "z3",
+    "solved_seconds_total": 12.97394450000138,
+    "slowest_sccs": [
+      {
+        "index": 627,
+        "size": 8138,
+        "edges": 29842,
+        "seconds": 12.959969200004707,
+        "method": "z3",
+        "stable_exists": false
+      }
+    ],
+    "structural_minset_count_independent_choice": 0,
+    "exact_stable_count": 0
+  },
+  "bridge_agreement": {
+    "whole_kernel_unsat": true,
+    "giant_scc_size": 8138,
+    "giant_scc_unsat": true,
+    "giant_scc_seconds": 12.959969200004707,
+    "nontrivial_scc_count": 693,
+    "nontrivial_sat_count": 630,
+    "nontrivial_unsat_count": 63,
+    "self_loop_scc_count": 2804,
+    "trivial_singleton_scc_count": 5642,
+    "matches_bridge_nontrivial_count": true,
+    "matches_bridge_sat_count": true,
+    "matches_bridge_unsat_count": true,
+    "matches_bridge_giant_size": true
+  },
+  "minset_structure": {
+    "stable_exists": false,
+    "independent_choice_count": 0,
+    "exact_count": 0,
+    "total_count": 0,
+    "n_sccs": 9139,
+    "n_nontrivial_sccs": 3497,
+    "n_unsat_sccs": 2867,
+    "isomorphism_classes": 41,
+    "cache_hits": 9098,
+    "scc_choices_top": [
+      [
+        6753,
+        11,
+        21
+      ],
+      [
+        8396,
+        6,
+        3
+      ],
+      [
+        9096,
+        6,
+        4
+      ],
+      [
+        4269,
+        5,
+        3
+      ],
+      [
+        7719,
+        5,
+        4
+      ],
+      [
+        7876,
+        5,
+        2
+      ],
+      [
+        8338,
+        5,
+        0
+      ],
+      [
+        8505,
+        5,
+        0
+      ],
+      [
+        8822,
+        5,
+        2
+      ],
+      [
+        738,
+        4,
+        0
+      ],
+      [
+        5259,
+        4,
+        2
+      ],
+      [
+        6223,
+        4,
+        2
+      ],
+      [
+        6648,
+        4,
+        2
+      ],
+      [
+        6731,
+        4,
+        2
+      ],
+      [
+        6882,
+        4,
+        2
+      ],
+      [
+        7443,
+        4,
+        2
+      ],
+      [
+        7579,
+        4,
+        2
+      ],
+      [
+        7783,
+        4,
+        0
+      ],
+      [
+        7905,
+        4,
+        3
+      ],
+      [
+        8256,
+        4,
+        3
+      ]
+    ],
+    "seconds": 12.139582600007998
+  },
+  "acceptance_probes": [
+    {
+      "word": "money::n",
+      "in_graph": true,
+      "in_kernel": true,
+      "in_grounded_full": false,
+      "credulous_stable_kernel": false,
+      "credulous_grounded_kernel": false
+    },
+    {
+      "word": "thing::n",
+      "in_graph": true,
+      "in_kernel": true,
+      "in_grounded_full": false,
+      "credulous_stable_kernel": false,
+      "credulous_grounded_kernel": false
+    },
+    {
+      "word": "be::v",
+      "in_graph": true,
+      "in_kernel": false,
+      "in_grounded_full": false
+    },
+    {
+      "word": "have::v",
+      "in_graph": true,
+      "in_kernel": false,
+      "in_grounded_full": false
+    },
+    {
+      "word": "good::a",
+      "in_graph": true,
+      "in_kernel": true,
+      "in_grounded_full": false,
+      "credulous_stable_kernel": false,
+      "credulous_grounded_kernel": false
+    },
+    {
+      "word": "set::n",
+      "in_graph": true,
+      "in_kernel": true,
+      "in_grounded_full": false,
+      "credulous_stable_kernel": false,
+      "credulous_grounded_kernel": false
+    },
+    {
+      "word": "make::v",
+      "in_graph": true,
+      "in_kernel": true,
+      "in_grounded_full": false,
+      "credulous_stable_kernel": false,
+      "credulous_grounded_kernel": false
+    },
+    {
+      "word": "one::n",
+      "in_graph": true,
+      "in_kernel": false,
+      "in_grounded_full": false
+    },
+    {
+      "word": "person::n",
+      "in_graph": true,
+      "in_kernel": false,
+      "in_grounded_full": false
+    },
+    {
+      "word": "way::n",
+      "in_graph": true,
+      "in_kernel": false,
+      "in_grounded_full": false
+    },
+    {
+      "word": "time::n",
+      "in_graph": true,
+      "in_kernel": true,
+      "in_grounded_full": false,
+      "credulous_stable_kernel": false,
+      "credulous_grounded_kernel": false
+    },
+    {
+      "word": "give::v",
+      "in_graph": true,
+      "in_kernel": true,
+      "in_grounded_full": false,
+      "credulous_stable_kernel": false,
+      "credulous_grounded_kernel": false
+    },
+    {
+      "word": "color::n",
+      "in_graph": true,
+      "in_kernel": true,
+      "in_grounded_full": false,
+      "credulous_stable_kernel": false,
+      "credulous_grounded_kernel": false
+    },
+    {
+      "word": "number::n",
+      "in_graph": true,
+      "in_kernel": true,
+      "in_grounded_full": false,
+      "credulous_stable_kernel": false,
+      "credulous_grounded_kernel": false
+    }
+  ],
+  "total_seconds": 470.8659201999981
+}
