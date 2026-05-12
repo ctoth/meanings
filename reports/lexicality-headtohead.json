@@ -1,0 +1,377 @@
+{
+  "lexicon_id": "oewn:2024",
+  "gold_set": {
+    "path": "data\\lexicality-gold.csv",
+    "size": 1194,
+    "stratum_counts": {
+      "abbreviation": 44,
+      "chemical": 130,
+      "ordinary": 250,
+      "phrase_or_idiom": 130,
+      "proper_name": 150,
+      "short_seed": 60,
+      "short_token": 180,
+      "taxon": 130,
+      "technical": 120
+    },
+    "gold_label_counts": {
+      "abbreviation": 44,
+      "chemical": 138,
+      "lexical-word": 299,
+      "phrase": 262,
+      "proper-name": 106,
+      "symbol-code": 207,
+      "taxon": 71,
+      "technical-term": 67
+    },
+    "stoplist_excluded": true,
+    "labels_agent_judged": true
+  },
+  "rule_classifier_full_gold": {
+    "macro_f1": 0.7391722954678339,
+    "micro_f1": 0.7604690117252931,
+    "per_class": {
+      "abbreviation": {
+        "precision": 1.0,
+        "recall": 0.75,
+        "f1": 0.8571428571428571,
+        "support": 44
+      },
+      "chemical": {
+        "precision": 0.7792207792207793,
+        "recall": 0.43478260869565216,
+        "f1": 0.5581395348837209,
+        "support": 138
+      },
+      "lexical-word": {
+        "precision": 0.815625,
+        "recall": 0.8729096989966555,
+        "f1": 0.8432956381260097,
+        "support": 299
+      },
+      "phrase": {
+        "precision": 0.7801724137931034,
+        "recall": 0.6908396946564885,
+        "f1": 0.7327935222672065,
+        "support": 262
+      },
+      "proper-name": {
+        "precision": 0.38596491228070173,
+        "recall": 0.8301886792452831,
+        "f1": 0.5269461077844311,
+        "support": 106
+      },
+      "symbol-code": {
+        "precision": 0.9575471698113207,
+        "recall": 0.9806763285024155,
+        "f1": 0.9689737470167064,
+        "support": 207
+      },
+      "taxon": {
+        "precision": 0.8181818181818182,
+        "recall": 0.5070422535211268,
+        "f1": 0.6260869565217392,
+        "support": 71
+      },
+      "technical-term": {
+        "precision": 0.9583333333333334,
+        "recall": 0.6865671641791045,
+        "f1": 0.8,
+        "support": 67
+      }
+    },
+    "confusion_matrix": {
+      "abbreviation": {
+        "abbreviation": 33,
+        "chemical": 2,
+        "lexical-word": 6,
+        "phrase": 3,
+        "proper-name": 0,
+        "symbol-code": 0,
+        "taxon": 0,
+        "technical-term": 0
+      },
+      "chemical": {
+        "abbreviation": 0,
+        "chemical": 60,
+        "lexical-word": 35,
+        "phrase": 37,
+        "proper-name": 6,
+        "symbol-code": 0,
+        "taxon": 0,
+        "technical-term": 0
+      },
+      "lexical-word": {
+        "abbreviation": 0,
+        "chemical": 1,
+        "lexical-word": 261,
+        "phrase": 0,
+        "proper-name": 32,
+        "symbol-code": 3,
+        "taxon": 0,
+        "technical-term": 2
+      },
+      "phrase": {
+        "abbreviation": 0,
+        "chemical": 6,
+        "lexical-word": 0,
+        "phrase": 181,
+        "proper-name": 69,
+        "symbol-code": 2,
+        "taxon": 4,
+        "technical-term": 0
+      },
+      "proper-name": {
+        "abbreviation": 0,
+        "chemical": 3,
+        "lexical-word": 2,
+        "phrase": 8,
+        "proper-name": 88,
+        "symbol-code": 1,
+        "taxon": 4,
+        "technical-term": 0
+      },
+      "symbol-code": {
+        "abbreviation": 0,
+        "chemical": 4,
+        "lexical-word": 0,
+        "phrase": 0,
+        "proper-name": 0,
+        "symbol-code": 203,
+        "taxon": 0,
+        "technical-term": 0
+      },
+      "taxon": {
+        "abbreviation": 0,
+        "chemical": 0,
+        "lexical-word": 0,
+        "phrase": 3,
+        "proper-name": 32,
+        "symbol-code": 0,
+        "taxon": 36,
+        "technical-term": 0
+      },
+      "technical-term": {
+        "abbreviation": 0,
+        "chemical": 1,
+        "lexical-word": 16,
+        "phrase": 0,
+        "proper-name": 1,
+        "symbol-code": 3,
+        "taxon": 0,
+        "technical-term": 46
+      }
+    },
+    "uncertain_predictions": 0,
+    "short_token_to_lexical_word_count": 12,
+    "top_failure_modes": [
+      {
+        "gold": "phrase",
+        "predicted": "proper-name",
+        "count": 69
+      },
+      {
+        "gold": "chemical",
+        "predicted": "phrase",
+        "count": 37
+      },
+      {
+        "gold": "chemical",
+        "predicted": "lexical-word",
+        "count": 35
+      },
+      {
+        "gold": "taxon",
+        "predicted": "proper-name",
+        "count": 32
+      },
+      {
+        "gold": "lexical-word",
+        "predicted": "proper-name",
+        "count": 32
+      },
+      {
+        "gold": "technical-term",
+        "predicted": "lexical-word",
+        "count": 16
+      },
+      {
+        "gold": "proper-name",
+        "predicted": "phrase",
+        "count": 8
+      },
+      {
+        "gold": "phrase",
+        "predicted": "chemical",
+        "count": 6
+      },
+      {
+        "gold": "abbreviation",
+        "predicted": "lexical-word",
+        "count": 6
+      },
+      {
+        "gold": "chemical",
+        "predicted": "proper-name",
+        "count": 6
+      },
+      {
+        "gold": "symbol-code",
+        "predicted": "chemical",
+        "count": 4
+      },
+      {
+        "gold": "proper-name",
+        "predicted": "taxon",
+        "count": 4
+      }
+    ]
+  },
+  "cv": {
+    "n_splits": 5,
+    "rule_classifier_on_cv_folds": {
+      "macro_f1": 0.7391722954678339,
+      "micro_f1": 0.7604690117252931,
+      "per_class": {
+        "abbreviation": {
+          "precision": 1.0,
+          "recall": 0.75,
+          "f1": 0.8571428571428571,
+          "support": 44
+        },
+        "chemical": {
+          "precision": 0.7792207792207793,
+          "recall": 0.43478260869565216,
+          "f1": 0.5581395348837209,
+          "support": 138
+        },
+        "lexical-word": {
+          "precision": 0.815625,
+          "recall": 0.8729096989966555,
+          "f1": 0.8432956381260097,
+          "support": 299
+        },
+        "phrase": {
+          "precision": 0.7801724137931034,
+          "recall": 0.6908396946564885,
+          "f1": 0.7327935222672065,
+          "support": 262
+        },
+        "proper-name": {
+          "precision": 0.38596491228070173,
+          "recall": 0.8301886792452831,
+          "f1": 0.5269461077844311,
+          "support": 106
+        },
+        "symbol-code": {
+          "precision": 0.9575471698113207,
+          "recall": 0.9806763285024155,
+          "f1": 0.9689737470167064,
+          "support": 207
+        },
+        "taxon": {
+          "precision": 0.8181818181818182,
+          "recall": 0.5070422535211268,
+          "f1": 0.6260869565217392,
+          "support": 71
+        },
+        "technical-term": {
+          "precision": 0.9583333333333334,
+          "recall": 0.6865671641791045,
+          "f1": 0.8,
+          "support": 67
+        }
+      }
+    },
+    "distributional_tfidf_lr": {
+      "macro_f1": 0.7442102604651547,
+      "micro_f1": 0.7964824120603015,
+      "per_class": {
+        "abbreviation": {
+          "precision": 1.0,
+          "recall": 0.6363636363636364,
+          "f1": 0.7777777777777778,
+          "support": 44
+        },
+        "chemical": {
+          "precision": 0.9081632653061225,
+          "recall": 0.644927536231884,
+          "f1": 0.7542372881355932,
+          "support": 138
+        },
+        "lexical-word": {
+          "precision": 0.7973421926910299,
+          "recall": 0.802675585284281,
+          "f1": 0.7999999999999999,
+          "support": 299
+        },
+        "phrase": {
+          "precision": 0.823728813559322,
+          "recall": 0.9274809160305344,
+          "f1": 0.8725314183123879,
+          "support": 262
+        },
+        "proper-name": {
+          "precision": 0.6692307692307692,
+          "recall": 0.8207547169811321,
+          "f1": 0.7372881355932203,
+          "support": 106
+        },
+        "symbol-code": {
+          "precision": 0.8311688311688312,
+          "recall": 0.927536231884058,
+          "f1": 0.8767123287671235,
+          "support": 207
+        },
+        "taxon": {
+          "precision": 0.6865671641791045,
+          "recall": 0.647887323943662,
+          "f1": 0.6666666666666667,
+          "support": 71
+        },
+        "technical-term": {
+          "precision": 0.5909090909090909,
+          "recall": 0.3880597014925373,
+          "f1": 0.46846846846846846,
+          "support": 67
+        }
+      }
+    }
+  },
+  "subset_breakdown": {
+    "short_token_symbol": {
+      "n": 240,
+      "rule_macro_f1": 0.5800589164447212,
+      "rule_micro_f1": 0.9416666666666667,
+      "distributional_macro_f1": 0.29566553128965467,
+      "distributional_micro_f1": 0.85
+    },
+    "taxon_chemical": {
+      "n": 261,
+      "rule_macro_f1": 0.25623205623205625,
+      "rule_micro_f1": 0.3333333333333333,
+      "distributional_macro_f1": 0.4539717282624024,
+      "distributional_micro_f1": 0.7203065134099617
+    },
+    "ordinary_lexical_word": {
+      "n": 283,
+      "rule_macro_f1": 0.9340866290018832,
+      "rule_micro_f1": 0.8763250883392226,
+      "distributional_macro_f1": 0.8988326848249028,
+      "distributional_micro_f1": 0.8162544169611308
+    },
+    "other": {
+      "n": 410,
+      "rule_macro_f1": 0.8714865826665728,
+      "rule_micro_f1": 0.8463414634146341,
+      "distributional_macro_f1": 0.8001832263665275,
+      "distributional_micro_f1": 0.8
+    }
+  },
+  "verdict": "(ii) rules win on short-token/symbol cases, lose on taxa/chemicals -> hybrid",
+  "caveats": [
+    "Gold labels are agent-judged (a more thorough rubric than the production classifier), not human-validated; the head-to-head is fair (identical labels for both) but absolute numbers are provisional.",
+    "The gold set excludes a profanity/slur/explicit stoplist to avoid content-filter trips; this slightly under-samples lexical-word and a few technical/uncertain cases. The relative comparison is unaffected since both classifiers face the same clean subset.",
+    "Hard cases (short tokens, taxa, chemicals, proper names, abbreviations, technical terms, phrases/idioms) are deliberately over-represented vs natural OEWN frequency; macro-F1 here is harder than on a natural sample."
+  ]
+}
