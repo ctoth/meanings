@@ -1,0 +1,11 @@
+{
+  "title": "Semantic message detection for machine translation, using an interlingua",
+  "authors": [
+    "Margaret Masterman"
+  ],
+  "year": "1961",
+  "abstract": "This conference paper argues that machine translation requires a semantic discipline capable of detecting message-connection rather than only syntactic connection. Masterman proposes a small interlingual semantic system built from minimals, connectives, and tree/lattice operations, together with semantic shells and shell-clusters for message detection.",
+  "url": "https://aclanthology.org/www.mt-archive.info/MT-1961-IFIP-01.pdf",
+  "pdf_url": "https://aclanthology.org/www.mt-archive.info/MT-1961-IFIP-01.pdf",
+  "venue": "International Conference on Machine Translation of Languages and Applied Language Analysis"
+}

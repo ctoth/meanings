@@ -1,0 +1,217 @@
+{
+  "lexicon_id": "oewn:2024",
+  "graph_type": "lemma_level_proxy",
+  "node_count": 151622,
+  "edge_count": 925707,
+  "kernel_node_count": 24018,
+  "kernel_fraction": 0.1584070913192017,
+  "kernel_scc_count": 2671,
+  "source_scc_count": 115,
+  "core_node_count": 20180,
+  "satellite_node_count": 3838,
+  "seed_node_count": 1243,
+  "seed_fraction_total": 0.008198018757172442,
+  "seed_fraction_kernel": 0.05175285202764593,
+  "residual_cyclic_scc_count": 1,
+  "largest_kernel_scc_sizes": [
+    20180,
+    15,
+    10,
+    7,
+    7,
+    7,
+    6,
+    6,
+    6,
+    6
+  ],
+  "layer_histogram": {},
+  "top_seed_nodes": [
+    [
+      "act",
+      3040
+    ],
+    [
+      "make",
+      2452
+    ],
+    [
+      "form",
+      2357
+    ],
+    [
+      "part",
+      2011
+    ],
+    [
+      "body",
+      1853
+    ],
+    [
+      "time",
+      1620
+    ],
+    [
+      "cause",
+      1504
+    ],
+    [
+      "place",
+      1255
+    ],
+    [
+      "financial",
+      150
+    ],
+    [
+      "flattened",
+      145
+    ],
+    [
+      "antibiotic",
+      99
+    ],
+    [
+      "snap",
+      86
+    ],
+    [
+      "repeatedly",
+      78
+    ],
+    [
+      "clustered",
+      72
+    ],
+    [
+      "breaking",
+      65
+    ]
+  ],
+  "top_degrees": {
+    "outdegree": [
+      [
+        "small",
+        5705
+      ],
+      [
+        "united_states",
+        4469
+      ],
+      [
+        "large",
+        4117
+      ],
+      [
+        "act",
+        2999
+      ],
+      [
+        "make",
+        2343
+      ],
+      [
+        "white",
+        2329
+      ],
+      [
+        "form",
+        2279
+      ],
+      [
+        "can",
+        2243
+      ],
+      [
+        "north_america",
+        2081
+      ],
+      [
+        "but",
+        2074
+      ],
+      [
+        "tropical",
+        2056
+      ],
+      [
+        "part",
+        1952
+      ],
+      [
+        "tree",
+        1842
+      ],
+      [
+        "body",
+        1812
+      ],
+      [
+        "long",
+        1791
+      ]
+    ],
+    "indegree": [
+      [
+        "break",
+        183
+      ],
+      [
+        "cut",
+        183
+      ],
+      [
+        "play",
+        148
+      ],
+      [
+        "draw",
+        147
+      ],
+      [
+        "run",
+        147
+      ],
+      [
+        "light",
+        146
+      ],
+      [
+        "check",
+        138
+      ],
+      [
+        "head",
+        138
+      ],
+      [
+        "line",
+        136
+      ],
+      [
+        "set",
+        133
+      ],
+      [
+        "charge",
+        132
+      ],
+      [
+        "call",
+        131
+      ],
+      [
+        "point",
+        131
+      ],
+      [
+        "hold",
+        125
+      ],
+      [
+        "pass",
+        123
+      ]
+    ]
+  }
+}

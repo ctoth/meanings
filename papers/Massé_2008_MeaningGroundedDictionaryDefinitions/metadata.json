@@ -1,0 +1,21 @@
+{
+  "title": "How is Meaning Grounded in Dictionary Definitions?",
+  "authors": [
+    "A. Massé",
+    "G. Chicoisne",
+    "Yassine Gargouri",
+    "S. Harnad",
+    "Olivier Picard",
+    "Odile Marcotte"
+  ],
+  "year": "2008",
+  "arxiv_id": "0806.3710",
+  "doi": "10.3115/1627328.1627331",
+  "abstract": "Meaning cannot be based on dictionary definitions all the way down: at some point the circularity of definitions must be broken in some way, by grounding the meanings of certain words in sensorimotor categories learned from experience or shaped by evolution. This is the \"symbol grounding problem\". We introduce the concept of a reachable set --- a larger vocabulary whose meanings can be learned from a smaller vocabulary through definition alone, as long as the meanings of the smaller vocabulary are themselves already grounded. We provide simple algorithms to compute reachable sets for any given dictionary.",
+  "url": "https://www.semanticscholar.org/paper/7e72de807400fc6be8ab6e89ced57298507b21d4",
+  "pdf_url": "http://dl.acm.org/ft_gateway.cfm?id=1627331&type=pdf",
+  "bibtex": "@Article{Massé2008HowIM,\n author = {A. Massé and G. Chicoisne and Yassine Gargouri and S. Harnad and Olivier Picard and Odile Marcotte},\n booktitle = {International Conference on Computational Linguistics},\n journal = {ArXiv},\n title = {How is Meaning Grounded in Dictionary Definitions?},\n volume = {abs/0806.3710},\n year = {2008}\n}\n",
+  "venue": "International Conference on Computational Linguistics",
+  "venue_type": "conference",
+  "volume": "abs/0806.3710"
+}

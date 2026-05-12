@@ -1,0 +1,7 @@
+*.png
+*.pdf
+.venv/
+__pycache__/
+*.pyc
+pyghidra_mcp_projects/
+unused-papers/

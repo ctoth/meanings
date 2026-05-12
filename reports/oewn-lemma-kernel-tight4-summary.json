@@ -1,0 +1,217 @@
+{
+  "lexicon_id": "oewn:2024",
+  "graph_type": "lemma_level_proxy",
+  "node_count": 151622,
+  "edge_count": 883018,
+  "kernel_node_count": 21084,
+  "kernel_fraction": 0.13905633747081558,
+  "kernel_scc_count": 2045,
+  "source_scc_count": 102,
+  "core_node_count": 18269,
+  "satellite_node_count": 2815,
+  "seed_node_count": 854,
+  "seed_fraction_total": 0.005632428011766103,
+  "seed_fraction_kernel": 0.04050464807436919,
+  "residual_cyclic_scc_count": 1,
+  "largest_kernel_scc_sizes": [
+    18269,
+    9,
+    6,
+    6,
+    6,
+    6,
+    5,
+    5,
+    5,
+    5
+  ],
+  "layer_histogram": {},
+  "top_seed_nodes": [
+    [
+      "act",
+      3040
+    ],
+    [
+      "make",
+      2452
+    ],
+    [
+      "form",
+      2357
+    ],
+    [
+      "part",
+      2011
+    ],
+    [
+      "quality",
+      1690
+    ],
+    [
+      "time",
+      1620
+    ],
+    [
+      "cause",
+      1504
+    ],
+    [
+      "place",
+      1255
+    ],
+    [
+      "orchid",
+      175
+    ],
+    [
+      "financial",
+      150
+    ],
+    [
+      "flattened",
+      145
+    ],
+    [
+      "snake",
+      141
+    ],
+    [
+      "antibiotic",
+      99
+    ],
+    [
+      "repeatedly",
+      78
+    ],
+    [
+      "clustered",
+      71
+    ]
+  ],
+  "top_degrees": {
+    "outdegree": [
+      [
+        "small",
+        5705
+      ],
+      [
+        "large",
+        4117
+      ],
+      [
+        "act",
+        2999
+      ],
+      [
+        "make",
+        2343
+      ],
+      [
+        "white",
+        2326
+      ],
+      [
+        "form",
+        2279
+      ],
+      [
+        "can",
+        2243
+      ],
+      [
+        "tropical",
+        2056
+      ],
+      [
+        "part",
+        1952
+      ],
+      [
+        "tree",
+        1843
+      ],
+      [
+        "body",
+        1812
+      ],
+      [
+        "long",
+        1791
+      ],
+      [
+        "plant",
+        1720
+      ],
+      [
+        "quality",
+        1669
+      ],
+      [
+        "born",
+        1653
+      ]
+    ],
+    "indegree": [
+      [
+        "break",
+        183
+      ],
+      [
+        "cut",
+        183
+      ],
+      [
+        "draw",
+        147
+      ],
+      [
+        "play",
+        147
+      ],
+      [
+        "run",
+        147
+      ],
+      [
+        "light",
+        146
+      ],
+      [
+        "check",
+        138
+      ],
+      [
+        "head",
+        138
+      ],
+      [
+        "line",
+        135
+      ],
+      [
+        "set",
+        133
+      ],
+      [
+        "charge",
+        132
+      ],
+      [
+        "call",
+        131
+      ],
+      [
+        "point",
+        130
+      ],
+      [
+        "hold",
+        125
+      ],
+      [
+        "pass",
+        123
+      ]
+    ]
+  }
+}

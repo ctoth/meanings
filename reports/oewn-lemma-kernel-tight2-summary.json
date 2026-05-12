@@ -1,0 +1,217 @@
+{
+  "lexicon_id": "oewn:2024",
+  "graph_type": "lemma_level_proxy",
+  "node_count": 151622,
+  "edge_count": 851835,
+  "kernel_node_count": 18533,
+  "kernel_fraction": 0.12223160227407633,
+  "kernel_scc_count": 937,
+  "source_scc_count": 68,
+  "core_node_count": 17261,
+  "satellite_node_count": 1272,
+  "seed_node_count": 399,
+  "seed_fraction_total": 0.0026315442350054743,
+  "seed_fraction_kernel": 0.021529164193600604,
+  "residual_cyclic_scc_count": 1,
+  "largest_kernel_scc_sizes": [
+    17261,
+    6,
+    6,
+    5,
+    5,
+    5,
+    4,
+    4,
+    4,
+    4
+  ],
+  "layer_histogram": {},
+  "top_seed_nodes": [
+    [
+      "act",
+      3037
+    ],
+    [
+      "make",
+      2452
+    ],
+    [
+      "form",
+      2357
+    ],
+    [
+      "part",
+      2011
+    ],
+    [
+      "quality",
+      1685
+    ],
+    [
+      "time",
+      1625
+    ],
+    [
+      "cause",
+      1503
+    ],
+    [
+      "place",
+      1255
+    ],
+    [
+      "orchid",
+      175
+    ],
+    [
+      "financial",
+      150
+    ],
+    [
+      "flattened",
+      145
+    ],
+    [
+      "snake",
+      141
+    ],
+    [
+      "crab",
+      90
+    ],
+    [
+      "repeatedly",
+      78
+    ],
+    [
+      "breaking",
+      65
+    ]
+  ],
+  "top_degrees": {
+    "outdegree": [
+      [
+        "small",
+        5705
+      ],
+      [
+        "large",
+        4117
+      ],
+      [
+        "merica",
+        3138
+      ],
+      [
+        "act",
+        2996
+      ],
+      [
+        "make",
+        2343
+      ],
+      [
+        "white",
+        2317
+      ],
+      [
+        "form",
+        2279
+      ],
+      [
+        "can",
+        2243
+      ],
+      [
+        "tropical",
+        2056
+      ],
+      [
+        "part",
+        1952
+      ],
+      [
+        "tree",
+        1840
+      ],
+      [
+        "body",
+        1812
+      ],
+      [
+        "long",
+        1791
+      ],
+      [
+        "eastern",
+        1747
+      ],
+      [
+        "plant",
+        1720
+      ]
+    ],
+    "indegree": [
+      [
+        "break",
+        183
+      ],
+      [
+        "cut",
+        183
+      ],
+      [
+        "draw",
+        147
+      ],
+      [
+        "play",
+        147
+      ],
+      [
+        "run",
+        146
+      ],
+      [
+        "light",
+        145
+      ],
+      [
+        "check",
+        138
+      ],
+      [
+        "head",
+        138
+      ],
+      [
+        "line",
+        135
+      ],
+      [
+        "charge",
+        132
+      ],
+      [
+        "set",
+        132
+      ],
+      [
+        "call",
+        131
+      ],
+      [
+        "point",
+        128
+      ],
+      [
+        "hold",
+        125
+      ],
+      [
+        "take",
+        123
+      ]
+    ]
+  }
+}

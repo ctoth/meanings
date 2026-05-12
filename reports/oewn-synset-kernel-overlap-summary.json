@@ -1,0 +1,227 @@
+{
+  "lexicon_id": "oewn:2024",
+  "graph_type": "synset_level_gloss_graph",
+  "node_count": 120630,
+  "edge_count": 497227,
+  "kernel_node_count": 19508,
+  "kernel_fraction": 0.1617176490093675,
+  "kernel_scc_count": 4842,
+  "source_scc_count": 187,
+  "core_node_count": 13442,
+  "satellite_node_count": 6066,
+  "seed_node_count": 1061,
+  "seed_fraction_total": 0.008795490342369228,
+  "seed_fraction_kernel": 0.054387943407832685,
+  "residual_cyclic_scc_count": 3,
+  "largest_kernel_scc_sizes": [
+    13442,
+    11,
+    10,
+    10,
+    6,
+    5,
+    5,
+    5,
+    5,
+    4
+  ],
+  "layer_histogram": {},
+  "resolution_stats": {
+    "candidate_matches": 509303,
+    "resolved_same_pos_unique": 119944,
+    "resolved_global_unique": 50818,
+    "resolved_same_pos_overlap": 233394,
+    "resolved_global_overlap": 103649,
+    "ambiguous_skipped": 0,
+    "self_only_skipped": 1498,
+    "unresolved_skipped": 0
+  },
+  "top_seed_nodes": [
+    [
+      "act [n] :: a manifestation of insincerity",
+      1559
+    ],
+    [
+      "can, canful [n] :: the quantity contained in a can",
+      1193
+    ],
+    [
+      "piece, part [n] :: an item that is an instance of some type",
+      1027
+    ],
+    [
+      "make [v] :: be suitable for",
+      882
+    ],
+    [
+      "quality [n] :: high social status",
+      843
+    ],
+    [
+      "body [n] :: the central message of a communication",
+      759
+    ],
+    [
+      "time [n] :: a suitable moment",
+      598
+    ],
+    [
+      "sealed, certain [a] :: established irrevocably",
+      516
+    ],
+    [
+      "inside, within [r] :: on the inside",
+      303
+    ],
+    [
+      "cheese [n] :: a solid food prepared from the pressed curd of milk",
+      82
+    ],
+    [
+      "flies [n] :: (theater) the space over the stage (out of view of the audience) used...",
+      77
+    ],
+    [
+      "tree [n] :: a tall perennial woody plant having a main trunk and branches forming...",
+      74
+    ],
+    [
+      "occurrence [n] :: an instance of something occurring",
+      70
+    ],
+    [
+      "violin, fiddle [n] :: bowed stringed instrument that is the highest member of the violin fa...",
+      32
+    ],
+    [
+      "zeus [n] :: (Greek mythology) the supreme god of ancient Greek mythology; son of...",
+      31
+    ]
+  ],
+  "top_degrees": {
+    "outdegree": [
+      [
+        "small [n] :: a garment size for a small person",
+        2742
+      ],
+      [
+        "large [n] :: a garment size for a large person",
+        1965
+      ],
+      [
+        "act [n] :: a manifestation of insincerity",
+        1557
+      ],
+      [
+        "can, canful [n] :: the quantity contained in a can",
+        1190
+      ],
+      [
+        "piece, part [n] :: an item that is an instance of some type",
+        1025
+      ],
+      [
+        "tropical [a] :: of or relating to the tropics, or either tropic",
+        913
+      ],
+      [
+        "make [v] :: be suitable for",
+        881
+      ],
+      [
+        "versatile, various [s] :: having great diversity or variety",
+        847
+      ],
+      [
+        "quality [n] :: high social status",
+        841
+      ],
+      [
+        "form [n] :: a particular mode in which something is manifested",
+        833
+      ],
+      [
+        "long [r] :: for an extended distance",
+        831
+      ],
+      [
+        "through [r] :: to completion",
+        831
+      ],
+      [
+        "plant [n] :: something planted secretly for discovery by another",
+        787
+      ],
+      [
+        "body [n] :: the central message of a communication",
+        756
+      ],
+      [
+        "several [s] :: distinct and individual",
+        749
+      ]
+    ],
+    "indegree": [
+      [
+        "microsensor [n] :: A submicrometer- to millimeter-size device that converts a nonelectri...",
+        27
+      ],
+      [
+        "myotonic_muscular_dystrophy, myotonic_dystrophy, ... [n] :: a severe form of muscular dystrophy marked by generalized weakness an...",
+        26
+      ],
+      [
+        "mononychus_olecranus [n] :: a turkey-sized long-legged fossil 75 million years old found in the G...",
+        25
+      ],
+      [
+        "maxwells_demon [n] :: an imaginary creature that controls a small hole in a partition that...",
+        25
+      ],
+      [
+        "welwitschia, welwitschia_mirabilis [n] :: curious plant of arid regions of southwestern Africa having a yard-hi...",
+        25
+      ],
+      [
+        "michigan, chicago, ... [n] :: a gambling card game in which chips are placed on the ace and king an...",
+        23
+      ],
+      [
+        "arbovirus, arborvirus [n] :: a large heterogeneous group of RNA viruses divisible into groups on t...",
+        23
+      ],
+      [
+        "temple_in_jerusalem, temple_of_jerusalem, ... [n] :: any of three successive temples in Jerusalem that served as the prima...",
+        23
+      ],
+      [
+        "generic, generic_wine [n] :: wine that does not meet the minimum qualifications and standards for...",
+        23
+      ],
+      [
+        "punks [n] :: a youth subculture closely associated with punk rock music in the lat...",
+        23
+      ],
+      [
+        "kuru [n] :: a progressive disease of the central nervous system marked by increas...",
+        23
+      ],
+      [
+        "becker_muscular_dystrophy [n] :: a form of muscular dystrophy that sets in in adolescence or adulthood...",
+        23
+      ],
+      [
+        "neobehaviorism [n] :: a school of psychology based on the general principles of behaviorism...",
+        23
+      ],
+      [
+        "liver [n] :: large and complicated reddish-brown glandular organ located in the up...",
+        22
+      ],
+      [
+        "hooke, robert_hooke [n] :: English scientist who formulated the law of elasticity and proposed a...",
+        22
+      ]
+    ]
+  }
+}

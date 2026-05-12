@@ -1,0 +1,13 @@
+{
+  "title": "The Large-Scale Structure of Semantic Networks: Statistical Analyses and a Model of Semantic Growth",
+  "authors": [
+    "Mark Steyvers",
+    "Joshua B. Tenenbaum"
+  ],
+  "year": "2005",
+  "doi": "10.1207/s15516709cog2901_3",
+  "abstract": "We present statistical analyses of the large-scale structure of three types of semantic networks: word associations, WordNet, and Roget's thesaurus. We show that they have a small-world structure, characterized by sparse connectivity, short average path-lengths between words, and strong local clustering. In addition, the distributions of the number of connections follow power laws that indicate a scale-free pattern of connectivity, with most nodes having relatively few connections joined together through a small number of hubs with many connections. These regularities are not consistent with many conventional models of semantic organization. We propose that they reflect the mechanisms by which semantic networks grow and describe a simple differentiation-based growth model that also suggests a mechanistic basis for age-of-acquisition and frequency effects in semantic processing.",
+  "url": "https://doi.org/10.1207/s15516709cog2901_3",
+  "pdf_url": "https://www.psychology.stanford.edu/sites/g/files/sbiybj6031/f/smallworlds.pdf",
+  "venue": "Cognitive Science"
+}

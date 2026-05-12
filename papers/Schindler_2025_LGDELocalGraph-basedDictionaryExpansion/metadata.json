@@ -1,0 +1,17 @@
+{
+  "title": "LGDE: Local Graph-based Dictionary Expansion",
+  "authors": [
+    "Juni Schindler",
+    "Sneha Jha",
+    "Xixuan Zhang",
+    "Kilian Buehling",
+    "Annett Heft",
+    "Mauricio Barahona"
+  ],
+  "year": "2025",
+  "doi": "10.1162/coli_a_00562",
+  "abstract": "We present Local Graph-based Dictionary Expansion (LGDE), a method for data-driven discovery of semantic neighbourhoods of words using tools from manifold learning and network science. At the heart of LGDE lies the creation of a word similarity graph from the geometry of word embeddings followed by local community detection based on graph diffusion. The diffusion in the local graph manifold allows the exploration of the complex nonlinear geometry of word embeddings to capture word similarities based on paths of semantic association, over and above direct pairwise similarity. Exploiting such semantic neighborhoods enables the expansion of dictionaries of pre-selected keywords for information retrieval and online data collection. We validate LGDE on two user-generated English corpora and a real-world conspiracy-related use case, showing improved performance over direct similarity methods.",
+  "url": "https://direct.mit.edu/coli/article/51/4/1235/128674/LGDE-Local-Graph-based-Dictionary-Expansion",
+  "pdf_url": "https://direct.mit.edu/coli/article-pdf/51/4/1235/2523695/coli_a_00562.pdf",
+  "venue": "Computational Linguistics"
+}

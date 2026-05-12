@@ -1,0 +1,15 @@
+[project]
+name = "meanings"
+version = "0.1.0"
+description = "Lexical graph and dictionary kernel tooling."
+requires-python = ">=3.12"
+dependencies = [
+  "wn>=0.13.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+package = true

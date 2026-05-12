@@ -1,0 +1,15 @@
+{
+  "title": "On the minimum feedback vertex set problem: Exact and enumeration algorithms",
+  "authors": [
+    "Fedor V. Fomin",
+    "Serge Gaspers",
+    "Artem V. Pyatkin",
+    "Igor Razgon"
+  ],
+  "year": "2008",
+  "doi": "10.1007/s00453-007-9152-0",
+  "abstract": "We present a time O(1.7548^n) algorithm finding a minimum feedback vertex set in an undirected graph on n vertices. We also prove that a graph on n vertices can contain at most 1.8638^n minimal feedback vertex sets and that there exist graphs having 105^(n/10) ≈ 1.5926^n minimal feedback vertex sets.",
+  "url": "https://link.springer.com/article/10.1007/s00453-007-9152-0",
+  "pdf_url": "https://www.dim.uchile.cl/~sgaspers/papers/FVS.pdf",
+  "venue": "Algorithmica"
+}

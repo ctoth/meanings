@@ -1,0 +1,12 @@
+{
+  "title": "OpenGloss: A Synthetic Encyclopedic Dictionary and Semantic Knowledge Graph",
+  "authors": [
+    "Michael J. Bommarito"
+  ],
+  "year": "2025",
+  "arxiv_id": "2511.18622",
+  "doi": "10.48550/arXiv.2511.18622",
+  "abstract": "We present OpenGloss, a synthetic encyclopedic dictionary and semantic knowledge graph for English that integrates lexicographic definitions, encyclopedic context, etymological histories, and semantic relationships in a unified resource. OpenGloss contains 537K senses across 150K lexemes, on par with WordNet 3.1 and Open English WordNet, while providing more than four times as many sense definitions. These lexemes include 9.1M semantic edges, 1M usage examples, 3M collocations, and 60M words of encyclopedic content.\n  Generated through a multi-agent procedural generation pipeline with schema-validated LLM outputs and automated quality assurance, the entire resource was produced in under one week for under $1,000. This demonstrates that structured generation can create comprehensive lexical resources at cost and time scales impractical for manual curation, enabling rapid iteration as foundation models improve. The resource addresses gaps in pedagogical applications by providing integrated content -- definitions, examples, collocations, encyclopedias, etymology -- that supports both vocabulary learning and natural language processing tasks.\n  As a synthetically generated resource, OpenGloss reflects both the capabilities and limitations of current foundation models. The dataset is publicly available on Hugging Face under CC-BY 4.0, enabling researchers and educators to build upon and adapt this resource.",
+  "url": "http://arxiv.org/abs/2511.18622v1",
+  "pdf_url": "https://arxiv.org/pdf/2511.18622v1"
+}
