@@ -4,11 +4,13 @@ version = "0.1.0"
 description = "Lexical graph and dictionary kernel tooling."
 requires-python = ">=3.12"
 dependencies = [
+  "formal-argumentation",
   "openpyxl>=3.1.5",
   "pandas>=3.0.3",
   "scikit-learn>=1.8.0",
   "statsmodels>=0.14.6",
   "wn>=0.13.0",
+  "z3-solver>=4.12",
 ]
 
 [build-system]
@@ -17,3 +19,11 @@ build-backend = "hatchling.build"
 
 [tool.uv]
 package = true
+
+[tool.uv.sources]
+formal-argumentation = { git = "https://github.com/ctoth/argumentation", rev = "8d28624" }
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+]
