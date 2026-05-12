@@ -84,8 +84,25 @@ DONE this round so far:
 - Cleaned up src/meanings/spectral_analysis.py: added SCCEigenvector dataclass (was returning list[dict[str,object]] → pyright noise + clunky indexing), updated call site + scripts/spectral_report.py + tests/test_spectral_analysis.py to use attrs not dict-keys, added to __all__, removed unused `deque` import, rewrote the confused half-corrected orientation docstring. `uv run pytest` → 10 passed.
 - LAUNCHED 4 background agents: af242e58f214a5470 = psycholinguistic regressions (Yoneda/PF empirical legs → reports/psycholinguistic-regression-findings.md + scripts/psycholinguistic_regression.py); a78d96229295735d3 = paper Liu-Slotine-Barabási 2011 Nature "Controllability of complex networks"; af122daf195d41291 = paper Mochizuki-Saito 2010 "informative nodes" (J Theor Biol); a46ad51649a269e51 = paper Gates-Rocha 2016 Sci Rep "Control...requires both structure and dynamics". All told to stay out of src/.
 
+### Round-3 agent status
+- DONE Gates-Rocha 2016 → papers/Gates_2016_ControlComplexNetworksRequires/ (nature.com direct). Boolean-ensemble result: SC + MDS both over/under-estimate driver set & pick wrong vars once dynamics present; canalization is the lever. NOT committed.
+- DONE Mochizuki-Saito 2010 → papers/Mochizuki_2010_AnalyzingSteadyStatesDynamics/ (DOI 10.1016/j.jtbi.2010.06.007 — note second author is Daisuke Saito not "Bernold", my prompt slipped; sci-hub.ru). "Linkage logic" / informative nodes = steady-state precursor to FVS-control. Cross-refs to Fiedler_2013/Mochizuki_2013. NOT committed.
+- STILL RUNNING: a78d96229295735d3 (Liu-Slotine-Barabási 2011 Nature — papers/Liu_2011_ControllabilityComplexNetworks/ dir exists, PDF+pngs present, notes.md pending), af242e58f214a5470 (psycholinguistic regressions).
+- Working tree also has a papers/Cho_2011_* dir I did NOT create — Q's or Q's deep-research thread's.
+- spectral_analysis cleanup committed 194a84a + pushed.
+
+### Regression agent DONE
+af242e58f214a5470 done: psycholinguistic block adds ΔR²/ΔAUC 0.0001–0.010 over structural features for every layer/membership outcome (< 0.05 threshold) → strong-residue claim refuted, Yoneda-completeness untouched (lexicographers-write-for-learners confound is causal-direction-fatal). revPR/FVS-seed add ≤+0.03 R² over log(out-degree) → Codex's "degree explains most" confirmed; revPR = out-degree spectrally laundered; fwd PageRank ~zero-corr with norms. Vincent-Lamarre "deeper=later AoA" effect VANISHES under structural controls. Files: reports/psycholinguistic-regression-findings.md, reports/psycholinguistic-regression-output.json, scripts/psycholinguistic_regression.py; added scikit-learn+statsmodels to pyproject/uv.lock; pytest 10/10. NOT committed.
+Folded these into reports/swanson-synthesis.md (Yoneda section, PF null-model caveat, recommended-next-work #2/#3, "what changed" section incl. listing all the new papers). NOT committed.
+
+### State of working tree (uncommitted, mine to commit)
+M: notes-swanson-prompts.md, reports/swanson-synthesis.md, pyproject.toml, uv.lock, papers/{Fiedler_2013,Mochizuki_2013,Zañudo_2016}/notes.md+citations.md, papers/index.md (all cross-ref edits from the bio + new-paper agents)
+?? mine: papers/{Gates_2016_ControlComplexNetworksRequires,Mochizuki_2010_AnalyzingSteadyStatesDynamics,Liu_2011_ControllabilityComplexNetworks}/, reports/psycholinguistic-regression-{findings.md,output.json}, scripts/psycholinguistic_regression.py, notes/liu-2011-retrieval.md
+?? NOT mine (Q's or stray, do NOT commit): papers/Cho_2011_AbelianDecompositionGeneralRelativity/ (unrelated GR paper, only metadata+pdf, looks abandoned)
+Liu_2011 dir has notes.md+abstract.md but no description.md/citations.md yet → agent a78d96229295735d3 still mid-write, NOT reported done. WAIT for it before committing papers/.
+
 ### Next step
-Commit the spectral_analysis cleanup. Wait for the 4 agents. Commit their outputs (papers/ additions; regression report+script). Fold regression results into reports/swanson-synthesis.md (Yoneda/PF sections — turn "blocked on data" into "result is X"). Summarize to Q. (compute_kernel: still flagged, not fixed — Q's call.)
+Wait for Liu-2011 agent notification. Then: commit (1) papers/ additions + cross-ref edits + index.md, (2) regression report+script+output, (3) synthesis update + notes + pyproject/uv.lock. Push each. Summarize to Q. DONE. (compute_kernel: flagged in synthesis #3, not fixed — needs Q's modeling decision.)
 
 ### Note for future agents
 The "research-papers" plugin skills are available here; `papers/` follows that convention (`notes.md`/`abstract.md`/`description.md`/`citations.md` per paper, `papers/index.md`). PDFs and PNGs are gitignored.
