@@ -194,7 +194,7 @@ Model: Mirsky et al. PNAS 2009 (ref [25]), 21 variables, 132 parameters (full OD
 
 ## Related Work Worth Reading / leads
 - **Mochizuki, Fiedler, Kurosawa, Saito — "Dynamics and control at feedback vertex sets. II: A faithful monitor to determine the diversity of molecular activities in regulatory networks", J. Theor. Biol. 2013 (ref [29])** — the companion biology paper; the obvious next read.
-- **Mochizuki & Saito 2010, "Analyzing steady states of dynamics of bio-molecules from the structure of regulatory networks", J. Theor. Biol. 266:323-335 (ref [28])** — origin of *informative nodes*; the steady-state precursor.
+- **Mochizuki & Saito 2010, "Analyzing steady states of dynamics of bio-molecules from the structure of regulatory networks", J. Theor. Biol. 266:323-335 (ref [28])** — origin of *informative nodes*; the steady-state precursor. → NOW IN COLLECTION: [`../Mochizuki_2010_AnalyzingSteadyStatesDynamics/notes.md`](../Mochizuki_2010_AnalyzingSteadyStatesDynamics/notes.md)
 - **Mochizuki 2008, "Structure of regulatory networks and diversity of gene expression patterns", J. Theor. Biol. 250:307-321 (ref [27])**.
 - **Foias & Temam 1984, "Determination of the solutions of the Navier–Stokes equations by a set of nodal values", Math. Comput. 43:117-133 (ref [11])** — origin of *determining nodes*.
 - **Karp 1975, "Reducibility among combinatorial problems", Kibernet. Sb. 12:16-83 (ref [19])** — FVS NP-completeness.
@@ -209,17 +209,17 @@ Model: Mirsky et al. PNAS 2009 (ref [25]), 21 variables, 132 parameters (full OD
 
 ### Already in Collection
 - [Dynamics and control at feedback vertex sets. II: A faithful monitor to determine the diversity of molecular activities in regulatory networks](../Mochizuki_2013_DynamicsControlFeedbackVertex/notes.md) — the companion biology paper (ref [29], "Part II"); detailed biological analysis, in-silico identification rates, the I^* circadian counterexample.
+- [Analyzing steady states of dynamics of bio-molecules from the structure of regulatory networks](../Mochizuki_2010_AnalyzingSteadyStatesDynamics/notes.md) — Mochizuki & Saito 2010 (ref [28]); origin of *informative nodes* / "linkage logic"; the steady-state precursor recovered here as Corollary 4.1.
 - [On the minimum feedback vertex set problem: Exact and enumeration algorithms](../Fomin_2008_MinimumFeedbackVertexSetProblem/notes.md) — not cited by Fiedler et al. (they cite Karp [19] and Chen et al. [7] for FVS complexity) but the same algorithmic backbone: the §7.2 brute-force minimal-FVS search is the naive version of these exact algorithms.
 
 ### New Leads (Not Yet in Collection)
-- Mochizuki, A., Saito, D. (2010) — "Analyzing steady states of dynamics of bio-molecules from the structure of regulatory networks", J. Theor. Biol. 266:323–335 (ref [28]) — origin of *informative nodes*; steady-state precursor recovered here as Corollary 4.1.
 - Foias, C., Temam, R. (1984) — "Determination of the solutions of the Navier–Stokes equations by a set of nodal values", Math. Comput. 43:117–133 (ref [11]) — origin of *determining nodes*.
 - Chen, J., Liu, Y., Lu, S., O'Sullivan, B., Razgon, I. (2008) — "A fixed-parameter algorithm for the directed feedback vertex set problem", J. ACM 55(21) (ref [7]) — the practical directed-FVS algorithm.
 - Joly, R. (2012) — "Observation and inverse problems in coupled cell networks", Nonlinearity 25:657–676 (ref [18]) — single-node generic reconstruction, contrasted here.
 - Imai et al. 2006 (Science 312, ref [17]); Oda et al. 2005 (Mol. Syst. Biol. 1, ref [30]); Mirsky et al. 2009 (PNAS 106, ref [25]) — the three biological network sources.
 
 ### Supersedes or Recontextualizes
-- Recovers Mochizuki & Saito 2010 [28] (steady-state uniqueness on informative sets) as a special case (Cor 4.1) — but [28] is not in the collection.
+- Recovers Mochizuki & Saito 2010 [28] (steady-state uniqueness on informative sets) as a special case (Cor 4.1) — [28] is now in the collection: [`../Mochizuki_2010_AnalyzingSteadyStatesDynamics/notes.md`](../Mochizuki_2010_AnalyzingSteadyStatesDynamics/notes.md).
 - Generalizes the determining-nodes idea of Foias & Temam 1984 [11] from PDEs (spectral gap) to finite regulatory networks (graph structure) — [11] not in the collection.
 
 ### Cited By (in Collection)
@@ -232,5 +232,7 @@ Model: Mirsky et al. PNAS 2009 (ref [25]), 21 variables, 132 parameters (full OD
 - [Hidden Structure and Function in the Lexicon](../Picard_2013_HiddenStructureFunctionLexicon/notes.md) — Kernel/Core/Satellite/MinSet distinction; Fiedler's "any cut of Γ into two units lets the preceding unit control the following one" (§8.5) gives a control-theoretic reading of that hierarchy.
 - [Loops and Self-Reference in the Construction of Dictionaries](../Levary_2012_LoopsSelfReferenceDictionaries/notes.md) — Levary et al.: definitional cycles are meaningful, not artifacts; Fiedler's cyclicity set C_0 (the union of all vertices on di-cycles) is exactly the "irreducible loopy core" that carries the global-attractor dynamics — a quantitative version of "the loops are where the content is."
 - [The Symbol Grounding Problem](../Harnad_1990_SymbolGroundingProblem/notes.md) — Harnad: recursive definability ≠ grounding; Fiedler's only-if part (a non-FVS subset fails to determine for *some* nonlinearity) is the formal echo — fixing the FVS is necessary, and even then the decay/dissipativity assumption (no lexical analogue) is doing real work.
+- [Control of complex networks requires both structure and dynamics](../Gates_2016_ControlComplexNetworksRequires/notes.md) — Gates & Rocha (2016): the *contrast* paper. Fiedler et al. prove FVS-control is dynamics-agnostic by theorem (the FVS = informative = determining set for *every* admissible nonlinearity); Gates & Rocha prove the rival structure-only constructions (structural controllability / maximum matching, minimum dominating set) are *not even an approximation* once dynamics enter, getting both the count and the identity of driver variables wrong, governed by canalization / effective connectivity. Same graph object, opposite robustness — this is why the lexical-grounding work transfers via FVS but not via maximum matching.
+- [Controllability of complex networks](../Liu_2011_ControllabilityComplexNetworks/notes.md) — Liu–Slotine–Barabási (2011): the *other* "minimal set of nodes that controls a directed network" answer — for linear `ẋ = Ax + Bu` dynamics and full-state controllability, the minimal driver set is the unmatched nodes of a maximum matching (Hopcroft–Karp), not a feedback vertex set. Fiedler et al.'s FVS-control is for arbitrary nonlinear dynamics and attractor steering. The two diverge sharply: on the OEWN definition digraph the maximum-matching driver set is ~74% of words vs ~1.5% for the FVS-determining "grounding seed" — the same biological-network regime where Liu et al. find n_D ≈ 0.8 for gene-regulatory networks. Fiedler's "any cut of Γ lets the preceding unit control the following" (§8.5) is the dynamical layering; Liu et al. supply the matching baseline against which the FVS seed should be reported.
 
-<!-- provenance: notes drafted by paper-reader subagent reading all 42 page images, 2026-05-12; cross-refs reconciled same day -->
+<!-- provenance: notes drafted by paper-reader subagent reading all 42 page images, 2026-05-12; cross-refs reconciled same day; Gates_2016 conceptual link added 2026-05-12 -->

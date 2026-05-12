@@ -153,6 +153,7 @@ This paper matters because it gives us a comparison class. If dictionary graphs 
 - [[Levary_2012_LoopsSelfReferenceDictionaries]] — studies loop-rich dictionary structure as a special semantic-network phenomenon and gives a growth story more specific to lexicons.
 - [[Massé_2008_MeaningGroundedDictionaryDefinitions]] — turns the broad semantic-network perspective into a specifically definitional dependency graph.
 - [[Vincent-Lamarre_2014_LatentStructureDictionaries]] — shows that definitional graphs have their own latent anatomy on top of generic network regularities.
+- [Controllability of complex networks](../Liu_2011_ControllabilityComplexNetworks/notes.md) — Liu–Slotine–Barabási (2011): sparse, heterogeneous (scale-free) networks — exactly the structure this paper finds in word-association / WordNet / Roget's networks — are the *hardest* to control under linear dynamics, with the minimum-driver-node fraction n_D governed mainly by the degree distribution. A semantic or definition network therefore inherits a large maximum-matching driver set directly from the sparse small-world / scale-free regularities documented here.
 
 ### Cited By (in Collection)
 - [[Massé_2008_MeaningGroundedDictionaryDefinitions]] — cites this for semantic-network structure outside the dictionary setting.

@@ -1,0 +1,17 @@
+{
+  "title": "Control of complex networks requires both structure and dynamics",
+  "authors": [
+    "Alexander J. Gates",
+    "Luis Mateus Rocha"
+  ],
+  "year": "2016",
+  "arxiv_id": "1509.08409",
+  "doi": "10.1038/srep24456",
+  "abstract": "The study of network structure has uncovered signatures of the organization of complex systems. However, there is also a need to understand how to control them; for example, identifying strategies to revert a diseased cell to a healthy state, or a mature cell to a pluripotent state. Two recent methodologies suggest that the controllability of complex systems can be predicted solely from the graph of interactions between variables, without considering their dynamics: structural controllability and minimum dominating sets. We demonstrate that such structure-only methods fail to characterize controllability when dynamics are introduced. We study Boolean network ensembles of network motifs as well as three models of biochemical regulation: the segment polarity network in Drosophila melanogaster, the cell cycle of budding yeast Saccharomyces cerevisiae and the floral organ arrangement in Arabidopsis thaliana. We demonstrate that structure-only methods both undershoot and overshoot the number and which sets of critical variables best control the dynamics of these models, highlighting the importance of the actual system dynamics in determining control. Our analysis further shows that the logic of automata transition functions, namely how canalizing they are, plays an important role in the extent to which structure predicts dynamics.",
+  "url": "https://www.semanticscholar.org/paper/8ff42add914650cecf6c5cf3180c845c2101d9bd",
+  "pdf_url": "https://www.nature.com/articles/srep24456.pdf",
+  "bibtex": "@Article{Gates2015ControlOC,\n author = {Alexander J. Gates and Luis Mateus Rocha},\n booktitle = {Scientific Reports},\n journal = {Scientific Reports},\n title = {Control of complex networks requires both structure and dynamics},\n volume = {6},\n year = {2015}\n}\n",
+  "venue": "Scientific Reports",
+  "venue_type": "journal",
+  "volume": "6"
+}

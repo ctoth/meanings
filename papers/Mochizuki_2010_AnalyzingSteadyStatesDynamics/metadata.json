@@ -1,0 +1,18 @@
+{
+  "title": "Analyzing steady states of dynamics of bio-molecules from the structure of regulatory networks.",
+  "authors": [
+    "A. Mochizuki",
+    "D. Saito"
+  ],
+  "year": "2010",
+  "arxiv_id": null,
+  "doi": "10.1016/j.jtbi.2010.06.007",
+  "abstract": "Regulatory relations between biological molecules constitute complex network systems and realize diverse biological functions through the dynamics of molecular activities. However, we currently have very little understanding of the relationship between the structure of a regulatory network and its dynamical properties. In this paper we introduce a new method, named \"linkage logic\" to analyze the dynamics of network systems. By this method, we can restrict possible steady states of a given system from the knowledge of regulatory linkages alone. The regulatory linkage simply specifies the list of variables that affect the dynamics of each variable. We formalize two aspects of the linkage logic: the \"Principle of Compatibility\" determines the upper limit of the diversity of possible steady states; the \"Principle of Dependency\" determines the possible combinations of steady states of the system. We show that these principles can be applied to steady states of a wide class of formulae of the ODE systems. We illustrate the use of the method by several examples including an experimentally determined regulatory network for biological functions.",
+  "url": "https://www.semanticscholar.org/paper/058eef50fba5c7f194ec9019f9d7920e7f73db76",
+  "pdf_url": "",
+  "bibtex": "@Article{Mochizuki2010AnalyzingSS,\n author = {A. Mochizuki and D. Saito},\n booktitle = {Journal of Theoretical Biology},\n journal = {Journal of theoretical biology},\n pages = {\n          323-35\n        },\n title = {Analyzing steady states of dynamics of bio-molecules from the structure of regulatory networks.},\n volume = {266 2},\n year = {2010}\n}\n",
+  "venue": "Journal of Theoretical Biology",
+  "venue_type": "journal",
+  "volume": "266 2",
+  "pages": "\n          323-35\n        "
+}

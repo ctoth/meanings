@@ -43,7 +43,7 @@
 ## Key Citations for Follow-up
 
 - **[29] Mochizuki, Fiedler, Kurosawa, Saito — "Dynamics and control at feedback vertex sets. II"** (J. Theor. Biol. 2013): the companion biology paper; covers the biological applications in depth (including the I^* circadian counterexample). The obvious next read.
-- **[28] Mochizuki & Saito 2010 — "Analyzing steady states… from the structure of regulatory networks"** (J. Theor. Biol. 266:323–335): origin of *informative nodes*; the steady-state precursor whose result this paper recovers as Corollary 4.1.
+- **[28] Mochizuki & Saito 2010 — "Analyzing steady states… from the structure of regulatory networks"** (J. Theor. Biol. 266:323–335): origin of *informative nodes*; the steady-state precursor whose result this paper recovers as Corollary 4.1. In collection: [`../Mochizuki_2010_AnalyzingSteadyStatesDynamics/notes.md`](../Mochizuki_2010_AnalyzingSteadyStatesDynamics/notes.md).
 - **[11] Foias & Temam 1984 — "Determination of the solutions of the Navier–Stokes equations by a set of nodal values"** (Math. Comput. 43:117–133): origin of *determining nodes*.
 - **[19] Karp 1975 — "Reducibility among combinatorial problems"** and **[7] Chen et al. 2008 — "A fixed-parameter algorithm for the directed feedback vertex set problem"** (J. ACM 55): the FVS complexity / algorithmics backbone.
 - **[18] Joly 2012 — "Observation and inverse problems in coupled cell networks"** (Nonlinearity 25:657–676): the single-node generic-reconstruction result this paper contrasts itself against.
