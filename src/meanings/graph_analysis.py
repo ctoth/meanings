@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from collections import Counter, deque
 from dataclasses import dataclass
-from itertools import combinations
+
+from meanings.minset import MinSetResult, solve_minset
 
 
 Adjacency = dict[str, set[str]]
@@ -20,6 +21,7 @@ class KernelAnalysis:
     core_policy: str
     seed_nodes: list[str]
     seed_method: str
+    minset_result: MinSetResult
     residual_cyclic_scc_count: int
     layer_histogram: dict[int, int]
     layer_by_node: dict[str, int]
@@ -118,113 +120,6 @@ def source_sccs(nodes: set[str], adjacency: Adjacency) -> list[set[str]]:
     return [component for index, component in enumerate(components) if indegree[index] == 0]
 
 
-def choose_feedback_vertex(component: set[str], adjacency: Adjacency, rev: Adjacency) -> str:
-    internal_out = {node: sum(1 for target in adjacency.get(node, set()) if target in component and target != node) for node in component}
-    internal_in = {node: sum(1 for source in rev.get(node, set()) if source in component and source != node) for node in component}
-    return max(
-        component,
-        key=lambda node: (
-            internal_out[node] + internal_in[node],
-            internal_out[node],
-            internal_in[node],
-            node,
-        ),
-    )
-
-
-def bounded_cycle_hitting_set(nodes: set[str], adjacency: Adjacency, max_passes: int = 8) -> tuple[list[str], int]:
-    active = set(nodes)
-    seed: list[str] = []
-    residual_cyclic_scc_count = 0
-    for _ in range(max_passes):
-        subgraph = induced_subgraph(active, adjacency)
-        rev = reverse_adjacency(active, subgraph)
-        components = strongly_connected_components(active, subgraph)
-        cyclic_components = []
-        for component in components:
-            if len(component) > 1:
-                cyclic_components.append(component)
-                continue
-            singleton = next(iter(component))
-            if singleton in subgraph.get(singleton, set()):
-                cyclic_components.append(component)
-        if not cyclic_components:
-            return seed, 0
-        removals = [choose_feedback_vertex(component, subgraph, rev) for component in cyclic_components]
-        for node in removals:
-            if node in active:
-                active.remove(node)
-                seed.append(node)
-        residual_cyclic_scc_count = len(cyclic_components)
-    subgraph = induced_subgraph(active, adjacency)
-    components = strongly_connected_components(active, subgraph)
-    residual_cyclic_scc_count = sum(
-        1
-        for component in components
-        if len(component) > 1 or next(iter(component)) in subgraph.get(next(iter(component)), set())
-    )
-    return seed, residual_cyclic_scc_count
-
-
-def is_acyclic(nodes: set[str], adjacency: Adjacency) -> bool:
-    subgraph = induced_subgraph(nodes, adjacency)
-    for component in strongly_connected_components(nodes, subgraph):
-        if len(component) > 1:
-            return False
-        node = next(iter(component))
-        if node in subgraph.get(node, set()):
-            return False
-    return True
-
-
-def exact_feedback_vertex_set(component: set[str], adjacency: Adjacency, max_size: int) -> list[str] | None:
-    ordered = sorted(component)
-    if len(ordered) > max_size:
-        return None
-    for size in range(len(ordered) + 1):
-        for removed in combinations(ordered, size):
-            remaining = component - set(removed)
-            if is_acyclic(remaining, adjacency):
-                return list(removed)
-    return None
-
-
-def exact_small_greedy_cycle_hitting_set(
-    nodes: set[str],
-    adjacency: Adjacency,
-    exact_limit: int = 12,
-) -> tuple[list[str], int]:
-    active = set(nodes)
-    seed: list[str] = []
-    while True:
-        subgraph = induced_subgraph(active, adjacency)
-        rev = reverse_adjacency(active, subgraph)
-        components = strongly_connected_components(active, subgraph)
-        cyclic_components = []
-        for component in components:
-            if len(component) > 1:
-                cyclic_components.append(component)
-                continue
-            node = next(iter(component))
-            if node in subgraph.get(node, set()):
-                cyclic_components.append(component)
-        if not cyclic_components:
-            return seed, 0
-
-        changed = False
-        for component in cyclic_components:
-            exact = exact_feedback_vertex_set(component, subgraph, exact_limit)
-            if exact is None:
-                exact = [choose_feedback_vertex(component, subgraph, rev)]
-            for node in exact:
-                if node in active:
-                    active.remove(node)
-                    seed.append(node)
-                    changed = True
-        if not changed:
-            return seed, len(cyclic_components)
-
-
 def compute_layer_map(nodes: set[str], adjacency: Adjacency, seed_nodes: set[str]) -> dict[str, int]:
     rev = reverse_adjacency(nodes, adjacency)
     known_layers = {node: 0 for node in seed_nodes}
@@ -248,18 +143,6 @@ def compute_layer_map(nodes: set[str], adjacency: Adjacency, seed_nodes: set[str
 def layer_histogram(layer_by_node: dict[str, int]) -> dict[int, int]:
     histogram = Counter(layer_by_node.values())
     return dict(sorted(histogram.items()))
-
-
-def choose_seed(
-    nodes: set[str],
-    adjacency: Adjacency,
-    seed_method: str,
-) -> tuple[list[str], int]:
-    if seed_method == "bounded-scc":
-        return bounded_cycle_hitting_set(nodes, adjacency)
-    if seed_method == "exact-small-greedy":
-        return exact_small_greedy_cycle_hitting_set(nodes, adjacency)
-    raise ValueError(f"Unsupported seed method: {seed_method}")
 
 
 def choose_core_nodes(
@@ -286,7 +169,9 @@ def analyze_kernel(
     src_sccs = source_sccs(kernel_nodes, kernel_graph)
     core_nodes = choose_core_nodes(kernel_sccs, src_sccs, core_policy)
     satellite_nodes = kernel_nodes - core_nodes
-    seed_nodes, residual_cyclic_scc_count = choose_seed(kernel_nodes, kernel_graph, seed_method)
+    minset_result = solve_minset(kernel_nodes, kernel_graph, seed_method)
+    seed_nodes = minset_result.nodes
+    residual_cyclic_scc_count = minset_result.residual_cyclic_scc_count
     layers: dict[str, int] = {}
     if residual_cyclic_scc_count == 0 and seed_nodes:
         layers = compute_layer_map(kernel_nodes, kernel_graph, set(seed_nodes))
@@ -302,6 +187,7 @@ def analyze_kernel(
         core_policy=core_policy,
         seed_nodes=seed_nodes,
         seed_method=seed_method,
+        minset_result=minset_result,
         residual_cyclic_scc_count=residual_cyclic_scc_count,
         layer_histogram=layer_histogram(layers),
         layer_by_node=layers,
