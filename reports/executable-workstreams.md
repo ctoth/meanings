@@ -384,6 +384,144 @@ uv run python -m meanings.cli --lexicon oewn:2024 --graph-type paper-wordnet --t
 - Core graph algorithms do not depend on OEWN-specific classes.
 - Resource-specific assumptions are documented in the adapter layer.
 
+## Workstream 9: Up-Goer Kernel Export
+
+**Purpose:** Turn the graph-theoretic grounding handle into an actual human-usable controlled vocabulary: the closest honest version of "the words I can make everything else out of."
+
+This is not merely a pretty seed list. The newer FVS-control papers sharpen the claim:
+
+- `Massé` / `Vincent-Lamarre`: a lexical grounding set is a feedback vertex set of the definition digraph.
+- `Fiedler` / `Mochizuki`: an FVS is a determining/monitor/control set for broad nonlinear systems; fixing it determines the rest of the network's long-run behavior.
+- `Zañudo`: FVS-plus-sources is the right structure-only control handle when the goal is attractor steering under unknown nonlinear dynamics.
+- `Liu`: maximum-matching driver nodes are the linear full-state-control baseline, not the lexical grounding object.
+- `Gates`: structure-only control claims can fail under real dynamics; keep the FVS claim precise as a worst-case structural handle, not a full semantic theory.
+
+**Current State**
+
+- `paper-wordnet` exists and runs on OEWN 2024.
+- Current `exact-small-greedy` candidate seed:
+  - seed nodes: `2,370`
+  - residual cyclic SCCs: `0`
+  - exact: `no`
+  - SCCs exact / heuristic: `1,380` / `872`
+  - candidate seed id: `exact-small-greedy:n2370:r0`
+- Layering succeeds after seed removal with 65 layers.
+- Psycholinguistic annotation CSVs exist for frequency, concreteness, and age of acquisition.
+- The raw WordNet seed contains sense/POS artifacts that are not human-facing vocabulary items, e.g. noun senses like `small [n] :: the slender part of the back`.
+
+**Implementation Tasks**
+
+- Add an export module for controlled vocabulary rows.
+- Produce two linked vocabulary surfaces:
+  - `strict_graph_seed`: exact graph nodes selected by the candidate seed method.
+  - `human_kernel`: cleaned surface lemmas collapsed from graph nodes, preserving all source-node provenance.
+- Add an explicit `grounding_vocabulary` definition:
+  - candidate seed nodes
+  - plus any source/exogenous nodes required by the chosen graph policy
+  - plus optional human-clean projection fields
+- For each exported row include:
+  - `node_id`
+  - `lemma`
+  - `pos`
+  - `surface_word`
+  - `gloss`
+  - `component` (`core`, `satellite`, `kernel-other`, `rest`)
+  - `is_seed`
+  - `seed_method`
+  - `candidate_seed_id`
+  - `layer`
+  - `degree_score`
+  - `outdegree`
+  - `indegree`
+  - `frequency`
+  - `age_of_acquisition`
+  - `concreteness`
+  - `source_label`
+- Add a human-clean projection policy:
+  - collapse `lemma::pos` to `lemma`
+  - merge POS/sense rows into one surface word
+  - retain provenance as `source_node_ids`
+  - mark rows with suspicious WordNet senses rather than deleting them silently
+  - sort primarily by seed membership, then frequency/AoA availability, then degree score
+- Add a validation report:
+  - strict seed size
+  - human-clean surface size
+  - number of seed nodes collapsed by surface form
+  - number of graph seed nodes with missing frequency/AoA/concreteness
+  - layer coverage after removing strict seed
+  - sample layer-1, layer-2, and deep-layer definitions reachable from the seed
+  - top suspicious seed senses for human review
+
+**Likely Files**
+
+- `src/meanings/kernel_export.py`
+- `src/meanings/wordnet_pipeline.py`
+- `src/meanings/cli.py`
+- `reports/up-goer-five-kernel.md`
+- `data/english_kernel_wordlist.csv`
+- `data/english_kernel_wordlist.json`
+
+**Commands**
+
+```powershell
+uv run python -m meanings.cli `
+  --graph-type paper-wordnet `
+  --seed-method exact-small-greedy `
+  --annotations data/psycholinguistic/frequency.csv `
+                data/psycholinguistic/age_of_acquisition.csv `
+                data/psycholinguistic/concreteness.csv `
+  --export-layers reports/oewn-paper-wordnet-layers.json `
+  --report reports/oewn-paper-wordnet-kernel-report.md `
+  --json reports/oewn-paper-wordnet-kernel-summary.json
+
+uv run python -m meanings.kernel_export `
+  --summary reports/oewn-paper-wordnet-kernel-summary.json `
+  --layers reports/oewn-paper-wordnet-layers.json `
+  --wordlist data/english_kernel_wordlist.csv `
+  --json data/english_kernel_wordlist.json `
+  --report reports/up-goer-five-kernel.md
+```
+
+**Outputs**
+
+- `data/english_kernel_wordlist.csv`
+- `data/english_kernel_wordlist.json`
+- `reports/up-goer-five-kernel.md`
+
+**Acceptance Checks**
+
+- The strict graph seed remains reproducible from `candidate_seed_id`.
+- The human-clean list never loses provenance: every surface word links back to one or more graph node ids.
+- The report states plainly that the list is a candidate grounding vocabulary, not a final semantic primitive set.
+- Residual cyclic SCC count is `0` for the strict seed before any human cleaning.
+- Human cleaning is separated from graph correctness; cleaning cannot be used to claim a smaller graph seed.
+- Annotation gaps are reported rather than imputed.
+- The report includes at least 25 suspicious or ugly seed senses for manual review.
+- The exported CSV can be loaded by pandas without custom parsing.
+
+**Paper Requests**
+
+These should be retrieved/read before treating the human-clean list as linguistically mature:
+
+- `Ogden 1930`, *Basic English* / controlled defining vocabulary lineage.
+- `Longman Dictionary of Contemporary English` defining-vocabulary documentation or papers on the LDOCE 2,000-word defining vocabulary.
+- `Anna Wierzbicka` / `Goddard` Natural Semantic Metalanguage papers, for the strongest linguistic-primitives counterpoint.
+- Controlled Natural Language survey papers, especially Attempto Controlled English and Simplified Technical English.
+- Lexicographic papers on defining vocabulary design and learner dictionaries.
+- Papers on sense pruning / basic sense selection in WordNet or SemCor, because the current seed is visibly polluted by rare representative senses.
+- More directed-FVS solver papers: `Chen, Liu, Lu, O'Sullivan, Razgon 2008`; `Lin and Jou 2000`; `Lapointe et al. 2012`.
+
+**First Commit-Sized Slice**
+
+Implement `src/meanings/kernel_export.py` with read-only inputs:
+
+- read `reports/oewn-paper-wordnet-kernel-summary.json`
+- read `reports/oewn-paper-wordnet-layers.json`
+- emit a CSV and JSON containing graph node id, parsed lemma/POS, label/gloss, seed membership, layer, degree score, and candidate seed id
+- write `reports/up-goer-five-kernel.md` with strict seed size, human-clean surface size, annotation coverage, and top 50 seed words
+
+Do not add manual cleaning rules in the first slice. The first slice is an auditable export of the current machine handle.
+
 ## Recommended Execution Order
 
 1. Workstream 0: lock definitions.
@@ -394,6 +532,7 @@ uv run python -m meanings.cli --lexicon oewn:2024 --graph-type paper-wordnet --t
 6. Workstream 6: add psycholinguistic annotations.
 7. Workstream 7: export recursive unfolding.
 8. Workstream 8: prepare multilingual adapters.
+9. Workstream 9: export and audit the Up-Goer kernel vocabulary.
 
 Workstream 2 should be maintained in parallel, but not allowed to define the baseline.
 
