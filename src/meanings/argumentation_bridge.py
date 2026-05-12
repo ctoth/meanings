@@ -26,7 +26,7 @@ any graph algorithms.
 
 from __future__ import annotations
 
-from argumentation.bipolar import BipolarArgumentationFramework
+from argumentation.bipolar import BipolarArgumentationFramework, cayrol_derived_defeats
 from argumentation.dung import ArgumentationFramework
 
 from meanings.graph_analysis import Adjacency, KernelAnalysis, induced_subgraph
@@ -37,6 +37,8 @@ __all__ = [
     "bipolar_support_framework",
     "kernel_attack_framework",
     "scc_attack_framework",
+    "bipolar_with_attacks_framework",
+    "derived_dung_framework",
 ]
 
 
@@ -76,6 +78,58 @@ def bipolar_support_framework(
         arguments=frozenset(nodes),
         defeats=frozenset(),
         supports=edges_of(nodes, adjacency),
+    )
+
+
+def bipolar_with_attacks_framework(
+    nodes: set[str],
+    supports: Adjacency,
+    attacks: Adjacency,
+) -> BipolarArgumentationFramework:
+    """Bipolar AF with *both* support edges (definition edges) and explicit attacks.
+
+    On the sense-level graph the attack relation is the rival-sense layer: two
+    senses of the same form attack each other. Unlike :func:`bipolar_support_framework`
+    (whose defeat relation is empty, so the bipolar grounded semantics is the
+    identity), this AF carries genuine conflict, so the Cayrol set-defeat /
+    derived-defeat machinery has something to chew on.
+
+    Note ``argumentation.bipolar``'s own ``stable_extensions`` enumerates ``2**n``
+    subsets; for anything beyond a tiny slice use :func:`derived_dung_framework`
+    plus the z3-backed solvers in ``argumentation.af_sat``.
+    """
+    return BipolarArgumentationFramework(
+        arguments=frozenset(nodes),
+        defeats=edges_of(nodes, attacks),
+        supports=edges_of(nodes, supports),
+    )
+
+
+def derived_dung_framework(
+    nodes: set[str],
+    supports: Adjacency,
+    attacks: Adjacency,
+) -> ArgumentationFramework:
+    """Flatten a bipolar (supports + attacks) AF to a plain Dung AF in poly time.
+
+    Uses Cayrol & Lagasquie-Schiex (2005) *derived defeats*: a base attack
+    ``w -> u`` together with a support chain ``u -> ... -> v`` yields a derived
+    attack ``w -> v`` (supported defeat), and dually a support chain into the
+    attacker yields indirect defeats; closure is taken to a fixpoint. The result
+    is a plain ``ArgumentationFramework`` (no exponential set-defeat blow-up), so
+    the z3-backed ``argumentation.af_sat`` solvers and ``argumentation.dung``
+    semantics apply directly.
+
+    On a cyclic support graph this can be expensive: an attacker on any node of a
+    support SCC ends up attacking every node the SCC reaches. Time-box on large
+    inputs and fall back to per-SCC analysis if needed.
+    """
+    base_attacks = edges_of(nodes, attacks)
+    base_supports = edges_of(nodes, supports)
+    derived = cayrol_derived_defeats(base_attacks, base_supports)
+    return ArgumentationFramework(
+        arguments=frozenset(nodes),
+        defeats=base_attacks | derived,
     )
 
 

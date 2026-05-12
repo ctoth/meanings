@@ -45,6 +45,43 @@ class SenseLevelGraphBuild:
     resolution_stats: dict[str, int]
 
 
+@dataclass(slots=True)
+class SenseLevelGraphWithAttacks:
+    """A sense-level definition graph plus a rival-sense *attack* layer.
+
+    ``supports`` is the same support adjacency as :class:`SenseLevelGraphBuild`
+    (``u -> v`` means "sense ``u`` occurs in the gloss resolved for sense ``v``").
+    ``attacks`` is an undirected (stored symmetrically) relation: two sense nodes
+    of the *same form* attack each other -- they are rival readings of the form,
+    so accepting one is reason to reject the others.
+
+    Rivalry is computed *per form across all parts of speech*: the written shape
+    ``bank`` is one form whatever the POS, and a reader meeting it must pick a
+    reading from the whole rival set, not just the same-POS subset. ``rivalry_key``
+    on each node records which form-clique it belongs to.
+    """
+
+    lexicon_id: str
+    nodes: set[str]
+    supports: Adjacency
+    attacks: Adjacency
+    labels: dict[str, str]
+    pos_by_node: dict[str, str]
+    node_metadata: dict[str, dict[str, object]]
+    resolution_stats: dict[str, int]
+    rivalry_key_by_node: dict[str, str]
+    rivalry_cliques: dict[str, list[str]]
+
+    @property
+    def attack_edge_count(self) -> int:
+        """Number of *ordered* attack edges (each unordered rivalry pair counts twice)."""
+        return sum(len(targets) for targets in self.attacks.values())
+
+    @property
+    def unordered_attack_pair_count(self) -> int:
+        return self.attack_edge_count // 2
+
+
 def load_lexicon(lexicon_id: str) -> wn.Wordnet:
     wn.download(lexicon_id)
     return wn.Wordnet(lexicon_id)
@@ -424,6 +461,62 @@ def build_sense_level_paper_wordnet_graph(lexicon_id: str = "oewn:2024") -> Sens
         pos_by_node=pos_by_node,
         node_metadata=node_metadata,
         resolution_stats=resolution_stats,
+    )
+
+
+def add_rival_sense_attacks(
+    build: SenseLevelGraphBuild,
+    *,
+    per_pos: bool = False,
+) -> SenseLevelGraphWithAttacks:
+    """Derive the rival-sense attack layer from a built sense-level support graph.
+
+    Two sense nodes attack each other iff they share a *form* (``lemma`` metadata
+    field). With ``per_pos=True`` rivalry is restricted to senses of the same POS;
+    the default is cross-POS (the form's written shape is the same regardless of
+    POS, and disambiguation happens over the whole rival set).
+    """
+    clique_members: dict[str, list[str]] = {}
+    for node in sorted(build.nodes):
+        metadata = build.node_metadata[node]
+        lemma = str(metadata["lemma"])
+        key = f"{lemma}::{metadata['pos']}" if per_pos else lemma
+        clique_members.setdefault(key, []).append(node)
+
+    attacks: Adjacency = {node: set() for node in build.nodes}
+    rivalry_key_by_node: dict[str, str] = {}
+    rivalry_cliques: dict[str, list[str]] = {}
+    for key, members in clique_members.items():
+        if len(members) < 2:
+            continue
+        rivalry_cliques[key] = members
+        for member in members:
+            rivalry_key_by_node[member] = key
+            attacks[member].update(other for other in members if other != member)
+
+    return SenseLevelGraphWithAttacks(
+        lexicon_id=build.lexicon_id,
+        nodes=build.nodes,
+        supports=build.adjacency,
+        attacks=attacks,
+        labels=build.labels,
+        pos_by_node=build.pos_by_node,
+        node_metadata=build.node_metadata,
+        resolution_stats=build.resolution_stats,
+        rivalry_key_by_node=rivalry_key_by_node,
+        rivalry_cliques=rivalry_cliques,
+    )
+
+
+def build_sense_level_paper_wordnet_graph_with_attacks(
+    lexicon_id: str = "oewn:2024",
+    *,
+    per_pos: bool = False,
+) -> SenseLevelGraphWithAttacks:
+    """Build the sense-level support graph and attach the rival-sense attack layer."""
+    return add_rival_sense_attacks(
+        build_sense_level_paper_wordnet_graph(lexicon_id),
+        per_pos=per_pos,
     )
 
 
