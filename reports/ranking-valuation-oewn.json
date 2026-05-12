@@ -1,0 +1,1082 @@
+{
+  "config": {
+    "lexicon": "oewn:2024",
+    "seed_method": "exact-small-greedy",
+    "core_policy": "source-union",
+    "h_max_iter_full": 25,
+    "h_max_iter_kernel": 5000,
+    "counting_max_iter_full": 25,
+    "counting_max_iter_kernel": 5000,
+    "burden_iters": 30,
+    "skip_full": false,
+    "note_on_full_graph": "full-graph categoriser-family scores are iteration-capped (per-block converged flag); kernel-scope scores run to convergence. The full-graph cap is small because pure-python iteration over 678k edges is expensive; at this cap the ranking ORDER is already stable even where the absolute scores are not.",
+    "psych_fields": [
+      "frequency",
+      "age_of_acquisition",
+      "concreteness"
+    ],
+    "edge_convention": "u -> v means u occurs in the gloss of v",
+    "orientations": {
+      "forward": "attack reading u->v; attackers[v] = v's definiens (in-neighbours) -> 'definability'",
+      "reverse": "attack reading on transpose; attackers[u] = words u occurs in (out-neighbours) -> 'foundational productivity'; the orientation reverse-PageRank used"
+    }
+  },
+  "graph": {
+    "nodes": 160010,
+    "edges": 677823,
+    "kernel": 18151,
+    "core": 510,
+    "satellites": 17641,
+    "seed": 5044,
+    "layers_defined_for": 18151,
+    "residual_cyclic_scc_count": 0,
+    "note": "post self-loop fix (commit 7d12e64): kernel/core/seed larger than the spectral report's older numbers (12853/288/2370)"
+  },
+  "psych_join": {
+    "all_nodes": 27356,
+    "kernel_nodes": 9007,
+    "all_total": 160010,
+    "kernel_total": 18151
+  },
+  "psych_prediction": {
+    "baselines_full_join": {
+      "n": 27356,
+      "frequency": {
+        "r2_log_outdeg": 0.2251851263653657,
+        "r2_log_outdeg_plus_log_indeg": 0.22534236015748277,
+        "pearson_log_outdeg": 0.4745367492253312,
+        "pearson_log_indeg": 0.04079245079609348
+      },
+      "age_of_acquisition": {
+        "r2_log_outdeg": 0.07967730144839635,
+        "r2_log_outdeg_plus_log_indeg": 0.07995489655484689,
+        "pearson_log_outdeg": -0.2822716802096809,
+        "pearson_log_indeg": -0.015120597072727372
+      },
+      "concreteness": {
+        "r2_log_outdeg": 0.0018866208551642227,
+        "r2_log_outdeg_plus_log_indeg": 0.0302364528199055,
+        "pearson_log_outdeg": 0.04343524899407455,
+        "pearson_log_indeg": 0.17218483403164184
+      }
+    }
+  },
+  "rankings": {
+    "kernel_forward": {
+      "h_categoriser": {
+        "converged": true,
+        "iterations": 22,
+        "higher_is_better": true,
+        "rho_vs_outdeg": 0.04139892648066411,
+        "rho_vs_indeg": -0.5487874173929107,
+        "rho_vs_seed_membership": -0.12187312966692594,
+        "rho_vs_core_membership": 0.4949065108534279,
+        "rho_vs_fvs_degree_key": -0.34616586997857896,
+        "rho_vs_layer_index": -0.09816577859633784,
+        "overlap_at_500_with_fvs_key": 0.009081735620585268,
+        "top20_words": [
+          [
+            "about::a",
+            1.0
+          ],
+          [
+            "absence::n",
+            1.0
+          ],
+          [
+            "accepting::a",
+            1.0
+          ],
+          [
+            "accipitridae::n",
+            1.0
+          ],
+          [
+            "accompanied::a",
+            1.0
+          ],
+          [
+            "accomplishment::n",
+            1.0
+          ],
+          [
+            "accurately::r",
+            1.0
+          ],
+          [
+            "achievement::n",
+            1.0
+          ],
+          [
+            "actively::r",
+            1.0
+          ],
+          [
+            "advantageously::r",
+            1.0
+          ],
+          [
+            "affected::a",
+            1.0
+          ],
+          [
+            "affecting::a",
+            1.0
+          ],
+          [
+            "age::n",
+            1.0
+          ],
+          [
+            "alike::a",
+            1.0
+          ],
+          [
+            "alongside::r",
+            1.0
+          ],
+          [
+            "alternatively::r",
+            1.0
+          ],
+          [
+            "angrily::r",
+            1.0
+          ],
+          [
+            "answering::a",
+            1.0
+          ],
+          [
+            "anywhere::r",
+            1.0
+          ],
+          [
+            "aphoristic::a",
+            1.0
+          ]
+        ],
+        "psych_prediction": {
+          "n_psych": 9007,
+          "frequency": {
+            "pearson_score_norm": -0.03635390885017381,
+            "r2_log_outdeg": 0.1502695907612478,
+            "r2_log_outdeg_plus_score": 0.15196478978186856,
+            "incremental_score_over_log_outdeg_r2": 0.0016951990206207634,
+            "r2_log_outdeg_plus_log_indeg": 0.1505580636854691,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.1548457621389686,
+            "incremental_score_over_degree_r2": 0.004287698453499522
+          },
+          "age_of_acquisition": {
+            "pearson_score_norm": 0.0406283667743287,
+            "r2_log_outdeg": 0.06520093048074183,
+            "r2_log_outdeg_plus_score": 0.06711971048625598,
+            "incremental_score_over_log_outdeg_r2": 0.0019187800055141535,
+            "r2_log_outdeg_plus_log_indeg": 0.06520480928897454,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.06846527645205736,
+            "incremental_score_over_degree_r2": 0.003260467163082814
+          },
+          "concreteness": {
+            "pearson_score_norm": -0.08907164257713146,
+            "r2_log_outdeg": 7.495049765637862e-05,
+            "r2_log_outdeg_plus_score": 0.007990781847178496,
+            "incremental_score_over_log_outdeg_r2": 0.007915831349522118,
+            "r2_log_outdeg_plus_log_indeg": 0.03375954959762317,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.03468189050051629,
+            "incremental_score_over_degree_r2": 0.0009223409028931151
+          }
+        }
+      },
+      "categoriser": {
+        "converged": true,
+        "iterations": 35,
+        "higher_is_better": true,
+        "rho_vs_outdeg": 0.04244169894494543,
+        "rho_vs_indeg": -0.94764594415737,
+        "rho_vs_seed_membership": -0.1367309064285242,
+        "rho_vs_core_membership": 0.2669263094083188,
+        "rho_vs_fvs_degree_key": -0.650417750600241,
+        "rho_vs_layer_index": -0.12830614059431286,
+        "overlap_at_500_with_fvs_key": 0.006036217303822937,
+        "top20_words": [
+          [
+            "about::a",
+            1.0
+          ],
+          [
+            "absence::n",
+            1.0
+          ],
+          [
+            "accepting::a",
+            1.0
+          ],
+          [
+            "accipitridae::n",
+            1.0
+          ],
+          [
+            "accompanied::a",
+            1.0
+          ],
+          [
+            "accomplishment::n",
+            1.0
+          ],
+          [
+            "accurately::r",
+            1.0
+          ],
+          [
+            "achievement::n",
+            1.0
+          ],
+          [
+            "actively::r",
+            1.0
+          ],
+          [
+            "advantageously::r",
+            1.0
+          ],
+          [
+            "affected::a",
+            1.0
+          ],
+          [
+            "affecting::a",
+            1.0
+          ],
+          [
+            "age::n",
+            1.0
+          ],
+          [
+            "alike::a",
+            1.0
+          ],
+          [
+            "alongside::r",
+            1.0
+          ],
+          [
+            "alternatively::r",
+            1.0
+          ],
+          [
+            "angrily::r",
+            1.0
+          ],
+          [
+            "answering::a",
+            1.0
+          ],
+          [
+            "anywhere::r",
+            1.0
+          ],
+          [
+            "aphoristic::a",
+            1.0
+          ]
+        ],
+        "psych_prediction": {
+          "n_psych": 9007,
+          "frequency": {
+            "pearson_score_norm": -0.04048896158267448,
+            "r2_log_outdeg": 0.1502695907612478,
+            "r2_log_outdeg_plus_score": 0.1504325709951242,
+            "incremental_score_over_log_outdeg_r2": 0.00016298023387639748,
+            "r2_log_outdeg_plus_log_indeg": 0.1505580636854691,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.1570809372629307,
+            "incremental_score_over_degree_r2": 0.006522873577461619
+          },
+          "age_of_acquisition": {
+            "pearson_score_norm": 0.03635040075654041,
+            "r2_log_outdeg": 0.06520093048074183,
+            "r2_log_outdeg_plus_score": 0.06552905776862528,
+            "incremental_score_over_log_outdeg_r2": 0.0003281272878834507,
+            "r2_log_outdeg_plus_log_indeg": 0.06520480928897454,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.06837020224695145,
+            "incremental_score_over_degree_r2": 0.003165392957976909
+          },
+          "concreteness": {
+            "pearson_score_norm": -0.1325385253439953,
+            "r2_log_outdeg": 7.495049765637862e-05,
+            "r2_log_outdeg_plus_score": 0.01789747544425324,
+            "incremental_score_over_log_outdeg_r2": 0.017822524946596863,
+            "r2_log_outdeg_plus_log_indeg": 0.03375954959762317,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.04529773754442801,
+            "incremental_score_over_degree_r2": 0.011538187946804834
+          }
+        }
+      },
+      "burden": {
+        "converged": true,
+        "iterations": 30,
+        "higher_is_better": false,
+        "rho_vs_outdeg": -0.0424420208335606,
+        "rho_vs_indeg": 0.9476452333245535,
+        "rho_vs_seed_membership": 0.13672963893373563,
+        "rho_vs_core_membership": -0.26693101784400775,
+        "rho_vs_fvs_degree_key": 0.6504154968210821,
+        "rho_vs_layer_index": 0.12830699719362917,
+        "overlap_at_500_with_fvs_key": 0.006036217303822937,
+        "top20_words": [
+          [
+            "about::a",
+            1.0
+          ],
+          [
+            "absence::n",
+            1.0
+          ],
+          [
+            "accepting::a",
+            1.0
+          ],
+          [
+            "accipitridae::n",
+            1.0
+          ],
+          [
+            "accompanied::a",
+            1.0
+          ],
+          [
+            "accomplishment::n",
+            1.0
+          ],
+          [
+            "accurately::r",
+            1.0
+          ],
+          [
+            "achievement::n",
+            1.0
+          ],
+          [
+            "actively::r",
+            1.0
+          ],
+          [
+            "advantageously::r",
+            1.0
+          ],
+          [
+            "affected::a",
+            1.0
+          ],
+          [
+            "affecting::a",
+            1.0
+          ],
+          [
+            "age::n",
+            1.0
+          ],
+          [
+            "alike::a",
+            1.0
+          ],
+          [
+            "alongside::r",
+            1.0
+          ],
+          [
+            "alternatively::r",
+            1.0
+          ],
+          [
+            "angrily::r",
+            1.0
+          ],
+          [
+            "answering::a",
+            1.0
+          ],
+          [
+            "anywhere::r",
+            1.0
+          ],
+          [
+            "aphoristic::a",
+            1.0
+          ]
+        ],
+        "psych_prediction": {
+          "n_psych": 9007,
+          "frequency": {
+            "pearson_score_norm": -0.019160541794069386,
+            "r2_log_outdeg": 0.1502695907612478,
+            "r2_log_outdeg_plus_score": 0.15084677931945267,
+            "incremental_score_over_log_outdeg_r2": 0.0005771885582048775,
+            "r2_log_outdeg_plus_log_indeg": 0.1505580636854691,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.1509576737187509,
+            "incremental_score_over_degree_r2": 0.00039961003328181643
+          },
+          "age_of_acquisition": {
+            "pearson_score_norm": 0.012727432844684066,
+            "r2_log_outdeg": 0.06520093048074183,
+            "r2_log_outdeg_plus_score": 0.0654479953781758,
+            "incremental_score_over_log_outdeg_r2": 0.0002470648974339795,
+            "r2_log_outdeg_plus_log_indeg": 0.06520480928897454,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.06621871875799212,
+            "incremental_score_over_degree_r2": 0.001013909469017582
+          },
+          "concreteness": {
+            "pearson_score_norm": -0.14929862723005172,
+            "r2_log_outdeg": 7.495049765637862e-05,
+            "r2_log_outdeg_plus_score": 0.02293471170450867,
+            "incremental_score_over_log_outdeg_r2": 0.02285976120685229,
+            "r2_log_outdeg_plus_log_indeg": 0.03375954959762317,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.034751325099286356,
+            "incremental_score_over_degree_r2": 0.0009917755016631835
+          }
+        }
+      },
+      "counting": {
+        "converged": true,
+        "iterations": 35,
+        "higher_is_better": true,
+        "rho_vs_outdeg": 0.0425173972838725,
+        "rho_vs_indeg": -0.948326897156032,
+        "rho_vs_seed_membership": -0.13683796259070824,
+        "rho_vs_core_membership": 0.2670195869404547,
+        "rho_vs_fvs_degree_key": -0.6508375034859366,
+        "rho_vs_layer_index": -0.12846848224800034,
+        "overlap_at_500_with_fvs_key": 0.007049345417925478,
+        "top20_words": [
+          [
+            "about::a",
+            1.0
+          ],
+          [
+            "absence::n",
+            1.0
+          ],
+          [
+            "accepting::a",
+            1.0
+          ],
+          [
+            "accipitridae::n",
+            1.0
+          ],
+          [
+            "accompanied::a",
+            1.0
+          ],
+          [
+            "accomplishment::n",
+            1.0
+          ],
+          [
+            "accurately::r",
+            1.0
+          ],
+          [
+            "achievement::n",
+            1.0
+          ],
+          [
+            "actively::r",
+            1.0
+          ],
+          [
+            "advantageously::r",
+            1.0
+          ],
+          [
+            "affected::a",
+            1.0
+          ],
+          [
+            "affecting::a",
+            1.0
+          ],
+          [
+            "age::n",
+            1.0
+          ],
+          [
+            "alike::a",
+            1.0
+          ],
+          [
+            "alongside::r",
+            1.0
+          ],
+          [
+            "alternatively::r",
+            1.0
+          ],
+          [
+            "angrily::r",
+            1.0
+          ],
+          [
+            "answering::a",
+            1.0
+          ],
+          [
+            "anywhere::r",
+            1.0
+          ],
+          [
+            "aphoristic::a",
+            1.0
+          ]
+        ],
+        "psych_prediction": {
+          "n_psych": 9007,
+          "frequency": {
+            "pearson_score_norm": -0.04039316123673283,
+            "r2_log_outdeg": 0.1502695907612478,
+            "r2_log_outdeg_plus_score": 0.15042536279310448,
+            "incremental_score_over_log_outdeg_r2": 0.00015577203185668242,
+            "r2_log_outdeg_plus_log_indeg": 0.1505580636854691,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.1570668748096845,
+            "incremental_score_over_degree_r2": 0.006508811124215419
+          },
+          "age_of_acquisition": {
+            "pearson_score_norm": 0.036242304558169694,
+            "r2_log_outdeg": 0.06520093048074183,
+            "r2_log_outdeg_plus_score": 0.0655206768687896,
+            "incremental_score_over_log_outdeg_r2": 0.0003197463880477702,
+            "r2_log_outdeg_plus_log_indeg": 0.06520480928897454,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.0683490699031144,
+            "incremental_score_over_degree_r2": 0.00314426061413986
+          },
+          "concreteness": {
+            "pearson_score_norm": -0.1329089819020087,
+            "r2_log_outdeg": 7.495049765637862e-05,
+            "r2_log_outdeg_plus_score": 0.017999181023799715,
+            "incremental_score_over_log_outdeg_r2": 0.017924230526143337,
+            "r2_log_outdeg_plus_log_indeg": 0.03375954959762317,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.04538109647178856,
+            "incremental_score_over_degree_r2": 0.01162154687416539
+          }
+        }
+      }
+    },
+    "kernel_reverse": {
+      "h_categoriser": {
+        "converged": true,
+        "iterations": 22,
+        "higher_is_better": true,
+        "rho_vs_outdeg": -0.5912772063773751,
+        "rho_vs_indeg": 0.015226328843261467,
+        "rho_vs_seed_membership": 0.01541306258838528,
+        "rho_vs_core_membership": 0.016369352965528928,
+        "rho_vs_fvs_degree_key": -0.46731889132909565,
+        "rho_vs_layer_index": 0.05962071269755494,
+        "overlap_at_500_with_fvs_key": 0.0,
+        "top20_words": [
+          [
+            "aardvark::n",
+            0.6666666666666666
+          ],
+          [
+            "abbess::n",
+            0.6666666666666666
+          ],
+          [
+            "abbot::n",
+            0.6666666666666666
+          ],
+          [
+            "aberration::n",
+            0.6666666666666666
+          ],
+          [
+            "abeyance::n",
+            0.6666666666666666
+          ],
+          [
+            "abolitionist::n",
+            0.6666666666666666
+          ],
+          [
+            "aboriginal::n",
+            0.6666666666666666
+          ],
+          [
+            "above_all::r",
+            0.6666666666666666
+          ],
+          [
+            "abrasive::a",
+            0.6666666666666666
+          ],
+          [
+            "absolute::a",
+            0.6666666666666666
+          ],
+          [
+            "abstain::v",
+            0.6666666666666666
+          ],
+          [
+            "abuse::n",
+            0.6666666666666666
+          ],
+          [
+            "academe::n",
+            0.6666666666666666
+          ],
+          [
+            "accelerator::n",
+            0.6666666666666666
+          ],
+          [
+            "accessory::n",
+            0.6666666666666666
+          ],
+          [
+            "accord::v",
+            0.6666666666666666
+          ],
+          [
+            "accordant::a",
+            0.6666666666666666
+          ],
+          [
+            "accountable::a",
+            0.6666666666666666
+          ],
+          [
+            "acellular::a",
+            0.6666666666666666
+          ],
+          [
+            "acerate::a",
+            0.6666666666666666
+          ]
+        ],
+        "psych_prediction": {
+          "n_psych": 9007,
+          "frequency": {
+            "pearson_score_norm": -0.25922751421054924,
+            "r2_log_outdeg": 0.1502695907612478,
+            "r2_log_outdeg_plus_score": 0.15189787641976726,
+            "incremental_score_over_log_outdeg_r2": 0.0016282856585194683,
+            "r2_log_outdeg_plus_log_indeg": 0.1505580636854691,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.1522055462986679,
+            "incremental_score_over_degree_r2": 0.001647482613198803
+          },
+          "age_of_acquisition": {
+            "pearson_score_norm": 0.1694792220109319,
+            "r2_log_outdeg": 0.06520093048074183,
+            "r2_log_outdeg_plus_score": 0.0658263612653136,
+            "incremental_score_over_log_outdeg_r2": 0.0006254307845717788,
+            "r2_log_outdeg_plus_log_indeg": 0.06520480928897454,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.06583171247125563,
+            "incremental_score_over_degree_r2": 0.0006269031822810911
+          },
+          "concreteness": {
+            "pearson_score_norm": 0.027679171919547507,
+            "r2_log_outdeg": 7.495049765637862e-05,
+            "r2_log_outdeg_plus_score": 0.0008518535657685566,
+            "incremental_score_over_log_outdeg_r2": 0.000776903068112178,
+            "r2_log_outdeg_plus_log_indeg": 0.03375954959762317,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.0346835467085026,
+            "incremental_score_over_degree_r2": 0.0009239971108794265
+          }
+        }
+      },
+      "categoriser": {
+        "converged": true,
+        "iterations": 42,
+        "higher_is_better": true,
+        "rho_vs_outdeg": -0.6592885273589998,
+        "rho_vs_indeg": 0.006602299239490717,
+        "rho_vs_seed_membership": -0.03367821286601238,
+        "rho_vs_core_membership": 0.013739205327669417,
+        "rho_vs_fvs_degree_key": -0.5738951427527027,
+        "rho_vs_layer_index": 0.09519576650652202,
+        "overlap_at_500_with_fvs_key": 0.0,
+        "top20_words": [
+          [
+            "purposefully::r",
+            0.9924180447479573
+          ],
+          [
+            "uniformity::n",
+            0.9924180447479573
+          ],
+          [
+            "airtight::a",
+            0.9899849525770982
+          ],
+          [
+            "orthographic::a",
+            0.9894432485016059
+          ],
+          [
+            "phonological::a",
+            0.9894432485016059
+          ],
+          [
+            "complexion::n",
+            0.9868763260316513
+          ],
+          [
+            "skinned::a",
+            0.9868763260316513
+          ],
+          [
+            "chromatic_color::n",
+            0.9821605715147896
+          ],
+          [
+            "shakespeare::n",
+            0.9805489401629824
+          ],
+          [
+            "theatrical_producer::n",
+            0.9805489401629824
+          ],
+          [
+            "give_rise::v",
+            0.9803505749975284
+          ],
+          [
+            "legal_tender::n",
+            0.978874756341741
+          ],
+          [
+            "affective::a",
+            0.9785096959685028
+          ],
+          [
+            "beheaded::a",
+            0.9779719040125242
+          ],
+          [
+            "utopia::n",
+            0.9779719040125242
+          ],
+          [
+            "recreational::a",
+            0.9769410546584182
+          ],
+          [
+            "batsman::n",
+            0.9758765061958942
+          ],
+          [
+            "outer_boundary::n",
+            0.9745167343250178
+          ],
+          [
+            "antioxidant::n",
+            0.9742035962286169
+          ],
+          [
+            "body_covering::n",
+            0.9737216054453038
+          ]
+        ],
+        "psych_prediction": {
+          "n_psych": 9007,
+          "frequency": {
+            "pearson_score_norm": -0.34262475069771386,
+            "r2_log_outdeg": 0.1502695907612478,
+            "r2_log_outdeg_plus_score": 0.15547755185499346,
+            "incremental_score_over_log_outdeg_r2": 0.005207961093745661,
+            "r2_log_outdeg_plus_log_indeg": 0.1505580636854691,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.15578601293909466,
+            "incremental_score_over_degree_r2": 0.0052279492536255745
+          },
+          "age_of_acquisition": {
+            "pearson_score_norm": 0.2247694188889062,
+            "r2_log_outdeg": 0.06520093048074183,
+            "r2_log_outdeg_plus_score": 0.06732726255562282,
+            "incremental_score_over_log_outdeg_r2": 0.002126332074880999,
+            "r2_log_outdeg_plus_log_indeg": 0.06520480928897454,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.06733273288570929,
+            "incremental_score_over_degree_r2": 0.0021279235967347487
+          },
+          "concreteness": {
+            "pearson_score_norm": 0.008288783078673331,
+            "r2_log_outdeg": 7.495049765637862e-05,
+            "r2_log_outdeg_plus_score": 8.170093796955324e-05,
+            "incremental_score_over_log_outdeg_r2": 6.7504403131746216e-06,
+            "r2_log_outdeg_plus_log_indeg": 0.03375954959762317,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.033776100509343876,
+            "incremental_score_over_degree_r2": 1.6550911720703e-05
+          }
+        }
+      },
+      "burden": {
+        "converged": true,
+        "iterations": 30,
+        "higher_is_better": false,
+        "rho_vs_outdeg": 0.6592885949416344,
+        "rho_vs_indeg": -0.0066025294149309795,
+        "rho_vs_seed_membership": 0.03367818901262122,
+        "rho_vs_core_membership": -0.013739140681898068,
+        "rho_vs_fvs_degree_key": 0.5738949720504919,
+        "rho_vs_layer_index": -0.09519581535372128,
+        "overlap_at_500_with_fvs_key": 0.0,
+        "top20_words": [
+          [
+            "purposefully::r",
+            1.0076398804799034
+          ],
+          [
+            "uniformity::n",
+            1.0076398804799034
+          ],
+          [
+            "airtight::a",
+            1.0101163632711276
+          ],
+          [
+            "orthographic::a",
+            1.0106693854999325
+          ],
+          [
+            "phonological::a",
+            1.0106693854999325
+          ],
+          [
+            "complexion::n",
+            1.0132981951449176
+          ],
+          [
+            "skinned::a",
+            1.0132981951449176
+          ],
+          [
+            "chromatic_color::n",
+            1.0181634541247315
+          ],
+          [
+            "shakespeare::n",
+            1.0198369087337602
+          ],
+          [
+            "theatrical_producer::n",
+            1.0198369087337602
+          ],
+          [
+            "give_rise::v",
+            1.0200432636024366
+          ],
+          [
+            "legal_tender::n",
+            1.0215811507222043
+          ],
+          [
+            "affective::a",
+            1.0219622800861856
+          ],
+          [
+            "beheaded::a",
+            1.0225242625168454
+          ],
+          [
+            "utopia::n",
+            1.0225242625168454
+          ],
+          [
+            "recreational::a",
+            1.0236032104774038
+          ],
+          [
+            "batsman::n",
+            1.024719822137408
+          ],
+          [
+            "outer_boundary::n",
+            1.026149643892738
+          ],
+          [
+            "antioxidant::n",
+            1.0264794788455698
+          ],
+          [
+            "body_covering::n",
+            1.0269875849569048
+          ]
+        ],
+        "psych_prediction": {
+          "n_psych": 9007,
+          "frequency": {
+            "pearson_score_norm": -0.2537924333509364,
+            "r2_log_outdeg": 0.1502695907612478,
+            "r2_log_outdeg_plus_score": 0.1519552933696834,
+            "incremental_score_over_log_outdeg_r2": 0.0016857026084355908,
+            "r2_log_outdeg_plus_log_indeg": 0.1505580636854691,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.15223343581863802,
+            "incremental_score_over_degree_r2": 0.0016753721331689286
+          },
+          "age_of_acquisition": {
+            "pearson_score_norm": 0.1752673940464606,
+            "r2_log_outdeg": 0.06520093048074183,
+            "r2_log_outdeg_plus_score": 0.06656059155509608,
+            "incremental_score_over_log_outdeg_r2": 0.001359661074354257,
+            "r2_log_outdeg_plus_log_indeg": 0.06520480928897454,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.06656345943310704,
+            "incremental_score_over_degree_r2": 0.0013586501441325005
+          },
+          "concreteness": {
+            "pearson_score_norm": 0.0013979131191425324,
+            "r2_log_outdeg": 7.495049765637862e-05,
+            "r2_log_outdeg_plus_score": 9.317593560054238e-05,
+            "incremental_score_over_log_outdeg_r2": 1.8225437944163758e-05,
+            "r2_log_outdeg_plus_log_indeg": 0.03375954959762317,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.03379139548624366,
+            "incremental_score_over_degree_r2": 3.184588862048532e-05
+          }
+        }
+      },
+      "counting": {
+        "converged": true,
+        "iterations": 42,
+        "higher_is_better": true,
+        "rho_vs_outdeg": -0.6593888019914711,
+        "rho_vs_indeg": 0.006636053954286232,
+        "rho_vs_seed_membership": -0.03370239348497176,
+        "rho_vs_core_membership": 0.013733710666891708,
+        "rho_vs_fvs_degree_key": -0.5739620350551985,
+        "rho_vs_layer_index": 0.0952419278402158,
+        "overlap_at_500_with_fvs_key": 0.0,
+        "top20_words": [
+          [
+            "purposefully::r",
+            0.9924623170524944
+          ],
+          [
+            "uniformity::n",
+            0.9924623170524944
+          ],
+          [
+            "airtight::a",
+            0.9900463906729983
+          ],
+          [
+            "orthographic::a",
+            0.9895044121858875
+          ],
+          [
+            "phonological::a",
+            0.9895044121858875
+          ],
+          [
+            "complexion::n",
+            0.9869480190485512
+          ],
+          [
+            "skinned::a",
+            0.9869480190485512
+          ],
+          [
+            "chromatic_color::n",
+            0.9822633171181513
+          ],
+          [
+            "shakespeare::n",
+            0.9806579393606724
+          ],
+          [
+            "theatrical_producer::n",
+            0.9806579393606724
+          ],
+          [
+            "give_rise::v",
+            0.9804683375668379
+          ],
+          [
+            "legal_tender::n",
+            0.978998333494901
+          ],
+          [
+            "affective::a",
+            0.9786322126006494
+          ],
+          [
+            "beheaded::a",
+            0.978119312947284
+          ],
+          [
+            "utopia::n",
+            0.978119312947284
+          ],
+          [
+            "recreational::a",
+            0.9770716522201663
+          ],
+          [
+            "batsman::n",
+            0.9760180513104512
+          ],
+          [
+            "outer_boundary::n",
+            0.974673295097223
+          ],
+          [
+            "antioxidant::n",
+            0.9743557207382954
+          ],
+          [
+            "body_covering::n",
+            0.9738871124606597
+          ]
+        ],
+        "psych_prediction": {
+          "n_psych": 9007,
+          "frequency": {
+            "pearson_score_norm": -0.3430843879942321,
+            "r2_log_outdeg": 0.1502695907612478,
+            "r2_log_outdeg_plus_score": 0.15550185862844856,
+            "incremental_score_over_log_outdeg_r2": 0.005232267867200768,
+            "r2_log_outdeg_plus_log_indeg": 0.1505580636854691,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.15580960650127296,
+            "incremental_score_over_degree_r2": 0.005251542815803867
+          },
+          "age_of_acquisition": {
+            "pearson_score_norm": 0.2250245955506566,
+            "r2_log_outdeg": 0.06520093048074183,
+            "r2_log_outdeg_plus_score": 0.06733038890695509,
+            "incremental_score_over_log_outdeg_r2": 0.00212945842621326,
+            "r2_log_outdeg_plus_log_indeg": 0.06520480928897454,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.06733579613954332,
+            "incremental_score_over_degree_r2": 0.0021309868505687835
+          },
+          "concreteness": {
+            "pearson_score_norm": 0.008600289380763732,
+            "r2_log_outdeg": 7.495049765637862e-05,
+            "r2_log_outdeg_plus_score": 8.438538836508247e-05,
+            "incremental_score_over_log_outdeg_r2": 9.434890708703847e-06,
+            "r2_log_outdeg_plus_log_indeg": 0.03375954959762317,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.033779681778161263,
+            "incremental_score_over_degree_r2": 2.0132180538090516e-05
+          }
+        }
+      }
+    }
+  },
+  "headline": {
+    "question": "Does any ranking semantics add real signal over log(out-degree) for predicting the psycholinguistic norms?",
+    "best_incremental_R2_over_log_outdeg": {
+      "value": 0.02285976120685229,
+      "where": "kernel_forward/burden/concreteness",
+      "details": {
+        "scope_orient": "kernel_forward",
+        "semantics": "burden",
+        "norm": "concreteness",
+        "r2_log_outdeg": 7.495049765637862e-05,
+        "r2_with_score": 0.02293471170450867,
+        "n": 9007
+      }
+    },
+    "interpretation_hint": "Compare best_incremental_R2_over_log_outdeg.value to the spectral report's reverse-PageRank incremental-over-out-degree numbers (which were ~0). A value near 0 means 'another principled score that also collapses to degree' (negative result); a clearly positive value means it adds signal.",
+    "scopes_present": [
+      "kernel_forward",
+      "kernel_reverse"
+    ]
+  }
+}
