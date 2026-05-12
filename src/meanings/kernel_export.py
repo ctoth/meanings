@@ -33,6 +33,18 @@ CSV_FIELDS = (
     "source_label",
 )
 
+SURFACE_FIELDS = (
+    "lemma",
+    "surface_word",
+    "seed_node_count",
+    "source_node_ids",
+    "parts_of_speech",
+    "max_degree_score",
+    "best_frequency",
+    "earliest_age_of_acquisition",
+    "mean_concreteness",
+)
+
 DEFAULT_ANNOTATION_PATHS = (
     Path("data/psycholinguistic/frequency.csv"),
     Path("data/psycholinguistic/age_of_acquisition.csv"),
@@ -194,6 +206,35 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         writer.writeheader()
         for row in rows:
             writer.writerow({field: csv_value(row.get(field)) for field in CSV_FIELDS})
+
+
+def write_seed_surfaces_csv(path: Path, surfaces: list[dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=SURFACE_FIELDS)
+        writer.writeheader()
+        for surface in surfaces:
+            writer.writerow(
+                {
+                    "lemma": surface["lemma"],
+                    "surface_word": surface["surface_word"],
+                    "seed_node_count": surface["seed_node_count"],
+                    "source_node_ids": ";".join(surface["source_node_ids"]),
+                    "parts_of_speech": ";".join(surface["parts_of_speech"]),
+                    "max_degree_score": surface["max_degree_score"],
+                    "best_frequency": csv_value(surface["best_frequency"]),
+                    "earliest_age_of_acquisition": csv_value(surface["earliest_age_of_acquisition"]),
+                    "mean_concreteness": csv_value(surface["mean_concreteness"]),
+                }
+            )
+
+
+def write_seed_words(path: Path, surfaces: list[dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as handle:
+        for surface in surfaces:
+            handle.write(str(surface["surface_word"]))
+            handle.write("\n")
 
 
 def collapse_seed_surfaces(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
@@ -443,6 +484,8 @@ def export_kernel_wordlist(
     wordlist_path: Path,
     json_path: Path,
     report_path: Path,
+    seed_surfaces_path: Path,
+    seed_words_path: Path,
     top: int,
 ) -> None:
     inputs = load_inputs(summary_path, layers_path, annotation_paths)
@@ -479,6 +522,8 @@ def export_kernel_wordlist(
 
     human_seed_surfaces = collapse_seed_surfaces(rows)
     write_csv(wordlist_path, rows)
+    write_seed_surfaces_csv(seed_surfaces_path, human_seed_surfaces)
+    write_seed_words(seed_words_path, human_seed_surfaces)
     write_json(json_path, inputs, rows, human_seed_surfaces)
     write_report(report_path, inputs, rows, human_seed_surfaces, build.adjacency, top)
 
@@ -488,6 +533,8 @@ def export_kernel_wordlist(
         json.dumps(
             {
                 "wordlist": str(wordlist_path),
+                "seed_surfaces": str(seed_surfaces_path),
+                "seed_words": str(seed_words_path),
                 "json": str(json_path),
                 "report": str(report_path),
                 "kernel_node_count": len(rows),
@@ -508,6 +555,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--layers", type=Path, default=Path("reports/oewn-paper-wordnet-layers.json"))
     parser.add_argument("--annotations", type=Path, nargs="*", default=[])
     parser.add_argument("--wordlist", type=Path, default=Path("data/english_kernel_wordlist.csv"))
+    parser.add_argument("--seed-surfaces", type=Path, default=Path("data/english_seed_surfaces.csv"))
+    parser.add_argument("--seed-words", type=Path, default=Path("data/up_goer_seed_words.txt"))
     parser.add_argument("--json", type=Path, default=Path("data/english_kernel_wordlist.json"))
     parser.add_argument("--report", type=Path, default=Path("reports/up-goer-five-kernel.md"))
     parser.add_argument("--top", type=int, default=50)
@@ -524,6 +573,8 @@ def main(argv: list[str] | None = None) -> None:
         wordlist_path=args.wordlist,
         json_path=args.json,
         report_path=args.report,
+        seed_surfaces_path=args.seed_surfaces,
+        seed_words_path=args.seed_words,
         top=args.top,
     )
 
