@@ -1,0 +1,283 @@
+{
+  "config": {
+    "lexicon": "oewn:2024",
+    "seed_method": "exact-small-greedy",
+    "core_policy": "source-union",
+    "structural_block": [
+      "log_indeg",
+      "log_outdeg",
+      "log_scc_size",
+      "in_cycle",
+      "log_pr_fwd",
+      "log_pr_rev",
+      "pos"
+    ],
+    "psycholinguistic_block": [
+      "frequency",
+      "age_of_acquisition",
+      "concreteness"
+    ]
+  },
+  "graph": {
+    "nodes": 160010,
+    "edges": 677823,
+    "kernel": 12853,
+    "core": 288,
+    "satellites": 12565,
+    "seed": 2370,
+    "residual_cyclic_scc": 0
+  },
+  "coverage": {
+    "frequency": {
+      "all_nodes": 46386,
+      "all_total": 160010,
+      "all_frac": 0.28989438160114994,
+      "kernel_nodes": 9468,
+      "kernel_total": 12853,
+      "kernel_frac": 0.73663736092741
+    },
+    "age_of_acquisition": {
+      "all_nodes": 34314,
+      "all_total": 160010,
+      "all_frac": 0.2144490969314418,
+      "kernel_nodes": 7311,
+      "kernel_total": 12853,
+      "kernel_frac": 0.568816618688244
+    },
+    "concreteness": {
+      "all_nodes": 38572,
+      "all_total": 160010,
+      "all_frac": 0.24105993375414037,
+      "kernel_nodes": 8416,
+      "kernel_total": 12853,
+      "kernel_frac": 0.6547887652688088
+    },
+    "all_three": {
+      "full": 27356,
+      "full_total": 160010,
+      "full_frac": 0.17096431473032936,
+      "kernel": 6899,
+      "kernel_total": 12853,
+      "kernel_frac": 0.5367618454835447
+    }
+  },
+  "coverage_by_layer_band": {
+    "L0": {
+      "n": 2370,
+      "all3_frac": 0.519409282700422
+    },
+    "L1-3": {
+      "n": 3391,
+      "all3_frac": 0.5818342671778236
+    },
+    "L4-10": {
+      "n": 2609,
+      "all3_frac": 0.5818321195860483
+    },
+    "L11+": {
+      "n": 4483,
+      "all3_frac": 0.4856123131831363
+    }
+  },
+  "join_counts": {
+    "all_rows": 27356,
+    "kernel_rows": 6899,
+    "layered_rows": 6899
+  },
+  "models": {
+    "a_kernel_membership": {
+      "n": 27356,
+      "base_rate": 0.2521933031144904,
+      "block1_struct": {
+        "auc": 0.9838173528467786,
+        "mcfadden_r2": 0.7843993349680743,
+        "features": [
+          "log_indeg",
+          "log_outdeg",
+          "log_scc_size",
+          "in_cycle",
+          "log_pr_fwd",
+          "log_pr_rev",
+          "pos=n",
+          "pos=r",
+          "pos=s",
+          "pos=v"
+        ]
+      },
+      "block2_psych_only": {
+        "auc": 0.7346859121940879,
+        "mcfadden_r2": 0.11570139031365534,
+        "features": [
+          "frequency",
+          "age_of_acquisition",
+          "concreteness"
+        ]
+      },
+      "block1+2": {
+        "auc": 0.9838593345703381,
+        "mcfadden_r2": 0.7849247284798273
+      },
+      "incremental_block2": {
+        "delta_auc": 4.198172355951435e-05,
+        "delta_mcfadden_r2": 0.0005253935117529585
+      },
+      "block2_standardized_coefs_given_block1": {
+        "frequency": {
+          "std_coef": -0.018749097558087527,
+          "p": 0.7148878389553173
+        },
+        "age_of_acquisition": {
+          "std_coef": 0.09076889225783372,
+          "p": 0.05971266360967955
+        },
+        "concreteness": {
+          "std_coef": -0.0644841607576856,
+          "p": 0.1097906046016677
+        }
+      }
+    },
+    "b_core_vs_satellite": {
+      "n": 6899,
+      "base_rate_core": 0.019568053341063922,
+      "block1_struct": {
+        "auc": 1.0,
+        "mcfadden_r2": 0.9976917317309634
+      },
+      "block2_psych_only": {
+        "auc": 0.5760726723174978,
+        "mcfadden_r2": 0.006725857176016481
+      },
+      "block1+2": {
+        "auc": 1.0,
+        "mcfadden_r2": 0.9946676105339386
+      },
+      "incremental_block2": {
+        "delta_auc": 0.0,
+        "delta_mcfadden_r2": -0.003024121197024776
+      },
+      "block2_standardized_coefs_given_block1": {}
+    },
+    "c_seed_membership": {
+      "n": 27356,
+      "base_rate": 0.04499926889896184,
+      "block1_struct": {
+        "auc": 0.9607778637199303,
+        "mcfadden_r2": 0.511895874965145
+      },
+      "block2_psych_only": {
+        "auc": 0.803991169119905,
+        "mcfadden_r2": 0.14634939906055433
+      },
+      "block1+2": {
+        "auc": 0.9611627221809785,
+        "mcfadden_r2": 0.5149054059335643
+      },
+      "incremental_block2": {
+        "delta_auc": 0.00038485846104818755,
+        "delta_mcfadden_r2": 0.0030095309684192717
+      },
+      "block2_standardized_coefs_given_block1": {
+        "frequency": {
+          "std_coef": 0.23825474954859904,
+          "p": 5.889789928507022e-05
+        },
+        "age_of_acquisition": {
+          "std_coef": 0.019563366761388947,
+          "p": 0.7529356966232614
+        },
+        "concreteness": {
+          "std_coef": -0.013005471031893593,
+          "p": 0.7762261487696782
+        }
+      }
+    },
+    "d_layer_index": {
+      "n": 6899,
+      "ols_log1p_layer": {
+        "r2_block1": 0.23830510698329588,
+        "r2_block2_only": 0.06900981973055798,
+        "r2_block1+2": 0.24493011483163663,
+        "incremental_block2_r2": 0.006625007848340747
+      },
+      "poisson_layer": {
+        "pseudo_r2_block1": 0.22806406172060956,
+        "pseudo_r2_block2_only": 0.08003442508792435,
+        "pseudo_r2_block1+2": 0.2379086756075387,
+        "incremental_block2_pseudo_r2": 0.009844613886929143
+      },
+      "block2_standardized_coefs_given_block1": {
+        "frequency": {
+          "std_coef_ols_log1p_layer": -0.10060003403313025
+        },
+        "age_of_acquisition": {
+          "std_coef_ols_log1p_layer": 0.009345882635395542
+        },
+        "concreteness": {
+          "std_coef_ols_log1p_layer": 0.06982547898861986
+        }
+      }
+    }
+  },
+  "pf_leg": {
+    "frequency": {
+      "n": 27356,
+      "r2_log_outdeg_only": 0.22518512636534482,
+      "r2_log_outdeg_plus_indeg": 0.22534236015749598,
+      "r2_log_outdeg_plus_revPR": 0.23448593979078025,
+      "incremental_revPR_over_outdeg_r2": 0.009300813425435428,
+      "incremental_revPR_over_degree_r2": 0.00915084898247398,
+      "r2_log_outdeg_plus_seed": 0.23098242577804107,
+      "incremental_seed_over_outdeg_r2": 0.005797299412696244,
+      "r2_log_outdeg_plus_fwdPR": 0.2286327309793711,
+      "pearson_outdeg_norm": 0.47453674922533096,
+      "pearson_revPR_norm": 0.4645847950694404,
+      "pearson_fwdPR_norm": 0.013055983934486265,
+      "pearson_indeg_norm": 0.04079245079609348,
+      "mean_norm_seed": 4.179750887686495,
+      "mean_norm_nonseed": 3.0351396112443148,
+      "mean_norm_kernel": 3.6604913000187698,
+      "mean_norm_rest": 2.8931205068030654,
+      "pearson_layer_norm_kernel": -0.16701748480175202
+    },
+    "age_of_acquisition": {
+      "n": 27356,
+      "r2_log_outdeg_only": 0.07967730144839635,
+      "r2_log_outdeg_plus_indeg": 0.07995489655484855,
+      "r2_log_outdeg_plus_revPR": 0.08199285924607247,
+      "incremental_revPR_over_outdeg_r2": 0.0023155577976761155,
+      "incremental_revPR_over_degree_r2": 0.0021773118218929577,
+      "r2_log_outdeg_plus_seed": 0.0825831122633236,
+      "incremental_seed_over_outdeg_r2": 0.0029058108149272455,
+      "r2_log_outdeg_plus_fwdPR": 0.08084958822716248,
+      "pearson_outdeg_norm": -0.2822716802096808,
+      "pearson_revPR_norm": -0.2720299898899628,
+      "pearson_fwdPR_norm": -0.007081411257849159,
+      "pearson_indeg_norm": -0.015120597072727357,
+      "mean_norm_seed": 7.750566229082048,
+      "mean_norm_nonseed": 9.900714917244018,
+      "mean_norm_kernel": 8.830812170314537,
+      "mean_norm_rest": 10.132147972723274,
+      "pearson_layer_norm_kernel": 0.08725247370313868
+    },
+    "concreteness": {
+      "n": 27356,
+      "r2_log_outdeg_only": 0.0018866208551773234,
+      "r2_log_outdeg_plus_indeg": 0.030236452819907056,
+      "r2_log_outdeg_plus_revPR": 0.03261856215115755,
+      "incremental_revPR_over_outdeg_r2": 0.030731941295980225,
+      "incremental_revPR_over_degree_r2": 0.02525812435139063,
+      "r2_log_outdeg_plus_seed": 0.0019490462979889767,
+      "incremental_seed_over_outdeg_r2": 6.24254428116533e-05,
+      "r2_log_outdeg_plus_fwdPR": 0.018762754494755396,
+      "pearson_outdeg_norm": 0.043435248994074534,
+      "pearson_revPR_norm": -0.04354392624289765,
+      "pearson_fwdPR_norm": 0.12515777251150223,
+      "pearson_indeg_norm": 0.1721848340316419,
+      "mean_norm_seed": 3.2779691307879775,
+      "mean_norm_nonseed": 3.2330277511961723,
+      "mean_norm_kernel": 3.176141469778228,
+      "mean_norm_rest": 3.254916654445911,
+      "pearson_layer_norm_kernel": 0.17787789494563136
+    }
+  }
+}
