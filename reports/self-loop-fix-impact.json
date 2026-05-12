@@ -1,0 +1,110 @@
+{
+  "lexicon": "oewn:2024",
+  "node_count": 160010,
+  "edge_count": 677823,
+  "self_loop_count": 3413,
+  "self_loop_examples": [
+    "aah::v",
+    "aba::n",
+    "abaca::n",
+    "abelia::n",
+    "abraham::n",
+    "absinthe::n",
+    "abudefduf::n",
+    "abyssinia::n",
+    "acacia::n",
+    "acanthoscelides::n",
+    "acanthus::n",
+    "acaridae::n",
+    "accumulated::a",
+    "acetaminophen::n",
+    "achillea::n",
+    "achimenes::n",
+    "achoerodus::n",
+    "achomawi::n",
+    "achromycin::n",
+    "acoustic_impedance::n"
+  ],
+  "with_self_loops": {
+    "bounded-scc": {
+      "seed_method": "bounded-scc",
+      "kernel_node_count": 18151,
+      "core_node_count": 510,
+      "satellite_node_count": 17641,
+      "seed_node_count": 3620,
+      "kernel_scc_count": 9139,
+      "source_scc_count": 508,
+      "residual_cyclic_scc_count": 1,
+      "minset_exact": false,
+      "layers_computed": false,
+      "layer_histogram_buckets": 0
+    },
+    "exact-small-greedy": {
+      "seed_method": "exact-small-greedy",
+      "kernel_node_count": 18151,
+      "core_node_count": 510,
+      "satellite_node_count": 17641,
+      "seed_node_count": 5044,
+      "kernel_scc_count": 9139,
+      "source_scc_count": 508,
+      "residual_cyclic_scc_count": 0,
+      "minset_exact": false,
+      "layers_computed": true,
+      "layer_histogram_buckets": 65
+    },
+    "exact-cutting": {
+      "seed_method": "exact-cutting",
+      "kernel_node_count": 18151,
+      "core_node_count": 510,
+      "satellite_node_count": 17641,
+      "seed_node_count": 3584,
+      "kernel_scc_count": 9139,
+      "source_scc_count": 508,
+      "residual_cyclic_scc_count": 11,
+      "minset_exact": false,
+      "layers_computed": false,
+      "layer_histogram_buckets": 0
+    }
+  },
+  "without_self_loops_prefix_baseline": {
+    "bounded-scc": {
+      "seed_method": "bounded-scc",
+      "kernel_node_count": 12853,
+      "core_node_count": 288,
+      "satellite_node_count": 12565,
+      "seed_node_count": 733,
+      "kernel_scc_count": 3841,
+      "source_scc_count": 286,
+      "residual_cyclic_scc_count": 1,
+      "minset_exact": false,
+      "layers_computed": false,
+      "layer_histogram_buckets": 0
+    },
+    "exact-small-greedy": {
+      "seed_method": "exact-small-greedy",
+      "kernel_node_count": 12853,
+      "core_node_count": 288,
+      "satellite_node_count": 12565,
+      "seed_node_count": 1824,
+      "kernel_scc_count": 3841,
+      "source_scc_count": 286,
+      "residual_cyclic_scc_count": 0,
+      "minset_exact": false,
+      "layers_computed": true,
+      "layer_histogram_buckets": 86
+    },
+    "exact-cutting": {
+      "seed_method": "exact-cutting",
+      "kernel_node_count": 12853,
+      "core_node_count": 288,
+      "satellite_node_count": 12565,
+      "seed_node_count": 726,
+      "kernel_scc_count": 3841,
+      "source_scc_count": 286,
+      "residual_cyclic_scc_count": 1,
+      "minset_exact": false,
+      "layers_computed": false,
+      "layer_histogram_buckets": 0
+    }
+  }
+}
