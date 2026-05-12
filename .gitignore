@@ -5,3 +5,5 @@ __pycache__/
 *.pyc
 pyghidra_mcp_projects/
 unused-papers/
+.claude/
+*.log
