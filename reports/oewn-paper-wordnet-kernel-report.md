@@ -4,7 +4,7 @@
 - Graph type: paper-faithful WordNet approximation
 - Node policy: one normalized `lemma::pos` node with the first available representative synset definition
 - Edge policy: content-word `defining_lemma::pos -> defined_lemma::pos`, preferring same POS and otherwise unambiguous POS
-- Seed method: `exact-small-greedy`
+- Seed method: `bounded-scc`
 - Core policy: `source-union`
 
 ## Summary
@@ -16,8 +16,8 @@
 - Source SCCs inside kernel: `286`
 - Core size (union of source SCCs): `288`
 - Satellite size (kernel minus source-SCC Core): `12565`
-- Candidate seed size: `2370` (1.48%; 18.44% of kernel)
-- Residual cyclic SCCs after seed method: `0`
+- Candidate seed size: `946` (0.59%; 7.36% of kernel)
+- Residual cyclic SCCs after seed method: `1`
 
 ## Vincent-Lamarre WordNet Reference
 
@@ -51,99 +51,35 @@
 
 ## Layer Histogram
 
-- Layer `0`: `2370` nodes
-- Layer `1`: `1614` nodes
-- Layer `2`: `1009` nodes
-- Layer `3`: `768` nodes
-- Layer `4`: `573` nodes
-- Layer `5`: `499` nodes
-- Layer `6`: `413` nodes
-- Layer `7`: `342` nodes
-- Layer `8`: `276` nodes
-- Layer `9`: `265` nodes
-- Layer `10`: `241` nodes
-- Layer `11`: `208` nodes
-- Layer `12`: `195` nodes
-- Layer `13`: `161` nodes
-- Layer `14`: `166` nodes
-- Layer `15`: `147` nodes
-- Layer `16`: `136` nodes
-- Layer `17`: `135` nodes
-- Layer `18`: `112` nodes
-- Layer `19`: `120` nodes
-- Layer `20`: `109` nodes
-- Layer `21`: `110` nodes
-- Layer `22`: `113` nodes
-- Layer `23`: `103` nodes
-- Layer `24`: `104` nodes
-- Layer `25`: `90` nodes
-- Layer `26`: `96` nodes
-- Layer `27`: `91` nodes
-- Layer `28`: `85` nodes
-- Layer `29`: `74` nodes
-- Layer `30`: `72` nodes
-- Layer `31`: `81` nodes
-- Layer `32`: `65` nodes
-- Layer `33`: `88` nodes
-- Layer `34`: `91` nodes
-- Layer `35`: `91` nodes
-- Layer `36`: `87` nodes
-- Layer `37`: `80` nodes
-- Layer `38`: `96` nodes
-- Layer `39`: `130` nodes
-- Layer `40`: `128` nodes
-- Layer `41`: `115` nodes
-- Layer `42`: `97` nodes
-- Layer `43`: `87` nodes
-- Layer `44`: `43` nodes
-- Layer `45`: `30` nodes
-- Layer `46`: `29` nodes
-- Layer `47`: `41` nodes
-- Layer `48`: `58` nodes
-- Layer `49`: `81` nodes
-- Layer `50`: `66` nodes
-- Layer `51`: `52` nodes
-- Layer `52`: `56` nodes
-- Layer `53`: `50` nodes
-- Layer `54`: `52` nodes
-- Layer `55`: `52` nodes
-- Layer `56`: `45` nodes
-- Layer `57`: `41` nodes
-- Layer `58`: `38` nodes
-- Layer `59`: `33` nodes
-- Layer `60`: `24` nodes
-- Layer `61`: `17` nodes
-- Layer `62`: `8` nodes
-- Layer `63`: `3` nodes
-- Layer `64`: `1` nodes
+- Layering skipped because the selected seed did not fully acyclicize the kernel.
 
 ## Top Candidate Seed Nodes
 
-- `small [n] :: the slender part of the back` (degree score `4881`)
-- `large [n] :: a garment size for a large person` (degree score `3500`)
-- `white [n] :: a person of European descent with a light-skinned or pale complexion` (degree score `2079`)
 - `can [n] :: airtight sealed metal container for food or drink or paint etc.` (degree score `1795`)
-- `born [n] :: British nuclear physicist (born in Germany) honored for his contribut...` (degree score `1546`)
-- `plant [n] :: buildings for carrying on industrial labor` (degree score `1504`)
-- `form [n] :: the phonological or orthographic sound or appearance of a word that c...` (degree score `1486`)
-- `yellow [n] :: yellow color or pigment; the chromatic color resembling the hue of su...` (degree score `1451`)
 - `act [n] :: a legal document codifying the result of deliberations of a committee...` (degree score `1446`)
 - `part [n] :: something determined in relation to something that includes it` (degree score `1354`)
-- `common [n] :: a piece of open land for recreational use in an urban area` (degree score `1299`)
-- `english [n] :: an Indo-European language belonging to the West Germanic branch; the...` (degree score `1265`)
 - `body [n] :: the entire physical structure of an organism (an animal, plant, or hu...` (degree score `1260`)
-- `city [n] :: a large and densely populated urban area; may include several indepen...` (degree score `1256`)
-- `eastern [a] :: lying toward or situated in the east` (degree score `1252`)
-- `northern [n] :: a dialect of Middle English that developed into Scottish Lallans` (degree score `1110`)
-- `various [a] :: of many different kinds purposefully arranged but lacking any uniformity` (degree score `1095`)
-- `water [n] :: binary compound that occurs at room temperature as a clear colorless...` (degree score `1095`)
-- `found [n] :: food and lodging provided in addition to money` (degree score `1079`)
-- `southern [a] :: in or characteristic of a region of the United States south of (appro...` (degree score `1076`)
-- `first [n] :: the first or highest in an ordering or series` (degree score `1068`)
-- `several [a] :: (used with count nouns) of an indefinite number more than 2 or 3 but...` (degree score `1068`)
-- `make [v] :: engage in` (degree score `1043`)
-- `quality [n] :: an essential and distinguishing attribute of something or someone` (degree score `1030`)
-- `central [n] :: a workplace that serves as a telecommunications facility where lines...` (degree score `1004`)
+- `time [n] :: an instance or single occasion for some event` (degree score `852`)
+- `capable [a] :: (usually followed by ‘of’) having capacity or ability` (degree score `705`)
+- `substance [n] :: the real physical matter of which a person or thing consists` (degree score `577`)
+- `degree [n] :: a position on a scale of intensity or amount or quality` (degree score `432`)
+- `lower [n] :: the lower of two berths` (degree score `310`)
+- `defeated [n] :: people who are defeated` (degree score `268`)
+- `free [n] :: people who are free` (degree score `202`)
+- `giving [n] :: the act of giving` (degree score `127`)
+- `situated [a] :: situated in a particular spot or position` (degree score `125`)
+- `gold [n] :: coins made of gold` (degree score `123`)
+- `flattened [a] :: having been flattened` (degree score `122`)
+- `spring [n] :: the season of growth; spring; the beginning of spring` (degree score `120`)
+- `financial [a] :: involving financial matters` (degree score `114`)
+- `tea [n] :: a beverage made by steeping tea leaves in water` (degree score `101`)
+- `surface [a] :: on the surface` (degree score `98`)
+- `read [n] :: something that is read` (degree score `89`)
+- `coffee [n] :: a beverage consisting of an infusion of ground coffee beans` (degree score `85`)
+- `living [a] :: pertaining to living persons` (degree score `81`)
+- `side [a] :: located on a side` (degree score `78`)
+- `married [n] :: a person who is married` (degree score `77`)
+- `dress [n] :: a one-piece garment for a woman; has skirt and bodice` (degree score `70`)
 
 ## Highest Outdegree Nodes
 
@@ -203,9 +139,9 @@
 
 ## Annotation Coverage
 
-- `frequency`: `0` / `160010` (0.00%)
-- `concreteness`: `0` / `160010` (0.00%)
-- `age_of_acquisition`: `0` / `160010` (0.00%)
+- `frequency`: `46386` / `160010` (28.99%)
+- `concreteness`: `38572` / `160010` (24.11%)
+- `age_of_acquisition`: `34314` / `160010` (21.44%)
 - `imageability`: `0` / `160010` (0.00%)
 
 ## Caveats

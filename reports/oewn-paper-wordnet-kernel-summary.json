@@ -12,11 +12,11 @@
   "core_node_count": 288,
   "satellite_node_count": 12565,
   "core_policy": "source-union",
-  "seed_method": "exact-small-greedy",
-  "seed_node_count": 2370,
-  "seed_fraction_total": 0.014811574276607712,
-  "seed_fraction_kernel": 0.18439274877460515,
-  "residual_cyclic_scc_count": 0,
+  "seed_method": "bounded-scc",
+  "seed_node_count": 946,
+  "seed_fraction_total": 0.00591213049184426,
+  "seed_fraction_kernel": 0.07360149381467361,
+  "residual_cyclic_scc_count": 1,
   "largest_kernel_scc_sizes": [
     8138,
     11,
@@ -29,73 +29,7 @@
     5,
     5
   ],
-  "layer_histogram": {
-    "0": 2370,
-    "1": 1614,
-    "2": 1009,
-    "3": 768,
-    "4": 573,
-    "5": 499,
-    "6": 413,
-    "7": 342,
-    "8": 276,
-    "9": 265,
-    "10": 241,
-    "11": 208,
-    "12": 195,
-    "13": 161,
-    "14": 166,
-    "15": 147,
-    "16": 136,
-    "17": 135,
-    "18": 112,
-    "19": 120,
-    "20": 109,
-    "21": 110,
-    "22": 113,
-    "23": 103,
-    "24": 104,
-    "25": 90,
-    "26": 96,
-    "27": 91,
-    "28": 85,
-    "29": 74,
-    "30": 72,
-    "31": 81,
-    "32": 65,
-    "33": 88,
-    "34": 91,
-    "35": 91,
-    "36": 87,
-    "37": 80,
-    "38": 96,
-    "39": 130,
-    "40": 128,
-    "41": 115,
-    "42": 97,
-    "43": 87,
-    "44": 43,
-    "45": 30,
-    "46": 29,
-    "47": 41,
-    "48": 58,
-    "49": 81,
-    "50": 66,
-    "51": 52,
-    "52": 56,
-    "53": 50,
-    "54": 52,
-    "55": 52,
-    "56": 45,
-    "57": 41,
-    "58": 38,
-    "59": 33,
-    "60": 24,
-    "61": 17,
-    "62": 8,
-    "63": 3,
-    "64": 1
-  },
+  "layer_histogram": {},
   "resolution_stats": {
     "definition_count": 160010,
     "candidate_matches": 719836,
@@ -115,36 +49,8 @@
   },
   "top_seed_nodes": [
     [
-      "small [n] :: the slender part of the back",
-      4881
-    ],
-    [
-      "large [n] :: a garment size for a large person",
-      3500
-    ],
-    [
-      "white [n] :: a person of European descent with a light-skinned or pale complexion",
-      2079
-    ],
-    [
       "can [n] :: airtight sealed metal container for food or drink or paint etc.",
       1795
-    ],
-    [
-      "born [n] :: British nuclear physicist (born in Germany) honored for his contribut...",
-      1546
-    ],
-    [
-      "plant [n] :: buildings for carrying on industrial labor",
-      1504
-    ],
-    [
-      "form [n] :: the phonological or orthographic sound or appearance of a word that c...",
-      1486
-    ],
-    [
-      "yellow [n] :: yellow color or pigment; the chromatic color resembling the hue of su...",
-      1451
     ],
     [
       "act [n] :: a legal document codifying the result of deliberations of a committee...",
@@ -155,64 +61,92 @@
       1354
     ],
     [
-      "common [n] :: a piece of open land for recreational use in an urban area",
-      1299
-    ],
-    [
-      "english [n] :: an Indo-European language belonging to the West Germanic branch; the...",
-      1265
-    ],
-    [
       "body [n] :: the entire physical structure of an organism (an animal, plant, or hu...",
       1260
     ],
     [
-      "city [n] :: a large and densely populated urban area; may include several indepen...",
-      1256
+      "time [n] :: an instance or single occasion for some event",
+      852
     ],
     [
-      "eastern [a] :: lying toward or situated in the east",
-      1252
+      "capable [a] :: (usually followed by \u2018of\u2019) having capacity or ability",
+      705
     ],
     [
-      "northern [n] :: a dialect of Middle English that developed into Scottish Lallans",
-      1110
+      "substance [n] :: the real physical matter of which a person or thing consists",
+      577
     ],
     [
-      "various [a] :: of many different kinds purposefully arranged but lacking any uniformity",
-      1095
+      "degree [n] :: a position on a scale of intensity or amount or quality",
+      432
     ],
     [
-      "water [n] :: binary compound that occurs at room temperature as a clear colorless...",
-      1095
+      "lower [n] :: the lower of two berths",
+      310
     ],
     [
-      "found [n] :: food and lodging provided in addition to money",
-      1079
+      "defeated [n] :: people who are defeated",
+      268
     ],
     [
-      "southern [a] :: in or characteristic of a region of the United States south of (appro...",
-      1076
+      "free [n] :: people who are free",
+      202
     ],
     [
-      "first [n] :: the first or highest in an ordering or series",
-      1068
+      "giving [n] :: the act of giving",
+      127
     ],
     [
-      "several [a] :: (used with count nouns) of an indefinite number more than 2 or 3 but...",
-      1068
+      "situated [a] :: situated in a particular spot or position",
+      125
     ],
     [
-      "make [v] :: engage in",
-      1043
+      "gold [n] :: coins made of gold",
+      123
     ],
     [
-      "quality [n] :: an essential and distinguishing attribute of something or someone",
-      1030
+      "flattened [a] :: having been flattened",
+      122
     ],
     [
-      "central [n] :: a workplace that serves as a telecommunications facility where lines...",
-      1004
+      "spring [n] :: the season of growth; spring; the beginning of spring",
+      120
+    ],
+    [
+      "financial [a] :: involving financial matters",
+      114
+    ],
+    [
+      "tea [n] :: a beverage made by steeping tea leaves in water",
+      101
+    ],
+    [
+      "surface [a] :: on the surface",
+      98
+    ],
+    [
+      "read [n] :: something that is read",
+      89
+    ],
+    [
+      "coffee [n] :: a beverage consisting of an infusion of ground coffee beans",
+      85
+    ],
+    [
+      "living [a] :: pertaining to living persons",
+      81
+    ],
+    [
+      "side [a] :: located on a side",
+      78
+    ],
+    [
+      "married [n] :: a person who is married",
+      77
+    ],
+    [
+      "dress [n] :: a one-piece garment for a woman; has skirt and bodice",
+      70
     ]
   ],
   "top_degrees": {
@@ -421,22 +355,26 @@
       ]
     ]
   },
-  "annotation_sources": [],
+  "annotation_sources": [
+    "data\\psycholinguistic\\frequency.csv",
+    "data\\psycholinguistic\\age_of_acquisition.csv",
+    "data\\psycholinguistic\\concreteness.csv"
+  ],
   "annotation_coverage": {
     "frequency": {
-      "count": 0,
+      "count": 46386,
       "total": 160010,
-      "fraction": 0.0
+      "fraction": 0.28989438160114994
     },
     "concreteness": {
-      "count": 0,
+      "count": 38572,
       "total": 160010,
-      "fraction": 0.0
+      "fraction": 0.24105993375414037
     },
     "age_of_acquisition": {
-      "count": 0,
+      "count": 34314,
       "total": 160010,
-      "fraction": 0.0
+      "fraction": 0.2144490969314418
     },
     "imageability": {
       "count": 0,
@@ -447,16 +385,16 @@
   "component_annotation_summary": {
     "rest": {
       "frequency": {
-        "count": 0,
-        "mean": 0.0
+        "count": 36918,
+        "mean": 2.6326394791802197
       },
       "concreteness": {
-        "count": 0,
-        "mean": 0.0
+        "count": 30156,
+        "mean": 3.155886722376973
       },
       "age_of_acquisition": {
-        "count": 0,
-        "mean": 0.0
+        "count": 27003,
+        "mean": 11.00978308376847
       },
       "imageability": {
         "count": 0,
@@ -465,16 +403,16 @@
     },
     "kernel": {
       "frequency": {
-        "count": 0,
-        "mean": 0.0
+        "count": 9468,
+        "mean": 3.498209826364921
       },
       "concreteness": {
-        "count": 0,
-        "mean": 0.0
+        "count": 8416,
+        "mean": 3.125931558935361
       },
       "age_of_acquisition": {
-        "count": 0,
-        "mean": 0.0
+        "count": 7311,
+        "mean": 9.11928583107646
       },
       "imageability": {
         "count": 0,
@@ -483,16 +421,16 @@
     },
     "core": {
       "frequency": {
-        "count": 0,
-        "mean": 0.0
+        "count": 240,
+        "mean": 3.3462478946495016
       },
       "concreteness": {
-        "count": 0,
-        "mean": 0.0
+        "count": 223,
+        "mean": 2.7795515695067268
       },
       "age_of_acquisition": {
-        "count": 0,
-        "mean": 0.0
+        "count": 137,
+        "mean": 9.114248737226276
       },
       "imageability": {
         "count": 0,
@@ -501,16 +439,16 @@
     },
     "satellites": {
       "frequency": {
-        "count": 0,
-        "mean": 0.0
+        "count": 9228,
+        "mean": 3.502162022248287
       },
       "concreteness": {
-        "count": 0,
-        "mean": 0.0
+        "count": 8193,
+        "mean": 3.1353594531917492
       },
       "age_of_acquisition": {
-        "count": 0,
-        "mean": 0.0
+        "count": 7174,
+        "mean": 9.119382023139114
       },
       "imageability": {
         "count": 0,
@@ -519,16 +457,16 @@
     },
     "seed": {
       "frequency": {
-        "count": 0,
-        "mean": 0.0
+        "count": 438,
+        "mean": 3.133469039454583
       },
       "concreteness": {
-        "count": 0,
-        "mean": 0.0
+        "count": 273,
+        "mean": 3.6316849816849817
       },
       "age_of_acquisition": {
-        "count": 0,
-        "mean": 0.0
+        "count": 273,
+        "mean": 9.937160032967032
       },
       "imageability": {
         "count": 0,
