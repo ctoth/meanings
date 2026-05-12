@@ -399,12 +399,16 @@ This is not merely a pretty seed list. The newer FVS-control papers sharpen the 
 **Current State**
 
 - `paper-wordnet` exists and runs on OEWN 2024.
+- Commit `7d12e64` fixed `compute_kernel` so self-loops count as cycles. Any report generated before that commit is stale for Kernel/seed/layer counts.
+- OEWN has `3,413` gloss self-loops under the current paper-wordnet construction.
 - Current `exact-small-greedy` candidate seed:
-  - seed nodes: `2,370`
+  - kernel nodes: `18,151`
+  - core nodes under `source-union`: `510`
+  - satellite nodes: `17,641`
+  - seed nodes: `5,044`
   - residual cyclic SCCs: `0`
   - exact: `no`
-  - SCCs exact / heuristic: `1,380` / `872`
-  - candidate seed id: `exact-small-greedy:n2370:r0`
+  - candidate seed id: `exact-small-greedy:n5044:r0`
 - Layering succeeds after seed removal with 65 layers.
 - Psycholinguistic annotation CSVs exist for frequency, concreteness, and age of acquisition.
 - The raw WordNet seed contains sense/POS artifacts that are not human-facing vocabulary items, e.g. noun senses like `small [n] :: the slender part of the back`.
@@ -464,6 +468,8 @@ This is not merely a pretty seed list. The newer FVS-control papers sharpen the 
 **Commands**
 
 ```powershell
+uv run python scripts/self_loop_fix_impact.py
+
 uv run python -m meanings.cli `
   --graph-type paper-wordnet `
   --seed-method exact-small-greedy `
@@ -490,6 +496,7 @@ uv run python -m meanings.kernel_export `
 
 **Acceptance Checks**
 
+- `reports/oewn-paper-wordnet-kernel-summary.json` is regenerated after commit `7d12e64` and reports `kernel_node_count = 18151` for the current self-loop-inclusive graph.
 - The strict graph seed remains reproducible from `candidate_seed_id`.
 - The human-clean list never loses provenance: every surface word links back to one or more graph node ids.
 - The report states plainly that the list is a candidate grounding vocabulary, not a final semantic primitive set.
@@ -515,6 +522,7 @@ These should be retrieved/read before treating the human-clean list as linguisti
 
 Implement `src/meanings/kernel_export.py` with read-only inputs:
 
+- first regenerate the paper-wordnet summary/layers after the self-loop fix
 - read `reports/oewn-paper-wordnet-kernel-summary.json`
 - read `reports/oewn-paper-wordnet-layers.json`
 - emit a CSV and JSON containing graph node id, parsed lemma/POS, label/gloss, seed membership, layer, degree score, and candidate seed id
