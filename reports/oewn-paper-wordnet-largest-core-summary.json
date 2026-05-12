@@ -1,0 +1,539 @@
+{
+  "lexicon_id": "oewn:2024",
+  "graph_type": "paper_wordnet",
+  "language": "en",
+  "resource_id": "oewn",
+  "node_count": 160010,
+  "edge_count": 677823,
+  "kernel_node_count": 12853,
+  "kernel_fraction": 0.08032622961064934,
+  "kernel_scc_count": 3841,
+  "source_scc_count": 286,
+  "core_node_count": 8138,
+  "satellite_node_count": 4715,
+  "core_policy": "largest-scc",
+  "seed_method": "exact-small-greedy",
+  "seed_node_count": 2370,
+  "seed_fraction_total": 0.014811574276607712,
+  "seed_fraction_kernel": 0.18439274877460515,
+  "residual_cyclic_scc_count": 0,
+  "largest_kernel_scc_sizes": [
+    8138,
+    11,
+    10,
+    6,
+    6,
+    6,
+    5,
+    5,
+    5,
+    5
+  ],
+  "layer_histogram": {
+    "0": 2370,
+    "1": 1614,
+    "2": 1009,
+    "3": 768,
+    "4": 573,
+    "5": 499,
+    "6": 413,
+    "7": 342,
+    "8": 276,
+    "9": 265,
+    "10": 241,
+    "11": 208,
+    "12": 195,
+    "13": 161,
+    "14": 166,
+    "15": 147,
+    "16": 136,
+    "17": 135,
+    "18": 112,
+    "19": 120,
+    "20": 109,
+    "21": 110,
+    "22": 113,
+    "23": 103,
+    "24": 104,
+    "25": 90,
+    "26": 96,
+    "27": 91,
+    "28": 85,
+    "29": 74,
+    "30": 72,
+    "31": 81,
+    "32": 65,
+    "33": 88,
+    "34": 91,
+    "35": 91,
+    "36": 87,
+    "37": 80,
+    "38": 96,
+    "39": 130,
+    "40": 128,
+    "41": 115,
+    "42": 97,
+    "43": 87,
+    "44": 43,
+    "45": 30,
+    "46": 29,
+    "47": 41,
+    "48": 58,
+    "49": 81,
+    "50": 66,
+    "51": 52,
+    "52": 56,
+    "53": 50,
+    "54": 52,
+    "55": 52,
+    "56": 45,
+    "57": 41,
+    "58": 38,
+    "59": 33,
+    "60": 24,
+    "61": 17,
+    "62": 8,
+    "63": 3,
+    "64": 1
+  },
+  "resolution_stats": {
+    "definition_count": 160010,
+    "candidate_matches": 719836,
+    "resolved_same_pos": 512641,
+    "resolved_unambiguous_pos": 175554,
+    "ambiguous_skipped": 31641,
+    "missing_skipped": 0
+  },
+  "paper_reference": {
+    "source": "Vincent-Lamarre 2014 WordNet",
+    "node_count": 132477,
+    "kernel_node_count": 9802,
+    "kernel_fraction": 0.12,
+    "core_node_count": 6392,
+    "satellite_node_count": 3410,
+    "seed_node_count": 1094
+  },
+  "top_seed_nodes": [
+    [
+      "small [n] :: the slender part of the back",
+      4881
+    ],
+    [
+      "large [n] :: a garment size for a large person",
+      3500
+    ],
+    [
+      "white [n] :: a person of European descent with a light-skinned or pale complexion",
+      2079
+    ],
+    [
+      "can [n] :: airtight sealed metal container for food or drink or paint etc.",
+      1795
+    ],
+    [
+      "born [n] :: British nuclear physicist (born in Germany) honored for his contribut...",
+      1546
+    ],
+    [
+      "plant [n] :: buildings for carrying on industrial labor",
+      1504
+    ],
+    [
+      "form [n] :: the phonological or orthographic sound or appearance of a word that c...",
+      1486
+    ],
+    [
+      "yellow [n] :: yellow color or pigment; the chromatic color resembling the hue of su...",
+      1451
+    ],
+    [
+      "act [n] :: a legal document codifying the result of deliberations of a committee...",
+      1446
+    ],
+    [
+      "part [n] :: something determined in relation to something that includes it",
+      1354
+    ],
+    [
+      "common [n] :: a piece of open land for recreational use in an urban area",
+      1299
+    ],
+    [
+      "english [n] :: an Indo-European language belonging to the West Germanic branch; the...",
+      1265
+    ],
+    [
+      "body [n] :: the entire physical structure of an organism (an animal, plant, or hu...",
+      1260
+    ],
+    [
+      "city [n] :: a large and densely populated urban area; may include several indepen...",
+      1256
+    ],
+    [
+      "eastern [a] :: lying toward or situated in the east",
+      1252
+    ],
+    [
+      "northern [n] :: a dialect of Middle English that developed into Scottish Lallans",
+      1110
+    ],
+    [
+      "various [a] :: of many different kinds purposefully arranged but lacking any uniformity",
+      1095
+    ],
+    [
+      "water [n] :: binary compound that occurs at room temperature as a clear colorless...",
+      1095
+    ],
+    [
+      "found [n] :: food and lodging provided in addition to money",
+      1079
+    ],
+    [
+      "southern [a] :: in or characteristic of a region of the United States south of (appro...",
+      1076
+    ],
+    [
+      "first [n] :: the first or highest in an ordering or series",
+      1068
+    ],
+    [
+      "several [a] :: (used with count nouns) of an indefinite number more than 2 or 3 but...",
+      1068
+    ],
+    [
+      "make [v] :: engage in",
+      1043
+    ],
+    [
+      "quality [n] :: an essential and distinguishing attribute of something or someone",
+      1030
+    ],
+    [
+      "central [n] :: a workplace that serves as a telecommunications facility where lines...",
+      1004
+    ]
+  ],
+  "top_degrees": {
+    "outdegree": [
+      [
+        "small [n] :: the slender part of the back",
+        4878
+      ],
+      [
+        "large [n] :: a garment size for a large person",
+        3497
+      ],
+      [
+        "white [n] :: a person of European descent with a light-skinned or pale complexion",
+        2073
+      ],
+      [
+        "tropical [a] :: relating to or situated in or characteristic of the tropics (the regi...",
+        1938
+      ],
+      [
+        "can [n] :: airtight sealed metal container for food or drink or paint etc.",
+        1788
+      ],
+      [
+        "tree [n] :: English actor and theatrical producer noted for his lavish production...",
+        1703
+      ],
+      [
+        "perennial [n] :: (botany) a plant lasting for three seasons or more",
+        1547
+      ],
+      [
+        "born [n] :: British nuclear physicist (born in Germany) honored for his contribut...",
+        1540
+      ],
+      [
+        "plant [n] :: buildings for carrying on industrial labor",
+        1502
+      ],
+      [
+        "form [n] :: the phonological or orthographic sound or appearance of a word that c...",
+        1478
+      ],
+      [
+        "yellow [n] :: yellow color or pigment; the chromatic color resembling the hue of su...",
+        1445
+      ],
+      [
+        "act [n] :: a legal document codifying the result of deliberations of a committee...",
+        1441
+      ],
+      [
+        "part [n] :: something determined in relation to something that includes it",
+        1352
+      ],
+      [
+        "shrub [n] :: a low woody perennial plant usually having several major stems",
+        1307
+      ],
+      [
+        "common [n] :: a piece of open land for recreational use in an urban area",
+        1294
+      ],
+      [
+        "english [n] :: an Indo-European language belonging to the West Germanic branch; the...",
+        1260
+      ],
+      [
+        "body [n] :: the entire physical structure of an organism (an animal, plant, or hu...",
+        1253
+      ],
+      [
+        "eastern [a] :: lying toward or situated in the east",
+        1249
+      ],
+      [
+        "city [n] :: a large and densely populated urban area; may include several indepen...",
+        1247
+      ],
+      [
+        "american [n] :: a native or inhabitant of the United States",
+        1145
+      ],
+      [
+        "cultivated [a] :: (of land or fields) prepared for raising crops by plowing or fertilizing",
+        1144
+      ],
+      [
+        "european [n] :: a native or inhabitant of Europe",
+        1125
+      ],
+      [
+        "western [n] :: a film about life in the western United States during the period of e...",
+        1111
+      ],
+      [
+        "northern [n] :: a dialect of Middle English that developed into Scottish Lallans",
+        1108
+      ],
+      [
+        "various [a] :: of many different kinds purposefully arranged but lacking any uniformity",
+        1089
+      ]
+    ],
+    "indegree": [
+      [
+        "microsensor [n] :: A submicrometer- to millimeter-size device that converts a nonelectri...",
+        27
+      ],
+      [
+        "myotonia_atrophica [n] :: a severe form of muscular dystrophy marked by generalized weakness an...",
+        25
+      ],
+      [
+        "myotonic_dystrophy [n] :: a severe form of muscular dystrophy marked by generalized weakness an...",
+        25
+      ],
+      [
+        "myotonic_muscular_dystrophy [n] :: a severe form of muscular dystrophy marked by generalized weakness an...",
+        25
+      ],
+      [
+        "steinerts_disease [n] :: a severe form of muscular dystrophy marked by generalized weakness an...",
+        25
+      ],
+      [
+        "mononychus_olecranus [n] :: a turkey-sized long-legged fossil 75 million years old found in the G...",
+        24
+      ],
+      [
+        "welwitschia [n] :: curious plant of arid regions of southwestern Africa having a yard-hi...",
+        24
+      ],
+      [
+        "welwitschia_mirabilis [n] :: curious plant of arid regions of southwestern Africa having a yard-hi...",
+        24
+      ],
+      [
+        "generic [n] :: wine that does not meet the minimum qualifications and standards for...",
+        23
+      ],
+      [
+        "generic_wine [n] :: wine that does not meet the minimum qualifications and standards for...",
+        23
+      ],
+      [
+        "kuru [n] :: a progressive disease of the central nervous system marked by increas...",
+        23
+      ],
+      [
+        "maxwells_demon [n] :: an imaginary creature that controls a small hole in a partition that...",
+        23
+      ],
+      [
+        "neobehaviorism [n] :: a school of psychology based on the general principles of behaviorism...",
+        23
+      ],
+      [
+        "newmarket [n] :: a gambling card game in which chips are placed on the ace and king an...",
+        23
+      ],
+      [
+        "placebo_effect [n] :: any effect that seems to be a consequence of administering a placebo;...",
+        23
+      ],
+      [
+        "stops [n] :: a gambling card game in which chips are placed on the ace and king an...",
+        23
+      ],
+      [
+        "arborvirus [n] :: a large heterogeneous group of RNA viruses divisible into groups on t...",
+        22
+      ],
+      [
+        "arbovirus [n] :: a large heterogeneous group of RNA viruses divisible into groups on t...",
+        22
+      ],
+      [
+        "dug_out [n] :: a shelter for humans or domesticated animals and livestock based on a...",
+        22
+      ],
+      [
+        "hooke [n] :: English scientist who formulated the law of elasticity and proposed a...",
+        22
+      ],
+      [
+        "liver [n] :: large and complicated reddish-brown glandular organ located in the up...",
+        22
+      ],
+      [
+        "pit_house [n] :: a shelter for humans or domesticated animals and livestock based on a...",
+        22
+      ],
+      [
+        "pithouse [n] :: a shelter for humans or domesticated animals and livestock based on a...",
+        22
+      ],
+      [
+        "radiation_sickness [n] :: syndrome resulting from exposure to ionizing radiation (e.g., exposur...",
+        22
+      ],
+      [
+        "radiation_syndrome [n] :: syndrome resulting from exposure to ionizing radiation (e.g., exposur...",
+        22
+      ]
+    ]
+  },
+  "annotation_sources": [],
+  "annotation_coverage": {
+    "frequency": {
+      "count": 0,
+      "total": 160010,
+      "fraction": 0.0
+    },
+    "concreteness": {
+      "count": 0,
+      "total": 160010,
+      "fraction": 0.0
+    },
+    "age_of_acquisition": {
+      "count": 0,
+      "total": 160010,
+      "fraction": 0.0
+    },
+    "imageability": {
+      "count": 0,
+      "total": 160010,
+      "fraction": 0.0
+    }
+  },
+  "component_annotation_summary": {
+    "rest": {
+      "frequency": {
+        "count": 0,
+        "mean": 0.0
+      },
+      "concreteness": {
+        "count": 0,
+        "mean": 0.0
+      },
+      "age_of_acquisition": {
+        "count": 0,
+        "mean": 0.0
+      },
+      "imageability": {
+        "count": 0,
+        "mean": 0.0
+      }
+    },
+    "kernel": {
+      "frequency": {
+        "count": 0,
+        "mean": 0.0
+      },
+      "concreteness": {
+        "count": 0,
+        "mean": 0.0
+      },
+      "age_of_acquisition": {
+        "count": 0,
+        "mean": 0.0
+      },
+      "imageability": {
+        "count": 0,
+        "mean": 0.0
+      }
+    },
+    "core": {
+      "frequency": {
+        "count": 0,
+        "mean": 0.0
+      },
+      "concreteness": {
+        "count": 0,
+        "mean": 0.0
+      },
+      "age_of_acquisition": {
+        "count": 0,
+        "mean": 0.0
+      },
+      "imageability": {
+        "count": 0,
+        "mean": 0.0
+      }
+    },
+    "satellites": {
+      "frequency": {
+        "count": 0,
+        "mean": 0.0
+      },
+      "concreteness": {
+        "count": 0,
+        "mean": 0.0
+      },
+      "age_of_acquisition": {
+        "count": 0,
+        "mean": 0.0
+      },
+      "imageability": {
+        "count": 0,
+        "mean": 0.0
+      }
+    },
+    "seed": {
+      "frequency": {
+        "count": 0,
+        "mean": 0.0
+      },
+      "concreteness": {
+        "count": 0,
+        "mean": 0.0
+      },
+      "age_of_acquisition": {
+        "count": 0,
+        "mean": 0.0
+      },
+      "imageability": {
+        "count": 0,
+        "mean": 0.0
+      }
+    }
+  }
+}

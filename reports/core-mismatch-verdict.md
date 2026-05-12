@@ -90,3 +90,34 @@ uv run python -m meanings.cli --graph-type paper-wordnet --core-policy largest-s
 uv run python -m meanings.compare_reports --left reports/oewn-paper-wordnet-kernel-summary.json --right reports/oewn-paper-wordnet-largest-core-summary.json --output reports/oewn-core-policy-comparison.md
 ```
 
+## Executed Core-Policy Test
+
+The `core_policy` option is now implemented:
+
+- `--core-policy source-union`
+- `--core-policy largest-scc`
+
+Comparison output:
+
+- [oewn-core-policy-comparison.md](/C:/Users/Q/code/meanings/reports/oewn-core-policy-comparison.md)
+
+Measured result:
+
+| Metric | Vincent-Lamarre WordNet | `source-union` | `largest-scc` |
+|---|---:|---:|---:|
+| Kernel | `9,802` | `12,853` | `12,853` |
+| Core | `6,392` | `288` | `8,138` |
+| Satellites | `3,410` | `12,565` | `4,715` |
+| Candidate seed | `1,094` | `2,370` | `2,370` |
+| Residual cyclic SCCs | n/a | `0` | `0` |
+
+Updated verdict:
+
+- `largest-scc` is much closer to the reported WordNet Core/Satellite scale.
+- `source-union` follows one strict reading of the methodology notes but produces a Core that is implausibly small relative to all reported dictionary results.
+- The remaining mismatch is now mostly resource/preprocessing, not graph orientation.
+
+Recommended default for paper-comparison reports:
+
+- Use `largest-scc` when comparing to the published WordNet table.
+- Keep `source-union` available because it matches the explicit source-SCC hierarchy language and is useful for testing definitional-flow assumptions.

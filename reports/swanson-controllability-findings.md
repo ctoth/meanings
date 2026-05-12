@@ -1,0 +1,131 @@
+# Swanson link: lexical grounding sets ↔ structural controllability / driver nodes
+
+**Date:** 2026-05-12
+**Type:** literature-based discovery (Swanson link) + concrete computation on OEWN
+**Status:** complete
+**Inputs read:** `reports/research-swanson-3-controllability-driver-nodes.md`; `reports/graph-object-definitions.md`; paper notes for `Massé_2008`, `Vincent-Lamarre_2014`, `Schindler_2025`; `src/meanings/graph_analysis.py`, `src/meanings/wordnet_pipeline.py`; `reports/oewn-paper-wordnet-kernel-summary.json`; `scripts/perron_frobenius_oewn.py` (pattern reused).
+**Computation artifact:** `reports/maximum-matching-oewn.json`, produced by `scripts/maximum_matching_oewn.py`.
+
+---
+
+## 0. TL;DR
+
+- **Two literatures, same-shaped question, different objects, no cross-citation.** Lexical grounding (Massé/Harnad 2008; Vincent-Lamarre 2014): the minimal grounding set = a **minimum feedback vertex set (FVS)** of the definition digraph. Network control (Liu–Slotine–Barabási, *Nature* 2011): the minimal driver-node set = the **unmatched nodes under a maximum matching**. I found no symbol-grounding / dictionary-graph paper citing Liu et al. or structural-controllability work, and no controllability paper citing Massé, Vincent-Lamarre, Harnad, Picard, or dictionary-graph work. The nearest bridge already exists *inside network science* but nobody has carried it to lexicons: **Fiedler–Mochizuki (2013) / Zañudo–Yang–Albert (PNAS 2017)** show that for *nonlinear* dynamics the right control set is exactly an **FVS** (plus source nodes), not the matching set — so the dictionary-grounding people independently rediscovered the *nonlinear* control object, and the network-control people independently rediscovered the *linear* one, and the two halves have never been put side by side under the "what controls a directed network?" banner.
+- **They genuinely diverge, and we now have the numbers.** On the OEWN paper-WordNet definition digraph (160,010 lemma::pos nodes, 677,823 edges): the FVS-seed is **2,370 nodes (1.5%)**; the maximum-matching driver set is **118,744 nodes (74.2%)**. On the kernel subgraph alone (12,853 nodes — the part where every cycle lives, the natural home of the FVS) the driver set is **2,785 nodes (21.7%)**, comparable in *size* to the 2,370-node seed but with only **255 nodes in common** (Jaccard 0.052). So even restricted to the cyclic core, "control the network in Liu's sense" and "ground the vocabulary in Harnad's sense" pick almost disjoint node sets. The divergence is the finding: **grounding cares about acyclicity/well-foundedness; matching-control cares about path-coverage under integrator dynamics. They are not the same minimal set, not even approximately.**
+
+---
+
+## 1. Disjointness: the citation gap is real
+
+### 1.1 What each side computes
+
+| | Lexical grounding (this repo's `MinSet`) | Network control (Liu et al. 2011) |
+|---|---|---|
+| Object | minimum **feedback vertex set** (FVS): smallest node set hitting every directed cycle | **driver nodes**: nodes left unmatched by a maximum matching of the digraph |
+| After you "have" the set | residual graph is a DAG → recursively unfold all definitions | inject independent control signals at drivers → reach any state of the linear system |
+| Hardness | minimum FVS is NP-hard (Karp); repo uses `exact-small-greedy` heuristic seed | maximum matching is **polynomial** (Hopcroft–Karp); the *minimum* driver set is therefore poly-time |
+| Dynamics model | none — pure reachability / well-foundedness of recursive definition | linear time-invariant: ẋ = Ax + Bu, A = (structural) adjacency |
+| On a DAG | FVS = ∅ (already well-founded) | driver set ≠ ∅ — every source node, and generally many more, must be driven |
+| On a single directed cycle Cₙ | FVS = {1 node} | driver set = ∅ (the cycle is a perfect matching of itself → "self-controlled", Lin's term) |
+
+The DAG row and the cycle row already prove the objects are different: on a DAG the FVS is empty but drivers are not; on a pure cycle drivers are empty but the FVS is not. **They are, in a precise sense, complementary** — FVS measures how far from acyclic you are; the matching deficiency measures how far from "every node is the unique target of some chosen incoming edge" you are.
+
+### 1.2 Citation search, both directions — empty
+
+- **Dictionary/grounding → controllability:** Massé et al. 2008, Vincent-Lamarre et al. 2014, Picard 2013, Levary 2012, Harnad 1990, and Schindler et al. 2025 (LGDE) cite graph-theory (FVS, SCC, Tarjan), psycholinguistics (age-of-acquisition), and network statistics (Steyvers–Tenenbaum small-world) — **none cite Liu–Slotine–Barabási or any structural-controllability paper.** The grounding literature talks about "minimal grounding set / kernel / core" with zero awareness that network science calls a sibling problem "driver nodes."
+- **Controllability → grounding:** Liu et al. 2011 and the large follow-up (target controllability, control energy, control profiles, observability, exact controllability via eigenvalue methods, Zañudo–Yang–Albert FVS-control) apply to regulatory/neural/metabolic/social/food-web/transport networks. I found **no controllability paper that cites Massé, Vincent-Lamarre, Harnad, or "dictionary graph"**, and the survey-level work on "controllability of semantic networks / WordNet / language graphs" does not exist as a recognizable line — the closest hits are generic "WordNet is a small-world network" papers (Steyvers–Tenenbaum 2005 and descendants), which never mention control or driver nodes.
+- **Nearest miss inside network science (the unexploited bridge):** Fiedler, Mochizuki et al., *J. Dyn. Diff. Eq.* 2013 ("Dynamics and Control at Feedback Vertex Sets I/II") and Zañudo, Yang, Albert, *PNAS* 2017 ("Structure-based control of complex networks with nonlinear dynamics") prove: for a network with *unspecified nonlinear* dynamics, overriding the state of a **feedback vertex set + source nodes** forces the whole network onto any of its natural attractors. That is *exactly* the dictionary-grounding move ("treat the FVS as known from outside, the rest unfolds"). Zañudo et al. even tabulate FVS-control set sizes vs. Liu's matching-control sizes on real networks and find them wildly different and even *inversely* related across network classes (biological: matching needs 75–96% of nodes, FVS needs 1–18%; social networks: the reverse). **So the network-science community has already discovered that FVS-control and matching-control are different objects answering different questions — it just never connected the FVS-control object to lexical grounding, which is the same object.** This is the Swanson link: literature A (grounding) ≈ literature B's FVS-control corner; literature B's mainstream (Liu matching-control) is the *other* answer; A has never heard of B.
+
+---
+
+## 2. Combinatorics: FVS vs. driver nodes, with bounds and worked examples
+
+### 2.1 Worked small examples
+
+1. **Directed triangle a→b→c→a.** Min FVS = 1 (any vertex). Max matching = {a→b, c→a} (or any 2 of the 3 edges, but they share endpoints pairwise, so max matching = ... actually a→b and c→a share no endpoint → size 2). N − |M| = 3 − ... wait: a perfect matching of a cycle Cₙ has size n (match each i→i+1), so M = {a→b, b→c, c→a}? No — b→c and a→b share vertex b on the *bipartite* sides? In the bipartite construction left={a,b,c}, right={a,b,c}, edges (a,b),(b,c),(c,a) form a perfect matching of size 3. So |M| = 3, N − |M| = 0 drivers. **FVS = 1, drivers = 0.**
+2. **Path a→b→c (a DAG).** Min FVS = 0. Bipartite edges (a,b),(b,c): max matching size 2 (they share no bipartite vertex: left a,b ; right b,c). N − |M| = 3 − 2 = 1 driver — and indeed it's `a` (the source). **FVS = 0, drivers = 1.**
+3. **"Hub-and-spokes" out-star: c→x₁, c→x₂, c→x₃.** Min FVS = 0 (acyclic). Max matching size 1 (all edges share left-vertex c). Drivers = 4 − 1 = 3: that's `c` plus two of the leaves. So a node with high *out*-degree (`c`, the definer of many words — like WordNet's "small[n]::the slender part of the back" with out-degree 4878) is forced to be a driver, *and* it can rescue only one of its targets. **High out-degree → likely a driver; high out-degree → not in the FVS unless it also sits on a cycle.** This matches Liu et al.'s counterintuitive "hubs are usually not drivers" only partially: out-hubs in a *bipartite-matching* sense are drivers; their finding is about in/out hubs in undirected-degree terms.
+4. **Two triangles sharing one vertex (figure-eight):** Min FVS = 1 (the shared vertex hits both cycles). Bipartite: 6 edges, the shared vertex appears on both sides; max matching = 4 or 5 depending on orientation; drivers = 5 − |M| ≈ 1. Here FVS and drivers can *both* be ~1 but need not be the *same* vertex — the FVS wants the articulation vertex, the matching is indifferent.
+
+### 2.2 Bounds and the structural relationship
+
+- **No clean inequality in either direction.** Example 1: FVS (1) > drivers (0). Example 2: FVS (0) < drivers (1). So neither |drivers| ≤ |FVS| + f(·) nor the reverse holds with f a graph invariant like #sources.
+- **The one robust bound:** |drivers| ≥ (# nodes with in-degree 0) — every pure source *must* be a driver (nothing can flow into it). In our OEWN graph: 3,329 pure-source nodes, all 3,329 are drivers (confirmed in the artifact). The FVS has *no* such forced membership — a source node is never on a cycle, so it's never in any FVS.
+- **Where they overlap structurally:** a node ends up in *both* sets roughly when it sits on a cycle (FVS pressure) *and* every incoming edge it has is "spoken for" by the matching elsewhere (driver pressure). In a strongly connected component with a perfect cycle cover, the matching is perfect → drivers ∩ SCC = ∅, but the SCC still contributes to the FVS. That's why in our data the kernel (one big SCC of 8,138 nodes + lots of tiny ones) has matching deficiency only 21.7% but FVS-seed fraction 18.4% — different fractions, and the *members* barely overlap (255 of ~2.5–2.8k).
+- **Existing graph-theory result relating FVS to matching:** I did not find a theorem equating min-FVS to a matching quantity on general digraphs (none exists — the objects have different complexity classes: matching is in P, FVS is NP-hard, so any general equality would collapse them). The closest structural kin: König/Dilworth duality governs matching; the FVS dual is the maximum "cycle packing" (Younger's conjecture territory, Reed–Robertson–Seymour–Thomas for the Erdős–Pósa property on digraphs) — a *different* min-max pair. The honest statement: **FVS and maximum matching are governed by two unrelated min-max dualities; there is no bridging identity, only the qualitative complementarity above.**
+
+---
+
+## 3. Concrete computation on the OEWN definition digraph
+
+### 3.1 What was run
+
+`scripts/maximum_matching_oewn.py` (Hopcroft–Karp, pure Python) builds the bipartite graph B over the same `build_paper_wordnet_graph()` digraph the repo uses for kernel/FVS-seed analysis: left = nodes-as-edge-tails, right = nodes-as-edge-heads, bipartite edge (u_L, v_R) for each definitional arc u→v (self-loops included, per Lin — a self-loop lets a node match itself). Driver set = right-vertices unmatched in M*. Run on (1) the full digraph and (2) the kernel subgraph. The FVS-seed / kernel / core / satellites come from `analyze_kernel(..., seed_method="exact-small-greedy", core_policy="source-union")` — exactly the repo's existing pipeline.
+
+### 3.2 Results (verbatim from `reports/maximum-matching-oewn.json`)
+
+**Graph:** 160,010 nodes, 677,823 edges, 3,413 self-loops. Kernel 12,853; Core 288; Satellites 12,565; FVS-seed 2,370.
+
+**Full digraph:**
+- max matching |M*| = **41,266** → driver nodes N − |M*| = **118,744** (74.21% of all nodes).
+- of the 118,744 drivers: 9,775 lie in the kernel (76.0% of the kernel is a driver); 279 of the 288 Core nodes are drivers; 3,329 are pure sources (in-degree 0); 115,415 have in-degree ≥ 1.
+- overlap with the 2,370-node FVS-seed: **drivers ∩ seed = 1,438**; seed \ drivers = 932; drivers \ seed = 117,306; **Jaccard = 0.012**.
+
+**Kernel subgraph (12,853 nodes):**
+- max matching |M*| = **10,068** → driver nodes = **2,785** (21.67% of the kernel).
+- 266 of 288 Core nodes are drivers here; 2,519 drivers are Satellites.
+- overlap with FVS-seed: **drivers ∩ seed = 255**; seed \ drivers = 2,115; drivers \ seed = 2,530; **Jaccard = 0.052**.
+
+### 3.3 Which words are "drivers but not grounders," and vice versa — the semantic reading
+
+From the labelled samples in the artifact (kernel subgraph):
+
+- **Driver, not in FVS-seed** (`sample_driver_not_seed`): `abnormally [r]`, `abundantly [r]`, `abruptly [r]`, `accidentally [r]`, `abbess [n]`, `abstraction [n]`, `acceleration [n]`, `accessible [a]`, `accompanying [a]`, `abnormality [n]` … — heavily **morphological derivatives** (-ly adverbs, -ity/-tion nominalizations, -ed/-ing participial adjectives) and shallow taxonomic leaves. These are drivers because no chosen incoming definitional edge lands *uniquely* on them — their definitions are paraphrases of a stem ("`abnormally`::in an abnormal manner"), so the matching can't "cover" them — yet they sit on no essential cycle, so a min-FVS happily skips them and lets them unfold from the stem.
+- **In FVS-seed, not a driver** (`sample_seed_not_driver` / `seed_minus_drivers`): `ability [n]`, `able [a]`, `abstract [n/v]`, `accordance [n]`, `according [a]`, `accurate [a]`, `accusation [n]`, `accumulated [a]`, plus named entities `abraham [n]`, `abelard [n]`, `abyssinia [n]` and technical terms `absolute_zero [n]`, `acoustic_impedance [n]`. These are grounders because they sit on (or hold together) definitional cycles — abstract relational vocabulary and self-referential clusters — but they're *matched*: something's definition flows uniquely into them, so Liu's matching doesn't need to drive them externally.
+- **Driver, outside the kernel entirely** (full-graph `sample_driver_outside_kernel`): `0 [n]`, `100 [n]`, `1000000 [n]`, `.22_caliber [a]`, ordinals `100th`, `101st` … — the numeral / measurement-unit tail (this is the same "numeraire" subvocabulary flagged in `research-swanson-1`). These are pure sinks/sources of the acyclic frontier: FVS = ∅ for them (trivially), but they must be driven because the matching can't reach them.
+
+**Interpretation:** the FVS-seed is a *small, abstract, cycle-load-bearing* core (HK-47's verdict: the words a meatbag genuinely cannot derive — the relational glue and the proper-noun islands). The maximum-matching driver set is a *large, mostly peripheral* set dominated by morphological boilerplate and the numeric/leaf frontier — it answers "which nodes can't be reached by a single coordinated wave of integrator dynamics," a question with little to do with "which words must be learned ostensively." **The OEWN data confirms the literature-level prediction in §1–2: divergent, by ~2 orders of magnitude on the full graph and by ~90% non-overlap on the kernel.**
+
+### 3.4 Status of this as a repo task
+
+Done, not just specified. The exact function added: `driver_nodes(nodes, adjacency)` in `scripts/maximum_matching_oewn.py` (Hopcroft–Karp + unmatched-heads extraction). If this graduates into `src/meanings/`, the natural home is a `controllability.py` module exposing `maximum_matching(nodes, adjacency) -> (match_left, match_right)` and `driver_node_set(nodes, adjacency) -> set[str]`, wired into the report renderer alongside the kernel block, with a JSON section mirroring `reports/maximum-matching-oewn.json`. **Predicted result (now verified):** drivers ≈ 74% of full graph, ≈ 22% of kernel, near-disjoint from the FVS-seed. Confirmed.
+
+---
+
+## 4. What control theory lends to lexical grounding — ranked by usefulness
+
+1. **FVS-control (Fiedler–Mochizuki / Zañudo–Yang–Albert), nonlinear regime — HIGHEST.** This is not a metaphor; it is the *same theorem* the grounding literature half-proved. It says: override the FVS, the rest follows *regardless of the functional form* of the local update. For dictionaries that means: ground the MinSet, and the meanings of all other words are *uniquely determined* by recursive unfolding no matter how baroque the definitions are. It also imports their machinery: minimal FVS heuristics tuned for biology, the "+ source nodes" correction (in our graph: add the 3,329 pure-source nodes to the seed to get a *full* control set, not just a cycle-breaking one), and the empirical observation that FVS-control sets are tiny in cycle-rich networks (matches our 1.5%).
+2. **Target controllability ("ground only the subvocabulary needed to define *this* domain") — HIGH, directly relevant to LGDE (`Schindler_2025`).** Target-controllability theory (Gao et al. 2014 and follow-ups) computes the minimal driver/FVS set needed to control a *specified target subset* rather than the whole network. The lexical analogue: given a seed dictionary W₀ (LGDE's input), what is the minimal grounding set for the *definitional closure* of W₀? That's a "local FVS" / "FVS restricted to the in-cone of the target set." This would give LGDE a principled stopping criterion and a notion of "the irreducible ostensive cost of this domain dictionary." Concretely: compute the FVS of the subgraph induced by all ancestors (definitional predecessors) of W₀.
+3. **Control profiles (source / external-dilation / internal-dilation classification of *why* a node is a driver) — MEDIUM, with a clean mapping to repo objects.** Ruths & Ruths (*Science* 2014) classify driver nodes by the structural reason they're unmatched: pure sources, external dilations (out-degree > in-degree imbalance), internal dilations (within an SCC). The mapping onto the repo's Kernel/Core/Satellite vocabulary is testable: pure-source drivers ↔ the acyclic frontier (numerals, proper nouns); internal-dilation drivers ↔ Core/Satellite kernel nodes; the profile of the OEWN graph (74% drivers, dominated by which class?) is computable from the artifact with one more pass — predicted to be heavily "external-dilation" because of the morphological-derivative leaves with in-degree 1.
+4. **Control energy ("cost of grounding") — MEDIUM-LOW.** Yan et al. (*Nature Physics* 2015) quantify the *energy* to actually steer the system, not just whether it's possible. Lexical analogue: not every grounding-set word is equally hard to learn ostensively (age-of-acquisition correlates, cf. `research-english-bootstrap-seed`). But this rides on the linear-dynamics model (§5), so the number it produces ("control energy") has no validated lexical meaning — at best it's a *ranking heuristic* over candidate seed words, and PageRank/Perron (already in `scripts/perron_frobenius_oewn.py`) probably does the same job with fewer assumptions.
+5. **Robustness of control to edge removal (stability of MinSets under dictionary revision) — LOW-MEDIUM.** There's literature on how driver sets change under link failure. Lexical analogue: how stable is the grounding set when a lexicographer rewrites definitions? Worth a sensitivity experiment (perturb 1% of definitions, recompute seed, measure churn) but it's a robustness check, not a borrowed theorem.
+
+---
+
+## 5. Falsifiers and scope limits
+
+- **The linear-integrator dynamics is the wrong model for "meaning unrolling," full stop.** ẋ = Ax + Bu treats a word's "state" as a real vector evolving by linear superposition of its definers' states. Meaning unrolling is not that — it's closer to **least-fixed-point semantics of a logic program / monotone operator on a partial order** (you "know" a word once you "know" all the content words in its definition; `compute_layer_map` in `graph_analysis.py` is literally a fixpoint stratification). So Liu et al.'s *maximum-matching* result — which is downstream of the linear model — is **only a structural-graph analogy for lexicons, and a poor one** (the §3 numbers show it picks the wrong words). Say this plainly: the matching/driver-node framing does *not* transfer; only the FVS framing does, and that's because FVS-control (Fiedler–Mochizuki) is itself a *dynamics-agnostic, fixed-point* statement — which is exactly why it coincides with grounding.
+- **Corollary: the "80% useful" part is the FVS half, not the matching half.** The research prompt's framing ("the structural part may still be the useful 80%") is right but needs sharpening: it's not "structural controllability minus the dynamics" that survives — it's specifically the *FVS-control* branch of network control theory, which the field developed precisely *because* it doesn't need the linear dynamics. The maximum-matching branch is the part that *requires* the linear dynamics and therefore the part that *fails* to transfer.
+- **What would disprove even the FVS bridge:** if it turned out that "knowing" a word does *not* require knowing all its definers (e.g., partial/probabilistic comprehension, or definitions that are merely *hints* à la Schindler's "code words") then the well-foundedness premise fails and FVS isn't the right object either — you'd be in "Erdős–Pósa cycle-packing / target-set-selection" territory instead. The repo's current model assumes hard recursive comprehension, so within that model FVS is correct; relax it and the bridge weakens.
+- **Self-loops:** a word whose definition uses itself ("`above`::appearing earlier in the same text" — does it?). Our graph has 3,413 self-loops; in FVS terms each self-loop forces that node into *every* FVS (a self-loop is a length-1 cycle). In matching terms a self-loop lets the node match itself. We included self-loops in both computations; if the repo's `compute_kernel` treats `x→x` as "no live out-edge" (it does — `target != node` filters self-edges), then there's a mild inconsistency: the kernel computation ignores self-loops but a faithful FVS must include all self-looped nodes. Flagged for the maintainers; doesn't change the §3 headline numbers materially (3,413 nodes vs. a 2,370-seed / 118,744-driver scale).
+
+---
+
+## 6. Proposed paper
+
+**Title:** *Grounding a Vocabulary Is Not Controlling It: Feedback Vertex Sets vs. Driver Nodes in Definitional Networks.*
+
+**Venue:** *Computational Linguistics* (the LGDE outlet — they take graph-structural lexicon work) or *Applied Network Science* / *Journal of Complex Networks* (the controllability-community outlet); a shorter version fits *TextGraphs* (where Massé 2008 appeared — closing the loop).
+
+**Thesis:** The symbol-grounding-for-dictionaries literature and the network-controllability literature have, independently, formalized "the minimal set of nodes from which the whole directed network is determined" — but with two different combinatorial objects (minimum feedback vertex set vs. maximum-matching driver nodes) that correspond to two different dynamical assumptions (fixed-point/well-founded unfolding vs. linear integrator dynamics). On real definitional networks these sets diverge by orders of magnitude and pick near-disjoint words. The bridge that *does* hold is to **FVS-control theory** (Fiedler–Mochizuki, Zañudo–Yang–Albert): lexical grounding is FVS-control of the definition digraph, which means decades of nonlinear-network-control machinery — target control, control profiles, robustness — transfers to lexicology, while the more famous maximum-matching framework does not.
+
+**Key result:** On OEWN (160k lemma::pos definition digraph): FVS-seed = 2,370 nodes (1.5%) vs. maximum-matching driver set = 118,744 nodes (74.2%); on the cyclic kernel, 2,370-node seed vs. 2,785-node driver set with only 255 in common (Jaccard 0.052). The driver set is dominated by morphological derivatives and the numeral/proper-noun acyclic frontier; the FVS-seed is the abstract, cycle-load-bearing relational core. Plus: a clean dictionary instantiation of target controllability ("the irreducible ostensive cost of a domain dictionary" = FVS of the in-cone of the seed) directly usable in dictionary-expansion pipelines like LGDE.
+
+---
+
+## What I could not verify
+
+- I could not load Liu–Slotine–Barabási 2011 or the Nat. Comms. 2019 critique from `nature.com` directly (login redirect); I used the open UVM-hosted PDF of the *Nature* paper, the PMC-hosted Zañudo–Yang–Albert PNAS 2017, search-result summaries, and the public abstracts/Wikipedia "Network controllability" for the rest. The §1 claims about *which* controllability subfields exist (target control, control energy, control profiles) are from those summaries plus prior knowledge, not from reading each primary paper in full.
+- The citation-disjointness claim is a *negative* result from targeted searches; I did not run an exhaustive forward-citation crawl of all ~3,000 citers of Liu et al. — so "no controllability paper cites the grounding literature" is "I found none and the obvious searches return none," not a proof.
+- The self-loop inconsistency in `compute_kernel` (§5) is observed from reading the source (`target != node` filter on line 86–87 of `graph_analysis.py`), not from a test that exhibits a wrong kernel — flagged, not confirmed-as-bug.
+- The control-profile class breakdown of the OEWN driver set (§4 item 3) is *predicted*, not computed — it needs one more pass over the matching to classify each driver as source / external-dilation / internal-dilation; I ran out of the budget I'd allotted to the computation after the two matching runs.

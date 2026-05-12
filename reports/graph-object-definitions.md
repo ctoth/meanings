@@ -45,6 +45,8 @@ The `Core` is the union of source SCCs inside the Kernel. In many full dictionar
 
 This corrects the earlier temporary implementation that reported the largest SCC as Core.
 
+Operational update: the code now exposes this as `--core-policy source-union`. It also exposes `--core-policy largest-scc` because the Picard/Vincent-Lamarre notes use both source-SCC hierarchy language and largest-SCC summary language, and the published WordNet table is much closer to the largest-SCC policy in our OEWN runs. Reports must state which policy was used.
+
 Source notes:
 
 - [Picard notes](/C:/Users/Q/code/meanings/papers/Picard_2013_HiddenStructureFunctionLexicon/notes.md)

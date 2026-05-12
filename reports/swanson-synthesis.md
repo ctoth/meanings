@@ -1,0 +1,66 @@
+# Swanson links: synthesis after the research pass
+
+**Date:** 2026-05-12
+
+Five deep-research briefs (`reports/research-swanson-{1..5}-*.md`) were each executed by a research agent with web access and the ability to run computations against the OEWN pipeline; Codex (`reports/codex-swanson-review.md`) gave an independent skeptical review from cold knowledge; two follow-up agents ingested psycholinguistic norms and built `src/meanings/spectral_analysis.py`. This file reconciles the results. Per-line deliverables: `reports/swanson-money-numeraire-findings.md`, `reports/swanson-core-satellite-findings.md`, `reports/swanson-controllability-findings.md`, `reports/swanson-yoneda-harnad-findings.md`, `reports/swanson-perron-frobenius-findings.md`, `reports/spectral-valuation-oewn.md`.
+
+## Scoreboard
+
+| # | Link | Disjointness real? | Survives data? | Verdict | Best output |
+|---|---|---|---|---|---|
+| 5 | Perron–Frobenius valuation | Yes (econ↔PF famously empty — Bidard–Erreygers–Parys "All but one"; Potron 1911 ignored ~90y) | **Naive form falsified**; corrected form (reverse-PageRank) partly holds | Strongest | (a) history-of-science "convergent rediscovery" paper; (b) "The Wrong Eigenvector" CL paper |
+| 3 | Controllability / driver nodes | Yes | N/A — confirmed *divergence* | Real contrast, not identity | "Discrete grounding vs structural control" — and the **FVS-control** bridge (Mochizuki–Fiedler, Zañudo–Yang–Albert) is the cleaner unexploited link |
+| 4 | Yoneda ↔ Harnad | Yes (4 non-citing communities incl. DisCoCat) | Empirical leg now runnable (norms ingested), not yet run | Compatible (Resolution A) + symmetry rider | Philosophy note; possibly + an NLP-empirical companion |
+| 1 | Money / numéraire | Yes | Conceptually partly real | Conflates 4 things; subsumed by #5 | Interpretive preface to the valuation paper, not a lead |
+| 2 | Core–satellite ecology | Yes (canonical Swanson signature — same words, zero cross-citation) | **Bimodality falsifier triggered** | Naming analogy shallow (condensation topology ≠ common-vs-rare) | Cautionary cross-disciplinary note; weak diachronic form needs LDOCE-revision data |
+
+## The one real result with numbers: spectral vs combinatorial grounding
+
+Edge convention throughout: `u → v` means "u occurs in the definition of v". Graph = OEWN `paper-wordnet`, 160,010 nodes / 677,823 edges; Kernel 12,853; Core 288; Satellites 12,565; combinatorial seed 2,370; one giant Kernel SCC of 8,138 nodes.
+
+- **Authority PageRank is the wrong object.** It ranks definitional *sinks* at the top (`magnificat`, `palaquium_gutta`, `niobe`, `regression_coefficient`); the FVS-seed hubs sit in the bottom decile (`small` → rank 152,871/160,010; `large` → 145,194; `body` → 134,011). Core mean PageRank is *below* uniform. (`reports/perron-frobenius-oewn.json`.)
+- **Un-damped Perron on the Kernel SCC localizes on technical micro-cliques** (`potassium`/`rubidium`/`sodium`; `vasoconstrictor`/`vasopressin`/`angiotensin`), λ\* ≈ 3.744, ρ ≈ 0.78 with SCC-internal in-degree — a degree re-skin, not foundational vocabulary.
+- **Reverse-PageRank (PageRank on the transpose) is the right object — qualitatively.** Its top is the abstract genus vocabulary: `act, degree, time, event, part, place, can, quality, quantity, extent, point, relation, things, distinguished`; `large` → rank 27/160,010, `body` → 29, `small` → 66, `water` → 132, `plant` → 151, `white` → 472. This matches the FVS-seed top set (`act, part, body, can, small, form, water, large, various, substance`). (`reports/spectral-valuation-oewn.json`.)
+- **But the quantitative prediction fails.** ρ(reverse-PageRank, FVS degree-key `internal_out + internal_in`) over the Kernel = **0.316**, not the predicted >0.6. Diagnosis: reverse-PageRank ≈ pure out-degree (ρ 0.995 full graph / 0.746 Kernel; ρ with in-degree ≈ −0.05), whereas the FVS heuristic key sums out+in. They agree where the mega-hubs dominate both and fan apart in the bulk.
+- **Null-model caveat (decisive).** A degree-preserving edge-swap null recovers ρ ≈ 0.52 of the real reverse ranking; out-degree alone recovers ρ ≈ 0.68. So *neither the spectral object nor the combinatorial seed adds much over raw out-degree* on this graph. Any "spectral valuation" paper must lead with the incremental-over-degree question, not the eigenvector mystique. Codex flagged exactly this.
+
+Codex's Predictions A (overlap-not-coincidence), B (Core/Satellite splits by spectral role), C (orientation exposes two senses of foundationalness — *definitional productivity / downstream use* under forward, *dependency on important definers* under reverse) all confirmed; D only partly (the Kernel/Rest condensation tells you *where Perron–Frobenius is licensed*, not a better ranking — on the reverse orientation the damped full-graph PageRank actually beats the largest-SCC eigenvector at surfacing the foundational words).
+
+## Controllability: a clean divergence
+
+Hopcroft–Karp maximum matching on the same graph (`reports/maximum-matching-oewn.json`):
+
+- Full digraph: 118,744 driver nodes (74.2%); overlap with the 2,370-node FVS-seed = 1,438, Jaccard 0.012.
+- Kernel subgraph: 2,785 driver nodes (21.7%) — *comparable in size* to the 2,370-node seed, but only **255 nodes in common** (Jaccard 0.052); 266/288 Core nodes are drivers.
+- Disagreement is structured: *driver-not-grounder* = morphological derivatives (`abnormally`, `accidentally`) and the numeral/proper-noun acyclic frontier (`0`, `100`, `.22_caliber`); *grounder-not-driver* = abstract relational vocabulary (`ability`, `able`, `abstract`, `accordance`) and proper-noun islands.
+
+FVS (cycle-breaking, well-foundedness) and structural-controllability driver nodes (matching/dilation under linear-integrator dynamics) are genuinely different objects with predictably different selections — the value is the *contrast*, which sharpens what lexical grounding is and isn't. The genuinely under-exploited bridge surfaced here is **feedback-vertex-set control** in biological networks (Mochizuki–Fiedler; Zañudo–Yang–Albert, PNAS 2017): that literature already uses FVS for control of nonlinear dynamics and has no contact with the dictionary-grounding literature that also uses FVS.
+
+## Ecology: the falsifier fired
+
+OEWN out-degree (the Hanski "site occupancy" analogue): 74.3% zeros + a monotone heavy tail among the rest (1: 9,727; 2: 7,340; 3: 4,002; …) — log-series / species-abundance shaped, **no second hump**. Hartigan's dip "rejects" unimodality only because of the zero spike at huge *n*; GMM BIC keeps falling with more components (the signature of straining to fit one skewed distribution). Decisive extra mismatch: Core (n=288) and Satellite (n=12,565) have *near-identical* out-degree distributions (means 43.8 vs 42.5; the mega-occupancy outliers are in the Satellites). So the lexical Core/Satellite split is **condensation topology** (source SCC vs downstream SCC inside the Kernel), not the common-vs-rare distinction that *is* Hanski's core/satellite. The naming collision is a real Swanson signature but the mechanism does not transfer. Only the weak form survives — a colonization–extinction process view of how words enter/leave the *defining* vocabulary across dictionary editions — and the strong prediction it makes (bimodal stationary occupancy via a rescue effect) is contradicted by the data we have. Testing the weak form needs diachronic definition text (Longman LDOCE controlled-defining-vocabulary revisions are the near-perfect natural experiment). Scripts: `scripts/bimodality_check.py`, `scripts/bimodality_kernel.py`.
+
+## Yoneda ↔ Harnad: compatible, with a symmetry rider
+
+Verdict: **Resolution A**. Yoneda determines an object *within a fixed category*; Harnad's point is that for a cognitive agent the ambient category (the universe of available relata) is not given a priori — it must be *grounded into existence* non-symbolically. Yoneda presupposes exactly what Harnad says is missing, so they are not contradictory. Reframes the repo's objects: a MinSet is a *generating set* for the category, MinSet non-uniqueness ≈ presentation non-uniqueness, Kernel/Core/Satellite ≈ graded grounding. The sharp rider toward Resolution B: anyone who rejects A by going full structuralist owes *mathematics* the same grounding story — Benacerraf's access problem is Harnad's problem wearing a hat; you can't apply structuralism asymmetrically. Four non-citing communities documented (categorical structuralism in philosophy of math; symbol-grounding; DisCoCat — the literal intersection of category theory and word meaning, which still takes distributional vectors as given; inferential/conceptual-role semantics). The empirical adjudication (does extra-graph sensorimotor variance predict layer/MinSet membership *after* controlling for structural features?) was blocked on missing data; that data is now in the repo (see below) and the regression is specified in `reports/swanson-yoneda-harnad-findings.md` §4.3.
+
+## Money / numéraire: demoted, not discarded
+
+The durable core is just the production-eigenstructure strand: Sraffa's standard commodity = the Perron eigenvector of the (irreducible "basics" block of the) input–output matrix, and Sraffa's basics/non-basics distinction is literally an SCC decomposition — so the *prompt-1 researcher (economics side) and Codex (math side) independently converged on the same move as prompt 5*. The other three strands the brief blended in — numéraire-as-gauge-choice, gold-standard-as-institutional-convertibility, and Harnad-style grounding — are analogy, social ontology, and cognitive grounding respectively, not the same object. Both the researcher and Codex independently called the "Nixon shock = dictionary has no Kernel that bottoms out" line rhetorically vivid but technically loose. Keep this as the historical/interpretive front matter of the valuation paper; don't lead with it.
+
+## What changed in the repo this pass
+
+- `data/psycholinguistic/{frequency,age_of_acquisition,concreteness}.csv` (+ raw `.xlsx` sources + `README.md`) — SUBTLEX-US (Brysbaert & New 2009), Kuperman et al. 2012 AoA, Brysbaert et al. 2014 concreteness, normalized to the loader's `word,<field>` shape. OEWN paper-wordnet annotation coverage is now 29% / 21% / 24% (was 0). `scripts/build_psycholinguistic_csvs.py` reproduces the conversion; `pyproject.toml`/`uv.lock` gained `pandas`+`openpyxl`. `reports/annotation-sources.md` rewritten; `reports/oewn-paper-wordnet-kernel-{report.md,summary.json}` regenerated with non-zero coverage.
+- `src/meanings/spectral_analysis.py` — `perron_scores(adjacency, nodes, *, orientation, component_policy, …)`, `scc_local_eigenvectors`, null models (`degree_rank_scores`, `randomized_edge_null` = degree-preserving directed double-edge swap, `label_shuffled_layers`), and tie-correct `spearman` / `overlap_at_k` / `rank_positions`. Pure Python (no numpy in env).
+- `scripts/spectral_report.py`, `scripts/perron_frobenius_oewn.py`, `scripts/maximum_matching_oewn.py`, `scripts/bimodality_{check,kernel}.py` — the scratch computations behind the findings.
+- `tests/` + `conftest.py` — the repo had no test suite; added 7 smoke tests for `spectral_analysis` (`uv run pytest` → 7 passed).
+- New data JSON in `reports/`: `perron-frobenius-oewn.json`, `spectral-valuation-oewn.json`, `maximum-matching-oewn.json`.
+
+## Recommended next work (consolidated from Codex + the agents)
+
+1. **Lead paper: "Discrete Grounding and Spectral Valuation in Dictionary Graphs."** FVS finds nodes required for well-founded recursive definition; reverse-PageRank/Perron finds self-consistent importance inside the cyclic substrate; their agreement/disagreement classifies words as global hubs, local cycle-bottlenecks, or mere high-frequency editorial conveniences. Must include the incremental-over-degree analysis up front (the null models show degree explains most of it).
+2. **Run the now-unblocked psycholinguistic regressions** for briefs 4 and 5: does AoA/concreteness/frequency predict layer or MinSet membership after controlling for in-degree, out-degree, SCC size, layer, PageRank, cycle participation?
+3. **Fix `compute_kernel`'s self-loop handling** (`target != node` filter in `src/meanings/graph_analysis.py`) — flagged from source by the controllability agent; not yet exhibited via a failing test.
+4. **Three-layer framing for any write-up:** well-foundedness (Massé/Picard/Vincent-Lamarre — Kernel/Core/MinSets) → valuation (Perron/Sraffa/PageRank — ranks cyclic nodes, does not ground them) → dynamics (controllability + ecology — how the graph changes / which target vocabulary is reachable). Money sits in the valuation layer; Hanski in dynamics; Yoneda/Harnad is a boundary condition, not a layer.
+5. **Diachronic data** for the ecology weak-form test (LDOCE defining-vocabulary revisions; Webster 1828/1913/modern; OED1/OED3) — only worth it if step 2's static results are interesting.
+6. **History-of-science paper** on Perron–Frobenius as convergent rediscovery (Sraffa/Leontief/Potron ↔ PageRank/Hubbell/Pinski–Narin ↔ Bonacich/Katz ↔ Markov stationary distributions ↔ LSA), with the citation-edge timeline as the figure — a standalone, lower-effort output.
