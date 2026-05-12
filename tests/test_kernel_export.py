@@ -7,6 +7,8 @@ from meanings.kernel_export import (
     label_gloss,
     row_for_node,
     suspicion_reasons,
+    write_seed_surfaces_csv,
+    write_seed_words,
 )
 
 
@@ -124,3 +126,30 @@ def test_suspicion_reasons_flags_unannotated_multiword_self_loop_seed() -> None:
         "self_loop",
         "domain_or_named_entity_like",
     ]
+
+
+def test_seed_surface_outputs_are_directly_consumable(tmp_path) -> None:
+    surfaces = [
+        {
+            "lemma": "make",
+            "surface_word": "make",
+            "seed_node_count": 2,
+            "source_node_ids": ["make::n", "make::v"],
+            "parts_of_speech": ["n", "v"],
+            "max_degree_score": 12,
+            "best_frequency": 6.1,
+            "earliest_age_of_acquisition": 3.4,
+            "mean_concreteness": 2.0,
+        }
+    ]
+    surfaces_path = tmp_path / "surfaces.csv"
+    words_path = tmp_path / "words.txt"
+
+    write_seed_surfaces_csv(surfaces_path, surfaces)
+    write_seed_words(words_path, surfaces)
+
+    assert surfaces_path.read_text(encoding="utf-8").splitlines() == [
+        "lemma,surface_word,seed_node_count,source_node_ids,parts_of_speech,max_degree_score,best_frequency,earliest_age_of_acquisition,mean_concreteness",
+        "make,make,2,make::n;make::v,n;v,12,6.1,3.4,2.0",
+    ]
+    assert words_path.read_text(encoding="utf-8") == "make\n"
