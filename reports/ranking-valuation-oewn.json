@@ -1057,6 +1057,504 @@
           }
         }
       }
+    },
+    "full_reverse": {
+      "h_categoriser": {
+        "converged": true,
+        "iterations": 22,
+        "higher_is_better": true,
+        "rho_vs_outdeg": -0.9870964582294107,
+        "rho_vs_indeg": 0.03598860082262689,
+        "rho_vs_seed_membership": -0.28703669539970167,
+        "rho_vs_core_membership": -0.09292187469241603,
+        "rho_vs_fvs_degree_key": -0.1697937180058297,
+        "rho_vs_layer_index": -0.12896940511959434,
+        "overlap_at_500_with_fvs_key": 0.0,
+        "top20_words": [
+          [
+            ".22::n",
+            1.0
+          ],
+          [
+            ".22_caliber::a",
+            1.0
+          ],
+          [
+            ".22_calibre::a",
+            1.0
+          ],
+          [
+            ".38_caliber::a",
+            1.0
+          ],
+          [
+            ".38_calibre::a",
+            1.0
+          ],
+          [
+            ".45_caliber::a",
+            1.0
+          ],
+          [
+            ".45_calibre::a",
+            1.0
+          ],
+          [
+            "0::a",
+            1.0
+          ],
+          [
+            "0::n",
+            1.0
+          ],
+          [
+            "1000000000000::n",
+            1.0
+          ],
+          [
+            "1000000000::n",
+            1.0
+          ],
+          [
+            "1000000::n",
+            1.0
+          ],
+          [
+            "100000::n",
+            1.0
+          ],
+          [
+            "10000::n",
+            1.0
+          ],
+          [
+            "1000::a",
+            1.0
+          ],
+          [
+            "1000::n",
+            1.0
+          ],
+          [
+            "1000th::a",
+            1.0
+          ],
+          [
+            "100::a",
+            1.0
+          ],
+          [
+            "100::n",
+            1.0
+          ],
+          [
+            "100_ml::n",
+            1.0
+          ]
+        ],
+        "psych_prediction": {
+          "n_psych": 27356,
+          "frequency": {
+            "pearson_score_norm": -0.3341883300775341,
+            "r2_log_outdeg": 0.2251851263653657,
+            "r2_log_outdeg_plus_score": 0.22622249778176506,
+            "incremental_score_over_log_outdeg_r2": 0.0010373714163993686,
+            "r2_log_outdeg_plus_log_indeg": 0.22534236015748277,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.22637093763118843,
+            "incremental_score_over_degree_r2": 0.0010285774737056608
+          },
+          "age_of_acquisition": {
+            "pearson_score_norm": 0.17022157290597037,
+            "r2_log_outdeg": 0.07967730144839635,
+            "r2_log_outdeg_plus_score": 0.08355693592988811,
+            "incremental_score_over_log_outdeg_r2": 0.003879634481491756,
+            "r2_log_outdeg_plus_log_indeg": 0.07995489655484689,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.0838120675674503,
+            "incremental_score_over_degree_r2": 0.003857171012603411
+          },
+          "concreteness": {
+            "pearson_score_norm": -0.02710521457685018,
+            "r2_log_outdeg": 0.0018866208551642227,
+            "r2_log_outdeg_plus_score": 0.0019539867621836127,
+            "incremental_score_over_log_outdeg_r2": 6.736590701938994e-05,
+            "r2_log_outdeg_plus_log_indeg": 0.0302364528199055,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.030337891477776657,
+            "incremental_score_over_degree_r2": 0.00010143865787115569
+          }
+        }
+      },
+      "categoriser": {
+        "converged": false,
+        "iterations": 25,
+        "higher_is_better": true,
+        "rho_vs_outdeg": -0.9992728842589561,
+        "rho_vs_indeg": 0.03809169407867098,
+        "rho_vs_seed_membership": -0.29598971089945564,
+        "rho_vs_core_membership": -0.0984182245593468,
+        "rho_vs_fvs_degree_key": -0.43823830488559323,
+        "rho_vs_layer_index": -0.07612776192523188,
+        "overlap_at_500_with_fvs_key": 0.0,
+        "top20_words": [
+          [
+            ".22::n",
+            1.0
+          ],
+          [
+            ".22_caliber::a",
+            1.0
+          ],
+          [
+            ".22_calibre::a",
+            1.0
+          ],
+          [
+            ".38_caliber::a",
+            1.0
+          ],
+          [
+            ".38_calibre::a",
+            1.0
+          ],
+          [
+            ".45_caliber::a",
+            1.0
+          ],
+          [
+            ".45_calibre::a",
+            1.0
+          ],
+          [
+            "0::a",
+            1.0
+          ],
+          [
+            "0::n",
+            1.0
+          ],
+          [
+            "1000000000000::n",
+            1.0
+          ],
+          [
+            "1000000000::n",
+            1.0
+          ],
+          [
+            "1000000::n",
+            1.0
+          ],
+          [
+            "100000::n",
+            1.0
+          ],
+          [
+            "10000::n",
+            1.0
+          ],
+          [
+            "1000::a",
+            1.0
+          ],
+          [
+            "1000::n",
+            1.0
+          ],
+          [
+            "1000th::a",
+            1.0
+          ],
+          [
+            "100::a",
+            1.0
+          ],
+          [
+            "100::n",
+            1.0
+          ],
+          [
+            "100_ml::n",
+            1.0
+          ]
+        ],
+        "psych_prediction": {
+          "n_psych": 27356,
+          "frequency": {
+            "pearson_score_norm": -0.405823566071368,
+            "r2_log_outdeg": 0.2251851263653657,
+            "r2_log_outdeg_plus_score": 0.2267314321786481,
+            "incremental_score_over_log_outdeg_r2": 0.0015463058132824115,
+            "r2_log_outdeg_plus_log_indeg": 0.22534236015748277,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.22686717568264536,
+            "incremental_score_over_degree_r2": 0.0015248155251625928
+          },
+          "age_of_acquisition": {
+            "pearson_score_norm": 0.22023040557968085,
+            "r2_log_outdeg": 0.07967730144839635,
+            "r2_log_outdeg_plus_score": 0.08462437416312041,
+            "incremental_score_over_log_outdeg_r2": 0.0049470727147240545,
+            "r2_log_outdeg_plus_log_indeg": 0.07995489655484689,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.08485149965591432,
+            "incremental_score_over_degree_r2": 0.004896603101067432
+          },
+          "concreteness": {
+            "pearson_score_norm": -0.035826646291482564,
+            "r2_log_outdeg": 0.0018866208551642227,
+            "r2_log_outdeg_plus_score": 0.0019291939221381948,
+            "incremental_score_over_log_outdeg_r2": 4.257306697397212e-05,
+            "r2_log_outdeg_plus_log_indeg": 0.0302364528199055,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.03034345514730452,
+            "incremental_score_over_degree_r2": 0.00010700232739901949
+          }
+        }
+      },
+      "burden": {
+        "converged": true,
+        "iterations": 30,
+        "higher_is_better": false,
+        "rho_vs_outdeg": 0.999260714856959,
+        "rho_vs_indeg": -0.03812995464707415,
+        "rho_vs_seed_membership": 0.29573172656181174,
+        "rho_vs_core_membership": 0.09840600197101325,
+        "rho_vs_fvs_degree_key": 0.4382256785792493,
+        "rho_vs_layer_index": 0.07612643488380978,
+        "overlap_at_500_with_fvs_key": 0.0,
+        "top20_words": [
+          [
+            ".22::n",
+            1.0
+          ],
+          [
+            ".22_caliber::a",
+            1.0
+          ],
+          [
+            ".22_calibre::a",
+            1.0
+          ],
+          [
+            ".38_caliber::a",
+            1.0
+          ],
+          [
+            ".38_calibre::a",
+            1.0
+          ],
+          [
+            ".45_caliber::a",
+            1.0
+          ],
+          [
+            ".45_calibre::a",
+            1.0
+          ],
+          [
+            "0::a",
+            1.0
+          ],
+          [
+            "0::n",
+            1.0
+          ],
+          [
+            "1000000000000::n",
+            1.0
+          ],
+          [
+            "1000000000::n",
+            1.0
+          ],
+          [
+            "1000000::n",
+            1.0
+          ],
+          [
+            "100000::n",
+            1.0
+          ],
+          [
+            "10000::n",
+            1.0
+          ],
+          [
+            "1000::a",
+            1.0
+          ],
+          [
+            "1000::n",
+            1.0
+          ],
+          [
+            "1000th::a",
+            1.0
+          ],
+          [
+            "100::a",
+            1.0
+          ],
+          [
+            "100::n",
+            1.0
+          ],
+          [
+            "100_ml::n",
+            1.0
+          ]
+        ],
+        "psych_prediction": {
+          "n_psych": 27356,
+          "frequency": {
+            "pearson_score_norm": -0.23785862482901293,
+            "r2_log_outdeg": 0.2251851263653657,
+            "r2_log_outdeg_plus_score": 0.2251985247662982,
+            "incremental_score_over_log_outdeg_r2": 1.3398400932507215e-05,
+            "r2_log_outdeg_plus_log_indeg": 0.22534236015748277,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.22535515054279898,
+            "incremental_score_over_degree_r2": 1.279038531620813e-05
+          },
+          "age_of_acquisition": {
+            "pearson_score_norm": 0.16473215267106261,
+            "r2_log_outdeg": 0.07967730144839635,
+            "r2_log_outdeg_plus_score": 0.08051377965436524,
+            "incremental_score_over_log_outdeg_r2": 0.0008364782059688824,
+            "r2_log_outdeg_plus_log_indeg": 0.07995489655484689,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.0807849609436273,
+            "incremental_score_over_degree_r2": 0.000830064388780416
+          },
+          "concreteness": {
+            "pearson_score_norm": -0.03195797815135849,
+            "r2_log_outdeg": 0.0018866208551642227,
+            "r2_log_outdeg_plus_score": 0.0020319401373291024,
+            "incremental_score_over_log_outdeg_r2": 0.00014531928216487966,
+            "r2_log_outdeg_plus_log_indeg": 0.0302364528199055,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.030410280934257683,
+            "incremental_score_over_degree_r2": 0.00017382811435218137
+          }
+        }
+      },
+      "counting": {
+        "converged": false,
+        "iterations": 25,
+        "higher_is_better": true,
+        "rho_vs_outdeg": -0.9992803177360181,
+        "rho_vs_indeg": 0.038094901553191306,
+        "rho_vs_seed_membership": -0.2959883337481561,
+        "rho_vs_core_membership": -0.098417333154858,
+        "rho_vs_fvs_degree_key": -0.4382864449715975,
+        "rho_vs_layer_index": -0.07613032747441922,
+        "overlap_at_500_with_fvs_key": 0.0,
+        "top20_words": [
+          [
+            ".22::n",
+            1.0
+          ],
+          [
+            ".22_caliber::a",
+            1.0
+          ],
+          [
+            ".22_calibre::a",
+            1.0
+          ],
+          [
+            ".38_caliber::a",
+            1.0
+          ],
+          [
+            ".38_calibre::a",
+            1.0
+          ],
+          [
+            ".45_caliber::a",
+            1.0
+          ],
+          [
+            ".45_calibre::a",
+            1.0
+          ],
+          [
+            "0::a",
+            1.0
+          ],
+          [
+            "0::n",
+            1.0
+          ],
+          [
+            "1000000000000::n",
+            1.0
+          ],
+          [
+            "1000000000::n",
+            1.0
+          ],
+          [
+            "1000000::n",
+            1.0
+          ],
+          [
+            "100000::n",
+            1.0
+          ],
+          [
+            "10000::n",
+            1.0
+          ],
+          [
+            "1000::a",
+            1.0
+          ],
+          [
+            "1000::n",
+            1.0
+          ],
+          [
+            "1000th::a",
+            1.0
+          ],
+          [
+            "100::a",
+            1.0
+          ],
+          [
+            "100::n",
+            1.0
+          ],
+          [
+            "100_ml::n",
+            1.0
+          ]
+        ],
+        "psych_prediction": {
+          "n_psych": 27356,
+          "frequency": {
+            "pearson_score_norm": -0.40653744022900656,
+            "r2_log_outdeg": 0.2251851263653657,
+            "r2_log_outdeg_plus_score": 0.22673828021458575,
+            "incremental_score_over_log_outdeg_r2": 0.001553153849220057,
+            "r2_log_outdeg_plus_log_indeg": 0.22534236015748277,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.22687386570980606,
+            "incremental_score_over_degree_r2": 0.0015315055523232868
+          },
+          "age_of_acquisition": {
+            "pearson_score_norm": 0.22078189604339538,
+            "r2_log_outdeg": 0.07967730144839635,
+            "r2_log_outdeg_plus_score": 0.08463172051819146,
+            "incremental_score_over_log_outdeg_r2": 0.004954419069795102,
+            "r2_log_outdeg_plus_log_indeg": 0.07995489655484689,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.0848585509636326,
+            "incremental_score_over_degree_r2": 0.004903654408785707
+          },
+          "concreteness": {
+            "pearson_score_norm": -0.03590556792543163,
+            "r2_log_outdeg": 0.0018866208551642227,
+            "r2_log_outdeg_plus_score": 0.0019291330103891058,
+            "incremental_score_over_log_outdeg_r2": 4.251215522488305e-05,
+            "r2_log_outdeg_plus_log_indeg": 0.0302364528199055,
+            "r2_log_outdeg_plus_log_indeg_plus_score": 0.030343787471969308,
+            "incremental_score_over_degree_r2": 0.00010733465206380632
+          }
+        }
+      }
     }
   },
   "headline": {
@@ -1075,6 +1573,7 @@
     },
     "interpretation_hint": "Compare best_incremental_R2_over_log_outdeg.value to the spectral report's reverse-PageRank incremental-over-out-degree numbers (which were ~0). A value near 0 means 'another principled score that also collapses to degree' (negative result); a clearly positive value means it adds signal.",
     "scopes_present": [
+      "full_reverse",
       "kernel_forward",
       "kernel_reverse"
     ]

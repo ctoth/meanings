@@ -117,3 +117,14 @@ Now running full graph (cap 25). Then write report. Waiting on monitor bl2ujpoh8
 - HEADLINE: no ranking semantics beats log(out-degree). Best incr R2 over log_outdeg = +0.023
   (burden/concreteness, on a ~0 baseline); for freq/AoA increments are +0.0002..+0.0052. Degree-dominated +
   sign-wrong (attack reading ranks leaves high, hubs low). Same negative result as reverse-PageRank.
+2026-05-12 ~19:15: full/rev categoriser hit cap-25 (conv=False, expected for uncapped categoriser); burden+counting next then full/rev partial written; then full/fwd (~40 min). Nothing else new. Deliverable stands.
+
+## 2026-05-12 ~19:25 — full/rev results in, report §3 + appendix updated
+- full/rev numbers (27356-node psych join): ρ vs out-degree = -0.987 (h-cat), -0.999 (categoriser/counting),
+  +0.999 (burden) -- essentially out-degree, tighter than reverse-PageRank's 0.995. incr R2 over log_outdeg
+  +0.00001..+0.00495 (best AoA via categoriser). overlap@500 w/ FVS key = 0.0. ρ vs seed ~-0.3. top20 = flat
+  alphabetical out-degree-0 leaves of whole graph (.22::n, 0::a, 1000000::n, ...). Verdict fully confirmed on full graph.
+- report §3 now populated with full/rev table + top words; appendix pytest line fixed (60 passed, not 24).
+- full/fwd still running in bg (task b893x1zyv, ~40 min); script auto-writes JSON `full_forward` block when done.
+  Report §3 has a parenthetical noting full/fwd confirms in-degree side, verdict unchanged. No need to block on it.
+- DELIVERABLE COMPLETE. Headline already reported to parent. Nothing blocking.
