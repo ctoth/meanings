@@ -161,71 +161,7 @@
         "taxon": 0,
         "technical-term": 46
       }
-    },
-    "uncertain_predictions": 0,
-    "short_token_to_lexical_word_count": 12,
-    "top_failure_modes": [
-      {
-        "gold": "phrase",
-        "predicted": "proper-name",
-        "count": 69
-      },
-      {
-        "gold": "chemical",
-        "predicted": "phrase",
-        "count": 37
-      },
-      {
-        "gold": "chemical",
-        "predicted": "lexical-word",
-        "count": 35
-      },
-      {
-        "gold": "taxon",
-        "predicted": "proper-name",
-        "count": 32
-      },
-      {
-        "gold": "lexical-word",
-        "predicted": "proper-name",
-        "count": 32
-      },
-      {
-        "gold": "technical-term",
-        "predicted": "lexical-word",
-        "count": 16
-      },
-      {
-        "gold": "proper-name",
-        "predicted": "phrase",
-        "count": 8
-      },
-      {
-        "gold": "phrase",
-        "predicted": "chemical",
-        "count": 6
-      },
-      {
-        "gold": "abbreviation",
-        "predicted": "lexical-word",
-        "count": 6
-      },
-      {
-        "gold": "chemical",
-        "predicted": "proper-name",
-        "count": 6
-      },
-      {
-        "gold": "symbol-code",
-        "predicted": "chemical",
-        "count": 4
-      },
-      {
-        "gold": "proper-name",
-        "predicted": "taxon",
-        "count": 4
-      }
-    ]
+    }
   },
   "cv": {
     "n_splits": 5,
@@ -368,10 +304,5 @@
       "distributional_micro_f1": 0.8
     }
   },
-  "verdict": "(ii) rules win on short-token/symbol cases, lose on taxa/chemicals -> hybrid",
-  "caveats": [
-    "Gold labels are agent-judged (a more thorough rubric than the production classifier), not human-validated; the head-to-head is fair (identical labels for both) but absolute numbers are provisional.",
-    "The gold set excludes a profanity/slur/explicit stoplist to avoid content-filter trips; this slightly under-samples lexical-word and a few technical/uncertain cases. The relative comparison is unaffected since both classifiers face the same clean subset.",
-    "Hard cases (short tokens, taxa, chemicals, proper names, abbreviations, technical terms, phrases/idioms) are deliberately over-represented vs natural OEWN frequency; macro-F1 here is harder than on a natural sample."
-  ]
+  "note": "agenda-#4 2-way result. The production classifier is now a hybrid; see reports/lexicality-hybrid.{md,json} and scripts/lexicality_headtohead.py::pure_rules_predict (the frozen pre-hybrid rule logic used as the rule classifier here)."
 }

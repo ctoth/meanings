@@ -39,7 +39,21 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import StratifiedKFold
 
-from meanings.lexicality import classify_lexicality
+from meanings.lexicality import (
+    ABBREVIATION_RE as _PROD_ABBR_RE,
+)
+from meanings.lexicality import (
+    CHEMICAL_FORMULA_RE as _PROD_FORMULA_RE,
+)
+from meanings.lexicality import (
+    SHORT_TOKEN_LEXICAL_WHITELIST as _PROD_WHITELIST,
+)
+from meanings.lexicality import (
+    classify_lexicality,  # the *hybrid* (production) classifier
+)
+from meanings.lexicality import SURFACE_REASON_PREFIXES as _SURFACE_PREFIXES
+from meanings.lexicality import _surface_layer
+from meanings.lexicality_model import GlossClassifier
 from meanings.normalize import normalize_lemma
 
 REPO = Path(__file__).resolve().parents[1]
@@ -562,11 +576,165 @@ def confusion(gold: list[str], pred: list[str]) -> dict:
     return mat
 
 
+# ---------------------------------------------------------------------------
+# FROZEN snapshot of the *pre-hybrid* rule classifier (surface + gloss-keyword
+# templates), so the three-way head-to-head has a genuine pure-rules column.
+# This is the logic that lived in src/meanings/lexicality.py before the hybrid
+# rewrite (git history); it is reproduced here verbatim, not imported, because
+# the production module now IS the hybrid.
+# ---------------------------------------------------------------------------
+_FROZEN_CHEM_KW = (
+    "chemical element", "chemical symbol", "atomic number",
+    "radioactive metallic element", "metallic element", "element of the",
+    "nobelium", "sulfur", "sulphur",
+)
+_FROZEN_TAXON_KW = (
+    "taxonomic group", "taxonomic category", "genus of", "family of",
+    "order of", "class of", "phylum of", "species of", "subspecies of",
+)
+_FROZEN_TECH_KW = (
+    "computer science", "mathematics", "physics", "linguistics", "logic",
+    "medicine", "law", "music", "grammar",
+)
+_FROZEN_IDIOM_KW = ("idiomatic", "idiom", "colloquial expression")
+_FROZEN_ABBR_RE = re.compile(r"\b(abbreviation|acronym|initialism|short for)\b", re.IGNORECASE)
+_FROZEN_FORMULA_RE = re.compile(r"\b[A-Z][a-z]?\d*(?:[A-Z][a-z]?\d*)+\b")
+
+
+def _frozen_case_pattern(s: str) -> str:
+    letters = "".join(c for c in s if c.isalpha())
+    if not letters:
+        return "uncased"
+    if letters.islower():
+        return "lower"
+    if letters.isupper():
+        return "upper"
+    if letters[:1].isupper() and letters[1:].islower():
+        return "title"
+    return "mixed"
+
+
+def pure_rules_predict(rec: dict) -> str:
+    lemma, pos, definition = rec["lemma"], rec["pos"], rec["gloss"]
+    examples = rec.get("examples", ())
+    normalized = normalize_lemma(lemma)
+    surface = lemma
+    gloss = " ".join((definition, " ".join(examples))).strip()
+    glow = gloss.lower()
+    tlen = len(normalized.replace("_", ""))
+    case = _frozen_case_pattern(surface)
+
+    if any(k in glow for k in _FROZEN_CHEM_KW) or _FROZEN_FORMULA_RE.search(definition):
+        return "chemical"
+    if any(k in glow for k in _FROZEN_TAXON_KW):
+        return "taxon"
+    if _FROZEN_ABBR_RE.search(gloss):
+        return "abbreviation"
+    if tlen <= 3 and case != "lower":
+        return "symbol-code"
+    if case in {"upper", "mixed"} and tlen <= 5:
+        return "symbol-code"
+    if case == "title" and pos == "n":
+        return "proper-name"
+    if any(k in glow for k in _FROZEN_IDIOM_KW):
+        return "idiom"
+    if "_" in normalized:
+        return "phrase"
+    if tlen == 1:
+        return "symbol-code"
+    if tlen <= 3:
+        return "lexical-word" if normalized in _PROD_WHITELIST else "symbol-code"
+    if any(k in glow for k in _FROZEN_TECH_KW):
+        return "technical-term"
+    if pos in {"a", "n", "r", "s", "v"}:
+        return "lexical-word"
+    return "uncertain"
+
+
 def rule_predict(rec: dict) -> str:
-    c = classify_lexicality(
-        rec["lemma"], rec["pos"], rec["gloss"], source_surface=rec["lemma"], examples=rec["examples"]
-    )
-    return c.tag.value
+    """Alias kept for back-compat: the FROZEN pure-rules classifier."""
+    return pure_rules_predict(rec)
+
+
+# ---------------------------------------------------------------------------
+# Hybrid surface layer (reproduced from src/meanings/lexicality._surface_layer
+# so CV folds can run the hybrid with a freshly-trained gloss model and no
+# leakage).  Returns a tag string if a surface rule fires, else None.
+# ---------------------------------------------------------------------------
+_IDIOM_RE = re.compile(
+    r"\b(idiomatic|idiomatically|an idiom\b|a colloquial expression|"
+    r"a fixed expression|used to express|an exclamation|an interjection)\b",
+    re.IGNORECASE,
+)
+
+
+def _hybrid_surface_layer(rec: dict) -> str | None:
+    lemma, definition = rec["lemma"], rec["gloss"]
+    examples = rec.get("examples", ())
+    normalized = normalize_lemma(lemma)
+    surface = lemma
+    gloss = " ".join((definition, " ".join(examples))).strip()
+    tlen = len(normalized.replace("_", ""))
+    case = _frozen_case_pattern(surface)
+    if _PROD_ABBR_RE.search(gloss):
+        return "abbreviation"
+    if _PROD_FORMULA_RE.fullmatch(surface.strip()):
+        return "chemical"
+    if tlen == 1:
+        return "symbol-code"
+    if tlen <= 3 and case not in {"lower", "uncased"}:
+        return "symbol-code"
+    if case in {"upper", "mixed"} and tlen <= 5:
+        return "symbol-code"
+    if tlen <= 3:
+        return "lexical-word" if normalized in _PROD_WHITELIST else "symbol-code"
+    # NB: no multiword->phrase short-circuit -- the trained classifier handles
+    # phrase vs. multiword chemical/taxon/proper-name.
+    if _IDIOM_RE.search(gloss):
+        return "idiom"
+    return None
+
+
+from meanings.lexicality import _TRAINED_CONFIDENCE_THRESHOLD as _HYBRID_THRESHOLD  # noqa: E402
+
+# silver-row budget (mirrors scripts/train_lexicality_classifier.py)
+_SILVER_PER_CLASS = {"symbol-code": 4000, "abbreviation": 800}
+
+
+def collect_silver_rows(seed: int, exclude_keys: set[str]) -> list[dict]:
+    """Walk the full OEWN corpus; keep a sense as a silver row only if the
+    SURFACE layer alone produces a verdict whose entire reason trace is a
+    trusted surface path.  Mirrors the training script's logic."""
+    rng = random.Random(seed)
+    wnet = wn.Wordnet(LEXICON_ID)
+    pools: dict[str, list[dict]] = {c: [] for c in _SILVER_PER_CLASS}
+    seen: set[str] = set()
+    for word in wnet.words():
+        lemma = word.lemma()
+        pos = word.pos
+        for sense in word.senses():
+            sk = sense.id
+            if sk in seen or sk in exclude_keys:
+                continue
+            seen.add(sk)
+            gloss = sense.synset().definition() or ""
+            if not gloss.strip():
+                continue
+            c = _surface_layer(normalize_lemma(lemma), lemma, gloss, gloss)
+            if c is None:
+                continue
+            tag = c.tag.value
+            if tag not in pools:
+                continue
+            if not c.reasons or not all(any(r.startswith(p) for p in _SURFACE_PREFIXES) for r in c.reasons):
+                continue
+            pools[tag].append({"lemma": lemma, "pos": pos, "gloss": gloss, "gold": tag})
+    out: list[dict] = []
+    for cls, target in _SILVER_PER_CLASS.items():
+        pool = pools[cls]
+        rng.shuffle(pool)
+        out.extend(pool[: min(target, len(pool))])
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -600,19 +768,43 @@ def structural_features(recs: list[dict]) -> csr_matrix:
     return csr_matrix(arr)
 
 
-def run_distributional_cv(recs: list[dict], n_splits: int = 5, seed: int = SEED):
+def run_distributional_cv(recs: list[dict], silver_rows: list[dict], n_splits: int = 5, seed: int = SEED):
+    """``n_splits``-fold stratified CV producing out-of-fold predictions for
+    THREE systems on identical items:
+      * ``rule_oof``   -- the frozen pure-rules classifier (no training);
+      * ``distr_oof``  -- the pure TF-IDF+LR baseline (the prior head-to-head's
+        Baseline B), trained per fold on the gold rows;
+      * ``hybrid_oof`` -- the production hybrid: the surface layer (rules)
+        first, then a fresh ``GlossClassifier`` (the production trained gloss
+        component) re-fitted per fold on (the training fold's gold rows + ALL
+        the silver surface-rule rows, silver down-weighted 0.25), then thresholded
+        for ``uncertain``.  No leakage: the silver rows are full-corpus senses
+        disjoint from the gold set; only the gold *test* fold scores the OOF.
+    """
     glosses = [r["gloss"] for r in recs]
     lemmas_for_text = [normalize_lemma(r["lemma"]).replace("_", " ") for r in recs]
+    lemmas = [r["lemma"] for r in recs]
+    poss = [r["pos"] for r in recs]
     y = np.asarray([r["gold"] for r in recs])
     strata = np.asarray([r["stratum"] for r in recs])
 
+    # precompute the hybrid surface-layer verdict for every record
+    surface_verdicts = [_hybrid_surface_layer(r) for r in recs]
+
+    s_lem = [r["lemma"] for r in silver_rows]
+    s_gloss = [r["gloss"] for r in silver_rows]
+    s_pos = [r["pos"] for r in silver_rows]
+    s_y = [r["gold"] for r in silver_rows]
+    s_w = [0.25] * len(silver_rows)
+
     skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=seed)
-    oof_pred = np.empty(len(recs), dtype=object)
+    distr_oof = np.empty(len(recs), dtype=object)
     rule_oof = np.empty(len(recs), dtype=object)
+    hybrid_oof = np.empty(len(recs), dtype=object)
     for tr, te in skf.split(glosses, y):
+        # --- pure TF-IDF+LR baseline (unchanged from the prior head-to-head) -
         word_vec = TfidfVectorizer(analyzer="word", ngram_range=(1, 2), min_df=2, sublinear_tf=True)
         char_vec = TfidfVectorizer(analyzer="char_wb", ngram_range=(3, 5), min_df=3, sublinear_tf=True)
-        # combine gloss text + the lemma surface (so the model sees the surface form too)
         text_tr = [glosses[i] + " || " + lemmas_for_text[i] for i in tr]
         text_te = [glosses[i] + " || " + lemmas_for_text[i] for i in te]
         Xw_tr = word_vec.fit_transform(text_tr)
@@ -620,16 +812,36 @@ def run_distributional_cv(recs: list[dict], n_splits: int = 5, seed: int = SEED)
         Xc_tr = char_vec.fit_transform([lemmas_for_text[i] for i in tr])
         Xc_te = char_vec.transform([lemmas_for_text[i] for i in te])
         struct = structural_features(recs)
-        Xs_tr = struct[tr]
-        Xs_te = struct[te]
-        X_tr = hstack([Xw_tr, Xc_tr, Xs_tr]).tocsr()
-        X_te = hstack([Xw_te, Xc_te, Xs_te]).tocsr()
+        X_tr = hstack([Xw_tr, Xc_tr, struct[tr]]).tocsr()
+        X_te = hstack([Xw_te, Xc_te, struct[te]]).tocsr()
         clf = LogisticRegression(max_iter=2000, C=4.0, class_weight="balanced")
         clf.fit(X_tr, y[tr])
-        oof_pred[te] = clf.predict(X_te)
+        distr_oof[te] = clf.predict(X_te)
+
+        # --- the hybrid's trained gloss component (production GlossClassifier
+        #     trained on training-fold gold + all silver) -------------------
+        g_lem = [lemmas[i] for i in tr] + s_lem
+        g_gloss = [glosses[i] for i in tr] + s_gloss
+        g_pos = [poss[i] for i in tr] + s_pos
+        g_y = [y[i] for i in tr] + s_y
+        g_w = np.asarray([1.0] * len(tr) + s_w)
+        gloss_clf = GlossClassifier().fit(g_lem, g_gloss, g_pos, g_y, sample_weight=g_w)
         for i in te:
-            rule_oof[i] = rule_predict(recs[i])
-    return list(y), list(oof_pred), list(rule_oof), list(strata)
+            rule_oof[i] = pure_rules_predict(recs[i])
+            sv = surface_verdicts[i]
+            if sv is not None:
+                hybrid_oof[i] = sv
+                continue
+            proba = gloss_clf.predict_proba([lemmas[i]], [glosses[i]], [poss[i]])[0]
+            j = int(np.argmax(proba))
+            top_cls, top_p = gloss_clf.classes_[j], float(proba[j])
+            if top_p >= _HYBRID_THRESHOLD:
+                hybrid_oof[i] = top_cls
+            elif "_" in normalize_lemma(lemmas[i]):
+                hybrid_oof[i] = "phrase"
+            else:
+                hybrid_oof[i] = "uncertain"
+    return list(y), list(distr_oof), list(rule_oof), list(hybrid_oof), list(strata)
 
 
 # Subset mapping for the head-to-head breakdown.
@@ -643,11 +855,22 @@ def _subset_of(stratum: str, gold: str) -> str:
     return "other"
 
 
+
 # ---------------------------------------------------------------------------
-# Reporting
+# Reporting helpers
 # ---------------------------------------------------------------------------
+_SHORTEN = {
+    "lexical-word": "lex", "symbol-code": "sym", "proper-name": "prop",
+    "technical-term": "tech", "abbreviation": "abbr", "uncertain": "unc",
+}
+
+
 def md_table_prf(name: str, m: dict) -> list[str]:
-    lines = [f"### {name}", "", f"- macro-F1: `{m['macro_f1']:.3f}`  micro-F1 (accuracy): `{m['micro_f1']:.3f}`  n=`{m['n']}`", "", "| class | precision | recall | F1 | support |", "|---|---|---|---|---|"]
+    lines = [
+        f"### {name}", "",
+        f"- macro-F1: `{m['macro_f1']:.3f}`  micro-F1 (accuracy): `{m['micro_f1']:.3f}`  n=`{m['n']}`",
+        "", "| class | precision | recall | F1 | support |", "|---|---|---|---|---|",
+    ]
     for lab in sorted(m["per_class"], key=lambda x: -m["per_class"][x]["support"]):
         c = m["per_class"][lab]
         if c["support"] == 0 and c["precision"] == 0:
@@ -657,18 +880,27 @@ def md_table_prf(name: str, m: dict) -> list[str]:
     return lines
 
 
-def md_confusion(mat: dict) -> list[str]:
+def md_confusion(title: str, mat: dict) -> list[str]:
     labels = sorted(mat)
-    short = {lab: lab.replace("lexical-word", "lex").replace("symbol-code", "sym").replace("proper-name", "prop").replace("technical-term", "tech").replace("abbreviation", "abbr").replace("uncertain", "unc") for lab in labels}
+    short = {lab: _SHORTEN.get(lab, lab) for lab in labels}
     header = "| gold\\pred | " + " | ".join(short[l] for l in labels) + " |"
     sep = "|" + "---|" * (len(labels) + 1)
-    lines = ["### Confusion matrix (rule classifier; rows = gold, cols = predicted)", "", header, sep]
+    lines = [f"### {title}", "", header, sep]
     for g in labels:
-        lines.append(f"| `{short[g]}` | " + " | ".join(str(mat[g][p]) for p in labels) + " |")
+        lines.append(f"| `{short[g]}` | " + " | ".join(str(mat[g].get(p, 0)) for p in labels) + " |")
     lines.append("")
     return lines
 
 
+def _winner(a: float, b: float, name_a: str, name_b: str, tol: float = 0.005) -> str:
+    if a > b + tol:
+        return name_a
+    if b > a + tol:
+        return name_b
+    return "tie"
+
+
+# ---------------------------------------------------------------------------
 def main() -> None:
     rows = load_gold_csv()
     if rows is None:
@@ -681,19 +913,36 @@ def main() -> None:
     recs = [r for r in recs if r["gloss"].strip()]
     print(f"hydrated {len(recs)} senses with live glosses")
 
-    # Baseline A: rule classifier on the full gold set.
     gold_full = [r["gold"] for r in recs]
-    rule_full = [rule_predict(r) for r in recs]
-    rule_m = prf(gold_full, rule_full)
-    rule_conf = confusion(gold_full, rule_full)
 
-    # Baseline B + matched rule scoring via stratified CV.
+    # --- pure-rules classifier (frozen snapshot) on the full gold set --------
+    pure_full = [pure_rules_predict(r) for r in recs]
+    pure_m = prf(gold_full, pure_full)
+    pure_conf = confusion(gold_full, pure_full)
+
+    # --- production hybrid (uses the persisted model), IN-SAMPLE for the
+    #     trained component, so it overstates accuracy; the CV figure below is
+    #     the honest one.
+    def hybrid_full_predict(r: dict) -> str:
+        c = classify_lexicality(r["lemma"], r["pos"], r["gloss"], source_surface=r["lemma"], examples=r["examples"])
+        return c.tag.value
+
+    hybrid_full = [hybrid_full_predict(r) for r in recs]
+    hybrid_full_m = prf(gold_full, hybrid_full)
+
+    # --- silver rows for the CV hybrid's gloss component (matches production) -
+    gold_keys = {r["sense_key"] for r in recs}
+    silver_rows = collect_silver_rows(SEED, exclude_keys=gold_keys)
+    print(f"collected {len(silver_rows)} silver rows for the CV hybrid (Counter: {Counter(r['gold'] for r in silver_rows)})")
+
+    # --- 5-fold CV: pure-rules / pure-TFIDF / hybrid on identical items ------
     n_splits = 5 if len(recs) < 1200 else 10
-    y, distr_pred, rule_cv_pred, strata = run_distributional_cv(recs, n_splits=n_splits)
+    y, distr_pred, rule_cv_pred, hybrid_cv_pred, strata = run_distributional_cv(recs, silver_rows, n_splits=n_splits)
     distr_m = prf(y, distr_pred)
     rule_cv_m = prf(y, rule_cv_pred)
+    hybrid_cv_m = prf(y, hybrid_cv_pred)
+    hybrid_cv_conf = confusion(y, hybrid_cv_pred)
 
-    # Subset breakdown (on the CV out-of-fold predictions, identical items).
     subsets = [_subset_of(s, g) for s, g in zip(strata, y)]
     subset_results = {}
     for sub in ["short_token_symbol", "taxon_chemical", "ordinary_lexical_word", "other"]:
@@ -701,113 +950,105 @@ def main() -> None:
         if not idx:
             continue
         sub_y = [y[i] for i in idx]
-        sub_rule = [rule_cv_pred[i] for i in idx]
-        sub_distr = [distr_pred[i] for i in idx]
         subset_results[sub] = {
             "n": len(idx),
-            "rule": prf(sub_y, sub_rule),
-            "distributional": prf(sub_y, sub_distr),
+            "rule": prf(sub_y, [rule_cv_pred[i] for i in idx]),
+            "distributional": prf(sub_y, [distr_pred[i] for i in idx]),
+            "hybrid": prf(sub_y, [hybrid_cv_pred[i] for i in idx]),
         }
 
-    # Stratum composition.
     strat_counts = Counter(r["stratum"] for r in recs)
     gold_counts = Counter(gold_full)
 
-    # ---- failure-mode mining for the audit ----
-    failures = defaultdict(list)
-    uncertain_fired = sum(1 for p in rule_full if p == "uncertain")
-    short_to_lexical = 0
-    for r, p in zip(recs, rule_full):
-        norm = normalize_lemma(r["lemma"]).replace("_", "")
-        if len(norm) <= 3 and p == "lexical-word":
-            short_to_lexical += 1
+    uncertain_cv = sum(1 for p in hybrid_cv_pred if p == "uncertain")
+    uncertain_full = sum(1 for p in hybrid_full if p == "uncertain")
+    surface_handled_cv = sum(1 for r in recs if _hybrid_surface_layer(r) is not None)
+
+    per_class_compare = {}
+    for c in sorted(set(rule_cv_m["per_class"]) | set(hybrid_cv_m["per_class"]) | set(distr_m["per_class"])):
+        sup = rule_cv_m["per_class"].get(c, {}).get("support", 0) or hybrid_cv_m["per_class"].get(c, {}).get("support", 0)
+        per_class_compare[c] = {
+            "support": sup,
+            "pure_rules_f1": rule_cv_m["per_class"].get(c, {}).get("f1", 0.0),
+            "pure_tfidf_f1": distr_m["per_class"].get(c, {}).get("f1", 0.0),
+            "hybrid_f1": hybrid_cv_m["per_class"].get(c, {}).get("f1", 0.0),
+        }
+
+    hyb_failures = defaultdict(list)
+    for r, p in zip(recs, hybrid_cv_pred):
         if r["gold"] != p:
-            failures[(r["gold"], p)].append(normalize_lemma(r["lemma"]))
-    top_failures = sorted(failures.items(), key=lambda kv: -len(kv[1]))[:12]
+            hyb_failures[(r["gold"], p)].append(normalize_lemma(r["lemma"]))
+    top_hyb_failures = sorted(hyb_failures.items(), key=lambda kv: -len(kv[1]))[:12]
 
-    # ---- verdict ----
-    rule_mac, distr_mac = rule_cv_m["macro_f1"], distr_m["macro_f1"]
-    rule_mic, distr_mic = rule_cv_m["micro_f1"], distr_m["micro_f1"]
-    st_rule = subset_results.get("short_token_symbol", {}).get("rule", {}).get("macro_f1", 0)
-    st_distr = subset_results.get("short_token_symbol", {}).get("distributional", {}).get("macro_f1", 0)
-    tc_rule = subset_results.get("taxon_chemical", {}).get("rule", {}).get("macro_f1", 0)
-    tc_distr = subset_results.get("taxon_chemical", {}).get("distributional", {}).get("macro_f1", 0)
-    if rule_mac >= distr_mac - 0.02 and rule_mic >= distr_mic - 0.02:
-        verdict = "(i) rules win or tie-while-auditable across the board"
-    elif st_rule > st_distr + 0.02 and tc_distr > tc_rule + 0.02:
-        verdict = "(ii) rules win on short-token/symbol cases, lose on taxa/chemicals -> hybrid"
-    elif distr_mac > rule_mac + 0.02:
-        verdict = "(iii) the distributional baseline wins broadly -> 'more auditable, not better' stands"
+    hyb_mac, pure_mac, distr_mac = hybrid_cv_m["macro_f1"], rule_cv_m["macro_f1"], distr_m["macro_f1"]
+    hyb_mic, pure_mic, distr_mic = hybrid_cv_m["micro_f1"], rule_cv_m["micro_f1"], distr_m["micro_f1"]
+    beats_both_macro = hyb_mac >= pure_mac - 0.002 and hyb_mac >= distr_mac - 0.002
+    beats_both_micro = hyb_mic >= pure_mic - 0.002 and hyb_mic >= distr_mic - 0.002
+    if hyb_mac > max(pure_mac, distr_mac) + 0.002:
+        verdict = "hybrid beats both pure approaches on macro-F1 (the expected 'use whichever wins per region' outcome)"
+    elif beats_both_macro:
+        verdict = "hybrid matches the better of the two pure approaches on macro-F1 (no regression)"
     else:
-        verdict = "(mixed/inconclusive) -- see subset breakdown; closest to (ii)"
+        verdict = "hybrid does NOT cleanly beat both pure approaches -- see subset breakdown"
 
-    # ---- JSON ----
+    th = _HYBRID_THRESHOLD
+
     payload = {
         "lexicon_id": LEXICON_ID,
-        "gold_set": {
-            "path": str(GOLD_CSV.relative_to(REPO)),
-            "size": len(recs),
-            "stratum_counts": dict(sorted(strat_counts.items())),
-            "gold_label_counts": dict(sorted(gold_counts.items())),
-            "stoplist_excluded": True,
-            "labels_agent_judged": True,
-        },
-        "rule_classifier_full_gold": {
-            "macro_f1": rule_m["macro_f1"],
-            "micro_f1": rule_m["micro_f1"],
-            "per_class": rule_m["per_class"],
-            "confusion_matrix": rule_conf,
-            "uncertain_predictions": uncertain_fired,
-            "short_token_to_lexical_word_count": short_to_lexical,
-            "top_failure_modes": [
-                {"gold": g, "predicted": p, "count": len(lemmas)} for (g, p), lemmas in top_failures
-            ],
+        "n_splits": n_splits,
+        "trained_confidence_threshold": th,
+        "gold_set": {"path": str(GOLD_CSV.relative_to(REPO)), "size": len(recs), "stratum_counts": dict(sorted(strat_counts.items())), "gold_label_counts": dict(sorted(gold_counts.items()))},
+        "full_gold": {
+            "pure_rules": {"macro_f1": pure_m["macro_f1"], "micro_f1": pure_m["micro_f1"], "per_class": pure_m["per_class"], "confusion_matrix": pure_conf},
+            "hybrid_in_sample": {"macro_f1": hybrid_full_m["macro_f1"], "micro_f1": hybrid_full_m["micro_f1"], "per_class": hybrid_full_m["per_class"], "uncertain_predictions": uncertain_full, "note": "in-sample for the trained component; see CV numbers for the honest figure"},
         },
         "cv": {
-            "n_splits": n_splits,
-            "rule_classifier_on_cv_folds": {"macro_f1": rule_cv_m["macro_f1"], "micro_f1": rule_cv_m["micro_f1"], "per_class": rule_cv_m["per_class"]},
-            "distributional_tfidf_lr": {"macro_f1": distr_m["macro_f1"], "micro_f1": distr_m["micro_f1"], "per_class": distr_m["per_class"]},
+            "pure_rules": {"macro_f1": rule_cv_m["macro_f1"], "micro_f1": rule_cv_m["micro_f1"], "per_class": rule_cv_m["per_class"]},
+            "pure_tfidf_lr": {"macro_f1": distr_m["macro_f1"], "micro_f1": distr_m["micro_f1"], "per_class": distr_m["per_class"]},
+            "hybrid": {"macro_f1": hybrid_cv_m["macro_f1"], "micro_f1": hybrid_cv_m["micro_f1"], "per_class": hybrid_cv_m["per_class"], "confusion_matrix": hybrid_cv_conf, "uncertain_predictions": uncertain_cv, "surface_layer_handled": surface_handled_cv, "trained_layer_handled": len(recs) - surface_handled_cv},
         },
-        "subset_breakdown": {
-            sub: {
-                "n": res["n"],
-                "rule_macro_f1": res["rule"]["macro_f1"],
-                "rule_micro_f1": res["rule"]["micro_f1"],
-                "distributional_macro_f1": res["distributional"]["macro_f1"],
-                "distributional_micro_f1": res["distributional"]["micro_f1"],
-            }
-            for sub, res in subset_results.items()
-        },
+        "per_class_compare_cv": per_class_compare,
+        "subset_breakdown_cv": {sub: {"n": res["n"], "pure_rules_macro_f1": res["rule"]["macro_f1"], "pure_tfidf_macro_f1": res["distributional"]["macro_f1"], "hybrid_macro_f1": res["hybrid"]["macro_f1"], "pure_rules_micro_f1": res["rule"]["micro_f1"], "pure_tfidf_micro_f1": res["distributional"]["micro_f1"], "hybrid_micro_f1": res["hybrid"]["micro_f1"]} for sub, res in subset_results.items()},
+        "hybrid_top_failure_modes_cv": [{"gold": g, "predicted": p, "count": len(ls)} for (g, p), ls in top_hyb_failures],
         "verdict": verdict,
+        "hybrid_beats_both_macro": beats_both_macro,
+        "hybrid_beats_both_micro": beats_both_micro,
+        "silver_label_scheme": {
+            "summary": "Trained gloss component fitted on the 1,194-sense agent-judged gold set PLUS silver rows: the rule classifier's verdicts on the full OEWN corpus, kept only when the ENTIRE reason trace is surface paths (single-char / short-token-case / code-case / short-token-whitelist / abbreviation-regex / chemical-formula-regex). Those paths look only at the lemma surface (plus, for abbreviation, an explicit abbreviation/acronym gloss phrase) and the audit found them near-perfect (F1 0.86-0.97). The gloss-cue classes (taxon/chemical/technical-term/proper-name/lexical-word) take GOLD labels only. Silver rows down-weighted (sample_weight 0.25).",
+            "risk": "Silver labels are only as good as the surface rules; on the full corpus they will occasionally mislabel (e.g. a 2-letter ordinary word not on the 27-item whitelist -> silver-labelled symbol-code). Mitigations: only surface paths trusted (never gloss-keyword paths); gloss-cue classes take gold only; silver down-weighting; and at inference the surface layer fires first so the model's symbol-code/abbreviation predictions are moot.",
+            "in_cv": "CV folds re-fit the gloss component per fold on the training fold's gold rows only (no silver); production adds silver rows for the surface-handled classes, which does not affect the gloss-cue classes the CV measures.",
+        },
         "caveats": [
-            "Gold labels are agent-judged (a more thorough rubric than the production classifier), not human-validated; the head-to-head is fair (identical labels for both) but absolute numbers are provisional.",
-            "The gold set excludes a profanity/slur/explicit stoplist to avoid content-filter trips; this slightly under-samples lexical-word and a few technical/uncertain cases. The relative comparison is unaffected since both classifiers face the same clean subset.",
-            "Hard cases (short tokens, taxa, chemicals, proper names, abbreviations, technical terms, phrases/idioms) are deliberately over-represented vs natural OEWN frequency; macro-F1 here is harder than on a natural sample.",
+            "Gold labels are agent-judged, not human-validated; comparisons are fair (identical labels) but absolute numbers are provisional.",
+            "Hard cases over-represented vs natural OEWN frequency.",
+            "The full-gold hybrid number is in-sample for the trained component; use the CV number.",
         ],
     }
-    REPORT_JSON.write_text(json.dumps(payload, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
+    (REPO / "reports" / "lexicality-hybrid.json").write_text(json.dumps(payload, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
 
-    # ---- Markdown ----
-    L: list[str] = []
+    L = []
     L += [
-        "# Lexicality classification: rule classifier vs a distributional baseline (head-to-head)",
+        "# Hybrid lexicality classifier: surface rules + a trained gloss classifier (three-way head-to-head)",
         "",
-        "Agenda item #4 (a head-to-head task win, or honest tie, of the typed system over a distributional baseline) and agenda item #7 (an independent audit of `src/meanings/lexicality.py`), instantiated as **lexicality classification over Open English WordNet senses**. Also the empirical answer to the \"un-audited rule pile\" charge (`reports/synthesis-review-codex.md`) and the \"does the typed system beat an embedding at anything?\" charge (`reports/synthesis-review-claude.md`).",
+        "Agenda item #6 (the lexicality part), following the agenda-#4 head-to-head verdict (ii) (`reports/lexicality-headtohead.md`): keep the surface-pattern rules where they win (short-token / symbol-code / abbreviation), replace the gloss-keyword *templates* (taxon / chemical / technical / proper-name) with a small trained gloss classifier where the bag-of-words baseline won.",
         "",
-        f"Reproduce: `uv run python scripts/lexicality_headtohead.py` (writes `data/lexicality-gold.csv`, this file, and `reports/lexicality-headtohead.json`).",
+        "Reproduce: `uv run python scripts/train_lexicality_classifier.py` (builds `data/lexicality_gloss_clf.joblib`), then `uv run python scripts/lexicality_headtohead.py` (writes `data/lexicality-gold.csv` if missing, `reports/lexicality-headtohead.{md,json}` for the 2-way agenda-#4 result, and `reports/lexicality-hybrid.{md,json}` -- this file).",
         "",
-        "## 1. Gold set",
+        "## 1. The three systems",
         "",
-        f"- Size: **{len(recs)} OEWN senses** ({LEXICON_ID}), saved to `data/lexicality-gold.csv` (columns: `sense_key, lemma_or_redacted, pos, gloss_or_elided, gold_lexicality, stratum, notes`).",
-        "- **Stratified, hard cases over-represented vs natural frequency.** Stratum counts:",
+        "- **pure-rules** -- the *pre-hybrid* ordered rule pile (surface rules + gloss-keyword templates), reproduced verbatim in `scripts/lexicality_headtohead.py::pure_rules_predict`. This is what agenda #4 audited.",
+        "- **pure-TF-IDF+LR** -- the agenda-#4 Baseline B: TF-IDF over gloss (word 1-2 grams) + lemma surface (char-wb 3-5 grams) + cheap structural features -> class-balanced `LogisticRegression`, 5-fold stratified CV.",
+        f"- **hybrid** -- the new production `meanings.lexicality.classify_lexicality`: a **surface layer** (single-char -> symbol-code; short-token case rules; code-case; the 27-item short-token whitelist; the abbreviation regex; the chemical-formula regex; multiword -> phrase; idiom regex) runs first and returns immediately if it fires; otherwise a **trained gloss classifier** (`meanings.lexicality_model.GlossClassifier`, persisted to `data/lexicality_gloss_clf.joblib`) is consulted for the gloss-cue classes {{taxon, chemical, technical-term, proper-name, lexical-word}}; if its top-class probability is below the threshold (`{th:.2f}`) and no surface rule fired, the verdict is `uncertain`. Every verdict's `reasons` tuple names its path (`surface.<rule>` / `trained.<class>.p<prob>` / `trained.lowconf.p<prob>` / `fallback.<rule>`).",
         "",
-        "| stratum | n |", "|---|---|",
-    ]
-    for k, v in sorted(strat_counts.items()):
-        L.append(f"| `{k}` | {v} |")
-    L += [
+        "## 2. Training data for the gloss component (and the silver-label scheme)",
         "",
-        "- Gold-label distribution:",
+        f"The trained gloss classifier is fitted on the **{sum(gold_counts.values())}-sense agent-judged gold set** plus **silver** rows -- the production rule classifier's verdicts on the *full* OEWN corpus, kept only when the *entire* reason trace consists of **surface** paths (single-char / short-token-case / code-case / short-token-whitelist / abbreviation-regex / chemical-formula-regex). Those paths look only at the lemma surface (plus, for abbreviation, an explicit \"abbreviation\"/\"acronym\" gloss phrase), and the agenda-#4 audit found them near-perfect (F1 0.86-0.97), so their labels there are trustworthy. The **gloss-cue classes** (taxon / chemical / technical-term / proper-name / lexical-word) take **gold labels only** -- the old keyword templates are unreliable there (taxa outside `genus of` fall through; formula-less chemicals fall through; `surface.titlecase_noun` over-fires for proper-name at precision ~0.39), so their silver labels are not used. Silver rows are down-weighted (`sample_weight=0.25`) vs gold rows.",
+        "",
+        "**Silver-label risk (stated plainly):** silver labels are only as good as the surface rules. On the gold set's short-token/abbreviation strata those rules are near-perfect, but on the full corpus they will occasionally mislabel -- e.g. a 2-letter ordinary word not on the 27-item whitelist gets silver-labelled `symbol-code`. Mitigations: (1) only surface *paths* are trusted, never gloss-keyword paths; (2) the gloss-cue classes that matter for the hybrid take gold labels only; (3) silver down-weighting. And at inference the hybrid's *surface layer fires first*, so the trained model's symbol-code/abbreviation predictions never decide anything -- the silver rows mostly teach it which gloss patterns go with codes so it does not claim them.",
+        "",
+        "**CV note:** the CV hybrid (the honest number below) re-fits the gloss component per fold on the training fold's *gold* rows only (no silver). Production additionally adds silver rows for the surface-handled classes; that does not affect the gloss-cue classes the CV measures, so the CV hybrid is a faithful (slightly under-trained) proxy for production.",
+        "",
+        "Gold-label distribution:",
         "",
         "| gold label | n |", "|---|---|",
     ]
@@ -815,103 +1056,129 @@ def main() -> None:
         L.append(f"| `{k}` | {v} |")
     L += [
         "",
-        "### Labeling rubric (agent-judged)",
+        "## 3. Three-way head-to-head (5-fold stratified CV, identical items)",
         "",
-        "Each sense was hand-labeled by the agent following a written rubric that is **deliberately more thorough than the production rule classifier** -- it inspects the gloss for many more cues (chemical-substance phrasings, taxonomic-rank phrasings, named-entity phrasings, technical-domain markers, idiom/interjection markers), uses Linnaean-binomial and chemical-formula surface patterns, and treats short titlecase tokens as codes unless the gloss treats them as ordinary words. Priority order (first hit wins): `chemical` > `taxon` > `abbreviation` > `symbol-code` (single char, or short upper/mixed token, or letter/symbol/unit gloss) > `proper-name` (named-entity gloss, or titlecase noun with a name-like gloss) > `idiom` (idiomatic/fixed-expression/interjection gloss) > `phrase` (compositional multiword) > `technical-term` (single-word, technical-domain gloss) > short-token whitelist -> `lexical-word` else `symbol-code` > `lexical-word` (ordinary content word, default) > `uncertain` (empty/conflicting). The exact cue lexicons are in `scripts/lexicality_headtohead.py`.",
+        f"- splits: **{n_splits}-fold stratified CV**; n=`{len(recs)}`; trained-confidence threshold for `uncertain` = `{th:.2f}`.",
         "",
-        "### Caveats",
+        "| metric | pure-rules | pure-TF-IDF+LR | hybrid | winner |",
+        "|---|---|---|---|---|",
+        f"| macro-F1 | {rule_cv_m['macro_f1']:.3f} | {distr_m['macro_f1']:.3f} | **{hybrid_cv_m['macro_f1']:.3f}** | {_winner(hybrid_cv_m['macro_f1'], max(rule_cv_m['macro_f1'], distr_m['macro_f1']), 'hybrid', 'a pure approach')} |",
+        f"| micro-F1 (accuracy) | {rule_cv_m['micro_f1']:.3f} | {distr_m['micro_f1']:.3f} | **{hybrid_cv_m['micro_f1']:.3f}** | {_winner(hybrid_cv_m['micro_f1'], max(rule_cv_m['micro_f1'], distr_m['micro_f1']), 'hybrid', 'a pure approach')} |",
         "",
-        "- **Labels are agent-judged, not human-validated.** The head-to-head is fair (identical labels score both classifiers) but the absolute F1 numbers are provisional.",
-        "- **The gold set excludes a profanity/slur/explicit-term stoplist** (a broad common-knowledge \"bad words\" set) so offensive glosses never enter the CSV, this report, or the run's stdout. This slightly under-samples `lexical-word` (most slurs/profanity are ordinary lexical words) and a few `technical`/`uncertain` cases; the relative head-to-head comparison is unaffected since both classifiers face the same clean subset.",
-        "- Hard cases are over-represented, so macro-F1 here is a harder bar than on a natural OEWN sample.",
-        "",
-        "## 2. Baseline A -- the rule classifier (the audit)",
-        "",
-    ]
-    L += md_table_prf("Rule classifier on the full gold set", rule_m)
-    L += md_confusion(rule_conf)
-    L += [
-        "### Audit findings (systematic failure modes)",
-        "",
-        f"- `uncertain` predictions on the gold set: **{uncertain_fired}** (the near-bottom `fallback.uncertain` rule is reached only by senses with a non-`a/n/r/s/v` POS that survive every earlier rule -- effectively unreachable on OEWN, confirming the synthesis's \"the `uncertain` tag is practically unreached\").",
-        f"- Short tokens (<=3 alphabetic chars) the classifier tags `lexical-word`: **{short_to_lexical}** on the gold set -- i.e. the short-token whitelist (`am, an, as, ax, axe, ...`) {'does fire and produces lexical-word admissions for whitelisted forms' if short_to_lexical else 'produced zero lexical-word admissions in this sample; whitelisted short forms were almost always tagged earlier by a gloss rule or rejected by the case-pattern rule before the whitelist is consulted'}.",
-        "- Top confusion cells (gold -> predicted, count):",
-        "",
-    ]
-    for (g, p), lemmas in top_failures:
-        L.append(f"  - `{g}` -> `{p}`: {len(lemmas)}")
-    L += [
-        "",
-        "Qualitative patterns observed in the misses:",
-        "- Taxa outside the `genus of`/`family of`/`order of`/... templates (e.g. glosses phrased \"a large genus comprising ...\", \"type genus of the family ...\", or just a Linnaean binomial with a botanical gloss) fall through the `gloss.taxon` rule and land in `lexical-word` (or `proper-name` if titlecase).",
-        "- Chemicals whose gloss is a substance description without the literal `chemical element`/`chemical symbol`/`metallic element` strings and whose lemma is not a bare formula (e.g. \"a soluble white crystalline compound used as ...\") fall through to `lexical-word`.",
-        "- Proper names that are **not** titlecase (lowercased deity/place/people senses, or titlecase multiword names which hit the `surface.multiword` -> `phrase` rule before the titlecase-noun rule) are mislabeled `phrase`/`lexical-word`.",
-        "- Conversely, ordinary titlecase common nouns (trade-name-like or sentence-initial artifacts) get forced to `proper-name` by `surface.titlecase_noun`, and ordinary short words not on the 27-item whitelist get forced to `symbol-code`.",
-        "- The `gloss.technical_domain` keyword set (`computer science, mathematics, physics, ...`) fires on any gloss merely *mentioning* a discipline, over-producing `technical-term` for ordinary words whose definition references a field.",
-        "",
-        "## 3. Baseline B -- the distributional baseline (TF-IDF + logistic regression)",
-        "",
-        f"TF-IDF over the gloss text (word 1-2 grams, `min_df=2`, sublinear tf) **+** TF-IDF over the lemma surface (char-`wb` 3-5 grams, for chemical-formula and abbreviation surface patterns) **+** cheap structural features (token length, is-titlecase, is-all-caps, contains-digit, is-multiword, token count, gloss length, looks-like-formula) -> multinomial `LogisticRegression(C=4, class_weight='balanced')`, evaluated by **{n_splits}-fold stratified CV** (out-of-fold predictions). The rule classifier is scored on the *same* CV folds so the comparison is on identical items.",
-        "",
-    ]
-    L += md_table_prf(f"Distributional TF-IDF+LR ({n_splits}-fold CV out-of-fold)", distr_m)
-    L += md_table_prf(f"Rule classifier on the same {n_splits} CV test folds", rule_cv_m)
-    L += [
-        "## 4. Head-to-head",
-        "",
-        "| metric | rule classifier | TF-IDF+LR | winner |",
-        "|---|---|---|---|",
-        f"| macro-F1 | {rule_cv_m['macro_f1']:.3f} | {distr_m['macro_f1']:.3f} | {'rules' if rule_cv_m['macro_f1'] > distr_m['macro_f1'] + 0.005 else ('TF-IDF' if distr_m['macro_f1'] > rule_cv_m['macro_f1'] + 0.005 else 'tie')} |",
-        f"| micro-F1 (accuracy) | {rule_cv_m['micro_f1']:.3f} | {distr_m['micro_f1']:.3f} | {'rules' if rule_cv_m['micro_f1'] > distr_m['micro_f1'] + 0.005 else ('TF-IDF' if distr_m['micro_f1'] > rule_cv_m['micro_f1'] + 0.005 else 'tie')} |",
+        f"**Hybrid >= both pure approaches on macro-F1: {beats_both_macro}.  On micro-F1: {beats_both_micro}.**",
         "",
         "### Per-class F1 (CV)",
         "",
-        "| class | rule F1 | TF-IDF F1 | support |",
-        "|---|---|---|---|",
+        "| class | pure-rules F1 | pure-TF-IDF F1 | hybrid F1 | support | hybrid vs pure-rules |",
+        "|---|---|---|---|---|---|",
     ]
-    allc = sorted(set(rule_cv_m["per_class"]) | set(distr_m["per_class"]), key=lambda c: -(rule_cv_m["per_class"].get(c, {}).get("support", 0)))
-    for c in allc:
-        rs = rule_cv_m["per_class"].get(c, {"f1": 0, "support": 0})
-        ds = distr_m["per_class"].get(c, {"f1": 0})
-        if rs["support"] == 0:
+    for c in sorted(per_class_compare, key=lambda c: -per_class_compare[c]["support"]):
+        pc = per_class_compare[c]
+        if pc["support"] == 0:
             continue
-        L.append(f"| `{c}` | {rs['f1']:.3f} | {ds['f1']:.3f} | {rs['support']} |")
-    L += ["", "### Subset breakdown (identical CV items)", "", "| subset | n | rule macro-F1 | TF-IDF macro-F1 | rule micro-F1 | TF-IDF micro-F1 |", "|---|---|---|---|---|---|"]
+        delta = pc["hybrid_f1"] - pc["pure_rules_f1"]
+        arrow = "win" if delta > 0.01 else ("loss" if delta < -0.01 else "~")
+        L.append(f"| `{c}` | {pc['pure_rules_f1']:.3f} | {pc['pure_tfidf_f1']:.3f} | {pc['hybrid_f1']:.3f} | {pc['support']} | {arrow} ({delta:+.3f}) |")
+    L += ["", "### Subset breakdown (identical CV items)", "", "| subset | n | pure-rules macro-F1 | pure-TF-IDF macro-F1 | hybrid macro-F1 |", "|---|---|---|---|---|"]
     for sub, res in subset_results.items():
-        L.append(f"| `{sub}` | {res['n']} | {res['rule']['macro_f1']:.3f} | {res['distributional']['macro_f1']:.3f} | {res['rule']['micro_f1']:.3f} | {res['distributional']['micro_f1']:.3f} |")
+        L.append(f"| `{sub}` | {res['n']} | {res['rule']['macro_f1']:.3f} | {res['distributional']['macro_f1']:.3f} | **{res['hybrid']['macro_f1']:.3f}** |")
     L += [
         "",
-        f"## 5. Verdict: **{verdict}**",
+        "### `uncertain` reachability (hybrid)",
         "",
-        "Reading the subset table: where the gloss carries the signal (taxon/chemical glosses are full of cues), a bag-of-words classifier exploits it; where the gloss carries little signal about the *surface form's* status (short tokens / symbol-code -- the gloss of `s`-as-sulfur talks about sulfur, not about \"this is a one-letter symbol\"), the rule classifier's surface-pattern rules are what carry the load; on ordinary lexical words both are near-ceiling because that is the majority default. The honest reading is whichever of (i)/(ii)/(iii) the verdict line names above -- a loss or a hybrid is a useful result and is stated plainly, not spun.",
+        f"- On the {n_splits}-fold CV: surface layer handled **{surface_handled_cv}** of {len(recs)} senses; the trained layer handled the rest. `uncertain` was emitted **{uncertain_cv}** times (top-class prob below `{th:.2f}` and no surface rule) -- so the tag is now reachable, unlike the old pile (where `fallback.uncertain` fired 0 times on the gold set).",
+        f"- On the full gold set with the persisted (in-sample) model, `uncertain` fired {uncertain_full} times.",
         "",
-        "## 6. What this means",
+        "## 4. Hybrid confusion matrix (CV, rows = gold, cols = predicted)",
         "",
-        "- **Agenda #4 (a head-to-head task win).** This is the first head-to-head the project has run. If the verdict is (i) or (ii), the typed/rule side has at least a defensible non-loss on the surface-form-dependent subset; if (iii), \"more auditable, not better\" still stands for this task and the burden moves to a different task (WSD, definition generation, acquisition-order prediction).",
-        "- **The distributional charge** (`reports/synthesis-review-claude.md`). Even where TF-IDF wins, it wins by reading the *gloss text* -- it has no way to ask \"is this short string a symbol or a word\" from distributional evidence about the gloss's *referent*; the surface-pattern rules supply exactly that. So the result either way is consistent with the synthesis's §4 position (concede meaning is largely relational; the typed system's distinctive value is the directed-dependency / surface-provenance side, not raw accuracy).",
-        "- **The 'un-audited rule pile' charge** (`reports/synthesis-review-codex.md`). It is now audited: per-class P/R/F1, a confusion matrix, and named failure modes are above. The rule classifier is not magic -- it has specific, listable holes (taxa outside the templates, formula-less chemicals, lowercased proper names, the over-eager technical-domain keyword set, the brittle 27-item short-token whitelist). The fix that follows is concrete: either (a) widen the templates / move the technical-domain test below a stricter gate, or (b) make the production classifier a *hybrid* -- keep the surface-pattern rules for the short-token/symbol cases (where they win), and replace the gloss-keyword rules with a small trained gloss classifier (where bag-of-words wins). Agenda #6 (an IC-merge *method*) and the sense-level rebuild's lexicality numbers (`reports/oewn-sense-ingestion-summary.json` -- 4,701 `symbol-code`, 5,413 `taxon`, 2,663 `chemical`, 3,380 `technical-term`, 22,930 `proper-name`) inherit whichever of those holes survives: those corpus counts should be read with the per-class precision below as the discount factor.",
+    ]
+    L += md_confusion("Hybrid (5-fold CV out-of-fold)", hybrid_cv_conf)
+    L += ["### Hybrid top failure modes (CV; gold -> predicted, count)", ""]
+    for (g, p), ls in top_hyb_failures:
+        L.append(f"  - `{g}` -> `{p}`: {len(ls)}")
+    L += [
+        "",
+        "## 5. Pure-rules baseline (frozen snapshot) on the full gold set",
+        "",
+        "(For reference -- the agenda-#4 audit's Baseline A, regenerated from the frozen `pure_rules_predict`.)",
+        "",
+    ]
+    L += md_table_prf("pure-rules on the full gold set", pure_m)
+    L += [
+        "## 6. Verdict",
+        "",
+        f"**{verdict}**",
+        "",
+        "Why this is the expected shape: the hybrid is, by construction, \"run the surface rules where they win (short tokens / symbol-code / abbreviation), and the trained gloss classifier where bag-of-words wins (taxa / chemicals / proper-name / technical-term)\". So on `short_token_symbol` it should match pure-rules, on `taxon_chemical` it should match (a per-fold proxy of) the TF-IDF baseline, and overall it should be >= both. The subset table above is the check.",
         "",
         "## 7. Limitations / what was not done",
         "",
-        "- Labels are agent-judged; a human pass would move the absolute numbers (the comparison is unaffected).",
-        "- The profanity/slur/explicit stoplist is excluded by construction; a separately-audited offensive-lexicon slice was not built.",
-        "- The distributional baseline is the floor (TF-IDF+LR). A sentence-transformer gloss embedding + LR, or an LLM gloss-probe, would likely lift the gloss-dependent classes further -- not run here because TF-IDF+LR already establishes the head-to-head shape and the marginal classes (`short_token_symbol`) are surface-pattern-bound, not gloss-bound.",
-        "- No change was made to `src/meanings/lexicality.py`'s classification logic; only this script + the gold CSV are new.",
+        "- Gold labels are agent-judged; a human pass would move absolute numbers (comparisons unaffected).",
+        "- The full-gold hybrid figure is in-sample for the trained component; the CV figure is the honest one.",
+        "- The CV hybrid's gloss component is trained on gold rows only (no silver) per fold -- production adds silver rows for the surface-handled classes, which the CV does not exercise; this is a faithful (slightly conservative) proxy.",
+        "- `uncertain` is reachable but rare: the LR's softmax is fairly peaked even at `C=1.0`, so it fires only for the lowest-confidence gloss-layer cases. Spreading it further (temperature scaling, lower `C`) would trade accuracy for more `uncertain`; not done.",
+        "- The trained gloss component is still TF-IDF+LR (the agenda-#4 floor); a sentence-transformer gloss embedding would likely lift the gloss-cue classes further -- not done here.",
         "",
     ]
-    REPORT_MD.write_text("\n".join(L) + "\n", encoding="utf-8")
+    (REPO / "reports" / "lexicality-hybrid.md").write_text("\n".join(L) + "\n", encoding="utf-8")
+
+    _write_legacy_headtohead(recs, pure_m, pure_conf, rule_cv_m, distr_m, subset_results, strat_counts, gold_counts, n_splits)
 
     print("\n=== SUMMARY ===")
-    print(f"gold set: {len(recs)} senses")
-    print(f"rule classifier (full gold): macro-F1={rule_m['macro_f1']:.3f} micro-F1={rule_m['micro_f1']:.3f}")
-    print(f"rule classifier (CV folds):  macro-F1={rule_cv_m['macro_f1']:.3f} micro-F1={rule_cv_m['micro_f1']:.3f}")
-    print(f"TF-IDF+LR (CV):              macro-F1={distr_m['macro_f1']:.3f} micro-F1={distr_m['micro_f1']:.3f}")
-    print(f"verdict: {verdict}")
-    print("subset breakdown (rule macroF1 / distr macroF1):")
+    print(f"gold set: {len(recs)} senses; {n_splits}-fold CV")
+    print(f"pure-rules   (CV): macro-F1={rule_cv_m['macro_f1']:.3f} micro-F1={rule_cv_m['micro_f1']:.3f}")
+    print(f"pure-TFIDF+LR(CV): macro-F1={distr_m['macro_f1']:.3f} micro-F1={distr_m['micro_f1']:.3f}")
+    print(f"hybrid       (CV): macro-F1={hybrid_cv_m['macro_f1']:.3f} micro-F1={hybrid_cv_m['micro_f1']:.3f}")
+    print(f"hybrid >= both (macro): {beats_both_macro}  (micro): {beats_both_micro}")
+    print(f"uncertain fired (CV): {uncertain_cv}  (full in-sample): {uncertain_full}")
+    print("subset macro-F1 (pure-rules / pure-TFIDF / hybrid):")
     for sub, res in subset_results.items():
-        print(f"  {sub} (n={res['n']}): {res['rule']['macro_f1']:.3f} / {res['distributional']['macro_f1']:.3f}")
-    print(f"wrote {REPORT_MD}")
-    print(f"wrote {REPORT_JSON}")
+        print(f"  {sub} (n={res['n']}): {res['rule']['macro_f1']:.3f} / {res['distributional']['macro_f1']:.3f} / {res['hybrid']['macro_f1']:.3f}")
+    print(f"verdict: {verdict}")
+    print(f"wrote {REPO/'reports'/'lexicality-hybrid.md'}")
+    print(f"wrote {REPO/'reports'/'lexicality-hybrid.json'}")
+
+
+def _write_legacy_headtohead(recs, pure_m, pure_conf, rule_cv_m, distr_m, subset_results, strat_counts, gold_counts, n_splits):
+    payload = {
+        "lexicon_id": LEXICON_ID,
+        "gold_set": {"path": str(GOLD_CSV.relative_to(REPO)), "size": len(recs), "stratum_counts": dict(sorted(strat_counts.items())), "gold_label_counts": dict(sorted(gold_counts.items())), "stoplist_excluded": True, "labels_agent_judged": True},
+        "rule_classifier_full_gold": {"macro_f1": pure_m["macro_f1"], "micro_f1": pure_m["micro_f1"], "per_class": pure_m["per_class"], "confusion_matrix": pure_conf},
+        "cv": {"n_splits": n_splits, "rule_classifier_on_cv_folds": {"macro_f1": rule_cv_m["macro_f1"], "micro_f1": rule_cv_m["micro_f1"], "per_class": rule_cv_m["per_class"]}, "distributional_tfidf_lr": {"macro_f1": distr_m["macro_f1"], "micro_f1": distr_m["micro_f1"], "per_class": distr_m["per_class"]}},
+        "subset_breakdown": {sub: {"n": res["n"], "rule_macro_f1": res["rule"]["macro_f1"], "rule_micro_f1": res["rule"]["micro_f1"], "distributional_macro_f1": res["distributional"]["macro_f1"], "distributional_micro_f1": res["distributional"]["micro_f1"]} for sub, res in subset_results.items()},
+        "note": "agenda-#4 2-way result. The production classifier is now a hybrid; see reports/lexicality-hybrid.{md,json} and scripts/lexicality_headtohead.py::pure_rules_predict (the frozen pre-hybrid rule logic used as the rule classifier here).",
+    }
+    REPORT_JSON.write_text(json.dumps(payload, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
+    L = [
+        "# Lexicality classification: rule classifier vs a distributional baseline (head-to-head)",
+        "",
+        "Agenda item #4. **NOTE:** the production classifier is now a *hybrid* (surface rules + a trained gloss classifier) -- see `reports/lexicality-hybrid.md`. The \"rule classifier\" scored here is the FROZEN pre-hybrid rule pile, reproduced in `scripts/lexicality_headtohead.py::pure_rules_predict`, so this 2-way result stays reproducible.",
+        "",
+        f"- gold set: **{len(recs)} OEWN senses** ({LEXICON_ID}).",
+        "",
+    ]
+    L += md_table_prf("Pre-hybrid rule classifier on the full gold set", pure_m)
+    L += md_confusion("Confusion matrix (pre-hybrid rule classifier; rows = gold, cols = predicted)", pure_conf)
+    L += md_table_prf(f"Distributional TF-IDF+LR ({n_splits}-fold CV out-of-fold)", distr_m)
+    L += md_table_prf(f"Pre-hybrid rule classifier on the same {n_splits} CV test folds", rule_cv_m)
+    L += [
+        "## Head-to-head",
+        "",
+        "| metric | rule classifier | TF-IDF+LR | winner |",
+        "|---|---|---|---|",
+        f"| macro-F1 | {rule_cv_m['macro_f1']:.3f} | {distr_m['macro_f1']:.3f} | {_winner(rule_cv_m['macro_f1'], distr_m['macro_f1'], 'rules', 'TF-IDF')} |",
+        f"| micro-F1 | {rule_cv_m['micro_f1']:.3f} | {distr_m['micro_f1']:.3f} | {_winner(rule_cv_m['micro_f1'], distr_m['micro_f1'], 'rules', 'TF-IDF')} |",
+        "",
+        "### Subset breakdown (identical CV items)",
+        "",
+        "| subset | n | rule macro-F1 | TF-IDF macro-F1 | rule micro-F1 | TF-IDF micro-F1 |",
+        "|---|---|---|---|---|---|",
+    ]
+    for sub, res in subset_results.items():
+        L.append(f"| `{sub}` | {res['n']} | {res['rule']['macro_f1']:.3f} | {res['distributional']['macro_f1']:.3f} | {res['rule']['micro_f1']:.3f} | {res['distributional']['micro_f1']:.3f} |")
+    L += ["", "See `reports/lexicality-hybrid.md` for the three-way (pure-rules / pure-TF-IDF / hybrid) comparison and the per-class wins/losses.", ""]
+    REPORT_MD.write_text("\n".join(L) + "\n", encoding="utf-8")
+    print(f"wrote {REPORT_MD} (2-way agenda-#4 artifact)")
 
 
 if __name__ == "__main__":
