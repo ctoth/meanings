@@ -37,7 +37,7 @@ from pathlib import Path
 
 from argumentation.af_sat import find_stable_extension
 from argumentation.af_sat import grounded_extension as af_sat_grounded
-from argumentation.bipolar import cayrol_derived_defeats
+# (cayrol_derived_defeats used inside derived_dung_framework, not here)
 from argumentation.dung import ArgumentationFramework, grounded_extension, preferred_extensions
 from argumentation.enforcement import enforce_skeptical
 from argumentation.ranking import h_categoriser_ranking
@@ -154,11 +154,17 @@ def main() -> None:
 
     # --- 3b. Model B: bipolar / Cayrol derived, small Kernel-SCC slice --------
     print("Selecting a small Kernel-SCC slice that contains rival-sense cliques...")
-    small_sccs = sorted(
-        (scc for scc in analysis.kernel_sccs
-         if 2 <= len(scc) <= SLICE_MAX_SCC_NODES and any(g.attacks[n] for n in scc)),
-        key=lambda s: (-len(s), tuple(sorted(s))),
-    )[:SLICE_SCC_COUNT]
+    # Prefer SCCs that contain *internal* rival-sense attacks (rival senses both in
+    # the same SCC) -- otherwise the Cayrol-derived defeat set is empty and the AF is
+    # trivial. Fall back to any SCC with a clique member if too few qualify.
+    sccs_internal = [scc for scc in analysis.kernel_sccs
+                     if 2 <= len(scc) <= SLICE_MAX_SCC_NODES
+                     and any(g.attacks[n] & scc for n in scc)]
+    sccs_any = [scc for scc in analysis.kernel_sccs
+                if 2 <= len(scc) <= SLICE_MAX_SCC_NODES and any(g.attacks[n] for n in scc)]
+    pool = sccs_internal + [s for s in sccs_any if s not in sccs_internal]
+    small_sccs = sorted(pool, key=lambda s: (-len(s), tuple(sorted(s))))[:SLICE_SCC_COUNT]
+    n_internal = len(sccs_internal)
     slice_results: list[dict] = []
     for scc in small_sccs:
         sub_supports = induced_subgraph(scc, g.supports)
@@ -202,42 +208,49 @@ def main() -> None:
               f"preferred={None if preferred is None else len(preferred)} "
               f"stable_exists={stable is not None}")
 
-    # --- 3c. Model B: whole sense Kernel, time-boxed -------------------------
-    print("Model B on the WHOLE sense Kernel (Cayrol derived defeats, time-boxed)...")
-    kernel_b: dict = {"attempted": True}
+    # --- 3c. Whole sense Kernel: attacks-only Dung AF (scalable) -------------
+    # A first attempt ran the full Cayrol derived-defeat closure on the whole
+    # 12,142-node Kernel; it blew past 9 GB RSS without terminating (an attacker on
+    # any node of a support SCC ends up attacking everything that SCC reaches, and
+    # the Kernel's giant SCC reaches almost everything -> a near-complete defeat
+    # relation). So the Cayrol-derived Model B is only feasible per small SCC (above).
+    # On the whole Kernel we report the *attacks-only* Dung AF (rival-sense clique
+    # edges, no support propagation): scalable, and it answers the headline question
+    # "is the Kernel-with-attacks AF UNSAT or SAT for stable?" directly.
+    print("Whole sense Kernel: attacks-only Dung AF (rival-sense cliques restricted to Kernel)...")
+    kernel_b: dict = {"model": "attacks-only Dung AF on the Kernel (no support propagation)",
+                      "cayrol_derived_whole_kernel": "infeasible: closure blew past 9 GB RSS without terminating; feasible only per small SCC"}
     td = time.perf_counter()
-    base_attacks = edges_of(kernel_nodes, kernel_attacks)
-    base_supports = edges_of(kernel_nodes, kernel_support)
-    try:
-        # Cayrol closure is the expensive step; we can't easily interrupt it, so we
-        # measure and record. If it overruns badly we still report the wall time.
-        derived = cayrol_derived_defeats(base_attacks, base_supports)
-        dt = time.perf_counter() - td
-        kernel_af = ArgumentationFramework(arguments=frozenset(kernel_nodes),
-                                           defeats=base_attacks | derived)
-        kernel_b.update({
-            "cayrol_derived_defeat_time_s": dt,
-            "base_attack_edges": len(base_attacks),
-            "derived_extra_defeats": len(derived),
-            "total_defeats": len(kernel_af.defeats),
-        })
-        print(f"  Cayrol closure: {len(base_attacks)} base + {len(derived)} derived "
-              f"= {len(kernel_af.defeats)} defeats in {dt:.1f}s")
-        # grounded
-        tg = time.perf_counter()
-        gr = grounded_extension(kernel_af)
-        kernel_b["grounded_size"] = len(gr)
-        kernel_b["grounded_time_s"] = time.perf_counter() - tg
-        # stable existence via z3
-        ts = time.perf_counter()
-        stable = find_stable_extension(kernel_af)
-        kernel_b["stable_exists"] = stable is not None
-        kernel_b["stable_size"] = None if stable is None else len(stable)
-        kernel_b["stable_z3_time_s"] = time.perf_counter() - ts
-        print(f"  grounded={len(gr)}  stable_exists={stable is not None}")
-    except Exception as exc:  # noqa: BLE001
-        kernel_b.update({"error": repr(exc), "wall_time_s": time.perf_counter() - td})
-        print(f"  Model-B-on-Kernel failed/overran: {exc!r}")
+    # restrict each rival clique to the Kernel
+    kernel_clique_sizes = Counter()
+    for members in g.rivalry_cliques.values():
+        in_k = [m for m in members if m in kernel_nodes]
+        if len(in_k) >= 2:
+            kernel_clique_sizes[len(in_k)] += 1
+    log10_kernel_product = sum(c * (k * math.log10(k)) for k, c in kernel_clique_sizes.items())
+    af_attacks_only = ArgumentationFramework(arguments=frozenset(kernel_nodes),
+                                             defeats=edges_of(kernel_nodes, kernel_attacks))
+    gr = grounded_extension(af_attacks_only)
+    tg = time.perf_counter() - td
+    ts = time.perf_counter()
+    stable = find_stable_extension(af_attacks_only)
+    kernel_b.update({
+        "kernel_rival_clique_count": sum(kernel_clique_sizes.values()),
+        "kernel_rival_clique_size_histogram": dict(sorted(kernel_clique_sizes.items())),
+        "kernel_attack_edges_ordered": sum(len(t) for t in kernel_attacks.values()),
+        "grounded_size": len(gr),
+        "grounded_time_s": tg,
+        "stable_exists": stable is not None,
+        "stable_size": None if stable is None else len(stable),
+        "stable_z3_time_s": time.perf_counter() - ts,
+        "stable_extension_count_log10": log10_kernel_product,
+        "note": ("the attacks-only Kernel AF is a disjoint union of rival-sense cliques "
+                 "(plus isolated nodes), so it always has stable extensions; their count "
+                 "is the product of Kernel-restricted clique sizes -- a true but vacuous "
+                 "multiplicativity (the lexicon's support wiring plays no role here)"),
+    })
+    print(f"  attacks-only Kernel AF: stable_exists={stable is not None} "
+          f"grounded={len(gr)} log10(stable count)~={log10_kernel_product:.0f}")
 
     # --- 5. ranking semantics over the bipolar (support+attack) graph --------
     # h-categoriser is for attack graphs; we feed it BOTH the support edges (as
@@ -299,7 +312,14 @@ def main() -> None:
         "attack_layer": attack_stats,
         "kernel_support_graph": kernel_stats,
         "model_a_attacks_only": model_a,
-        "model_b_small_kernel_scc_slice": slice_results,
+        "model_b_small_kernel_scc_slice": {
+            "kernel_sccs_with_internal_rival_attacks": n_internal,
+            "kernel_sccs_with_any_clique_member_in_size_range": len([
+                s for s in analysis.kernel_sccs
+                if 2 <= len(s) <= SLICE_MAX_SCC_NODES and any(g.attacks[n] for n in s)
+            ]),
+            "slice": slice_results,
+        },
         "model_b_whole_sense_kernel": kernel_b,
         "ranking_semantics_bipolar": ranking_out,
         "total_runtime_s": time.perf_counter() - t0,

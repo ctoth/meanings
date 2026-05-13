@@ -24,5 +24,6 @@
 - scripts/sense_level_argumentation.py written; running now (Model A=attacks-only disjoint cliques; Model B=Cayrol-derived Dung; small-SCC slice + whole-Kernel time-boxed; h-categoriser ranking variant a=support-as-attack, b=support+rival).
 - Discovery from tiny test: support edge INTO a rival breaks 2-clique symmetry via Cayrol *mediated* defeat (r supports s1, s1 attacks s2 => r attacks s2). So Model B is non-trivial; the "k senses => k stable" only holds for bare cliques (Model A, vacuous).
 
-## Blocker
-Waiting on script run (WordNet load + ~minutes graph build).
+## Blocker (2026-05-12 cont)
+First run exited 0 but produced no stdout and no JSON (output lost — likely stdout buffering under `timeout|tee|tail` + `uv run`). Re-running with `python -u`, nohup-backgrounded, to /tmp/sla2.log. Monitor bkpem5q8k armed.
+Commit 777618b = script + notes. b3daa8a = builder+bridge+tests. b3daa8a tests pass.
