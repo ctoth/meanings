@@ -290,9 +290,23 @@ def main() -> None:
     parser.add_argument("--vocabulary", default="data/oewn-upgoer-sense-vocabulary.json")
     parser.add_argument("--summary", default="reports/oewn-sense-ingestion-summary.json")
     parser.add_argument("--report", default="reports/sense-ingestion-rebuild.md")
+    parser.add_argument(
+        "--polysemy-fallback",
+        action="store_true",
+        help=(
+            "Resolve ambiguous high-polysemy gloss tokens to the lowest-rank "
+            "(most-frequent) candidate sense within the candidate identity "
+            "cluster instead of skipping. The audit (reports/audit-new-src.md "
+            "finding #2) showed the default skip behaviour is structurally "
+            "concentrated on the genus vocabulary and biases the sense-Kernel "
+            "smaller; this flag enables the resolver fix."
+        ),
+    )
     args = parser.parse_args()
 
-    build = build_sense_level_paper_wordnet_graph(args.lexicon)
+    build = build_sense_level_paper_wordnet_graph(
+        args.lexicon, polysemy_fallback=args.polysemy_fallback
+    )
     analysis = analyze_kernel(build.nodes, build.adjacency, seed_method="exact-small-greedy")
     strict_seed = export_strict_seed(build, analysis.seed_nodes, Path(args.strict_seed))
     vocabulary = export_human_vocabulary(build, Path(args.vocabulary))

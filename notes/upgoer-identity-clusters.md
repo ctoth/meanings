@@ -131,3 +131,47 @@ human list is a separate controlled-vocabulary projection with policy.
 6. Measure how many current seed artifacts are removed, quarantined, or merged
    without breaking acyclic definitional closure.
 
+## IC-projection design decision (2026-05-13, sense-resolver-fix agent)
+
+This appends a subsection — the original note above is unchanged.
+
+Synthesis section 8 asks whether the strict-seed should be derived as
+(P1) the FVS of the IC-projected graph (collapse each IC to one node, project
+edges across IC boundaries, run `analyze_kernel`), or
+(P2) the FVS of the sense graph with IC-restriction applied only at export
+(pick one representative sense per IC from the sense-graph seed).
+
+Both surfaces are produced by `scripts/sense_resolver_comparison.py` against
+the IC-fallback sense graph (`polysemy_fallback=True`). The numbers + the
+recommendation live in `reports/sense-resolver-comparison.json` /
+`reports/sense-resolver-comparison-summary.md` and the full writeup is
+`reports/sense-resolver-fix.md`.
+
+The recommendation criteria the comparison applies:
+- If P1's IC-projected graph has residual cyclic SCCs after the seed -> P2.
+  P1's projection step collapses too many edges into cycles and the IC-graph
+  FVS is no longer a clean acyclic-closure witness for the strict-seed export.
+- Else if P1's seed is at least as tight as P2's -> P1. P1 computes the FVS
+  on the surface the strict-seed export actually targets (one IC = one
+  referential unit) instead of computing it on the sense graph and projecting
+  after, which can include redundant IC members.
+- Else (P2 tighter) -> P2. P2's per-IC representative is the
+  highest-in-degree-cited sense, which is a more informative anchor than
+  "this IC was a node in the FVS" would be.
+
+The non-resolver-fallback runs (the audit-baseline 925k -> 423k resolved
+behaviour) sat under P2-by-default-and-by-accident: `scripts/sense_ingestion_rebuild.py`
+ran `analyze_kernel` on the raw all-sense adjacency, then filtered seed nodes
+to those whose `lexicality == "lexical-word"`. That is a *lexicality* filter,
+not an IC restriction; the typed-lexical-IC Kernel the data-model facet's
+prediction was about was never actually computed. The agent-level move with
+this work is to (a) settle the P1-vs-P2 choice with measurement, (b) wire the
+chosen path into the rebuild driver, (c) re-emit the strict seed so the
+strict surface matches the documented data model.
+
+The choice does not bind whether ICs become nodes in the *production*
+support graph. ICs remain metadata on sense nodes; P1's IC graph is a derived
+analysis object computed at strict-seed time. That preserves every downstream
+invariant the rest of the codebase keeps (the support graph stays sense-level;
+the rival-sense attack layer remains on sense nodes; the admission policy
+remains per-IC; only the strict-seed export changes surface).

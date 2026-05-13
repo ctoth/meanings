@@ -95,4 +95,39 @@ None on my path. The failing test is the concurrent agent's territory (task spec
 
 Blocked on incident resolution. NO further work until the commit is clean.
 
+---
+
+## Checkpoint 3 — comparison script launched
+
+### Incident resolved
+
+- `git reset --mixed HEAD~1`, then `git add` only my own files, then a clean recommit. Final commit: **`61e4834`**, 2 files (`src/meanings/wordnet_pipeline.py` + `notes/sense-resolver-fix.md`), 155 insertions. Parallel agent's lexicality changes left unstaged in working tree as before.
+- Lesson: never `git commit --amend` while other agents have unstaged changes in the same working tree. Either use `--only` with explicit pathspecs, or reset and recommit fresh.
+
+### Comparison script
+
+- `scripts/sense_resolver_comparison.py` written. It does the 4-step plan: builds baseline + IC-fallback sense graphs, runs `analyze_kernel(exact-small-greedy, source-union)` on both, computes IC-projection P1 (collapse-then-FVS) vs P2 (FVS-then-restrict), classifies the verdict (i/ii/iii), writes `reports/sense-resolver-comparison.json` + `reports/sense-resolver-comparison-summary.md`.
+- Launched in background as `b41anzg3a`. Status: still running. Output file shows it has loaded the OEWN wn lexicon and is on `[1/4] Building baseline sense-level graph`. Expected: 60-120 min wall time.
+
+### Multiple python processes visible
+
+`tasklist` shows ~7 python processes. The big ones (~150 MB resident) are likely other agents (Fix wave A?) doing their own builds. Mine is whichever pid started after my launch.
+
+### Current state
+
+- Commit `61e4834` landed. Pre-amend commit `cec9590` no longer exists (the `--mixed` reset undid it before I recommitted).
+- Comparison script running in background. Will check periodically.
+
+### What I'm doing while waiting
+
+While the long-running build is going, I'll:
+1. Update `scripts/sense_ingestion_rebuild.py` to optionally use the IC-fallback builder + the chosen IC-projection path (decision pending comparison results, but I can prepare the wiring).
+2. Draft `reports/sense-resolver-fix.md` skeleton (filling in numbers after the run completes).
+3. Append IC-projection subsection to `notes/upgoer-identity-clusters.md` (only if I have decision; else skip and add later).
+
+### Blocker
+
+No blocker. Waiting on background job.
+
+
 
