@@ -1,0 +1,1148 @@
+{
+  "stats": {
+    "lemmas": 151622,
+    "candidate_pairs": 33801,
+    "accepted_pairs": 4770,
+    "rejected_pairs": 29031,
+    "clusters": 4248,
+    "forms_in_clusters": 8897,
+    "merge_records": 4770
+  },
+  "baseline_pairs": 7,
+  "baseline_forms": 14,
+  "regression_missed": [],
+  "cluster_size_histogram": {
+    "2": 3971,
+    "3": 194,
+    "4": 62,
+    "5": 11,
+    "6": 4,
+    "7": 4,
+    "8": 1,
+    "10": 1
+  },
+  "rejected_examples": [
+    {
+      "forms": [
+        "striping",
+        "stripping"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "bonny",
+        "bony"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "device",
+        "devise"
+      ],
+      "rule_ids": [
+        "spelling.ce_se"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "bellow",
+        "below"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "toter",
+        "totter"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "leporidae",
+        "leporide"
+      ],
+      "rule_ids": [
+        "spelling.ae_e"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "becket",
+        "beckett"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "taper",
+        "tapper"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "boggy",
+        "bogy"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "burry",
+        "bury"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "but",
+        "butt"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "compositae",
+        "composite"
+      ],
+      "rule_ids": [
+        "spelling.ae_e"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "bell",
+        "boell"
+      ],
+      "rule_ids": [
+        "spelling.oe_e"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "bel",
+        "bell"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "endameba",
+        "endamoeba"
+      ],
+      "rule_ids": [
+        "spelling.oe_e"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "lore",
+        "lorre"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "gal",
+        "gall"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "sloped",
+        "slopped"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "shinny",
+        "shiny"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "vila",
+        "villa"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "stela",
+        "stella"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "mouse",
+        "mousse"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "pur",
+        "purr"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "re",
+        "roe"
+      ],
+      "rule_ids": [
+        "spelling.oe_e"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "crystalized",
+        "crystallized"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "sa",
+        "ssa"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "tor",
+        "tour"
+      ],
+      "rule_ids": [
+        "spelling.or_our"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "ferrule",
+        "ferule"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "razing",
+        "razzing"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "lama",
+        "llama"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "ad",
+        "add"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "som",
+        "somme"
+      ],
+      "rule_ids": [
+        "spelling.mme_m"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "some",
+        "somme"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "swingeing",
+        "swinging"
+      ],
+      "rule_ids": [
+        "spelling.dropped_e"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "man",
+        "mann"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "labiatae",
+        "labiate"
+      ],
+      "rule_ids": [
+        "spelling.ae_e"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "coral",
+        "corral"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "haem",
+        "hem"
+      ],
+      "rule_ids": [
+        "spelling.ae_e"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "tiled",
+        "tilled"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "litter",
+        "littre"
+      ],
+      "rule_ids": [
+        "spelling.er_re"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "liter",
+        "litter"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "dully",
+        "duly"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "ana",
+        "anna"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "bus",
+        "buss"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "bovinae",
+        "bovine"
+      ],
+      "rule_ids": [
+        "spelling.ae_e"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "outer",
+        "outre"
+      ],
+      "rule_ids": [
+        "spelling.er_re"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "fae",
+        "fe"
+      ],
+      "rule_ids": [
+        "spelling.ae_e"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "hale",
+        "halle"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "filing",
+        "filling"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "rice",
+        "rise"
+      ],
+      "rule_ids": [
+        "spelling.ce_se"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "pe",
+        "poe"
+      ],
+      "rule_ids": [
+        "spelling.oe_e"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "te",
+        "toe"
+      ],
+      "rule_ids": [
+        "spelling.oe_e"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "taped",
+        "tapped"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "prolog",
+        "prologue"
+      ],
+      "rule_ids": [
+        "spelling.og_ogue"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "mari",
+        "marri"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "pater",
+        "patter"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "ane",
+        "anne"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "brag",
+        "bragg"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "placable",
+        "placeable"
+      ],
+      "rule_ids": [
+        "spelling.dropped_e"
+      ],
+      "best_gloss_score": 0.0
+    },
+    {
+      "forms": [
+        "coccus",
+        "cocus"
+      ],
+      "rule_ids": [
+        "spelling.doubled_consonant"
+      ],
+      "best_gloss_score": 0.0
+    }
+  ],
+  "spot_sample": [
+    {
+      "forms": [
+        "sandarac",
+        "sandarach"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-sandarac__1.20.00..",
+        "oewn-sandarach__1.20.00.."
+      ]
+    },
+    {
+      "forms": [
+        "crystalised",
+        "crystalized"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "s",
+      "matched_senses": [
+        "oewn-crystalised__5.00.00.preserved.02",
+        "oewn-crystalized__5.00.00.preserved.02"
+      ]
+    },
+    {
+      "forms": [
+        "channukah",
+        "chanukah"
+      ],
+      "rule_id": "spelling.doubled_consonant",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-channukah__1.28.00..",
+        "oewn-chanukah__1.28.00.."
+      ]
+    },
+    {
+      "forms": [
+        "convergence",
+        "convergency"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-convergence__1.09.00..",
+        "oewn-convergency__1.09.00.."
+      ]
+    },
+    {
+      "forms": [
+        "hindi",
+        "hindu"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "a",
+      "matched_senses": [
+        "oewn-hindi__3.01.00..",
+        "oewn-hindu__3.01.00.."
+      ]
+    },
+    {
+      "forms": [
+        "dowery",
+        "dowry"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-dowery__1.21.00..",
+        "oewn-dowry__1.21.00.."
+      ]
+    },
+    {
+      "forms": [
+        "epiphyseal",
+        "epiphysial"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "a",
+      "matched_senses": [
+        "oewn-epiphyseal__3.01.00..",
+        "oewn-epiphysial__3.01.00.."
+      ]
+    },
+    {
+      "forms": [
+        "sentimentise",
+        "sentimentize"
+      ],
+      "rule_id": "spelling.ize_ise",
+      "gloss_score": 1.0,
+      "pos": "v",
+      "matched_senses": [
+        "oewn-sentimentise__2.29.00..",
+        "oewn-sentimentize__2.29.00.."
+      ]
+    },
+    {
+      "forms": [
+        "aesthetically",
+        "esthetically"
+      ],
+      "rule_id": "spelling.ae_e",
+      "gloss_score": 1.0,
+      "pos": "r",
+      "matched_senses": [
+        "oewn-aesthetically__4.02.00..",
+        "oewn-esthetically__4.02.00.."
+      ]
+    },
+    {
+      "forms": [
+        "telephotograph",
+        "telephotography"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 0.4,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-telephotograph__1.06.01..",
+        "oewn-telephotography__1.04.01.."
+      ]
+    },
+    {
+      "forms": [
+        "gomorrah",
+        "gomorrha"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-gomorrah__1.15.00..",
+        "oewn-gomorrha__1.15.00.."
+      ]
+    },
+    {
+      "forms": [
+        "hasidism",
+        "hassidim"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-hasidism__1.14.00..",
+        "oewn-hassidim__1.14.00.."
+      ]
+    },
+    {
+      "forms": [
+        "defoliate",
+        "defoliated"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "s",
+      "matched_senses": [
+        "oewn-defoliate__5.00.00.leafless.00",
+        "oewn-defoliated__5.00.00.leafless.00"
+      ]
+    },
+    {
+      "forms": [
+        "brage",
+        "bragi"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-brage__1.18.00..",
+        "oewn-bragi__1.18.00.."
+      ]
+    },
+    {
+      "forms": [
+        "metagrabolised",
+        "metagrobolised"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "s",
+      "matched_senses": [
+        "oewn-metagrabolised__5.00.00.perplexed.00",
+        "oewn-metagrobolised__5.00.00.perplexed.00"
+      ]
+    },
+    {
+      "forms": [
+        "anaesthetize",
+        "anesthetize"
+      ],
+      "rule_id": "spelling.ae_e",
+      "gloss_score": 1.0,
+      "pos": "v",
+      "matched_senses": [
+        "oewn-anaesthetize__2.29.00..",
+        "oewn-anesthetize__2.29.00.."
+      ]
+    },
+    {
+      "forms": [
+        "distil",
+        "distill"
+      ],
+      "rule_id": "spelling.doubled_consonant",
+      "gloss_score": 1.0,
+      "pos": "v",
+      "matched_senses": [
+        "oewn-distil__2.30.04..",
+        "oewn-distill__2.30.04.."
+      ]
+    },
+    {
+      "forms": [
+        "gorki",
+        "gorky"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-gorki__1.18.00..",
+        "oewn-gorky__1.18.00.."
+      ]
+    },
+    {
+      "forms": [
+        "brindle",
+        "brindled"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "s",
+      "matched_senses": [
+        "oewn-brindle__5.00.00.patterned.00",
+        "oewn-brindled__5.00.00.patterned.00"
+      ]
+    },
+    {
+      "forms": [
+        "entozoan",
+        "entozoon"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-entozoan__1.05.00..",
+        "oewn-entozoon__1.05.00.."
+      ]
+    },
+    {
+      "forms": [
+        "cenobitic",
+        "coenobitic"
+      ],
+      "rule_id": "spelling.oe_e",
+      "gloss_score": 1.0,
+      "pos": "a",
+      "matched_senses": [
+        "oewn-cenobitic__3.01.00..",
+        "oewn-coenobitic__3.01.00.."
+      ]
+    },
+    {
+      "forms": [
+        "astigmatism",
+        "stigmatism"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 0.692,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-astigmatism__1.26.01..",
+        "oewn-stigmatism__1.26.00.."
+      ]
+    },
+    {
+      "forms": [
+        "papoose",
+        "pappoose"
+      ],
+      "rule_id": "spelling.doubled_consonant",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-papoose__1.18.00..",
+        "oewn-pappoose__1.18.00.."
+      ]
+    },
+    {
+      "forms": [
+        "destabilisation",
+        "destabilization"
+      ],
+      "rule_id": "spelling.ize_ise",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-destabilisation__1.04.00..",
+        "oewn-destabilization__1.04.00.."
+      ]
+    },
+    {
+      "forms": [
+        "pasteuriser",
+        "pasteurizer"
+      ],
+      "rule_id": "spelling.ize_ise",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-pasteuriser__1.06.01..",
+        "oewn-pasteurizer__1.06.01.."
+      ]
+    },
+    {
+      "forms": [
+        "serialisation",
+        "serialization"
+      ],
+      "rule_id": "spelling.ize_ise",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-serialisation__1.04.00..",
+        "oewn-serialization__1.04.00.."
+      ]
+    },
+    {
+      "forms": [
+        "poignance",
+        "poignancy"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-poignance__1.26.00..",
+        "oewn-poignancy__1.26.00.."
+      ]
+    },
+    {
+      "forms": [
+        "chaldaea",
+        "chaldea"
+      ],
+      "rule_id": "spelling.ae_e",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-chaldaea__1.15.00..",
+        "oewn-chaldea__1.15.00.."
+      ]
+    },
+    {
+      "forms": [
+        "unpatronised",
+        "unpatronized"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "a",
+      "matched_senses": [
+        "oewn-unpatronised__3.00.00..",
+        "oewn-unpatronized__3.00.00.."
+      ]
+    },
+    {
+      "forms": [
+        "minah",
+        "mynah"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-minah__1.05.00..",
+        "oewn-mynah__1.05.00.."
+      ]
+    },
+    {
+      "forms": [
+        "naziism",
+        "nazism"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-naziism__1.14.00..",
+        "oewn-nazism__1.14.00.."
+      ]
+    },
+    {
+      "forms": [
+        "circularise",
+        "circularize"
+      ],
+      "rule_id": "spelling.ize_ise",
+      "gloss_score": 1.0,
+      "pos": "v",
+      "matched_senses": [
+        "oewn-circularise__2.41.00..",
+        "oewn-circularize__2.41.00.."
+      ]
+    },
+    {
+      "forms": [
+        "livable",
+        "liveable"
+      ],
+      "rule_id": "spelling.dropped_e",
+      "gloss_score": 1.0,
+      "pos": "a",
+      "matched_senses": [
+        "oewn-livable__3.00.00..",
+        "oewn-liveable__3.00.00.."
+      ]
+    },
+    {
+      "forms": [
+        "grayish",
+        "greyish"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "s",
+      "matched_senses": [
+        "oewn-grayish__5.00.00.achromatic.00",
+        "oewn-greyish__5.00.00.achromatic.00"
+      ]
+    },
+    {
+      "forms": [
+        "miosis",
+        "myosis"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-miosis__1.04.00..",
+        "oewn-myosis__1.04.00.."
+      ]
+    },
+    {
+      "forms": [
+        "color",
+        "colour"
+      ],
+      "rule_id": "spelling.or_our",
+      "gloss_score": 1.0,
+      "pos": "a",
+      "matched_senses": [
+        "oewn-color__3.00.00..",
+        "oewn-colour__3.00.02.."
+      ]
+    },
+    {
+      "forms": [
+        "challah",
+        "hallah"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-challah__1.13.00..",
+        "oewn-hallah__1.13.00.."
+      ]
+    },
+    {
+      "forms": [
+        "hyperlipoidaemia",
+        "hyperlipoidemia"
+      ],
+      "rule_id": "spelling.ae_e",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-hyperlipoidaemia__1.26.00..",
+        "oewn-hyperlipoidemia__1.26.00.."
+      ]
+    },
+    {
+      "forms": [
+        "bondswoman",
+        "bondwoman"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-bondswoman__1.18.02..",
+        "oewn-bondwoman__1.18.01.."
+      ]
+    },
+    {
+      "forms": [
+        "castilleia",
+        "castilleja"
+      ],
+      "rule_id": "edit-distance",
+      "gloss_score": 1.0,
+      "pos": "n",
+      "matched_senses": [
+        "oewn-castilleia__1.20.00..",
+        "oewn-castilleja__1.20.00.."
+      ]
+    }
+  ]
+}
