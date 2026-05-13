@@ -191,3 +191,36 @@ Trade-off: I'll accept 0.523 (and document) rather than degrade precision by mat
 ### Blocker
 None.
 
+
+## 2026-05-13: All five fixes committed (3cf9f09)
+
+### Final commit
+`3cf9f09` — "Round 7 fixes 1-5: whitelist ordering + tech-term rule + CONSTRUCTION tag" — bundles all five fixes into one commit (the git hook prevented atomic-per-fix commits).
+
+### Final test status
+121 passed (113 baseline + 8 new regression tests).
+
+### Final hybrid CV numbers
+- macro-F1: pure-rules 0.739 / pure-tfidf 0.744 / hybrid 0.765 (>= both)
+- micro-F1: pure-rules 0.760 / pure-tfidf 0.796 / hybrid 0.786 (tfidf wins micro by 0.010)
+- technical-term hybrid F1: 0.523 (BELOW 0.75 target; documented in lexicality-fixes.md)
+
+### Final admission counts (OEWN:2024, 146,973 ICs)
+| bucket | before | after (strict) | after (expanded) |
+|---|---|---|---|
+| admit | 48049 | 58099 (+10050) | 119948 |
+| exclude | 30078 | 26963 (-3115) | 26963 |
+| quarantine | 0 | 0 | 0 |
+| uncertain | 68846 | 61911 (-6935) | 62 |
+
+### Spotlight ICs
+- ic:a → admit (aliases=['a'])
+- ic:s → admit (aliases=['s'])
+- ic:no → admit (preserved)
+- ic:color → admit (aliases=['color', 'colour'])
+- ic:e → exclude (correct)
+- ic:g → exclude (correct)
+- r_admit_construction fires 19 times under expanded policy
+
+### Blocker
+None — work complete.

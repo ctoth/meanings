@@ -208,3 +208,17 @@ Still pending after the swarm: writing the paper(s); cross-dictionary confound b
 
 ### Note for future agents
 The "research-papers" plugin skills are available here; `papers/` follows that convention (`notes.md`/`abstract.md`/`description.md`/`citations.md` per paper, `papers/index.md`). PDFs and PNGs are gitignored.
+
+## 2026-05-13
+
+### Round 8: fix the upstream holes from round 7
+Q: "fix all the holes huh? can we figure out how to do that?" Launched two parallel fix-waves on disjoint files:
+- Wave A (a5a311ff4fb5c57bc, claude) — lexicality.py + admission.py: reorder so short-token whitelist beats single_character (fix a/s function-words); revert technical-term to rule-based (kills the -0.41 hybrid regression + the color/colour mis-tag); add Lexicality.CONSTRUCTION + r_admit_construction admission rule (the multiword-phrase ICs now in uncertain). Retrain .joblib, re-run head-to-head + admission_export. Commits atomically as it goes. STATUS: reconnaissance done (notes/lexicality-fixes.md). About to start implementing fix #1. Noted: the 27-item whitelist currently has NO single-char entries — needs to ADD `a` and `s` plus fix ordering; existing test test_short_token_verdicts_for_artifact_cases pins "s"→SYMBOL_CODE, will be updated.
+- Wave B (af931691544b62764, claude) — wordnet_pipeline.py: change resolver, polysemy_fallback=True keeps an edge to the deterministic representative (lowest sense rank, since all candidates of a single gloss-lookup share an IC by construction) instead of skipping. Run the edge-budget-controlled comparison. Settle the IC-projection decision. STATUS: COMMITTED two things — 61e4834 (resolver fix: optional polysemy_fallback=True on the builder + sibling wrapper, 113 tests pass) and 6088913 (comparison driver + report skeleton). BUT the comparison RUN never happened — the agent bailed citing "the build is taking longer than expected, could be over an hour" and went into wait mode without filling in the numbers. The report reports/sense-resolver-fix.md is a skeleton pointing to a comparison-summary file that doesn't exist yet.
+- I launched the comparison run myself: `scripts/sense_resolver_comparison.py < /dev/null 2>&1 | tee sense-resolver-comparison.log` (bg bc860utn4). Will produce reports/sense-resolver-comparison.json + sense-resolver-comparison-summary.md. ETA 20-30 min for the two builds + analyze_kernel calls + the IC-projection P1/P2 numbers. When done, fill in `reports/sense-resolver-fix.md` §2/§3/§4/§5 with the actual numbers + verdict.
+
+### Next step
+Wait for wave A to commit its fixes atomically + report done.
+Wait for the bc860utn4 comparison run; then fill in reports/sense-resolver-fix.md.
+When BOTH waves are settled: fold into synthesis.md §10 a "round 8 update" with the lexicality fix deltas + the edge-budget comparison verdict + the IC-projection decision.
+Plus low-priority: re-pin formal-argumentation to a tag (if upstream has one); the lead paper *draft*.
