@@ -339,7 +339,30 @@ def build_synset_graph(lexicon_id: str = "oewn:2024") -> SynsetGraphBuild:
     )
 
 
-def build_sense_level_paper_wordnet_graph(lexicon_id: str = "oewn:2024") -> SenseLevelGraphBuild:
+def build_sense_level_paper_wordnet_graph(
+    lexicon_id: str = "oewn:2024",
+    *,
+    polysemy_fallback: bool = False,
+) -> SenseLevelGraphBuild:
+    """Build the sense-level support graph from OEWN gloss text.
+
+    With ``polysemy_fallback=False`` (the default, audit-baseline behaviour):
+    when the same-POS branch has multiple candidates and the
+    ``choose_best_candidate`` signature-overlap tie-break can't pick one (zero
+    overlap or a tie), the candidate is recorded as ``ambiguous_skipped`` and
+    no edge is emitted -- the resolver-bias regime documented in
+    ``reports/audit-new-src.md`` finding #2.
+
+    With ``polysemy_fallback=True``: instead of skipping, the resolver falls
+    back to a deterministic representative sense (the first one returned by
+    ``word.senses()`` order, which corresponds to OEWN sense rank ~ frequency).
+    The fallback edge is recorded under ``resolved_polysemy_fallback_same_pos``
+    or ``resolved_polysemy_fallback_global`` rather than under the
+    overlap-resolved counters, so the comparison stays measurable. All
+    candidate senses of a single gloss word share the same identity cluster
+    (``ic_id``), so this fallback never crosses ICs; it picks one
+    representative sense *within* the IC.
+    """
     lexicon = load_lexicon(lexicon_id)
     nodes: set[str] = set()
     adjacency: Adjacency = {}
@@ -352,10 +375,14 @@ def build_sense_level_paper_wordnet_graph(lexicon_id: str = "oewn:2024") -> Sens
     lemma_by_node: dict[str, str] = {}
     lemma_index: dict[str, set[str]] = {}
     lemma_pos_index: dict[tuple[str, str], set[str]] = {}
+    # Tracks the order in which `word.senses()` yielded each sense for its
+    # (lemma, pos) bucket. The first-yielded sense has rank 0; lower rank is
+    # used as the polysemy_fallback tie-breaker.
+    sense_rank_by_node: dict[str, int] = {}
 
     for word in lexicon.words():
         lemma = normalize_lemma(word.lemma())
-        for sense in word.senses():
+        for rank_index, sense in enumerate(word.senses()):
             synset = sense.synset()
             definition = synset.definition()
             if not definition:
@@ -374,6 +401,7 @@ def build_sense_level_paper_wordnet_graph(lexicon_id: str = "oewn:2024") -> Sens
             lemma_by_node[node] = lemma
             lemma_index.setdefault(lemma, set()).add(node)
             lemma_pos_index.setdefault((lemma, synset.pos), set()).add(node)
+            sense_rank_by_node[node] = rank_index
 
             lexicality = classify_oewn_sense(word, synset)
             variant = identity_cluster_for_form(lemma)
@@ -397,10 +425,16 @@ def build_sense_level_paper_wordnet_graph(lexicon_id: str = "oewn:2024") -> Sens
         "resolved_global_unique": 0,
         "resolved_same_pos_overlap": 0,
         "resolved_global_overlap": 0,
+        "resolved_polysemy_fallback_same_pos": 0,
+        "resolved_polysemy_fallback_global": 0,
         "ambiguous_skipped": 0,
         "self_reference_skipped": 0,
         "unresolved_skipped": 0,
     }
+
+    def _representative(choices: set[str]) -> str:
+        """Deterministic IC-fallback representative: lowest sense rank, then sense id."""
+        return min(choices, key=lambda n: (sense_rank_by_node.get(n, 1_000_000), n))
 
     lemma_set = set(lemma_index)
     for target_node, definition in definition_by_node.items():
@@ -428,6 +462,11 @@ def build_sense_level_paper_wordnet_graph(lexicon_id: str = "oewn:2024") -> Sens
                     adjacency[source_node].add(target_node)
                     resolution_stats["resolved_same_pos_overlap"] += 1
                     continue
+                if polysemy_fallback:
+                    source_node = _representative(same_pos_choices)
+                    adjacency[source_node].add(target_node)
+                    resolution_stats["resolved_polysemy_fallback_same_pos"] += 1
+                    continue
                 resolution_stats["ambiguous_skipped"] += 1
                 continue
 
@@ -446,6 +485,10 @@ def build_sense_level_paper_wordnet_graph(lexicon_id: str = "oewn:2024") -> Sens
                 if source_node is not None:
                     adjacency[source_node].add(target_node)
                     resolution_stats["resolved_global_overlap"] += 1
+                elif polysemy_fallback:
+                    source_node = _representative(all_choices)
+                    adjacency[source_node].add(target_node)
+                    resolution_stats["resolved_polysemy_fallback_global"] += 1
                 else:
                     resolution_stats["ambiguous_skipped"] += 1
             elif had_self_reference:
@@ -462,6 +505,18 @@ def build_sense_level_paper_wordnet_graph(lexicon_id: str = "oewn:2024") -> Sens
         node_metadata=node_metadata,
         resolution_stats=resolution_stats,
     )
+
+
+def build_sense_level_paper_wordnet_graph_with_ic_fallback(
+    lexicon_id: str = "oewn:2024",
+) -> SenseLevelGraphBuild:
+    """Sense-level builder with the polysemy IC-fallback enabled.
+
+    Equivalent to ``build_sense_level_paper_wordnet_graph(lexicon_id,
+    polysemy_fallback=True)``. Kept as a sibling name so call sites can declare
+    their intent (audit-baseline vs IC-fallback) explicitly.
+    """
+    return build_sense_level_paper_wordnet_graph(lexicon_id, polysemy_fallback=True)
 
 
 def add_rival_sense_attacks(
