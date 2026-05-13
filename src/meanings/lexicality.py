@@ -20,10 +20,13 @@ baseline and found a clean split:
 
 So the production classifier is now a **hybrid**:
 
-  1.  A clearly-marked **surface layer** runs first (single-char, short-token
-      cases, code-case, abbreviation regex, chemical-formula regex, multiword
-      -> phrase, idiom regex, short-token whitelist).  If a surface rule fires
-      it returns immediately with a ``surface.*`` reason -- these are
+  1.  A clearly-marked **surface layer** runs first.  The rules are checked in
+      this order: abbreviation regex, chemical-formula regex, **short-token
+      whitelist** (so a whitelisted lemma like ``a`` / ``s`` / ``no`` always
+      resolves to lexical-word, regardless of its length or case), then
+      single-character, short-token-case-rejected, code-case, short-token
+      unlisted, and finally the idiom regex.  If a surface rule fires it
+      returns immediately with a ``surface.*`` reason -- these are
       near-deterministic and high precision.
   2.  Otherwise a small **trained gloss classifier** (TF-IDF over the gloss +
       cheap structural features -> class-balanced logistic regression;
@@ -68,6 +71,14 @@ class LexicalityTag(StrEnum):
     TECHNICAL_TERM = "technical-term"
     PHRASE = "phrase"
     IDIOM = "idiom"
+    # Round-7 hole #4: a multi-token form with meaning or force not recoverable
+    # from naive word-by-word composition.  Named-entity multiwords with
+    # construction-like glosses (e.g. `11_november`, `1st_baron_beaverbrook`,
+    # `bless_her_heart`) and multi-token idiomatic expressions both land here.
+    # Compositional multiwords stay `phrase`.  `notes/upgoer-identity-clusters.md`
+    # names this in §"Core Distinctions": "Construction: a multi-token form with
+    # meaning or force not recoverable from naive word-by-word composition."
+    CONSTRUCTION = "construction"
     UNCERTAIN = "uncertain"
 
 
@@ -83,6 +94,15 @@ class LexicalityClassification:
 
 SHORT_TOKEN_LEXICAL_WHITELIST = frozenset(
     {
+        # single-character function words (pronoun "I", indefinite article "a",
+        # the plural-marker / possessive-marker reading "s" -- ordinary English
+        # function words whose single-character form would otherwise be stamped
+        # `symbol-code` by the single-character surface rule).  The whitelist
+        # check runs FIRST in the surface layer (before single_character /
+        # short_token_case_rejected / code_case) so a whitelisted lemma always
+        # resolves to lexical-word regardless of its length or case.
+        "a", "i", "s",
+        # standard short function words (the original 27-item set)
         "am", "an", "as", "at", "ax", "axe", "be", "by", "do", "go", "he",
         "if", "in", "is", "it", "me", "my", "no", "of", "on", "or", "ox",
         "so", "to", "up", "us", "we",
@@ -112,8 +132,10 @@ SURFACE_REASON_PREFIXES = (
     "surface.short_token_unlisted",
     "surface.abbreviation",
     "surface.chemical_formula",
+    "surface.technical_domain",
     "surface.multiword",
     "surface.idiom",
+    "surface.construction_idiomatic",
 )
 
 # Trained classifier behaviour.
@@ -137,6 +159,37 @@ _LEGACY_TAXON_KEYWORDS = (
 _LEGACY_TECHNICAL_KEYWORDS = (
     "computer science", "in mathematics", "in physics", "in linguistics",
     "in logic", "in medicine", "in law", "in music", "in grammar",
+)
+
+# Technical-domain markers used by the surface rule (round-7 hole #2: revert
+# `technical-term` to a rule-based check; the trained classifier no longer
+# carries the class).  Two forms, both high-precision per the agenda-#4
+# head-to-head (pure-rules technical-term F1 0.80):
+#   (1) a discipline name appears in the gloss (the FROZEN keyword set
+#       reproduced in scripts/lexicality_headtohead.py::pure_rules_predict,
+#       extended with a few high-precision additions found on the gold set);
+#   (2) a parenthetical "(domain)" tag.
+# We use a regex (not naive substring) so word boundaries are enforced; a
+# gloss mentioning "lawful" should NOT fire on the "law" keyword.
+TECHNICAL_DOMAIN_RE = re.compile(
+    r"(?:"
+    # (1) disciplinary keywords with word boundaries.  This mirrors the FROZEN
+    # _FROZEN_TECH_KW substring check that achieved F1=0.80 in the
+    # head-to-head, lifted to use regex word boundaries.  We add a small set
+    # of domain names found on the gold set the FROZEN list missed.
+    r"\b(?:computer science|mathematics|mathematical|mathematician|physics|"
+    r"linguistics|linguistic|logic|medicine|medicinal|law|music|musical|"
+    r"musician|grammar|geology|geological|economics|economic|astronomy|"
+    r"astronomical|heraldry|computing|programming|programmer|technical|"
+    r"taxonomic|trigonometry|stratigraphy|biological|theological|"
+    r"psychological|histological|chemical)\b"
+    # (2) parenthetical "(domain)" tag, the OEWN dictionary convention
+    r"|"
+    r"\((?:math|mathematics|physics|chemistry|biology|astronomy|geology|"
+    r"music|economics|linguistics|law|medicine|computing|grammar|"
+    r"statistics|logic|trademark|architecture|heraldry|theology)\)"
+    r")",
+    re.IGNORECASE,
 )
 
 
@@ -212,7 +265,26 @@ def _surface_layer(
     if CHEMICAL_FORMULA_RE.fullmatch(surface.strip()):
         return LexicalityClassification(LexicalityTag.CHEMICAL, ("surface.chemical_formula",))
 
-    # Single character -> symbol-code.
+    # SHORT-TOKEN WHITELIST FIRES FIRST (round-7 hole #1): a lemma on the
+    # whitelist of genuine English function words (`a`, `s`, `i`, `am`, `an`,
+    # `as`, ..., `ox`, ...) is always a lexical word.  Without this short-
+    # circuit, `a` (single-char) would be stamped `symbol-code` by the single-
+    # character rule below, and the admission policy would then exclude it via
+    # `r_block_symbol_only`.  The whitelist is gated on `case_pattern == "lower"`
+    # so that titlecase / uppercase forms of the same surface (the Nobelium
+    # symbol `No`, the strontium symbol `Sr`, etc.) are still routed to
+    # `symbol-code` via the case-rejection rule below.
+    if (
+        token_length <= 3
+        and case_pattern == "lower"
+        and normalized in SHORT_TOKEN_LEXICAL_WHITELIST
+    ):
+        return LexicalityClassification(
+            LexicalityTag.LEXICAL_WORD, ("surface.short_token_whitelist",)
+        )
+
+    # Single character -> symbol-code (only if NOT whitelisted, since the
+    # whitelist check above already returned for whitelisted single chars).
     if token_length == 1:
         return LexicalityClassification(LexicalityTag.SYMBOL_CODE, ("surface.single_character",))
 
@@ -226,25 +298,41 @@ def _surface_layer(
     if case_pattern in {"upper", "mixed"} and token_length <= 5:
         return LexicalityClassification(LexicalityTag.SYMBOL_CODE, ("surface.code_case",))
 
-    # Short token: explicit whitelist -> lexical-word, else symbol-code.
+    # Short non-whitelisted token -> symbol-code (the whitelist case fired above).
     if token_length <= 3:
-        if normalized in SHORT_TOKEN_LEXICAL_WHITELIST:
-            return LexicalityClassification(
-                LexicalityTag.LEXICAL_WORD, ("surface.short_token_whitelist",)
-            )
         return LexicalityClassification(
             LexicalityTag.SYMBOL_CODE, ("surface.short_token_unlisted",)
         )
 
-    # Idiom/interjection gloss (high-precision, fires rarely).  Note: `idiom`
-    # is NOT in the trained model's label space, so this rule is how an idiom
-    # gets tagged at all -- but it does NOT pre-empt the trained classifier for
-    # the gloss-cue classes (chemical/taxon/proper-name), it only fires on the
-    # explicit idiom/interjection markers.  Multiword lemmas are NOT short-circuited
-    # to `phrase` here -- the trained classifier handles phrase vs. multiword
-    # chemical/taxon/proper-name (a Linnaean binomial like `Felis_catus` must
-    # not be stamped `phrase` before the gloss is read).
+    # TECHNICAL-DOMAIN GLOSS RULE (round-7 hole #2): a gloss that explicitly
+    # restricts the sense to a discipline ("in mathematics,", "(physics)", "in
+    # computer science", ...) gets tagged `technical-term` by the surface layer.
+    # The trained classifier NO LONGER carries `technical-term` in its label
+    # space -- per the agenda-#4 head-to-head, pure-rules technical-term F1
+    # was 0.80 while the trained classifier's was 0.39, a -0.41 regression.
+    # The rule is high-precision (it requires an explicit "in <domain>," or
+    # parenthetical "(domain)" marker, not a mere mention of the discipline).
+    # This also fixes the `color`/`colour`-as-`technical-term` mis-tag: the
+    # `color` gloss does not contain a technical-domain marker, so the rule
+    # does not fire, and the trained classifier (without that class) tags it
+    # `lexical-word`.
+    if TECHNICAL_DOMAIN_RE.search(gloss):
+        return LexicalityClassification(
+            LexicalityTag.TECHNICAL_TERM, ("surface.technical_domain",)
+        )
+
+    # Idiom/construction/interjection gloss (high-precision, fires rarely).
+    # Round-7 hole #4: route MULTIWORD idiomatic glosses to `CONSTRUCTION`
+    # (a multi-token form with non-compositional meaning), and single-word
+    # interjection/exclamation glosses to `IDIOM` (the legacy tag, kept for
+    # interjections like "ouch", "ahem").  This rule does NOT pre-empt the
+    # trained classifier for the gloss-cue classes (chemical/taxon/proper-name)
+    # -- it only fires on explicit idiom/interjection markers.
     if IDIOM_RE.search(gloss):
+        if "_" in normalized:
+            return LexicalityClassification(
+                LexicalityTag.CONSTRUCTION, ("surface.construction_idiomatic",)
+            )
         return LexicalityClassification(LexicalityTag.IDIOM, ("surface.idiom",))
 
     return None

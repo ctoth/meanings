@@ -46,6 +46,28 @@ from meanings.lexicality import (
     CHEMICAL_FORMULA_RE as _PROD_FORMULA_RE,
 )
 from meanings.lexicality import (
+    TECHNICAL_DOMAIN_RE as _PROD_TECH_DOMAIN_RE,
+)
+
+# Round-7 hole #2/#3: training-fold re-route logic that mirrors
+# `scripts/train_lexicality_classifier.py`.  In CV we must apply the same
+# transformations to the training fold so the hybrid measured here reflects
+# the production trained classifier's label space.
+_TRAINED_NON_LABEL_TAGS = frozenset({"symbol-code", "abbreviation"})
+
+
+def _reroute_for_training(lemma: str, gloss: str, gold: str) -> str | None:
+    """Mirror the production trainer's gold-row re-routing.  Returns the
+    relabelled `gold` or None to drop the row entirely.
+    """
+    if gold == "technical-term":
+        if _PROD_TECH_DOMAIN_RE.search(gloss):
+            return None  # surface rule handles it; drop the row
+        return "lexical-word"
+    if gold in _TRAINED_NON_LABEL_TAGS:
+        return None  # surface layer handles these end-to-end
+    return gold
+from meanings.lexicality import (
     SHORT_TOKEN_LEXICAL_WHITELIST as _PROD_WHITELIST,
 )
 from meanings.lexicality import (
@@ -680,6 +702,12 @@ def _hybrid_surface_layer(rec: dict) -> str | None:
         return "abbreviation"
     if _PROD_FORMULA_RE.fullmatch(surface.strip()):
         return "chemical"
+    # WHITELIST FIRST (round-7 hole #1): genuine function words like `a`, `s`,
+    # `no` are lexical when surfaced as the lowercase form.  Titlecase / upper
+    # forms (the Nobelium symbol `No`, the strontium symbol `Sr`) still fall
+    # through to the case-rejection rule below.
+    if tlen <= 3 and case == "lower" and normalized in _PROD_WHITELIST:
+        return "lexical-word"
     if tlen == 1:
         return "symbol-code"
     if tlen <= 3 and case not in {"lower", "uncased"}:
@@ -687,7 +715,11 @@ def _hybrid_surface_layer(rec: dict) -> str | None:
     if case in {"upper", "mixed"} and tlen <= 5:
         return "symbol-code"
     if tlen <= 3:
-        return "lexical-word" if normalized in _PROD_WHITELIST else "symbol-code"
+        return "symbol-code"
+    # Technical-domain gloss rule (round-7 hole #2): high-precision rule check
+    # for "in <domain>," / "(domain)" markers, BEFORE the trained classifier.
+    if _PROD_TECH_DOMAIN_RE.search(gloss):
+        return "technical-term"
     # NB: no multiword->phrase short-circuit -- the trained classifier handles
     # phrase vs. multiword chemical/taxon/proper-name.
     if _IDIOM_RE.search(gloss):
@@ -819,12 +851,17 @@ def run_distributional_cv(recs: list[dict], silver_rows: list[dict], n_splits: i
         distr_oof[te] = clf.predict(X_te)
 
         # --- the hybrid's trained gloss component (production GlossClassifier
-        #     trained on training-fold gold + all silver) -------------------
-        g_lem = [lemmas[i] for i in tr] + s_lem
-        g_gloss = [glosses[i] for i in tr] + s_gloss
-        g_pos = [poss[i] for i in tr] + s_pos
-        g_y = [y[i] for i in tr] + s_y
-        g_w = np.asarray([1.0] * len(tr) + s_w)
+        #     trained on training-fold gold ONLY, with technical-term re-routed
+        #     and symbol-code/abbreviation dropped to match the production
+        #     trainer's label space; silver budget zeroed per Fix #2/#3).
+        g_lem, g_gloss, g_pos, g_y, g_w = [], [], [], [], []
+        for i in tr:
+            new_y = _reroute_for_training(lemmas[i], glosses[i], y[i])
+            if new_y is None:
+                continue
+            g_lem.append(lemmas[i]); g_gloss.append(glosses[i])
+            g_pos.append(poss[i]); g_y.append(new_y); g_w.append(1.0)
+        g_w = np.asarray(g_w)
         gloss_clf = GlossClassifier().fit(g_lem, g_gloss, g_pos, g_y, sample_weight=g_w)
         for i in te:
             rule_oof[i] = pure_rules_predict(recs[i])

@@ -35,14 +35,14 @@
         "description": "admit(IC) if it has a phrase/idiom reading and evidence is explicit (expanded list)",
         "priority": 10,
         "decision": "admit",
-        "enabled": false
+        "enabled": true
       },
       {
         "rule_id": "r_admit_construction",
         "description": "admit(IC) if it has a construction reading (multi-token non-compositional) and evidence is explicit (expanded list)",
         "priority": 10,
         "decision": "admit",
-        "enabled": false
+        "enabled": true
       }
     ],
     "superiority": [
@@ -93,23 +93,170 @@
     ]
   },
   "lexicon_id": "oewn:2024",
-  "expanded_list": false,
+  "expanded_list": true,
   "counts": {
-    "admit": 58099,
+    "admit": 119948,
     "exclude": 26963,
     "quarantine": 0,
-    "uncertain": 61911
+    "uncertain": 62
   },
   "ic_total": 146973,
   "old_lexicality_filter_admitted_ic_count": 121375,
-  "delta_admitted_vs_old_filter": -63276,
+  "delta_admitted_vs_old_filter": -1427,
   "fired_rule_histogram": {
-    "r_uncertain": 61911,
-    "r_admit_lexical": 58099,
-    "r_block_symbol_only": 26963
+    "r_admit_phrase_idiom": 61830,
+    "r_admit_lexical": 58081,
+    "r_block_symbol_only": 26963,
+    "r_uncertain": 62,
+    "r_admit_construction": 19,
+    "r_admit_lexical,r_admit_phrase_idiom": 18
   },
   "examples": {
     "admitted": [
+      {
+        "ic_id": "ic:.22_caliber",
+        "decision": "admit",
+        "aliases": [
+          ".22 caliber",
+          ".22-caliber"
+        ],
+        "tag_counts": {
+          "phrase": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_admit_phrase_idiom"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_phrase_idiom (priority 10, concludes admit) -- admit(IC) if it has a phrase/idiom reading and evidence is explicit (expanded list)",
+          "  because: has a phrase/idiom reading (2 sense(s): oewn-.22-caliber__3.01.00.., oewn-.22_caliber__3.01.00..)",
+          "  because: evidence is explicit",
+          "members: 2 sense(s) over forms ['.22 caliber', '.22-caliber']; tags {'phrase': 2}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:.22_calibre",
+        "decision": "admit",
+        "aliases": [
+          ".22 calibre",
+          ".22-calibre"
+        ],
+        "tag_counts": {
+          "phrase": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_admit_phrase_idiom"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_phrase_idiom (priority 10, concludes admit) -- admit(IC) if it has a phrase/idiom reading and evidence is explicit (expanded list)",
+          "  because: has a phrase/idiom reading (2 sense(s): oewn-.22-calibre__3.01.00.., oewn-.22_calibre__3.01.00..)",
+          "  because: evidence is explicit",
+          "members: 2 sense(s) over forms ['.22 calibre', '.22-calibre']; tags {'phrase': 2}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:.38_caliber",
+        "decision": "admit",
+        "aliases": [
+          ".38 caliber",
+          ".38-caliber"
+        ],
+        "tag_counts": {
+          "phrase": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_admit_phrase_idiom"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_phrase_idiom (priority 10, concludes admit) -- admit(IC) if it has a phrase/idiom reading and evidence is explicit (expanded list)",
+          "  because: has a phrase/idiom reading (2 sense(s): oewn-.38-caliber__3.01.00.., oewn-.38_caliber__3.01.00..)",
+          "  because: evidence is explicit",
+          "members: 2 sense(s) over forms ['.38 caliber', '.38-caliber']; tags {'phrase': 2}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:.38_calibre",
+        "decision": "admit",
+        "aliases": [
+          ".38 calibre",
+          ".38-calibre"
+        ],
+        "tag_counts": {
+          "phrase": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_admit_phrase_idiom"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_phrase_idiom (priority 10, concludes admit) -- admit(IC) if it has a phrase/idiom reading and evidence is explicit (expanded list)",
+          "  because: has a phrase/idiom reading (2 sense(s): oewn-.38-calibre__3.01.00.., oewn-.38_calibre__3.01.00..)",
+          "  because: evidence is explicit",
+          "members: 2 sense(s) over forms ['.38 calibre', '.38-calibre']; tags {'phrase': 2}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:.45_caliber",
+        "decision": "admit",
+        "aliases": [
+          ".45 caliber",
+          ".45-caliber"
+        ],
+        "tag_counts": {
+          "phrase": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_admit_phrase_idiom"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_phrase_idiom (priority 10, concludes admit) -- admit(IC) if it has a phrase/idiom reading and evidence is explicit (expanded list)",
+          "  because: has a phrase/idiom reading (2 sense(s): oewn-.45-caliber__3.01.00.., oewn-.45_caliber__3.01.00..)",
+          "  because: evidence is explicit",
+          "members: 2 sense(s) over forms ['.45 caliber', '.45-caliber']; tags {'phrase': 2}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:.45_calibre",
+        "decision": "admit",
+        "aliases": [
+          ".45 calibre",
+          ".45-calibre"
+        ],
+        "tag_counts": {
+          "phrase": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_admit_phrase_idiom"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_phrase_idiom (priority 10, concludes admit) -- admit(IC) if it has a phrase/idiom reading and evidence is explicit (expanded list)",
+          "  because: has a phrase/idiom reading (2 sense(s): oewn-.45-calibre__3.01.00.., oewn-.45_calibre__3.01.00..)",
+          "  because: evidence is explicit",
+          "members: 2 sense(s) over forms ['.45 calibre', '.45-calibre']; tags {'phrase': 2}"
+        ],
+        "excluded_sense_ids": []
+      },
       {
         "ic_id": "ic:1000",
         "decision": "admit",
@@ -341,6 +488,29 @@
         "excluded_sense_ids": []
       },
       {
+        "ic_id": "ic:11_november",
+        "decision": "admit",
+        "aliases": [
+          "11 November"
+        ],
+        "tag_counts": {
+          "phrase": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_admit_phrase_idiom"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_phrase_idiom (priority 10, concludes admit) -- admit(IC) if it has a phrase/idiom reading and evidence is explicit (expanded list)",
+          "  because: has a phrase/idiom reading (1 sense(s): oewn-11_november__1.28.00..)",
+          "  because: evidence is explicit",
+          "members: 1 sense(s) over forms ['11 November']; tags {'phrase': 1}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
         "ic_id": "ic:11th",
         "decision": "admit",
         "aliases": [
@@ -406,167 +576,6 @@
           "  because: has a lexical-word reading (1 sense(s): oewn-125th__5.00.00.ordinal.00)",
           "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
           "members: 1 sense(s) over forms ['125th']; tags {'lexical-word': 1}"
-        ],
-        "excluded_sense_ids": []
-      },
-      {
-        "ic_id": "ic:12th",
-        "decision": "admit",
-        "aliases": [
-          "12th"
-        ],
-        "tag_counts": {
-          "lexical-word": 1
-        },
-        "sense_count": 1,
-        "fired_rules": [
-          "r_admit_lexical"
-        ],
-        "defeated_rules": [],
-        "rationale": [
-          "decision: admit",
-          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
-          "  because: has a lexical-word reading (1 sense(s): oewn-12th__5.00.00.ordinal.00)",
-          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
-          "members: 1 sense(s) over forms ['12th']; tags {'lexical-word': 1}"
-        ],
-        "excluded_sense_ids": []
-      },
-      {
-        "ic_id": "ic:130th",
-        "decision": "admit",
-        "aliases": [
-          "130th"
-        ],
-        "tag_counts": {
-          "lexical-word": 1
-        },
-        "sense_count": 1,
-        "fired_rules": [
-          "r_admit_lexical"
-        ],
-        "defeated_rules": [],
-        "rationale": [
-          "decision: admit",
-          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
-          "  because: has a lexical-word reading (1 sense(s): oewn-130th__5.00.00.ordinal.00)",
-          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
-          "members: 1 sense(s) over forms ['130th']; tags {'lexical-word': 1}"
-        ],
-        "excluded_sense_ids": []
-      },
-      {
-        "ic_id": "ic:135th",
-        "decision": "admit",
-        "aliases": [
-          "135th"
-        ],
-        "tag_counts": {
-          "lexical-word": 1
-        },
-        "sense_count": 1,
-        "fired_rules": [
-          "r_admit_lexical"
-        ],
-        "defeated_rules": [],
-        "rationale": [
-          "decision: admit",
-          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
-          "  because: has a lexical-word reading (1 sense(s): oewn-135th__5.00.00.ordinal.00)",
-          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
-          "members: 1 sense(s) over forms ['135th']; tags {'lexical-word': 1}"
-        ],
-        "excluded_sense_ids": []
-      },
-      {
-        "ic_id": "ic:13th",
-        "decision": "admit",
-        "aliases": [
-          "13th"
-        ],
-        "tag_counts": {
-          "lexical-word": 1
-        },
-        "sense_count": 1,
-        "fired_rules": [
-          "r_admit_lexical"
-        ],
-        "defeated_rules": [],
-        "rationale": [
-          "decision: admit",
-          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
-          "  because: has a lexical-word reading (1 sense(s): oewn-13th__5.00.00.ordinal.00)",
-          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
-          "members: 1 sense(s) over forms ['13th']; tags {'lexical-word': 1}"
-        ],
-        "excluded_sense_ids": []
-      },
-      {
-        "ic_id": "ic:140th",
-        "decision": "admit",
-        "aliases": [
-          "140th"
-        ],
-        "tag_counts": {
-          "lexical-word": 1
-        },
-        "sense_count": 1,
-        "fired_rules": [
-          "r_admit_lexical"
-        ],
-        "defeated_rules": [],
-        "rationale": [
-          "decision: admit",
-          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
-          "  because: has a lexical-word reading (1 sense(s): oewn-140th__5.00.00.ordinal.00)",
-          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
-          "members: 1 sense(s) over forms ['140th']; tags {'lexical-word': 1}"
-        ],
-        "excluded_sense_ids": []
-      },
-      {
-        "ic_id": "ic:145th",
-        "decision": "admit",
-        "aliases": [
-          "145th"
-        ],
-        "tag_counts": {
-          "lexical-word": 1
-        },
-        "sense_count": 1,
-        "fired_rules": [
-          "r_admit_lexical"
-        ],
-        "defeated_rules": [],
-        "rationale": [
-          "decision: admit",
-          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
-          "  because: has a lexical-word reading (1 sense(s): oewn-145th__5.00.00.ordinal.00)",
-          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
-          "members: 1 sense(s) over forms ['145th']; tags {'lexical-word': 1}"
-        ],
-        "excluded_sense_ids": []
-      },
-      {
-        "ic_id": "ic:14th",
-        "decision": "admit",
-        "aliases": [
-          "14th"
-        ],
-        "tag_counts": {
-          "lexical-word": 1
-        },
-        "sense_count": 1,
-        "fired_rules": [
-          "r_admit_lexical"
-        ],
-        "defeated_rules": [],
-        "rationale": [
-          "decision: admit",
-          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
-          "  because: has a lexical-word reading (1 sense(s): oewn-14th__5.00.00.ordinal.00)",
-          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
-          "members: 1 sense(s) over forms ['14th']; tags {'lexical-word': 1}"
         ],
         "excluded_sense_ids": []
       }
@@ -1024,11 +1033,104 @@
     ],
     "uncertain": [
       {
-        "ic_id": "ic:.22_caliber",
+        "ic_id": "ic:adriatic",
         "decision": "uncertain",
         "aliases": [],
         "tag_counts": {
-          "phrase": 2
+          "uncertain": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['Adriatic']; tags {'uncertain': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-adriatic__1.17.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:bahasa",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "uncertain": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['Bahasa']; tags {'uncertain': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-bahasa__1.10.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:calan",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "uncertain": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['Calan']; tags {'uncertain': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-calan__1.06.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:carduus",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "uncertain": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['Carduus']; tags {'uncertain': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-carduus__1.20.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:carib",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "proper-name": 1,
+          "uncertain": 1
         },
         "sense_count": 2,
         "fired_rules": [
@@ -1039,134 +1141,20 @@
           "decision: uncertain",
           "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
           "  because: no admission rule fired",
-          "members: 2 sense(s) over forms ['.22 caliber', '.22-caliber']; tags {'phrase': 2}"
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'proper-name': 1, 'uncertain': 1}); likely all-uncertain",
+          "members: 2 sense(s) over forms ['Carib']; tags {'proper-name': 1, 'uncertain': 1}"
         ],
         "excluded_sense_ids": [
-          "oewn-.22-caliber__3.01.00..",
-          "oewn-.22_caliber__3.01.00.."
+          "oewn-carib__1.10.00..",
+          "oewn-carib__1.18.00.."
         ]
       },
       {
-        "ic_id": "ic:.22_calibre",
+        "ic_id": "ic:catha",
         "decision": "uncertain",
         "aliases": [],
         "tag_counts": {
-          "phrase": 2
-        },
-        "sense_count": 2,
-        "fired_rules": [
-          "r_uncertain"
-        ],
-        "defeated_rules": [],
-        "rationale": [
-          "decision: uncertain",
-          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
-          "  because: no admission rule fired",
-          "members: 2 sense(s) over forms ['.22 calibre', '.22-calibre']; tags {'phrase': 2}"
-        ],
-        "excluded_sense_ids": [
-          "oewn-.22-calibre__3.01.00..",
-          "oewn-.22_calibre__3.01.00.."
-        ]
-      },
-      {
-        "ic_id": "ic:.38_caliber",
-        "decision": "uncertain",
-        "aliases": [],
-        "tag_counts": {
-          "phrase": 2
-        },
-        "sense_count": 2,
-        "fired_rules": [
-          "r_uncertain"
-        ],
-        "defeated_rules": [],
-        "rationale": [
-          "decision: uncertain",
-          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
-          "  because: no admission rule fired",
-          "members: 2 sense(s) over forms ['.38 caliber', '.38-caliber']; tags {'phrase': 2}"
-        ],
-        "excluded_sense_ids": [
-          "oewn-.38-caliber__3.01.00..",
-          "oewn-.38_caliber__3.01.00.."
-        ]
-      },
-      {
-        "ic_id": "ic:.38_calibre",
-        "decision": "uncertain",
-        "aliases": [],
-        "tag_counts": {
-          "phrase": 2
-        },
-        "sense_count": 2,
-        "fired_rules": [
-          "r_uncertain"
-        ],
-        "defeated_rules": [],
-        "rationale": [
-          "decision: uncertain",
-          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
-          "  because: no admission rule fired",
-          "members: 2 sense(s) over forms ['.38 calibre', '.38-calibre']; tags {'phrase': 2}"
-        ],
-        "excluded_sense_ids": [
-          "oewn-.38-calibre__3.01.00..",
-          "oewn-.38_calibre__3.01.00.."
-        ]
-      },
-      {
-        "ic_id": "ic:.45_caliber",
-        "decision": "uncertain",
-        "aliases": [],
-        "tag_counts": {
-          "phrase": 2
-        },
-        "sense_count": 2,
-        "fired_rules": [
-          "r_uncertain"
-        ],
-        "defeated_rules": [],
-        "rationale": [
-          "decision: uncertain",
-          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
-          "  because: no admission rule fired",
-          "members: 2 sense(s) over forms ['.45 caliber', '.45-caliber']; tags {'phrase': 2}"
-        ],
-        "excluded_sense_ids": [
-          "oewn-.45-caliber__3.01.00..",
-          "oewn-.45_caliber__3.01.00.."
-        ]
-      },
-      {
-        "ic_id": "ic:.45_calibre",
-        "decision": "uncertain",
-        "aliases": [],
-        "tag_counts": {
-          "phrase": 2
-        },
-        "sense_count": 2,
-        "fired_rules": [
-          "r_uncertain"
-        ],
-        "defeated_rules": [],
-        "rationale": [
-          "decision: uncertain",
-          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
-          "  because: no admission rule fired",
-          "members: 2 sense(s) over forms ['.45 calibre', '.45-calibre']; tags {'phrase': 2}"
-        ],
-        "excluded_sense_ids": [
-          "oewn-.45-calibre__3.01.00..",
-          "oewn-.45_calibre__3.01.00.."
-        ]
-      },
-      {
-        "ic_id": "ic:11_november",
-        "decision": "uncertain",
-        "aliases": [],
-        "tag_counts": {
-          "phrase": 1
+          "uncertain": 1
         },
         "sense_count": 1,
         "fired_rules": [
@@ -1177,18 +1165,19 @@
           "decision: uncertain",
           "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
           "  because: no admission rule fired",
-          "members: 1 sense(s) over forms ['11 November']; tags {'phrase': 1}"
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['Catha']; tags {'uncertain': 1}"
         ],
         "excluded_sense_ids": [
-          "oewn-11_november__1.28.00.."
+          "oewn-catha__1.20.00.."
         ]
       },
       {
-        "ic_id": "ic:15_august_1945",
+        "ic_id": "ic:chordata",
         "decision": "uncertain",
         "aliases": [],
         "tag_counts": {
-          "phrase": 1
+          "uncertain": 1
         },
         "sense_count": 1,
         "fired_rules": [
@@ -1199,18 +1188,19 @@
           "decision: uncertain",
           "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
           "  because: no admission rule fired",
-          "members: 1 sense(s) over forms ['15 August 1945']; tags {'phrase': 1}"
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['Chordata']; tags {'uncertain': 1}"
         ],
         "excluded_sense_ids": [
-          "oewn-15_august_1945__1.28.00.."
+          "oewn-chordata__1.05.00.."
         ]
       },
       {
-        "ic_id": "ic:15_minutes",
+        "ic_id": "ic:clamatores",
         "decision": "uncertain",
         "aliases": [],
         "tag_counts": {
-          "phrase": 1
+          "uncertain": 1
         },
         "sense_count": 1,
         "fired_rules": [
@@ -1221,18 +1211,19 @@
           "decision: uncertain",
           "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
           "  because: no admission rule fired",
-          "members: 1 sense(s) over forms ['15 minutes']; tags {'phrase': 1}"
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['Clamatores']; tags {'uncertain': 1}"
         ],
         "excluded_sense_ids": [
-          "oewn-15_minutes__1.28.00.."
+          "oewn-clamatores__1.05.00.."
         ]
       },
       {
-        "ic_id": "ic:17_november",
+        "ic_id": "ic:cordia",
         "decision": "uncertain",
         "aliases": [],
         "tag_counts": {
-          "phrase": 1
+          "uncertain": 1
         },
         "sense_count": 1,
         "fired_rules": [
@@ -1243,18 +1234,19 @@
           "decision: uncertain",
           "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
           "  because: no admission rule fired",
-          "members: 1 sense(s) over forms ['17 November']; tags {'phrase': 1}"
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['Cordia']; tags {'uncertain': 1}"
         ],
         "excluded_sense_ids": [
-          "oewn-17_november__1.14.00.."
+          "oewn-cordia__1.20.00.."
         ]
       },
       {
-        "ic_id": "ic:1862_apollo",
+        "ic_id": "ic:cunoniaceae",
         "decision": "uncertain",
         "aliases": [],
         "tag_counts": {
-          "phrase": 1
+          "uncertain": 1
         },
         "sense_count": 1,
         "fired_rules": [
@@ -1265,18 +1257,19 @@
           "decision: uncertain",
           "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
           "  because: no admission rule fired",
-          "members: 1 sense(s) over forms ['1862 Apollo']; tags {'phrase': 1}"
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['Cunoniaceae']; tags {'uncertain': 1}"
         ],
         "excluded_sense_ids": [
-          "oewn-1862_apollo__1.17.01.."
+          "oewn-cunoniaceae__1.20.00.."
         ]
       },
       {
-        "ic_id": "ic:18_karat_gold",
+        "ic_id": "ic:cushitic",
         "decision": "uncertain",
         "aliases": [],
         "tag_counts": {
-          "phrase": 1
+          "uncertain": 1
         },
         "sense_count": 1,
         "fired_rules": [
@@ -1287,18 +1280,19 @@
           "decision: uncertain",
           "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
           "  because: no admission rule fired",
-          "members: 1 sense(s) over forms ['18-karat gold']; tags {'phrase': 1}"
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['Cushitic']; tags {'uncertain': 1}"
         ],
         "excluded_sense_ids": [
-          "oewn-18-karat_gold__1.27.00.."
+          "oewn-cushitic__1.10.00.."
         ]
       },
       {
-        "ic_id": "ic:1_esdras",
+        "ic_id": "ic:dasyuridae",
         "decision": "uncertain",
         "aliases": [],
         "tag_counts": {
-          "phrase": 1
+          "uncertain": 1
         },
         "sense_count": 1,
         "fired_rules": [
@@ -1309,18 +1303,19 @@
           "decision: uncertain",
           "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
           "  because: no admission rule fired",
-          "members: 1 sense(s) over forms ['1 Esdras']; tags {'phrase': 1}"
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['Dasyuridae']; tags {'uncertain': 1}"
         ],
         "excluded_sense_ids": [
-          "oewn-1_esdras__1.10.00.."
+          "oewn-dasyuridae__1.05.00.."
         ]
       },
       {
-        "ic_id": "ic:1_hitter",
+        "ic_id": "ic:daviesia",
         "decision": "uncertain",
         "aliases": [],
         "tag_counts": {
-          "phrase": 1
+          "uncertain": 1
         },
         "sense_count": 1,
         "fired_rules": [
@@ -1331,18 +1326,45 @@
           "decision: uncertain",
           "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
           "  because: no admission rule fired",
-          "members: 1 sense(s) over forms ['1-hitter']; tags {'phrase': 1}"
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['Daviesia']; tags {'uncertain': 1}"
         ],
         "excluded_sense_ids": [
-          "oewn-1-hitter__1.04.00.."
+          "oewn-daviesia__1.20.00.."
         ]
       },
       {
-        "ic_id": "ic:1_kings",
+        "ic_id": "ic:draco",
         "decision": "uncertain",
         "aliases": [],
         "tag_counts": {
-          "phrase": 1
+          "proper-name": 2,
+          "uncertain": 1
+        },
+        "sense_count": 3,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'proper-name': 2, 'uncertain': 1}); likely all-uncertain",
+          "members: 3 sense(s) over forms ['Draco']; tags {'proper-name': 2, 'uncertain': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-draco__1.05.00..",
+          "oewn-draco__1.17.00..",
+          "oewn-draco__1.18.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:dravidic",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "uncertain": 1
         },
         "sense_count": 1,
         "fired_rules": [
@@ -1353,18 +1375,19 @@
           "decision: uncertain",
           "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
           "  because: no admission rule fired",
-          "members: 1 sense(s) over forms ['1 Kings']; tags {'phrase': 1}"
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['Dravidic']; tags {'uncertain': 1}"
         ],
         "excluded_sense_ids": [
-          "oewn-1_kings__1.10.00.."
+          "oewn-dravidic__1.10.00.."
         ]
       },
       {
-        "ic_id": "ic:1_samuel",
+        "ic_id": "ic:ecclesiasticus",
         "decision": "uncertain",
         "aliases": [],
         "tag_counts": {
-          "phrase": 1
+          "uncertain": 1
         },
         "sense_count": 1,
         "fired_rules": [
@@ -1375,18 +1398,46 @@
           "decision: uncertain",
           "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
           "  because: no admission rule fired",
-          "members: 1 sense(s) over forms ['1 Samuel']; tags {'phrase': 1}"
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['Ecclesiasticus']; tags {'uncertain': 1}"
         ],
         "excluded_sense_ids": [
-          "oewn-1_samuel__1.10.00.."
+          "oewn-ecclesiasticus__1.10.00.."
         ]
       },
       {
-        "ic_id": "ic:1st_baron_beaverbrook",
+        "ic_id": "ic:ectoprocta",
         "decision": "uncertain",
         "aliases": [],
         "tag_counts": {
-          "phrase": 1
+          "proper-name": 2,
+          "uncertain": 1
+        },
+        "sense_count": 3,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'proper-name': 2, 'uncertain': 1}); likely all-uncertain",
+          "members: 3 sense(s) over forms ['Ectoprocta', 'Endoprocta', 'Entoprocta']; tags {'proper-name': 2, 'uncertain': 1}",
+          "merge provenance: Spelling-variant merge (edit-distance) with gloss-similarity confirmation; all forms retained."
+        ],
+        "excluded_sense_ids": [
+          "oewn-ectoprocta__1.05.00..",
+          "oewn-endoprocta__1.05.00..",
+          "oewn-entoprocta__1.05.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:esperanto",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "uncertain": 1
         },
         "sense_count": 1,
         "fired_rules": [
@@ -1397,18 +1448,19 @@
           "decision: uncertain",
           "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
           "  because: no admission rule fired",
-          "members: 1 sense(s) over forms ['1st Baron Beaverbrook']; tags {'phrase': 1}"
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['Esperanto']; tags {'uncertain': 1}"
         ],
         "excluded_sense_ids": [
-          "oewn-1st_baron_beaverbrook__1.18.00.."
+          "oewn-esperanto__1.10.00.."
         ]
       },
       {
-        "ic_id": "ic:1st_baron_verulam",
+        "ic_id": "ic:europan",
         "decision": "uncertain",
         "aliases": [],
         "tag_counts": {
-          "phrase": 1
+          "uncertain": 1
         },
         "sense_count": 1,
         "fired_rules": [
@@ -1419,18 +1471,19 @@
           "decision: uncertain",
           "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
           "  because: no admission rule fired",
-          "members: 1 sense(s) over forms ['1st Baron Verulam']; tags {'phrase': 1}"
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['Europan']; tags {'uncertain': 1}"
         ],
         "excluded_sense_ids": [
-          "oewn-1st_baron_verulam__1.18.00.."
+          "oewn-europan__1.10.00.."
         ]
       },
       {
-        "ic_id": "ic:1st_class",
+        "ic_id": "ic:eurypterida",
         "decision": "uncertain",
         "aliases": [],
         "tag_counts": {
-          "phrase": 1
+          "uncertain": 1
         },
         "sense_count": 1,
         "fired_rules": [
@@ -1441,32 +1494,11 @@
           "decision: uncertain",
           "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
           "  because: no admission rule fired",
-          "members: 1 sense(s) over forms ['1st class']; tags {'phrase': 1}"
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['Eurypterida']; tags {'uncertain': 1}"
         ],
         "excluded_sense_ids": [
-          "oewn-1st_class__1.10.00.."
-        ]
-      },
-      {
-        "ic_id": "ic:1st_class_mail",
-        "decision": "uncertain",
-        "aliases": [],
-        "tag_counts": {
-          "phrase": 1
-        },
-        "sense_count": 1,
-        "fired_rules": [
-          "r_uncertain"
-        ],
-        "defeated_rules": [],
-        "rationale": [
-          "decision: uncertain",
-          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
-          "  because: no admission rule fired",
-          "members: 1 sense(s) over forms ['1st-class mail']; tags {'phrase': 1}"
-        ],
-        "excluded_sense_ids": [
-          "oewn-1st-class_mail__1.10.00.."
+          "oewn-eurypterida__1.05.00.."
         ]
       }
     ]

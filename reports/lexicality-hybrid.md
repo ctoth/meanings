@@ -37,8 +37,8 @@ Gold-label distribution:
 
 | metric | pure-rules | pure-TF-IDF+LR | hybrid | winner |
 |---|---|---|---|---|
-| macro-F1 | 0.739 | 0.744 | **0.745** | tie |
-| micro-F1 (accuracy) | 0.760 | 0.796 | **0.770** | a pure approach |
+| macro-F1 | 0.739 | 0.744 | **0.765** | hybrid |
+| micro-F1 (accuracy) | 0.760 | 0.796 | **0.786** | a pure approach |
 
 **Hybrid >= both pure approaches on macro-F1: True.  On micro-F1: False.**
 
@@ -46,28 +46,28 @@ Gold-label distribution:
 
 | class | pure-rules F1 | pure-TF-IDF F1 | hybrid F1 | support | hybrid vs pure-rules |
 |---|---|---|---|---|---|
-| `lexical-word` | 0.843 | 0.800 | 0.779 | 299 | loss (-0.064) |
-| `phrase` | 0.733 | 0.873 | 0.891 | 262 | win (+0.158) |
-| `symbol-code` | 0.969 | 0.877 | 0.788 | 207 | loss (-0.181) |
-| `chemical` | 0.558 | 0.754 | 0.689 | 138 | win (+0.131) |
-| `proper-name` | 0.527 | 0.737 | 0.757 | 106 | win (+0.230) |
-| `taxon` | 0.626 | 0.667 | 0.677 | 71 | win (+0.051) |
-| `technical-term` | 0.800 | 0.468 | 0.388 | 67 | loss (-0.412) |
+| `lexical-word` | 0.843 | 0.800 | 0.894 | 299 | win (+0.051) |
+| `phrase` | 0.733 | 0.873 | 0.779 | 262 | win (+0.046) |
+| `symbol-code` | 0.969 | 0.877 | 0.885 | 207 | loss (-0.084) |
+| `chemical` | 0.558 | 0.754 | 0.617 | 138 | win (+0.059) |
+| `proper-name` | 0.527 | 0.737 | 0.773 | 106 | win (+0.246) |
+| `taxon` | 0.626 | 0.667 | 0.662 | 71 | win (+0.036) |
+| `technical-term` | 0.800 | 0.468 | 0.523 | 67 | loss (-0.277) |
 | `abbreviation` | 0.857 | 0.778 | 0.989 | 44 | win (+0.132) |
 
 ### Subset breakdown (identical CV items)
 
 | subset | n | pure-rules macro-F1 | pure-TF-IDF macro-F1 | hybrid macro-F1 |
 |---|---|---|---|---|
-| `short_token_symbol` | 240 | 0.580 | 0.296 | **0.353** |
-| `taxon_chemical` | 261 | 0.256 | 0.454 | **0.464** |
-| `ordinary_lexical_word` | 283 | 0.934 | 0.899 | **0.828** |
-| `other` | 410 | 0.871 | 0.800 | **0.823** |
+| `short_token_symbol` | 240 | 0.580 | 0.296 | **0.349** |
+| `taxon_chemical` | 261 | 0.256 | 0.454 | **0.440** |
+| `ordinary_lexical_word` | 283 | 0.934 | 0.899 | **0.938** |
+| `other` | 410 | 0.871 | 0.800 | **0.836** |
 
 ### `uncertain` reachability (hybrid)
 
-- On the 5-fold CV: surface layer handled **286** of 1194 senses; the trained layer handled the rest. `uncertain` was emitted **32** times (top-class prob below `0.40` and no surface rule) -- so the tag is now reachable, unlike the old pile (where `fallback.uncertain` fired 0 times on the gold set).
-- On the full gold set with the persisted (in-sample) model, `uncertain` fired 8 times.
+- On the 5-fold CV: surface layer handled **418** of 1194 senses; the trained layer handled the rest. `uncertain` was emitted **1** times (top-class prob below `0.40` and no surface rule) -- so the tag is now reachable, unlike the old pile (where `fallback.uncertain` fired 0 times on the gold set).
+- On the full gold set with the persisted (in-sample) model, `uncertain` fired 0 times.
 
 ## 4. Hybrid confusion matrix (CV, rows = gold, cols = predicted)
 
@@ -76,29 +76,29 @@ Gold-label distribution:
 | gold\pred | abbr | chemical | lex | phrase | prop | sym | taxon | tech | unc |
 |---|---|---|---|---|---|---|---|---|---|
 | `abbr` | 44 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| `chemical` | 1 | 93 | 8 | 15 | 3 | 9 | 1 | 1 | 7 |
-| `lex` | 0 | 4 | 212 | 0 | 24 | 36 | 1 | 9 | 13 |
-| `phrase` | 0 | 4 | 0 | 244 | 0 | 4 | 10 | 0 | 0 |
-| `prop` | 0 | 1 | 4 | 8 | 84 | 2 | 5 | 1 | 1 |
-| `sym` | 0 | 29 | 0 | 0 | 0 | 178 | 0 | 0 | 0 |
-| `taxon` | 0 | 0 | 0 | 19 | 4 | 1 | 45 | 1 | 1 |
-| `tech` | 0 | 1 | 21 | 0 | 1 | 15 | 0 | 19 | 10 |
+| `chemical` | 1 | 79 | 11 | 12 | 2 | 8 | 1 | 24 | 0 |
+| `lex` | 0 | 6 | 262 | 0 | 26 | 0 | 1 | 4 | 0 |
+| `phrase` | 0 | 1 | 0 | 192 | 0 | 3 | 16 | 50 | 0 |
+| `prop` | 0 | 1 | 4 | 8 | 87 | 1 | 4 | 1 | 0 |
+| `sym` | 0 | 29 | 1 | 0 | 0 | 177 | 0 | 0 | 0 |
+| `taxon` | 0 | 0 | 0 | 19 | 3 | 1 | 46 | 1 | 1 |
+| `tech` | 0 | 2 | 9 | 0 | 1 | 3 | 0 | 52 | 0 |
 | `unc` | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
 
 ### Hybrid top failure modes (CV; gold -> predicted, count)
 
-  - `lexical-word` -> `symbol-code`: 36
+  - `phrase` -> `technical-term`: 50
   - `symbol-code` -> `chemical`: 29
-  - `lexical-word` -> `proper-name`: 24
-  - `technical-term` -> `lexical-word`: 21
+  - `lexical-word` -> `proper-name`: 26
+  - `chemical` -> `technical-term`: 24
   - `taxon` -> `phrase`: 19
-  - `technical-term` -> `symbol-code`: 15
-  - `chemical` -> `phrase`: 15
-  - `lexical-word` -> `uncertain`: 13
-  - `phrase` -> `taxon`: 10
-  - `technical-term` -> `uncertain`: 10
-  - `chemical` -> `symbol-code`: 9
-  - `lexical-word` -> `technical-term`: 9
+  - `phrase` -> `taxon`: 16
+  - `chemical` -> `phrase`: 12
+  - `chemical` -> `lexical-word`: 11
+  - `technical-term` -> `lexical-word`: 9
+  - `chemical` -> `symbol-code`: 8
+  - `proper-name` -> `phrase`: 8
+  - `lexical-word` -> `chemical`: 6
 
 ## 5. Pure-rules baseline (frozen snapshot) on the full gold set
 
@@ -121,7 +121,7 @@ Gold-label distribution:
 
 ## 6. Verdict
 
-**hybrid matches the better of the two pure approaches on macro-F1 (no regression)**
+**hybrid beats both pure approaches on macro-F1 (the expected 'use whichever wins per region' outcome)**
 
 Why this is the expected shape: the hybrid is, by construction, "run the surface rules where they win (short tokens / symbol-code / abbreviation), and the trained gloss classifier where bag-of-words wins (taxa / chemicals / proper-name / technical-term)". So on `short_token_symbol` it should match pure-rules, on `taxon_chemical` it should match (a per-fold proxy of) the TF-IDF baseline, and overall it should be >= both. The subset table above is the check.
 

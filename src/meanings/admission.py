@@ -62,6 +62,11 @@ LEXICALITY_CLASS_PRECISION: dict[str, float] = {
     # idiom has no head-to-head support row (the gold set folds idiom into the
     # phrase stratum); treat it like phrase.
     "idiom": 0.780,
+    # construction (round-7 hole #4): multi-token form with non-compositional
+    # meaning; fires only on explicit idiomatic-gloss markers on multiword
+    # lemmas, so it inherits the high precision of those markers.  No
+    # head-to-head support row yet; treat as the idiom/phrase precision floor.
+    "construction": 0.780,
     "uncertain": 0.0,
 }
 LOW_PRECISION_THRESHOLD = 0.50
@@ -78,6 +83,10 @@ SYMBOL_ONLY_TAGS: frozenset[str] = frozenset(
 )
 LEXICAL_ADMIT_TAGS: frozenset[str] = frozenset({"lexical-word"})
 PHRASE_IDIOM_ADMIT_TAGS: frozenset[str] = frozenset({"phrase", "idiom"})
+# Round-7 hole #4: construction is a separate admit tag (under the expanded
+# policy only); compositional `phrase` ICs stay in `uncertain` unless
+# r_admit_phrase_idiom is enabled.
+CONSTRUCTION_ADMIT_TAGS: frozenset[str] = frozenset({"construction"})
 
 # Classifier reason prefixes that are NOT high-precision surface rules.
 _TRAINED_PROB_RE = re.compile(r"\.p(\d+(?:\.\d+)?)\b")
@@ -124,9 +133,11 @@ class ICFacts:
     forms: tuple[str, ...]
     lexical_sense_ids: tuple[str, ...]
     phrase_idiom_sense_ids: tuple[str, ...]
+    construction_sense_ids: tuple[str, ...]
     blocked_sense_ids: tuple[str, ...]
     has_lexical_reading: bool
     has_phrase_or_idiom_reading: bool
+    has_construction_reading: bool
     every_reading_blocked: bool
     evidence_explicit: bool
     evidence_missing_reasons: tuple[str, ...]
@@ -206,12 +217,14 @@ def derive_ic_facts(ic: ICRecord) -> ICFacts:
 
     lexical = [s for s in senses if s.lexicality in LEXICAL_ADMIT_TAGS]
     phrase_idiom = [s for s in senses if s.lexicality in PHRASE_IDIOM_ADMIT_TAGS]
+    construction = [s for s in senses if s.lexicality in CONSTRUCTION_ADMIT_TAGS]
     blocked = [s for s in senses if s.lexicality in SYMBOL_ONLY_TAGS]
     uncertain_tagged = [s for s in senses if s.lexicality == "uncertain"]
 
     has_lexical = bool(lexical)
     has_phrase_idiom = bool(phrase_idiom)
-    admitting = lexical + phrase_idiom
+    has_construction = bool(construction)
+    admitting = lexical + phrase_idiom + construction
     # "every reading is in the blocked set" -> truly nothing admissible. (An
     # uncertain-tagged member is not blocked, but it is not admitting either; if
     # the IC has *only* uncertain members it is not symbol-only, it is uncertain
@@ -305,9 +318,11 @@ def derive_ic_facts(ic: ICRecord) -> ICFacts:
         forms=forms,
         lexical_sense_ids=tuple(s.sense_id for s in lexical),
         phrase_idiom_sense_ids=tuple(s.sense_id for s in phrase_idiom),
+        construction_sense_ids=tuple(s.sense_id for s in construction),
         blocked_sense_ids=tuple(s.sense_id for s in blocked),
         has_lexical_reading=has_lexical,
         has_phrase_or_idiom_reading=has_phrase_idiom,
+        has_construction_reading=has_construction,
         every_reading_blocked=every_blocked,
         evidence_explicit=evidence_explicit,
         evidence_missing_reasons=tuple(missing),
@@ -398,6 +413,20 @@ def _w_admit_phrase_idiom(f: ICFacts) -> tuple[bool, list[str]]:
     return False, []
 
 
+def _w_admit_construction(f: ICFacts) -> tuple[bool, list[str]]:
+    """Round-7 hole #4: admit an IC whose only admitting reading is a
+    `construction` (multi-token form with non-compositional meaning), under
+    the expanded policy only.  Strict (single-word) admission stays at
+    `r_admit_lexical`."""
+    if f.has_construction_reading and f.evidence_explicit:
+        return True, [
+            f"has a construction reading ({len(f.construction_sense_ids)} sense(s): "
+            f"{', '.join(f.construction_sense_ids[:5])}{'...' if len(f.construction_sense_ids) > 5 else ''})",
+            "evidence is explicit (multi-token form with non-compositional meaning, surface-rule-backed)",
+        ]
+    return False, []
+
+
 def _w_block_symbol_only(f: ICFacts) -> tuple[bool, list[str]]:
     if f.every_reading_blocked:
         return True, [
@@ -478,16 +507,27 @@ def default_policy(*, admit_phrases_and_idioms: bool = False) -> AdmissionPolicy
             when=_w_admit_phrase_idiom,
             enabled=admit_phrases_and_idioms,
         ),
+        Rule(
+            rule_id="r_admit_construction",
+            description="admit(IC) if it has a construction reading (multi-token non-compositional) and evidence is explicit (expanded list)",
+            priority=10,
+            decision=AdmissionDecision.ADMIT,
+            when=_w_admit_construction,
+            enabled=admit_phrases_and_idioms,
+        ),
     )
     superiority = (
         ("r_block_symbol_only", "r_admit_lexical"),
         ("r_block_symbol_only", "r_admit_phrase_idiom"),
+        ("r_block_symbol_only", "r_admit_construction"),
         ("r_block_symbol_only", "r_quarantine_low_conf"),
         ("r_block_sense_mismatch", "r_admit_lexical"),
         ("r_block_sense_mismatch", "r_admit_phrase_idiom"),
+        ("r_block_sense_mismatch", "r_admit_construction"),
         ("r_block_sense_mismatch", "r_quarantine_low_conf"),
         ("r_quarantine_low_conf", "r_admit_lexical"),
         ("r_quarantine_low_conf", "r_admit_phrase_idiom"),
+        ("r_quarantine_low_conf", "r_admit_construction"),
     )
     return AdmissionPolicy(rules=rules, superiority=superiority)
 
@@ -637,6 +677,8 @@ def evaluate_ic(ic: ICRecord, policy: AdmissionPolicy | None = None) -> Admissio
         admit_ids = set(facts.lexical_sense_ids)
         if any(fr.rule_id == "r_admit_phrase_idiom" for fr in fired):
             admit_ids |= set(facts.phrase_idiom_sense_ids)
+        if any(fr.rule_id == "r_admit_construction" for fr in fired):
+            admit_ids |= set(facts.construction_sense_ids)
         admit_forms = sorted({s.form for s in ic.senses if s.sense_id in admit_ids})
         excluded_ids = tuple(s.sense_id for s in ic.senses if s.sense_id not in admit_ids)
         aliases = tuple(admit_forms)

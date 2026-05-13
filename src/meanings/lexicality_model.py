@@ -16,12 +16,14 @@ from sklearn.linear_model import LogisticRegression
 from meanings.normalize import normalize_lemma
 
 # The trained classifier's label space (the gloss-cue classes).  symbol-code,
-# abbreviation, phrase, idiom, single-char are handled by the surface layer of
-# the hybrid before this model is ever consulted.
+# abbreviation, phrase, idiom, single-char, and `technical-term` (round-7 hole
+# #2) are handled by the surface layer of the hybrid before this model is
+# ever consulted.  `technical-term` was previously in the label space but the
+# trained classifier scored 0.39 F1 on it vs the pure-rules 0.80; the surface
+# rule now owns that class.
 GLOSS_CUE_LABELS = (
     "taxon",
     "chemical",
-    "technical-term",
     "proper-name",
     "lexical-word",
 )

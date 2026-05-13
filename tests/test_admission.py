@@ -131,6 +131,47 @@ def test_all_uncertain_ic_is_uncertain():
     assert "r_uncertain" in {f.rule_id for f in v.fired}
 
 
+def test_construction_admitted_only_under_expanded_policy():
+    # Round-7 hole #4: a multiword construction IC is admitted only when the
+    # expanded policy is enabled (r_admit_construction), and yields the
+    # multi-token form as an alias.
+    ic = ICRecord(
+        ic_id="ic:bless_her_heart",
+        senses=(
+            _sense(
+                "bhh%1", "bless_her_heart", "construction",
+                ("surface.construction_idiomatic",), pos="v",
+                definition="an idiomatic Southern American expression of sympathy or condescension",
+            ),
+        ),
+    )
+    strict = evaluate_ic(ic, default_policy(admit_phrases_and_idioms=False))
+    # strict: r_admit_construction disabled, no other rule fires -> uncertain
+    assert strict.decision is AdmissionDecision.UNCERTAIN
+    expanded = evaluate_ic(ic, default_policy(admit_phrases_and_idioms=True))
+    assert expanded.decision is AdmissionDecision.ADMIT
+    assert "r_admit_construction" in {f.rule_id for f in expanded.fired}
+    assert expanded.aliases == ("bless_her_heart",)
+
+
+def test_construction_admission_facts_track_construction_senses():
+    # derive_ic_facts surfaces the construction reading on `ICFacts`.
+    ic = ICRecord(
+        ic_id="ic:ic_const",
+        senses=(
+            _sense("c%1", "11_november", "construction",
+                   ("surface.construction_idiomatic",), pos="n",
+                   definition="(an idiomatic / non-compositional date expression)"),
+        ),
+    )
+    from meanings.admission import derive_ic_facts
+    facts = derive_ic_facts(ic)
+    assert facts.has_construction_reading
+    assert facts.construction_sense_ids == ("c%1",)
+    # construction is NOT in the symbol-only set, so the IC is not blocked.
+    assert not facts.every_reading_blocked
+
+
 def test_phrase_idiom_admitted_only_when_toggled():
     ic = ICRecord(
         ic_id="ic:kick_the_bucket",

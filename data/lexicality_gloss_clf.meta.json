@@ -1,31 +1,24 @@
 {
   "lexicon_id": "oewn:2024",
   "model_path": "data\\lexicality_gloss_clf.joblib",
-  "model_size_mb": 0.838,
+  "model_size_mb": 0.156,
   "gloss_cue_labels": [
     "taxon",
     "chemical",
-    "technical-term",
     "proper-name",
     "lexical-word"
   ],
   "trained_classes": [
-    "abbreviation",
     "chemical",
     "lexical-word",
     "phrase",
     "proper-name",
-    "symbol-code",
-    "taxon",
-    "technical-term"
+    "taxon"
   ],
-  "gold_rows": 1194,
-  "silver_rows": 3769,
-  "silver_per_class_target": {
-    "symbol-code": 4000,
-    "abbreviation": 800
-  },
-  "silver_weight": 0.25,
+  "gold_rows": 888,
+  "silver_rows": 0,
+  "silver_per_class_target": {},
+  "silver_weight": 0.1,
   "trusted_silver_reason_prefixes": [
     "surface.single_character",
     "surface.short_token_case_rejected",
@@ -34,8 +27,10 @@
     "surface.short_token_unlisted",
     "surface.abbreviation",
     "surface.chemical_formula",
+    "surface.technical_domain",
     "surface.multiword",
-    "surface.idiom"
+    "surface.idiom",
+    "surface.construction_idiomatic"
   ],
   "seed": 20240512
 }

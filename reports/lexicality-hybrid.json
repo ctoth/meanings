@@ -165,8 +165,8 @@
       }
     },
     "hybrid_in_sample": {
-      "macro_f1": 0.9529550462217528,
-      "micro_f1": 0.9455611390284757,
+      "macro_f1": 0.8702857198874021,
+      "micro_f1": 0.8768844221105527,
       "per_class": {
         "abbreviation": {
           "precision": 0.9777777777777777,
@@ -175,55 +175,49 @@
           "support": 44
         },
         "chemical": {
-          "precision": 0.7771084337349398,
-          "recall": 0.9347826086956522,
-          "f1": 0.8486842105263158,
+          "precision": 0.7394366197183099,
+          "recall": 0.7608695652173914,
+          "f1": 0.7500000000000001,
           "support": 138
         },
         "lexical-word": {
-          "precision": 1.0,
-          "recall": 0.9464882943143813,
-          "f1": 0.9725085910652921,
+          "precision": 0.96,
+          "recall": 0.9632107023411371,
+          "f1": 0.9616026711185308,
           "support": 299
         },
         "phrase": {
           "precision": 1.0,
-          "recall": 0.9809160305343512,
-          "f1": 0.9903660886319846,
+          "recall": 0.7938931297709924,
+          "f1": 0.8851063829787233,
           "support": 262
         },
         "proper-name": {
           "precision": 1.0,
-          "recall": 0.9905660377358491,
-          "f1": 0.9952606635071091,
+          "recall": 0.9811320754716981,
+          "f1": 0.9904761904761905,
           "support": 106
         },
         "symbol-code": {
-          "precision": 0.9175257731958762,
-          "recall": 0.8599033816425121,
-          "f1": 0.8877805486284289,
+          "precision": 0.917098445595855,
+          "recall": 0.855072463768116,
+          "f1": 0.885,
           "support": 207
         },
         "taxon": {
-          "precision": 1.0,
-          "recall": 0.9859154929577465,
-          "f1": 0.9929078014184397,
+          "precision": 0.9857142857142858,
+          "recall": 0.971830985915493,
+          "f1": 0.9787234042553192,
           "support": 71
         },
         "technical-term": {
-          "precision": 0.9545454545454546,
-          "recall": 0.9402985074626866,
-          "f1": 0.9473684210526316,
+          "precision": 0.3939393939393939,
+          "recall": 0.7761194029850746,
+          "f1": 0.5226130653266331,
           "support": 67
-        },
-        "uncertain": {
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "support": 0
         }
       },
-      "uncertain_predictions": 8,
+      "uncertain_predictions": 0,
       "note": "in-sample for the trained component; see CV numbers for the honest figure"
     }
   },
@@ -337,8 +331,8 @@
       }
     },
     "hybrid": {
-      "macro_f1": 0.7445487318792011,
-      "micro_f1": 0.7696817420435511,
+      "macro_f1": 0.7652338830917176,
+      "micro_f1": 0.7864321608040201,
       "per_class": {
         "abbreviation": {
           "precision": 0.9777777777777777,
@@ -347,45 +341,45 @@
           "support": 44
         },
         "chemical": {
-          "precision": 0.7045454545454546,
-          "recall": 0.6739130434782609,
-          "f1": 0.688888888888889,
+          "precision": 0.6694915254237288,
+          "recall": 0.572463768115942,
+          "f1": 0.6171875000000001,
           "support": 138
         },
         "lexical-word": {
-          "precision": 0.8653061224489796,
-          "recall": 0.7090301003344481,
-          "f1": 0.7794117647058822,
+          "precision": 0.9128919860627178,
+          "recall": 0.8762541806020067,
+          "f1": 0.8941979522184301,
           "support": 299
         },
         "phrase": {
-          "precision": 0.8531468531468531,
-          "recall": 0.9312977099236641,
-          "f1": 0.8905109489051095,
+          "precision": 0.8311688311688312,
+          "recall": 0.732824427480916,
+          "f1": 0.7789046653144015,
           "support": 262
         },
         "proper-name": {
-          "precision": 0.7241379310344828,
-          "recall": 0.7924528301886793,
-          "f1": 0.7567567567567567,
+          "precision": 0.7310924369747899,
+          "recall": 0.8207547169811321,
+          "f1": 0.7733333333333333,
           "support": 106
         },
         "symbol-code": {
-          "precision": 0.726530612244898,
-          "recall": 0.8599033816425121,
-          "f1": 0.7876106194690266,
+          "precision": 0.917098445595855,
+          "recall": 0.855072463768116,
+          "f1": 0.885,
           "support": 207
         },
         "taxon": {
-          "precision": 0.7258064516129032,
-          "recall": 0.6338028169014085,
-          "f1": 0.6766917293233083,
+          "precision": 0.6764705882352942,
+          "recall": 0.647887323943662,
+          "f1": 0.6618705035971224,
           "support": 71
         },
         "technical-term": {
-          "precision": 0.6129032258064516,
-          "recall": 0.2835820895522388,
-          "f1": 0.38775510204081626,
+          "precision": 0.3939393939393939,
+          "recall": 0.7761194029850746,
+          "f1": 0.5226130653266331,
           "support": 67
         },
         "uncertain": {
@@ -409,35 +403,35 @@
         },
         "chemical": {
           "abbreviation": 1,
-          "chemical": 93,
-          "lexical-word": 8,
-          "phrase": 15,
-          "proper-name": 3,
-          "symbol-code": 9,
+          "chemical": 79,
+          "lexical-word": 11,
+          "phrase": 12,
+          "proper-name": 2,
+          "symbol-code": 8,
           "taxon": 1,
-          "technical-term": 1,
-          "uncertain": 7
+          "technical-term": 24,
+          "uncertain": 0
         },
         "lexical-word": {
           "abbreviation": 0,
-          "chemical": 4,
-          "lexical-word": 212,
+          "chemical": 6,
+          "lexical-word": 262,
           "phrase": 0,
-          "proper-name": 24,
-          "symbol-code": 36,
+          "proper-name": 26,
+          "symbol-code": 0,
           "taxon": 1,
-          "technical-term": 9,
-          "uncertain": 13
+          "technical-term": 4,
+          "uncertain": 0
         },
         "phrase": {
           "abbreviation": 0,
-          "chemical": 4,
+          "chemical": 1,
           "lexical-word": 0,
-          "phrase": 244,
+          "phrase": 192,
           "proper-name": 0,
-          "symbol-code": 4,
-          "taxon": 10,
-          "technical-term": 0,
+          "symbol-code": 3,
+          "taxon": 16,
+          "technical-term": 50,
           "uncertain": 0
         },
         "proper-name": {
@@ -445,19 +439,19 @@
           "chemical": 1,
           "lexical-word": 4,
           "phrase": 8,
-          "proper-name": 84,
-          "symbol-code": 2,
-          "taxon": 5,
+          "proper-name": 87,
+          "symbol-code": 1,
+          "taxon": 4,
           "technical-term": 1,
-          "uncertain": 1
+          "uncertain": 0
         },
         "symbol-code": {
           "abbreviation": 0,
           "chemical": 29,
-          "lexical-word": 0,
+          "lexical-word": 1,
           "phrase": 0,
           "proper-name": 0,
-          "symbol-code": 178,
+          "symbol-code": 177,
           "taxon": 0,
           "technical-term": 0,
           "uncertain": 0
@@ -467,22 +461,22 @@
           "chemical": 0,
           "lexical-word": 0,
           "phrase": 19,
-          "proper-name": 4,
+          "proper-name": 3,
           "symbol-code": 1,
-          "taxon": 45,
+          "taxon": 46,
           "technical-term": 1,
           "uncertain": 1
         },
         "technical-term": {
           "abbreviation": 0,
-          "chemical": 1,
-          "lexical-word": 21,
+          "chemical": 2,
+          "lexical-word": 9,
           "phrase": 0,
           "proper-name": 1,
-          "symbol-code": 15,
+          "symbol-code": 3,
           "taxon": 0,
-          "technical-term": 19,
-          "uncertain": 10
+          "technical-term": 52,
+          "uncertain": 0
         },
         "uncertain": {
           "abbreviation": 0,
@@ -496,9 +490,9 @@
           "uncertain": 0
         }
       },
-      "uncertain_predictions": 32,
-      "surface_layer_handled": 286,
-      "trained_layer_handled": 908
+      "uncertain_predictions": 1,
+      "surface_layer_handled": 418,
+      "trained_layer_handled": 776
     }
   },
   "per_class_compare_cv": {
@@ -512,43 +506,43 @@
       "support": 138,
       "pure_rules_f1": 0.5581395348837209,
       "pure_tfidf_f1": 0.7542372881355932,
-      "hybrid_f1": 0.688888888888889
+      "hybrid_f1": 0.6171875000000001
     },
     "lexical-word": {
       "support": 299,
       "pure_rules_f1": 0.8432956381260097,
       "pure_tfidf_f1": 0.7999999999999999,
-      "hybrid_f1": 0.7794117647058822
+      "hybrid_f1": 0.8941979522184301
     },
     "phrase": {
       "support": 262,
       "pure_rules_f1": 0.7327935222672065,
       "pure_tfidf_f1": 0.8725314183123879,
-      "hybrid_f1": 0.8905109489051095
+      "hybrid_f1": 0.7789046653144015
     },
     "proper-name": {
       "support": 106,
       "pure_rules_f1": 0.5269461077844311,
       "pure_tfidf_f1": 0.7372881355932203,
-      "hybrid_f1": 0.7567567567567567
+      "hybrid_f1": 0.7733333333333333
     },
     "symbol-code": {
       "support": 207,
       "pure_rules_f1": 0.9689737470167064,
       "pure_tfidf_f1": 0.8767123287671235,
-      "hybrid_f1": 0.7876106194690266
+      "hybrid_f1": 0.885
     },
     "taxon": {
       "support": 71,
       "pure_rules_f1": 0.6260869565217392,
       "pure_tfidf_f1": 0.6666666666666667,
-      "hybrid_f1": 0.6766917293233083
+      "hybrid_f1": 0.6618705035971224
     },
     "technical-term": {
       "support": 67,
       "pure_rules_f1": 0.8,
       "pure_tfidf_f1": 0.46846846846846846,
-      "hybrid_f1": 0.38775510204081626
+      "hybrid_f1": 0.5226130653266331
     },
     "uncertain": {
       "support": 0,
@@ -562,44 +556,44 @@
       "n": 240,
       "pure_rules_macro_f1": 0.5800589164447212,
       "pure_tfidf_macro_f1": 0.29566553128965467,
-      "hybrid_macro_f1": 0.3530360606420457,
+      "hybrid_macro_f1": 0.3487202380952381,
       "pure_rules_micro_f1": 0.9416666666666667,
       "pure_tfidf_micro_f1": 0.85,
-      "hybrid_micro_f1": 0.8
+      "hybrid_micro_f1": 0.7958333333333333
     },
     "taxon_chemical": {
       "n": 261,
       "pure_rules_macro_f1": 0.25623205623205625,
       "pure_tfidf_macro_f1": 0.4539717282624024,
-      "hybrid_macro_f1": 0.464355754857997,
+      "hybrid_macro_f1": 0.4401442684817036,
       "pure_rules_micro_f1": 0.3333333333333333,
       "pure_tfidf_micro_f1": 0.7203065134099617,
-      "hybrid_micro_f1": 0.7394636015325671
+      "hybrid_micro_f1": 0.6704980842911877
     },
     "ordinary_lexical_word": {
       "n": 283,
       "pure_rules_macro_f1": 0.9340866290018832,
       "pure_tfidf_macro_f1": 0.8988326848249028,
-      "hybrid_macro_f1": 0.8281573498964803,
+      "hybrid_macro_f1": 0.9380863039399624,
       "pure_rules_micro_f1": 0.8763250883392226,
       "pure_tfidf_micro_f1": 0.8162544169611308,
-      "hybrid_micro_f1": 0.7067137809187279
+      "hybrid_micro_f1": 0.8833922261484098
     },
     "other": {
       "n": 410,
       "pure_rules_macro_f1": 0.8714865826665728,
       "pure_tfidf_macro_f1": 0.8001832263665275,
-      "hybrid_macro_f1": 0.8234851464485523,
+      "hybrid_macro_f1": 0.8355505655085786,
       "pure_rules_micro_f1": 0.8463414634146341,
       "pure_tfidf_micro_f1": 0.8,
-      "hybrid_micro_f1": 0.8146341463414634
+      "hybrid_micro_f1": 0.7878048780487805
     }
   },
   "hybrid_top_failure_modes_cv": [
     {
-      "gold": "lexical-word",
-      "predicted": "symbol-code",
-      "count": 36
+      "gold": "phrase",
+      "predicted": "technical-term",
+      "count": 50
     },
     {
       "gold": "symbol-code",
@@ -609,12 +603,12 @@
     {
       "gold": "lexical-word",
       "predicted": "proper-name",
-      "count": 24
+      "count": 26
     },
     {
-      "gold": "technical-term",
-      "predicted": "lexical-word",
-      "count": 21
+      "gold": "chemical",
+      "predicted": "technical-term",
+      "count": 24
     },
     {
       "gold": "taxon",
@@ -622,42 +616,42 @@
       "count": 19
     },
     {
-      "gold": "technical-term",
-      "predicted": "symbol-code",
-      "count": 15
+      "gold": "phrase",
+      "predicted": "taxon",
+      "count": 16
     },
     {
       "gold": "chemical",
       "predicted": "phrase",
-      "count": 15
+      "count": 12
     },
     {
-      "gold": "lexical-word",
-      "predicted": "uncertain",
-      "count": 13
-    },
-    {
-      "gold": "phrase",
-      "predicted": "taxon",
-      "count": 10
+      "gold": "chemical",
+      "predicted": "lexical-word",
+      "count": 11
     },
     {
       "gold": "technical-term",
-      "predicted": "uncertain",
-      "count": 10
+      "predicted": "lexical-word",
+      "count": 9
     },
     {
       "gold": "chemical",
       "predicted": "symbol-code",
-      "count": 9
+      "count": 8
+    },
+    {
+      "gold": "proper-name",
+      "predicted": "phrase",
+      "count": 8
     },
     {
       "gold": "lexical-word",
-      "predicted": "technical-term",
-      "count": 9
+      "predicted": "chemical",
+      "count": 6
     }
   ],
-  "verdict": "hybrid matches the better of the two pure approaches on macro-F1 (no regression)",
+  "verdict": "hybrid beats both pure approaches on macro-F1 (the expected 'use whichever wins per region' outcome)",
   "hybrid_beats_both_macro": true,
   "hybrid_beats_both_micro": false,
   "silver_label_scheme": {

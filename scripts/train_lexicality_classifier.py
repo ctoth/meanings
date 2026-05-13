@@ -61,7 +61,11 @@ import joblib
 import numpy as np
 import wn
 
-from meanings.lexicality import SURFACE_REASON_PREFIXES, _surface_layer
+from meanings.lexicality import (
+    SURFACE_REASON_PREFIXES,
+    TECHNICAL_DOMAIN_RE,
+    _surface_layer,
+)
 from meanings.lexicality_model import GLOSS_CUE_LABELS, GlossClassifier
 from meanings.normalize import normalize_lemma
 
@@ -78,11 +82,25 @@ SEED = 20240512
 TRUSTED_SILVER_REASONS = SURFACE_REASON_PREFIXES
 
 # How many full-corpus silver rows to draw per trusted surface class.
-SILVER_PER_CLASS = {
-    "symbol-code": 4000,
-    "abbreviation": 800,
-}
-SILVER_WEIGHT = 0.25  # silver rows down-weighted vs gold rows (weight 1.0)
+# Round-7 hole #2: reduced symbol-code silver budget from 4000 to 1000.  With
+# `technical-term` dropped from the trained label space, the gold set has 350
+# lexical-word rows; the prior 4000:350 silver:gold ratio gave the model a
+# strong symbol-code prior on any short ordinary noun (e.g. `color`, which
+# the post-retrain classifier mis-tagged symbol-code at p=0.53).  At 1000 the
+# ratio is healthier and the surface layer still fires for actual short tokens
+# before the trained classifier sees them, so the trained model's symbol-code
+# predictions almost never decide anything.
+# Round-7 hole #2/#3: drop the symbol-code silver budget entirely.  The
+# surface layer handles symbol-code deterministically (single-char,
+# short-token cases, code-case) before the trained model is consulted, so
+# the trained model never needs to predict symbol-code at inference.  The
+# old 4000-row symbol-code silver budget was biasing the trained model
+# toward symbol-code predictions on short ordinary nouns (e.g. `color` was
+# tagged symbol-code at p=0.53 by the post-Fix-#2 retrain).  Without those
+# silver rows, the trained model's label space narrows to the gold-label
+# classes that survive the technical-term re-route.
+SILVER_PER_CLASS: dict[str, int] = {}
+SILVER_WEIGHT = 0.10  # unused with empty SILVER_PER_CLASS
 
 
 # ---------------------------------------------------------------------------
@@ -100,6 +118,8 @@ def load_gold_rows() -> list[dict]:
         for sense in word.senses():
             by_key[sense.id] = (word, sense)
     rows: list[dict] = []
+    technical_routed_surface = 0
+    technical_routed_lexical = 0
     for sk, gold in keys:
         rec = by_key.get(sk)
         if rec is None:
@@ -108,6 +128,28 @@ def load_gold_rows() -> list[dict]:
         syn = sense.synset()
         gloss = syn.definition() or ""
         if not gloss.strip():
+            continue
+        # Round-7 hole #2: `technical-term` is no longer in the trained
+        # classifier's label space.  Re-route any `technical-term` gold rows:
+        # if the gloss matches the surface technical-domain regex, the surface
+        # layer will handle it at inference time -> drop the row from training
+        # so the model is not asked about it; otherwise relabel as
+        # `lexical-word` (the trained classifier should call these ordinary
+        # words; the rule's high precision is the floor).
+        if gold == "technical-term":
+            if TECHNICAL_DOMAIN_RE.search(gloss):
+                technical_routed_surface += 1
+                continue
+            gold = "lexical-word"
+            technical_routed_lexical += 1
+        # Round-7 hole #3: drop `symbol-code` and `abbreviation` gold rows from
+        # training.  Those classes are 100% handled by the surface layer at
+        # inference time (single-char / short-token-case / code-case /
+        # abbreviation regex), so the trained model never legitimately needs
+        # to predict them.  Keeping them in training was causing the model to
+        # mis-tag short ordinary nouns (e.g. `color`) as symbol-code on
+        # gloss-pattern noise.
+        if gold in {"symbol-code", "abbreviation"}:
             continue
         rows.append(
             {
@@ -119,6 +161,11 @@ def load_gold_rows() -> list[dict]:
                 "source": "gold",
             }
         )
+    print(
+        f"technical-term gold rows re-routed: {technical_routed_surface} dropped "
+        f"(surface rule will handle), {technical_routed_lexical} relabelled "
+        f"lexical-word (rule does not fire)"
+    )
     return rows
 
 
