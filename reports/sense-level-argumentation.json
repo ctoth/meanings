@@ -1,0 +1,498 @@
+{
+  "lexicon_id": "oewn:2024",
+  "attack_layer": {
+    "sense_nodes": 212478,
+    "support_edges": 418094,
+    "attack_edges_ordered": 415210,
+    "attack_pairs_unordered": 207605,
+    "rival_sense_clique_count": 27589,
+    "rival_sense_clique_size_histogram": {
+      "2": 16217,
+      "3": 5230,
+      "4": 2319,
+      "5": 1250,
+      "6": 720,
+      "7": 514,
+      "8": 283,
+      "9": 219,
+      "10": 178,
+      "11": 137,
+      "12": 93,
+      "13": 78,
+      "14": 59,
+      "15": 46,
+      "16": 35,
+      "17": 31,
+      "18": 34,
+      "19": 16,
+      "20": 15,
+      "21": 16,
+      "22": 19,
+      "23": 10,
+      "24": 7,
+      "25": 8,
+      "26": 4,
+      "27": 4,
+      "28": 2,
+      "29": 2,
+      "30": 4,
+      "31": 2,
+      "32": 3,
+      "33": 1,
+      "34": 3,
+      "35": 2,
+      "36": 3,
+      "37": 3,
+      "38": 2,
+      "39": 1,
+      "40": 2,
+      "41": 2,
+      "42": 2,
+      "44": 3,
+      "45": 4,
+      "48": 1,
+      "51": 1,
+      "52": 1,
+      "57": 1,
+      "70": 1,
+      "75": 1
+    },
+    "sense_nodes_in_nontrivial_clique": 88445,
+    "fraction_sense_nodes_in_clique": 0.41625485932661266,
+    "largest_clique_size": 75,
+    "largest_cliques": [
+      [
+        "break",
+        75
+      ],
+      [
+        "cut",
+        70
+      ],
+      [
+        "run",
+        57
+      ],
+      [
+        "play",
+        52
+      ],
+      [
+        "make",
+        51
+      ],
+      [
+        "light",
+        48
+      ],
+      [
+        "clear",
+        45
+      ],
+      [
+        "draw",
+        45
+      ],
+      [
+        "hold",
+        45
+      ],
+      [
+        "set",
+        45
+      ],
+      [
+        "fall",
+        44
+      ],
+      [
+        "give",
+        44
+      ],
+      [
+        "take",
+        44
+      ],
+      [
+        "head",
+        42
+      ],
+      [
+        "pass",
+        42
+      ]
+    ],
+    "model_a_stable_extension_count_log10": 52930.832173328476
+  },
+  "kernel_support_graph": {
+    "kernel_nodes": 12142,
+    "kernel_sccs": 7466,
+    "seed_nodes": 1299,
+    "seed_method": "bounded-scc",
+    "residual_cyclic_scc_count": 2,
+    "kernel_support_edges": 27809,
+    "kernel_attack_edges_ordered": 9436,
+    "kernel_nodes_in_clique": 6446,
+    "time_s": 3.530591500006267
+  },
+  "model_a_attacks_only": {
+    "description": "Dung AF = rival-sense attack edges only (disjoint clique union)",
+    "stable_existence": true,
+    "stable_extension_count_log10": 52930.832173328476,
+    "grounded_extension_size": 124033,
+    "note": "multiplicity is exact and multiplicative but vacuous: no support edge plays any role"
+  },
+  "model_b_small_kernel_scc_slice": {
+    "kernel_sccs_with_internal_rival_attacks": 269,
+    "kernel_sccs_with_any_clique_member_in_size_range": 724,
+    "slice": [
+      {
+        "scc_size": 11,
+        "nodes_sample": [
+          "cecum [n] :: the cavity in which the large intestine begins and into which the ile...",
+          "colon [n] :: the part of the large intestine between the cecum and the rectum; it...",
+          "descending_colon [n] :: the part of the large intestine that descends from the transverse col...",
+          "duodenum [n] :: the part of the small intestine between the stomach and the jejunum",
+          "ileum [n] :: the part of the small intestine between the jejunum and the cecum",
+          "jejunum [n] :: the part of the small intestine between the duodenum and the ileum"
+        ],
+        "support_edges": 23,
+        "attack_edges_ordered": 0,
+        "derived_dung_defeats": 0,
+        "grounded_size": 11,
+        "preferred_count": 1,
+        "preferred_error": null,
+        "preferred_sizes": [
+          11
+        ],
+        "stable_exists": true,
+        "stable_size": 11,
+        "enforce_skeptical": [
+          {
+            "argument": "oewn-cecum__1.08.00..",
+            "cost": 0,
+            "edit_additions": null,
+            "n_extensions": 1
+          },
+          {
+            "argument": "oewn-colon__1.08.00..",
+            "cost": 0,
+            "edit_additions": null,
+            "n_extensions": 1
+          },
+          {
+            "argument": "oewn-descending_colon__1.08.00..",
+            "cost": 0,
+            "edit_additions": null,
+            "n_extensions": 1
+          }
+        ]
+      },
+      {
+        "scc_size": 11,
+        "nodes_sample": [
+          "eighth [s] :: coming next after the seventh and just before the ninth in position",
+          "eleventh [s] :: coming next after the tenth and just before the twelfth in position",
+          "fifth [s] :: coming next after the fourth and just before the sixth in position",
+          "fourth [s] :: coming next after the third and just before the fifth in position or...",
+          "ninth [s] :: coming next after the eighth and just before the tenth in position",
+          "seventh [s] :: coming next after the sixth and just before the eighth in position"
+        ],
+        "support_edges": 20,
+        "attack_edges_ordered": 0,
+        "derived_dung_defeats": 0,
+        "grounded_size": 11,
+        "preferred_count": 1,
+        "preferred_error": null,
+        "preferred_sizes": [
+          11
+        ],
+        "stable_exists": true,
+        "stable_size": 11,
+        "enforce_skeptical": [
+          {
+            "argument": "oewn-eighth__5.00.00.ordinal.00",
+            "cost": 0,
+            "edit_additions": null,
+            "n_extensions": 1
+          },
+          {
+            "argument": "oewn-eleventh__5.00.00.ordinal.00",
+            "cost": 0,
+            "edit_additions": null,
+            "n_extensions": 1
+          },
+          {
+            "argument": "oewn-fifth__5.00.00.ordinal.00",
+            "cost": 0,
+            "edit_additions": null,
+            "n_extensions": 1
+          }
+        ]
+      },
+      {
+        "scc_size": 9,
+        "nodes_sample": [
+          "cucumber [n] :: a melon vine of the genus Cucumis; cultivated from earliest times for...",
+          "cucurbita [n] :: type genus of the Cucurbitaceae",
+          "cucurbitaceae [n] :: a family of herbaceous vines (such as cucumber or melon or squash or...",
+          "cucurbitaceous [a] :: of or relating to plants of the family Cucurbitaceae",
+          "melon [n] :: any of various fruit of cucurbitaceous vines including: muskmelons, w...",
+          "melon_vine [n] :: any of various fruit of cucurbitaceous vines including: muskmelons, w..."
+        ],
+        "support_edges": 11,
+        "attack_edges_ordered": 2,
+        "derived_dung_defeats": 72,
+        "grounded_size": 0,
+        "preferred_count": 9,
+        "preferred_error": null,
+        "preferred_sizes": [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "stable_exists": true,
+        "stable_size": 1,
+        "enforce_skeptical": [
+          {
+            "argument": "oewn-cucumber__1.20.00..",
+            "error": "ValueError('no skeptical preferred enforcement found within max_cost=2')"
+          },
+          {
+            "argument": "oewn-cucurbita__1.20.00..",
+            "error": "ValueError('no skeptical preferred enforcement found within max_cost=2')"
+          },
+          {
+            "argument": "oewn-cucurbitaceae__1.20.00..",
+            "error": "ValueError('no skeptical preferred enforcement found within max_cost=2')"
+          }
+        ]
+      },
+      {
+        "scc_size": 8,
+        "nodes_sample": [
+          "absolution [n] :: the act of absolving or remitting; formal redemption as pronounced by...",
+          "baptism [n] :: a Christian sacrament signifying spiritual cleansing and rebirth",
+          "confession [n] :: (Roman Catholic Church) the act of a penitent disclosing their sinful...",
+          "extreme_unction [n] :: a Catholic sacrament; a priest anoints a dying person with oil and pr...",
+          "matrimony [n] :: the ceremony or sacrament of marriage",
+          "penance [n] :: a Catholic sacrament; repentance and confession and atonement and abs..."
+        ],
+        "support_edges": 16,
+        "attack_edges_ordered": 0,
+        "derived_dung_defeats": 0,
+        "grounded_size": 8,
+        "preferred_count": 1,
+        "preferred_error": null,
+        "preferred_sizes": [
+          8
+        ],
+        "stable_exists": true,
+        "stable_size": 8,
+        "enforce_skeptical": [
+          {
+            "argument": "oewn-absolution__1.04.00..",
+            "cost": 0,
+            "edit_additions": null,
+            "n_extensions": 1
+          },
+          {
+            "argument": "oewn-baptism__1.04.00..",
+            "cost": 0,
+            "edit_additions": null,
+            "n_extensions": 1
+          },
+          {
+            "argument": "oewn-confession__1.04.00..",
+            "cost": 0,
+            "edit_additions": null,
+            "n_extensions": 1
+          }
+        ]
+      },
+      {
+        "scc_size": 7,
+        "nodes_sample": [
+          "arm [n] :: the part of an armchair or sofa that supports the elbow and forearm o...",
+          "carpal [n] :: any of the eight small bones of the wrist of primates",
+          "elbow [n] :: the part of a sleeve that covers the elbow joint",
+          "elbow_joint [n] :: hinge joint between the forearm and upper arm and the corresponding j...",
+          "forearm [n] :: the part of the superior limb between the elbow and the wrist",
+          "radius [n] :: the outer and slightly shorter of the two bones of the human forearm"
+        ],
+        "support_edges": 10,
+        "attack_edges_ordered": 0,
+        "derived_dung_defeats": 0,
+        "grounded_size": 7,
+        "preferred_count": 1,
+        "preferred_error": null,
+        "preferred_sizes": [
+          7
+        ],
+        "stable_exists": true,
+        "stable_size": 7,
+        "enforce_skeptical": [
+          {
+            "argument": "oewn-arm__1.06.02..",
+            "cost": 0,
+            "edit_additions": null,
+            "n_extensions": 1
+          },
+          {
+            "argument": "oewn-carpal__1.08.00..",
+            "cost": 0,
+            "edit_additions": null,
+            "n_extensions": 1
+          },
+          {
+            "argument": "oewn-elbow__1.06.00..",
+            "cost": 0,
+            "edit_additions": null,
+            "n_extensions": 1
+          }
+        ]
+      },
+      {
+        "scc_size": 7,
+        "nodes_sample": [
+          "clause [n] :: (grammar) an expression including a subject and predicate functioning...",
+          "complex_sentence [n] :: a sentence composed of at least one main clause and one subordinate c...",
+          "grammatical_constituent [n] :: (grammar) a word or phrase or clause forming part of a larger grammat...",
+          "main_clause [n] :: a clause in a complex sentence that can stand alone as a complete sen...",
+          "phrase [n] :: an expression consisting of one or more words forming a grammatical c...",
+          "subject [n] :: (grammar) one of the two main constituents of a sentence; the grammat..."
+        ],
+        "support_edges": 12,
+        "attack_edges_ordered": 0,
+        "derived_dung_defeats": 0,
+        "grounded_size": 7,
+        "preferred_count": 1,
+        "preferred_error": null,
+        "preferred_sizes": [
+          7
+        ],
+        "stable_exists": true,
+        "stable_size": 7,
+        "enforce_skeptical": [
+          {
+            "argument": "oewn-clause__1.10.00..",
+            "cost": 0,
+            "edit_additions": null,
+            "n_extensions": 1
+          },
+          {
+            "argument": "oewn-complex_sentence__1.10.00..",
+            "cost": 0,
+            "edit_additions": null,
+            "n_extensions": 1
+          },
+          {
+            "argument": "oewn-grammatical_constituent__1.10.00..",
+            "cost": 0,
+            "edit_additions": null,
+            "n_extensions": 1
+          }
+        ]
+      }
+    ]
+  },
+  "model_b_whole_sense_kernel": {
+    "model": "attacks-only Dung AF on the Kernel (no support propagation)",
+    "cayrol_derived_whole_kernel": "infeasible: closure blew past 9 GB RSS without terminating; feasible only per small SCC",
+    "kernel_rival_clique_count": 1519,
+    "kernel_rival_clique_size_histogram": {
+      "2": 1006,
+      "3": 278,
+      "4": 115,
+      "5": 58,
+      "6": 28,
+      "7": 15,
+      "8": 9,
+      "9": 3,
+      "11": 4,
+      "12": 1,
+      "14": 1,
+      "17": 1
+    },
+    "kernel_attack_edges_ordered": 9436,
+    "grounded_size": 8087,
+    "grounded_time_s": 0.04446550000284333,
+    "stable_exists": true,
+    "stable_size": 9606,
+    "stable_z3_time_s": 1.7398419000091963,
+    "stable_extension_count_log10": 1889.226983327127,
+    "note": "the attacks-only Kernel AF is a disjoint union of rival-sense cliques (plus isolated nodes), so it always has stable extensions; their count is the product of Kernel-restricted clique sizes -- a true but vacuous multiplicativity (the lexicon's support wiring plays no role here)"
+  },
+  "ranking_semantics_bipolar": {
+    "support_as_attack": {
+      "h_cat_time_s": 1.8240234999975655,
+      "rho_score_vs_neg_indegree": 0.8281987744012523,
+      "top_words": [
+        "positive [s] :: persuaded of; very sure",
+        "line [n] :: something (as a cord or rope) that is long and thin and flexible",
+        "rhizomatous [a] :: producing or possessing or resembling rhizomes",
+        "wavelike [s] :: uneven by virtue of having wrinkles or waves",
+        "change [n] :: the result of alteration or modification",
+        "canvas [n] :: an oil painting on canvas fabric",
+        "micro [s] :: extremely small in scale or scope or capability",
+        "moist [s] :: slightly wet",
+        "pawn [v] :: leave as a guarantee in return for money",
+        "divinely [r] :: by divine means",
+        "waxed [a] :: treated with wax",
+        "occupation [n] :: any activity that occupies a person's attention",
+        "information [n] :: a collection of facts from which conclusions may be drawn",
+        "daily [n] :: a newspaper that is published every day",
+        "buddhist [n] :: one who follows the teachings of Buddha",
+        "semantic_role [n] :: (linguistics) the underlying relation that a constituent has with the...",
+        "rowing [n] :: the act of rowing as a sport",
+        "laid [s] :: set down according to a plan",
+        "east_central [s] :: of a region of the United States generally including Kentucky, West V...",
+        "portion [v] :: give out",
+        "form [n] :: a printed document with spaces in which to write",
+        "text [n] :: a book prepared for use in schools or colleges",
+        "uninhabited [a] :: not having inhabitants; not lived in",
+        "flock [v] :: move as a crowd or in a group",
+        "sign [v] :: make the sign of the cross over someone in order to call on God for p..."
+      ]
+    },
+    "support_plus_rival_as_attack": {
+      "h_cat_time_s": 1.6482044000003953,
+      "rho_score_vs_neg_attackercount": 0.7778541037564473,
+      "rho_vs_support_only_ranking": 0.8069766893767266,
+      "top_words": [
+        "rhizomatous [a] :: producing or possessing or resembling rhizomes",
+        "wavelike [s] :: uneven by virtue of having wrinkles or waves",
+        "micro [s] :: extremely small in scale or scope or capability",
+        "moist [s] :: slightly wet",
+        "pawn [v] :: leave as a guarantee in return for money",
+        "divinely [r] :: by divine means",
+        "waxed [a] :: treated with wax",
+        "buddhist [n] :: one who follows the teachings of Buddha",
+        "semantic_role [n] :: (linguistics) the underlying relation that a constituent has with the...",
+        "rowing [n] :: the act of rowing as a sport",
+        "laid [s] :: set down according to a plan",
+        "east_central [s] :: of a region of the United States generally including Kentucky, West V...",
+        "uninhabited [a] :: not having inhabitants; not lived in",
+        "tufted [s] :: (of plants) growing in small dense clumps or tufts",
+        "affirmative [n] :: a reply of affirmation",
+        "hilly [s] :: having hills and crags",
+        "look_upon [v] :: look on as or consider",
+        "cheeselike [s] :: having the consistency of cheese",
+        "drooping [s] :: having branches or flower heads that bend downward",
+        "within [r] :: on the inside",
+        "pierce [n] :: 14th President of the United States (1804-1869)",
+        "breathe [v] :: utter or tell",
+        "tract [n] :: an extended area of land",
+        "basis [n] :: a relation that provides the foundation for something",
+        "done [s] :: having finished or arrived at completion"
+      ]
+    }
+  },
+  "total_runtime_s": 816.7323230000038
+}
