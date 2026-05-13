@@ -1,0 +1,1644 @@
+{
+  "policy": {
+    "name": "human-up-goer-admission/v1",
+    "rules": [
+      {
+        "rule_id": "r_block_symbol_only",
+        "description": "exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+        "priority": 100,
+        "decision": "exclude",
+        "enabled": true
+      },
+      {
+        "rule_id": "r_block_sense_mismatch",
+        "description": "exclude(IC) if admission depends on a sense mismatch (only admitting reading is a low-precision classifier call)",
+        "priority": 100,
+        "decision": "exclude",
+        "enabled": true
+      },
+      {
+        "rule_id": "r_quarantine_low_conf",
+        "description": "quarantine(IC) if it has a lexical reading but evidence is not explicit, or the admitting reading's confidence & class precision are both low",
+        "priority": 50,
+        "decision": "quarantine",
+        "enabled": true
+      },
+      {
+        "rule_id": "r_admit_lexical",
+        "description": "admit(IC) if it has a lexical-word reading and evidence is explicit",
+        "priority": 10,
+        "decision": "admit",
+        "enabled": true
+      },
+      {
+        "rule_id": "r_admit_phrase_idiom",
+        "description": "admit(IC) if it has a phrase/idiom reading and evidence is explicit (expanded list)",
+        "priority": 10,
+        "decision": "admit",
+        "enabled": false
+      }
+    ],
+    "superiority": [
+      [
+        "r_block_symbol_only",
+        "r_admit_lexical"
+      ],
+      [
+        "r_block_symbol_only",
+        "r_admit_phrase_idiom"
+      ],
+      [
+        "r_block_symbol_only",
+        "r_quarantine_low_conf"
+      ],
+      [
+        "r_block_sense_mismatch",
+        "r_admit_lexical"
+      ],
+      [
+        "r_block_sense_mismatch",
+        "r_admit_phrase_idiom"
+      ],
+      [
+        "r_block_sense_mismatch",
+        "r_quarantine_low_conf"
+      ],
+      [
+        "r_quarantine_low_conf",
+        "r_admit_lexical"
+      ],
+      [
+        "r_quarantine_low_conf",
+        "r_admit_phrase_idiom"
+      ]
+    ]
+  },
+  "lexicon_id": "oewn:2024",
+  "expanded_list": false,
+  "counts": {
+    "admit": 48049,
+    "exclude": 30078,
+    "quarantine": 0,
+    "uncertain": 68846
+  },
+  "ic_total": 146973,
+  "old_lexicality_filter_admitted_ic_count": 121375,
+  "delta_admitted_vs_old_filter": -73326,
+  "fired_rule_histogram": {
+    "r_uncertain": 68846,
+    "r_admit_lexical": 48049,
+    "r_block_symbol_only": 30078
+  },
+  "examples": {
+    "admitted": [
+      {
+        "ic_id": "ic:aardvark",
+        "decision": "admit",
+        "aliases": [
+          "aardvark"
+        ],
+        "tag_counts": {
+          "lexical-word": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (1 sense(s): oewn-aardvark__1.05.00..)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 1 sense(s) over forms ['aardvark']; tags {'lexical-word': 1}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:aardwolf",
+        "decision": "admit",
+        "aliases": [
+          "aardwolf"
+        ],
+        "tag_counts": {
+          "lexical-word": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (1 sense(s): oewn-aardwolf__1.05.00..)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 1 sense(s) over forms ['aardwolf']; tags {'lexical-word': 1}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:abacinate",
+        "decision": "admit",
+        "aliases": [
+          "abacinate"
+        ],
+        "tag_counts": {
+          "lexical-word": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (1 sense(s): oewn-abacinate__2.39.00..)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 1 sense(s) over forms ['abacinate']; tags {'lexical-word': 1}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:aback",
+        "decision": "admit",
+        "aliases": [
+          "aback"
+        ],
+        "tag_counts": {
+          "lexical-word": 1,
+          "uncertain": 1
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (1 sense(s): oewn-aback__4.02.00..)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 2 sense(s) over forms ['aback']; tags {'lexical-word': 1, 'uncertain': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-aback__4.02.01.."
+        ]
+      },
+      {
+        "ic_id": "ic:abactinal",
+        "decision": "admit",
+        "aliases": [
+          "abactinal"
+        ],
+        "tag_counts": {
+          "lexical-word": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (1 sense(s): oewn-abactinal__3.00.00..)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 1 sense(s) over forms ['abactinal']; tags {'lexical-word': 1}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:abampere",
+        "decision": "admit",
+        "aliases": [
+          "abampere"
+        ],
+        "tag_counts": {
+          "lexical-word": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (1 sense(s): oewn-abampere__1.23.00..)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 1 sense(s) over forms ['abampere']; tags {'lexical-word': 1}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:abandon",
+        "decision": "admit",
+        "aliases": [
+          "abandon"
+        ],
+        "tag_counts": {
+          "lexical-word": 4,
+          "technical-term": 1,
+          "uncertain": 2
+        },
+        "sense_count": 7,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (4 sense(s): oewn-abandon__1.12.00.., oewn-abandon__2.31.00.., oewn-abandon__2.38.00.., oewn-abandon__2.40.00..)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 7 sense(s) over forms ['abandon']; tags {'lexical-word': 4, 'technical-term': 1, 'uncertain': 2}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-abandon__1.07.00..",
+          "oewn-abandon__2.31.01..",
+          "oewn-abandon__2.40.01.."
+        ]
+      },
+      {
+        "ic_id": "ic:abandoned",
+        "decision": "admit",
+        "aliases": [
+          "abandoned"
+        ],
+        "tag_counts": {
+          "lexical-word": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (2 sense(s): oewn-abandoned__5.00.00.uninhabited.00, oewn-abandoned__5.00.00.uninhibited.00)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 2 sense(s) over forms ['abandoned']; tags {'lexical-word': 2}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:abandonment",
+        "decision": "admit",
+        "aliases": [
+          "abandonment"
+        ],
+        "tag_counts": {
+          "lexical-word": 3
+        },
+        "sense_count": 3,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (3 sense(s): oewn-abandonment__1.04.01.., oewn-abandonment__1.04.02.., oewn-abandonment__1.04.03..)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 3 sense(s) over forms ['abandonment']; tags {'lexical-word': 3}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:abarticulation",
+        "decision": "admit",
+        "aliases": [
+          "abarticulation"
+        ],
+        "tag_counts": {
+          "lexical-word": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (1 sense(s): oewn-abarticulation__1.26.00..)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 1 sense(s) over forms ['abarticulation']; tags {'lexical-word': 1}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:abasement",
+        "decision": "admit",
+        "aliases": [
+          "abasement"
+        ],
+        "tag_counts": {
+          "lexical-word": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (2 sense(s): oewn-abasement__1.04.00.., oewn-abasement__1.26.00..)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 2 sense(s) over forms ['abasement']; tags {'lexical-word': 2}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:abash",
+        "decision": "admit",
+        "aliases": [
+          "abash"
+        ],
+        "tag_counts": {
+          "lexical-word": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (1 sense(s): oewn-abash__2.37.00..)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 1 sense(s) over forms ['abash']; tags {'lexical-word': 1}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:abashed",
+        "decision": "admit",
+        "aliases": [
+          "abashed"
+        ],
+        "tag_counts": {
+          "lexical-word": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (1 sense(s): oewn-abashed__5.00.00.discomposed.00)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 1 sense(s) over forms ['abashed']; tags {'lexical-word': 1}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:abashment",
+        "decision": "admit",
+        "aliases": [
+          "abashment"
+        ],
+        "tag_counts": {
+          "lexical-word": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (1 sense(s): oewn-abashment__1.12.00..)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 1 sense(s) over forms ['abashment']; tags {'lexical-word': 1}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:abasia",
+        "decision": "admit",
+        "aliases": [
+          "abasia"
+        ],
+        "tag_counts": {
+          "lexical-word": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (1 sense(s): oewn-abasia__1.26.00..)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 1 sense(s) over forms ['abasia']; tags {'lexical-word': 1}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:abasic",
+        "decision": "admit",
+        "aliases": [
+          "abasic",
+          "abatic"
+        ],
+        "tag_counts": {
+          "lexical-word": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (2 sense(s): oewn-abasic__3.01.00.., oewn-abatic__3.01.00..)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 2 sense(s) over forms ['abasic', 'abatic']; tags {'lexical-word': 2}",
+          "merge provenance: Spelling-variant merge (edit-distance) with gloss-similarity confirmation; all forms retained."
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:abatable",
+        "decision": "admit",
+        "aliases": [
+          "abatable"
+        ],
+        "tag_counts": {
+          "lexical-word": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (1 sense(s): oewn-abatable__5.00.00.stoppable.00)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 1 sense(s) over forms ['abatable']; tags {'lexical-word': 1}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:abate",
+        "decision": "admit",
+        "aliases": [
+          "abate"
+        ],
+        "tag_counts": {
+          "lexical-word": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (2 sense(s): oewn-abate__2.30.00.., oewn-abate__2.30.01..)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 2 sense(s) over forms ['abate']; tags {'lexical-word': 2}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:abatement",
+        "decision": "admit",
+        "aliases": [
+          "abatement"
+        ],
+        "tag_counts": {
+          "lexical-word": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (2 sense(s): oewn-abatement__1.04.00.., oewn-abatement__1.11.01..)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 2 sense(s) over forms ['abatement']; tags {'lexical-word': 2}"
+        ],
+        "excluded_sense_ids": []
+      },
+      {
+        "ic_id": "ic:abatis",
+        "decision": "admit",
+        "aliases": [
+          "abattis"
+        ],
+        "tag_counts": {
+          "lexical-word": 1,
+          "uncertain": 1
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_admit_lexical"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: admit",
+          "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+          "  because: has a lexical-word reading (1 sense(s): oewn-abattis__1.06.00..)",
+          "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+          "members: 2 sense(s) over forms ['abatis', 'abattis']; tags {'lexical-word': 1, 'uncertain': 1}",
+          "merge provenance: Spelling-variant merge (spelling.doubled_consonant) with gloss-similarity confirmation; all forms retained."
+        ],
+        "excluded_sense_ids": [
+          "oewn-abatis__1.06.00.."
+        ]
+      }
+    ],
+    "quarantined": [],
+    "excluded": [
+      {
+        "ic_id": "ic:.22",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "symbol-code": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 1}) -- no lexical/phrase/idiom reading exists",
+          "members: 1 sense(s) over forms ['.22']; tags {'symbol-code': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-.22__1.06.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:.22_calibre",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "abbreviation": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'abbreviation': 2}) -- no lexical/phrase/idiom reading exists",
+          "members: 2 sense(s) over forms ['.22 calibre', '.22-calibre']; tags {'abbreviation': 2}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-.22-calibre__3.01.00..",
+          "oewn-.22_calibre__3.01.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:.38_calibre",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "abbreviation": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'abbreviation': 2}) -- no lexical/phrase/idiom reading exists",
+          "members: 2 sense(s) over forms ['.38 calibre', '.38-calibre']; tags {'abbreviation': 2}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-.38-calibre__3.01.00..",
+          "oewn-.38_calibre__3.01.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:.45_calibre",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "abbreviation": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'abbreviation': 2}) -- no lexical/phrase/idiom reading exists",
+          "members: 2 sense(s) over forms ['.45 calibre', '.45-calibre']; tags {'abbreviation': 2}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-.45-calibre__3.01.00..",
+          "oewn-.45_calibre__3.01.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:0",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "symbol-code": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 2}) -- no lexical/phrase/idiom reading exists",
+          "members: 2 sense(s) over forms ['0']; tags {'symbol-code': 2}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-0__1.23.00..",
+          "oewn-0__5.00.00.cardinal.00"
+        ]
+      },
+      {
+        "ic_id": "ic:1",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "symbol-code": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 2}) -- no lexical/phrase/idiom reading exists",
+          "members: 2 sense(s) over forms ['1']; tags {'symbol-code': 2}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-1__1.23.00..",
+          "oewn-1__5.00.00.cardinal.00"
+        ]
+      },
+      {
+        "ic_id": "ic:10",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "symbol-code": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 2}) -- no lexical/phrase/idiom reading exists",
+          "members: 2 sense(s) over forms ['10']; tags {'symbol-code': 2}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-10__1.23.00..",
+          "oewn-10__5.00.00.cardinal.00"
+        ]
+      },
+      {
+        "ic_id": "ic:100",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "symbol-code": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 2}) -- no lexical/phrase/idiom reading exists",
+          "members: 2 sense(s) over forms ['100']; tags {'symbol-code': 2}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-100__1.23.00..",
+          "oewn-100__5.00.00.cardinal.00"
+        ]
+      },
+      {
+        "ic_id": "ic:1000",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "symbol-code": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 2}) -- no lexical/phrase/idiom reading exists",
+          "members: 2 sense(s) over forms ['1000']; tags {'symbol-code': 2}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-1000__1.23.00..",
+          "oewn-1000__5.00.00.cardinal.00"
+        ]
+      },
+      {
+        "ic_id": "ic:10000",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "symbol-code": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 1}) -- no lexical/phrase/idiom reading exists",
+          "members: 1 sense(s) over forms ['10000']; tags {'symbol-code': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-10000__1.23.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:100000",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "symbol-code": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 1}) -- no lexical/phrase/idiom reading exists",
+          "members: 1 sense(s) over forms ['100000']; tags {'symbol-code': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-100000__1.23.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:1000000000000",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "chemical": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'chemical': 2}) -- no lexical/phrase/idiom reading exists",
+          "members: 2 sense(s) over forms ['1000000000000']; tags {'chemical': 2}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-1000000000000__1.23.00..",
+          "oewn-1000000000000__1.23.01.."
+        ]
+      },
+      {
+        "ic_id": "ic:1000th",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "symbol-code": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 1}) -- no lexical/phrase/idiom reading exists",
+          "members: 1 sense(s) over forms ['1000th']; tags {'symbol-code': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-1000th__5.00.00.ordinal.00"
+        ]
+      },
+      {
+        "ic_id": "ic:100_ml",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "symbol-code": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 1}) -- no lexical/phrase/idiom reading exists",
+          "members: 1 sense(s) over forms ['100 mL']; tags {'symbol-code': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-100_ml__1.23.01.."
+        ]
+      },
+      {
+        "ic_id": "ic:100th",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "symbol-code": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 1}) -- no lexical/phrase/idiom reading exists",
+          "members: 1 sense(s) over forms ['100th']; tags {'symbol-code': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-100th__5.00.00.ordinal.00"
+        ]
+      },
+      {
+        "ic_id": "ic:101",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "symbol-code": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 1}) -- no lexical/phrase/idiom reading exists",
+          "members: 1 sense(s) over forms ['101']; tags {'symbol-code': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-101__5.00.00.cardinal.00"
+        ]
+      },
+      {
+        "ic_id": "ic:101st",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "symbol-code": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 1}) -- no lexical/phrase/idiom reading exists",
+          "members: 1 sense(s) over forms ['101st']; tags {'symbol-code': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-101st__5.00.00.ordinal.00"
+        ]
+      },
+      {
+        "ic_id": "ic:105",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "symbol-code": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 1}) -- no lexical/phrase/idiom reading exists",
+          "members: 1 sense(s) over forms ['105']; tags {'symbol-code': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-105__5.00.00.cardinal.00"
+        ]
+      },
+      {
+        "ic_id": "ic:105th",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "symbol-code": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 1}) -- no lexical/phrase/idiom reading exists",
+          "members: 1 sense(s) over forms ['105th']; tags {'symbol-code': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-105th__5.00.00.ordinal.00"
+        ]
+      },
+      {
+        "ic_id": "ic:10_membered",
+        "decision": "exclude",
+        "aliases": [],
+        "tag_counts": {
+          "chemical": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_block_symbol_only"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: exclude",
+          "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+          "  because: every reading is a non-lexical artifact (tags: {'chemical': 1}) -- no lexical/phrase/idiom reading exists",
+          "members: 1 sense(s) over forms ['10-membered']; tags {'chemical': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-10-membered__5.00.00.membered.00"
+        ]
+      }
+    ],
+    "uncertain": [
+      {
+        "ic_id": "ic:.22_caliber",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "phrase": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "members: 2 sense(s) over forms ['.22 caliber', '.22-caliber']; tags {'phrase': 2}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-.22-caliber__3.01.00..",
+          "oewn-.22_caliber__3.01.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:.38_caliber",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "phrase": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "members: 2 sense(s) over forms ['.38 caliber', '.38-caliber']; tags {'phrase': 2}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-.38-caliber__3.01.00..",
+          "oewn-.38_caliber__3.01.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:.45_caliber",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "phrase": 2
+        },
+        "sense_count": 2,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "members: 2 sense(s) over forms ['.45 caliber', '.45-caliber']; tags {'phrase': 2}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-.45-caliber__3.01.00..",
+          "oewn-.45_caliber__3.01.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:1000000",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "uncertain": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['1000000']; tags {'uncertain': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-1000000__1.23.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:1000000000",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "uncertain": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "  because: members carry no admitting and no fully-blocking tag (tags: {'uncertain': 1}); likely all-uncertain",
+          "members: 1 sense(s) over forms ['1000000000']; tags {'uncertain': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-1000000000__1.23.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:11_november",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "phrase": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "members: 1 sense(s) over forms ['11 November']; tags {'phrase': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-11_november__1.28.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:11_plus",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "phrase": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "members: 1 sense(s) over forms ['11-plus']; tags {'phrase': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-11-plus__1.04.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:14_july",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "phrase": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "members: 1 sense(s) over forms ['14 July']; tags {'phrase': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-14_july__1.28.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:15_august_1945",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "phrase": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "members: 1 sense(s) over forms ['15 August 1945']; tags {'phrase': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-15_august_1945__1.28.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:15_minutes",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "phrase": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "members: 1 sense(s) over forms ['15 minutes']; tags {'phrase': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-15_minutes__1.28.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:17_november",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "phrase": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "members: 1 sense(s) over forms ['17 November']; tags {'phrase': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-17_november__1.14.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:18_karat_gold",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "phrase": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "members: 1 sense(s) over forms ['18-karat gold']; tags {'phrase': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-18-karat_gold__1.27.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:1_esdras",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "phrase": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "members: 1 sense(s) over forms ['1 Esdras']; tags {'phrase': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-1_esdras__1.10.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:1_hitter",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "phrase": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "members: 1 sense(s) over forms ['1-hitter']; tags {'phrase': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-1-hitter__1.04.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:1_kings",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "phrase": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "members: 1 sense(s) over forms ['1 Kings']; tags {'phrase': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-1_kings__1.10.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:1_samuel",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "phrase": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "members: 1 sense(s) over forms ['1 Samuel']; tags {'phrase': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-1_samuel__1.10.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:1st_baron_beaverbrook",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "phrase": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "members: 1 sense(s) over forms ['1st Baron Beaverbrook']; tags {'phrase': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-1st_baron_beaverbrook__1.18.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:1st_baron_verulam",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "phrase": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "members: 1 sense(s) over forms ['1st Baron Verulam']; tags {'phrase': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-1st_baron_verulam__1.18.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:1st_class",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "phrase": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "members: 1 sense(s) over forms ['1st class']; tags {'phrase': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-1st_class__1.10.00.."
+        ]
+      },
+      {
+        "ic_id": "ic:1st_class_mail",
+        "decision": "uncertain",
+        "aliases": [],
+        "tag_counts": {
+          "phrase": 1
+        },
+        "sense_count": 1,
+        "fired_rules": [
+          "r_uncertain"
+        ],
+        "defeated_rules": [],
+        "rationale": [
+          "decision: uncertain",
+          "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+          "  because: no admission rule fired",
+          "members: 1 sense(s) over forms ['1st-class mail']; tags {'phrase': 1}"
+        ],
+        "excluded_sense_ids": [
+          "oewn-1st-class_mail__1.10.00.."
+        ]
+      }
+    ]
+  },
+  "spotlight_ics": [
+    {
+      "ic_id": "ic:no",
+      "decision": "admit",
+      "aliases": [
+        "no"
+      ],
+      "tag_counts": {
+        "lexical-word": 5,
+        "symbol-code": 1
+      },
+      "sense_count": 6,
+      "fired_rules": [
+        "r_admit_lexical"
+      ],
+      "defeated_rules": [],
+      "rationale": [
+        "decision: admit",
+        "fired: r_admit_lexical (priority 10, concludes admit) -- admit(IC) if it has a lexical-word reading and evidence is explicit",
+        "  because: has a lexical-word reading (5 sense(s): oewn-no__1.10.00.., oewn-no__3.00.00.., oewn-no__4.02.00.., oewn-no__4.02.01.., oewn-no__4.02.02..)",
+        "  because: evidence is explicit (source senses + glosses + tags + classifier rationale + merge/exclusion record)",
+        "members: 6 sense(s) over forms ['No', 'no']; tags {'lexical-word': 5, 'symbol-code': 1}"
+      ],
+      "excluded_sense_ids": [
+        "oewn-no__1.27.00.."
+      ]
+    },
+    {
+      "ic_id": "ic:s",
+      "decision": "exclude",
+      "aliases": [],
+      "tag_counts": {
+        "symbol-code": 7
+      },
+      "sense_count": 7,
+      "fired_rules": [
+        "r_block_symbol_only"
+      ],
+      "defeated_rules": [],
+      "rationale": [
+        "decision: exclude",
+        "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+        "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 7}) -- no lexical/phrase/idiom reading exists",
+        "members: 7 sense(s) over forms ['S', 's']; tags {'symbol-code': 7}"
+      ],
+      "excluded_sense_ids": [
+        "oewn-s__1.07.00..",
+        "oewn-s__1.10.00..",
+        "oewn-s__1.10.01..",
+        "oewn-s__1.23.00..",
+        "oewn-s__1.24.00..",
+        "oewn-s__1.27.00..",
+        "oewn-s__1.28.00.."
+      ]
+    },
+    {
+      "ic_id": "ic:a",
+      "decision": "exclude",
+      "aliases": [],
+      "tag_counts": {
+        "symbol-code": 8
+      },
+      "sense_count": 8,
+      "fired_rules": [
+        "r_block_symbol_only"
+      ],
+      "defeated_rules": [],
+      "rationale": [
+        "decision: exclude",
+        "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+        "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 8}) -- no lexical/phrase/idiom reading exists",
+        "members: 8 sense(s) over forms ['A', 'a']; tags {'symbol-code': 8}"
+      ],
+      "excluded_sense_ids": [
+        "oewn-a__1.08.00..",
+        "oewn-a__1.10.00..",
+        "oewn-a__1.10.01..",
+        "oewn-a__1.23.00..",
+        "oewn-a__1.23.01..",
+        "oewn-a__1.27.00..",
+        "oewn-a__1.27.01..",
+        "oewn-a__1.27.02.."
+      ]
+    },
+    {
+      "ic_id": "ic:color",
+      "decision": "uncertain",
+      "aliases": [],
+      "tag_counts": {
+        "symbol-code": 7,
+        "technical-term": 17,
+        "uncertain": 4
+      },
+      "sense_count": 28,
+      "fired_rules": [
+        "r_uncertain"
+      ],
+      "defeated_rules": [],
+      "rationale": [
+        "decision: uncertain",
+        "fired: r_uncertain (priority 0, concludes uncertain) -- uncertain(IC) if no rule fires (or rules tie at equal priority with conflicting decisions)",
+        "  because: no admission rule fired",
+        "  because: members carry no admitting and no fully-blocking tag (tags: {'symbol-code': 7, 'technical-term': 17, 'uncertain': 4}); likely all-uncertain",
+        "members: 28 sense(s) over forms ['color', 'colour']; tags {'symbol-code': 7, 'technical-term': 17, 'uncertain': 4}",
+        "merge provenance: Spelling-variant merge (spelling.or_our) with gloss-similarity confirmation; all forms retained."
+      ],
+      "excluded_sense_ids": [
+        "oewn-color__1.07.00..",
+        "oewn-color__1.07.01..",
+        "oewn-color__1.07.02..",
+        "oewn-color__1.07.03..",
+        "oewn-color__1.07.04..",
+        "oewn-color__1.09.01..",
+        "oewn-color__1.27.00..",
+        "oewn-color__2.30.00.."
+      ]
+    },
+    {
+      "ic_id": "ic:e",
+      "decision": "exclude",
+      "aliases": [],
+      "tag_counts": {
+        "symbol-code": 6
+      },
+      "sense_count": 6,
+      "fired_rules": [
+        "r_block_symbol_only"
+      ],
+      "defeated_rules": [],
+      "rationale": [
+        "decision: exclude",
+        "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+        "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 6}) -- no lexical/phrase/idiom reading exists",
+        "members: 6 sense(s) over forms ['E', 'e']; tags {'symbol-code': 6}"
+      ],
+      "excluded_sense_ids": [
+        "oewn-e__1.10.00..",
+        "oewn-e__1.10.01..",
+        "oewn-e__1.23.00..",
+        "oewn-e__1.24.00..",
+        "oewn-e__1.27.00..",
+        "oewn-e__1.27.01.."
+      ]
+    },
+    {
+      "ic_id": "ic:g",
+      "decision": "exclude",
+      "aliases": [],
+      "tag_counts": {
+        "symbol-code": 10
+      },
+      "sense_count": 10,
+      "fired_rules": [
+        "r_block_symbol_only"
+      ],
+      "defeated_rules": [],
+      "rationale": [
+        "decision: exclude",
+        "fired: r_block_symbol_only (priority 100, concludes exclude) -- exclude(IC) if every reading is symbol-code/abbreviation/taxon/chemical/proper-name/technical-term",
+        "  because: every reading is a non-lexical artifact (tags: {'symbol-code': 10}) -- no lexical/phrase/idiom reading exists",
+        "members: 10 sense(s) over forms ['G', 'g']; tags {'symbol-code': 10}"
+      ],
+      "excluded_sense_ids": [
+        "oewn-g__1.10.00..",
+        "oewn-g__1.10.01..",
+        "oewn-g__1.23.00..",
+        "oewn-g__1.23.01..",
+        "oewn-g__1.23.02..",
+        "oewn-g__1.23.03..",
+        "oewn-g__1.23.07..",
+        "oewn-g__1.23.08.."
+      ]
+    }
+  ]
+}

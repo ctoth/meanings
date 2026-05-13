@@ -9,3 +9,4 @@ unused-papers/
 *.log
 scratch/
 data/oewn-upgoer-sense-vocabulary.json
+data/oewn-upgoer-admitted.json
