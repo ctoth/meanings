@@ -148,3 +148,56 @@ A seven-agent wave (one per high-value agenda item) ran after the phase-3 review
 ---
 
 *Status: phase-4-revised + round-7-updated. The phase-5 verifier gate has not been run; whether it's worth running on a research synthesis vs just continuing to build is Q's call.*
+
+---
+
+## 11. Round 8 — fix the holes from round 7: results
+
+Two parallel fix-waves on disjoint files. Both landed.
+
+### 11.1 Wave A — lexicality cleanup + the `CONSTRUCTION` tag (commit `3cf9f09`)
+
+All five fixes shipped:
+
+1. **Whitelist ordering fixed.** Added `a`, `i`, `s` to `SHORT_TOKEN_LEXICAL_WHITELIST` (the previous 27-item list had *no* single-character entries — a hole the round-7 framing implied was just an ordering issue); reordered `_surface_layer` to check the whitelist before `single_character`, gated on `case_pattern == "lower"` so titlecase `No`/Nobelium still routes to `symbol_code`. **`ic:a` and `ic:s` now admit.**
+2. **Technical-term reverted to rule-based.** Added a `TECHNICAL_DOMAIN_RE` (word-boundary regex on discipline keywords + `(domain)` parentheticals) into the surface layer *before* the trained classifier; dropped `technical_term` from `GLOSS_CUE_LABELS`; re-routed 67 gold rows in the trainer. **Hybrid macro-F1 0.745 → 0.765** (cleanly beats both pure-rules 0.739 and pure-TF-IDF 0.744 on macro). Technical-term F1 itself: 0.388 → **0.523** — below the round-7 target of 0.75. The honest reason (documented in `reports/lexicality-fixes.md`): the agenda-#4 pure-rules 0.80 came from naive substring matching that over-fires on `lawful`, `lawn`, etc.; the word-boundary regex trades recall for precision (the more principled choice). So the recovery is partial but more honest; further gain needs cleaning the gold rubric (which has its own noise — `anteater`/`Chewa` labelled `technical_term` without a disciplinary cue).
+3. **`color`/`colour`-as-`technical_term`: fixed.** Falls out of #2 — `color`/`colour` no longer have a `technical_term` candidate to land on; both spellings now **admit under one IC `ic:color` with aliases `[color, colour]`**.
+4. **`LexicalityTag.CONSTRUCTION` added** as a first-class tag (multi-token + idiomatic gloss → `construction`); `r_admit_construction` added to the admission policy under the *expanded* mode (strict still admits `lexical_word` only). Fires 19 times under expanded — the multiword-phrase ICs that round-7 admission dumped into `uncertain` now route through a proper category.
+5. **End-to-end re-run.** New strict admission counts: **admit 48,049 → 58,099 (+10,050)**, exclude 30,078 → 26,963 (−3,115), uncertain 68,846 → 61,911 (−6,935). Expanded mode: 119,948 admit (of which 19 via `r_admit_construction`). Spotlight ICs all correct: `ic:a` admit, `ic:s` admit, `ic:no` admit, `ic:color` admit with both spellings, `ic:e`/`ic:g` exclude.
+
+Honest minor caveat (from the agent's own report): a git hook auto-bundled the intended five atomic commits into two (`cdaa8ab` + `3cf9f09`) — not blocking, just less surgical than planned. 121 tests pass.
+
+### 11.2 Wave B — the sense-resolver fix + the edge-budget-controlled comparison (commits `61e4834` + `6088913` + `5b3ae1a`)
+
+`reports/sense-resolver-comparison-summary.md`. The resolver got a `polysemy_fallback=True` mode: when the same-POS tie-break can't pick one sense (the audit's 54%-skip case), pick the **deterministic representative** — lowest sense rank in OEWN, tie-broken by sense id (every candidate of a single gloss-lookup belongs to one lemma → one IC by construction, so the fallback never crosses ICs). The genus words get their incoming edges back; the bias is now *visible* (recorded in `resolution_stats` under `resolved_polysemy_fallback_*`) rather than invisible.
+
+**The edge-budget-controlled comparison — the headline finding** (and a real correction to §3 / §10):
+
+| | baseline (no fallback) | IC-fallback | lemma-level |
+|---|---:|---:|---:|
+| nodes | 212,478 | 212,478 | 160,010 |
+| edges | 418,094 | **910,355** (+118%) | 677,823 |
+| edges / node | 1.97 | **4.28** | 4.24 |
+| Kernel | 12,142 | **20,744** | 18,151 |
+| seed (`exact-small-greedy`) | 1,582 | 3,040 | 5,044 |
+| literal gloss self-loops | 0 | 0 | 3,413 |
+
+Genus words now in the Kernel under the fix (senses_in_kernel / total_senses, in-degree restored): `line` 14→20 / 36, in-degree 57→143; `head` 8→10 / 42, 70→159; `break` 3→6 / 75, 85→236; `take` 2→12 / 44, 57→146; `make` 12→22 / 51, 50→132; `set` 5→11 / 45, 62→160; `run` 3→6 / 57, 62→193; `point` 9→12 / 40, 63→151. Exactly the words the audit identified.
+
+**Verdict (ii) — the audit's "the Kernel shrank because we dropped edges" charge survives.** With edges restored, the sense-Kernel converges to within 14 % of the lemma-Kernel (20,744 vs 18,151), not the 33 % shrink the round-7 framing claimed (12,142 vs 18,151). So **the round-7 §3/§10 "the sense-level Kernel shrank → the artifacts dissolved" framing was substantially wrong**: most of the apparent shrink was the 54 % of gloss matches the resolver was silently dropping. *What does survive*: the **literal-gloss-self-loop dissolution** (0 self-loops in *both* sense-graph variants vs 3,413 lemma — the prediction holds independently of the resolver, because the skip-on-self policy is in both builders). That's the load-bearing sense-level claim now — not Kernel size.
+
+**IC-projection decision settled (synthesis §8):** **P2** (sense-graph FVS then restrict to one IC representative at export) — seed 2,739, vs P1's (collapse IC then FVS) 4,122. P2 is tighter; the sense-graph FVS has the full edge structure to chew on; the per-IC representative becomes a more informative anchor than "this IC was in the FVS." Symmetric difference 200/200 — the two paths disagree on a small minority. P2 wired in.
+
+### 11.3 What round 8 changes about the synthesis
+
+- **§3 (the sense-level rebuild)** — the "Kernel shrank by ~33 %" framing is *retracted*; with the resolver fix it's a +14 % drift, not a shrink, and most of the original drop was dropped edges. The defensible §3 claims that survive: (a) literal gloss self-loops are eliminable by sense-level resolution + a skip-on-self policy; (b) the sense-level node surface is the right granularity for the typed admission model (`ic:no` admit-as-negation, the Nobelium sense excluded, the dialectical tree as the rationale — now strengthened by round 8's `ic:a` / `ic:s` / `ic:color` fixes); (c) the sense-level graph admits the rival-sense attack layer that the lemma-level graph couldn't (§2 / round 7 demonstrator). The "Kernel shrinkage" sentence in §3 should now read "edge-budget-controlled, the sense-level Kernel is +14 % vs lemma; the original shrink was substantially dropped edges (audit charge survives — round 8)."
+- **§4 (can-defend / should-not-claim)** — under "can defend" the phrase "literal gloss self-loops are eliminable …" stays exactly right (round 8 confirms it independently of the resolver). The "sense-level Kernel is smaller, suggesting artifact-dissolution" claim should be removed from any defense column. The hybrid lexicality classifier is now CV macro-F1 **0.765**, not 0.745.
+- **§6 agenda** — ✓ on the upstream-holes punch list (whitelist ordering / technical-term revert / `color` fix / `CONSTRUCTION` tag / sense-resolver fix / edge-budget-controlled comparison / IC-projection decision). The lead-paper *draft* and a non-pedagogical dictionary for #5 and the diachrony data are the next gates. Re-pin `formal-argumentation` to a tag remains a polish item.
+- **§7 (open for a critic)** — the "Yoneda-completeness untouched" line stands; the "the sense-level rebuild's numbers might be cooked" bullet is now answered honestly: *yes, the Kernel-size cooked-ness was real, has been corrected, and the load-bearing claim is narrower than round 7 said.* The "more auditable, not better" line stands; round 8's hybrid bump from 0.745 to 0.765 is the same shape of finding — small honest improvement.
+- **§10 agenda status** — ◐ #7 (audit + resolver-bias) is now ✓; the upstream lexicality holes are ✓; the IC-projection decision is ✓.
+
+121 tests pass. Master at `5b3ae1a`. Punch list for round 9 is short: the lead-paper draft; a non-pedagogical dictionary for #5; the diachrony data; the `formal-argumentation` re-pin to a tag; the phase-5 verifier gate (still optional).
+
+---
+
+*Status: phase-4-revised + round-7-updated + round-8-updated. The size-based sense-level-rebuild claim is retracted; the literal-self-loop-dissolution and the typed-model-granularity claims survive intact; the admission policy now has the upstream holes closed; the audit's charge is honestly accepted and the synthesis is reconciled.*
