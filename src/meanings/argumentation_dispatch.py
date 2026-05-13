@@ -477,7 +477,7 @@ def dispatch_stable(
     verdicts: list[Optional[SccVerdict]] = [None] * len(cond.sccs)
     chosen_in: dict[int, frozenset[str]] = {}  # IN set chosen for each processed SCC
     all_in: set[str] = set()
-    overall_exists = True
+    greedy_concluded_sat = True  # the greedy sweep never hit an UNSAT-in-context SCC
     cache_hits = 0
     notes: list[str] = []
 
@@ -492,12 +492,15 @@ def dispatch_stable(
             cache_hits += 1
         verdicts[scc_idx] = v
         if not v.stable_exists:
-            overall_exists = False
-            # we can stop early for the boolean, but keep going so the per-SCC histogram
-            # / counts in the report are complete -- unless the graph is huge; here SCCs
-            # are cheap so we always finish.
+            # The *greedy* upstream choice makes this SCC's residual UNSAT. That does NOT
+            # mean the whole AF is UNSAT -- a different upstream stable extension might
+            # leave this SCC SAT (e.g. forcing a node OUT of an odd cycle makes it SAT).
+            # So we cannot conclude here; flag it and let the corrective exact pass below
+            # decide. Keep going so the per-SCC histogram / counts in the report stay
+            # complete (SCCs are cheap).
+            greedy_concluded_sat = False
         # choose a witness extension for this SCC (recompute on residual if cache hit)
-        if want_witness and overall_exists:
+        if greedy_concluded_sat:
             wext = v.witness
             if wext is None and v.stable_exists:
                 # cache hit (witness not carried) or backdoor without explicit witness:
@@ -509,13 +512,59 @@ def dispatch_stable(
                 chosen_in[scc_idx] = wext
                 all_in |= wext
 
+    # ------------------------------------------------------------------------------
+    # Corrective exact pass when the greedy sweep could not conclude SAT.
+    #
+    # Contract: ``dispatch_stable`` is *exact*. It is fast (SCC-decomposed greedy
+    # sweep) whenever that sweep concludes SAT; when it cannot (some SCC is UNSAT under
+    # the greedy upstream choice -- which may still be SAT under a different choice), it
+    # falls back to an exact decision:
+    #   * if every SCC residual is small enough to enumerate, a witness-producing DAG
+    #     dynamic program over the condensation (``_exact_stable_search``), which is
+    #     correct under cross-SCC context-dependence;
+    #   * otherwise, a single monolithic z3 call (``find_stable_extension``) on the whole
+    #     AF -- z3 decides even the ~18k-node OEWN Kernel AF in ~8 s.
+    # Either way the returned ``stable_exists`` / ``stable_witness`` match a monolithic
+    # ``argumentation.af_sat`` computation.
+    # ------------------------------------------------------------------------------
+    all_enumerable = all(v is not None and v.size <= _BRUTE_FORCE_MAX for v in verdicts)
+    exact_count: Optional[int] = None
+    if greedy_concluded_sat:
+        overall_exists = True
+        witness = frozenset(all_in) if want_witness else None
+        if want_structural_count:
+            if all_enumerable:
+                exact_count = _exact_stable_count(cond, cross_in)
+            # else exact_count stays None
+    else:
+        # greedy short-circuited -- do NOT clamp to UNSAT; decide exactly.
+        if all_enumerable:
+            search = _exact_stable_search(cond, cross_in, want_count=want_structural_count)
+            overall_exists = search.exists
+            witness = search.witness if want_witness else None
+            exact_count = search.count if want_structural_count else None
+            notes.append("greedy sweep short-circuited; resolved by exact DAG-DP over the condensation")
+        else:
+            mono = find_stable_extension(dung_attack_framework(set(nodes), adjacency))
+            overall_exists = mono is not None
+            witness = (frozenset(mono) if mono is not None else None) if want_witness else None
+            if want_structural_count:
+                exact_count = 0 if not overall_exists else None
+            notes.append(
+                "greedy sweep short-circuited and an SCC was too large to enumerate; "
+                "resolved by a monolithic z3 stable check on the whole AF"
+            )
+
     # structural MinSet count: flat product of per-SCC isolated stable counts (independent
     # -choice reading -- upper bound on the true count, exact when no cross-SCC forcing).
+    # Only meaningful when the greedy sweep concluded: after a short-circuit the downstream
+    # per-SCC forced-OUT contexts are stale, so the product is no longer a sound bound --
+    # report ``None`` and rely on ``exact_stable_count`` (DAG-DP) instead.
     structural_count: Optional[int] = None
     if want_structural_count:
         if not overall_exists:
             structural_count = 0
-        else:
+        elif greedy_concluded_sat:
             prod = 1
             unknown = False
             for v in verdicts:
@@ -526,16 +575,8 @@ def dispatch_stable(
                 prod *= v.stable_count
             structural_count = None if unknown else prod
 
-    # exact count: DAG dynamic program over the condensation, only if every SCC residual is
-    # enumerable (size <= brute-force cap); ``None`` otherwise.
-    exact_count: Optional[int] = None
-    if want_structural_count:
-        if not overall_exists:
-            exact_count = 0
-        elif all(v is not None and v.size <= _BRUTE_FORCE_MAX for v in verdicts):
-            exact_count = _exact_stable_count(cond, cross_in)
-
-    witness = frozenset(all_in) if (want_witness and overall_exists) else None
+    if not overall_exists:
+        exact_count = 0
 
     return DispatchResult(
         condensation=cond,
@@ -552,6 +593,73 @@ def dispatch_stable(
 
 
 _EXACT_COUNT_LEAF_CAP = 2_000_000  # bail (return None) above this many enumerated branches
+
+
+@dataclass(slots=True)
+class _ExactSearchResult:
+    exists: bool
+    witness: Optional[frozenset[str]]  # IN set of one global stable extension, if any
+    count: Optional[int]  # exact number of stable extensions, or None if not requested / overflowed
+
+
+def _exact_stable_search(
+    cond: Condensation,
+    cross_in: dict[int, list[tuple[str, str]]],
+    *,
+    want_count: bool,
+) -> _ExactSearchResult:
+    """Exact stable-extension decision (and witness, and optional count) for the whole AF.
+
+    A DAG dynamic program over the condensation: walk SCCs in topological order; at SCC
+    *i* the forced-OUT set is determined by which upstream nodes are IN so far; enumerate
+    that residual's stable extensions and recurse. The whole AF is stable-SAT iff some
+    root-to-leaf assignment survives; the first surviving assignment is a witness. This is
+    correct under cross-SCC context-dependence (unlike the single-witness greedy sweep),
+    and exponential only in the *width* of the SCC fan-out -- fine for the tiny per-SCC
+    condensations here, and UNSAT SCCs (odd cycles) kill their branches immediately.
+
+    Only call this when every SCC residual is small enough to brute-force.
+    """
+    order = cond.topo_order
+    counter = {"branches": 0, "overflow": False}
+
+    def rec(pos: int, in_so_far: frozenset[str], want_count_here: bool) -> tuple[int, Optional[frozenset[str]]]:
+        # returns (number of completions found below this node, one full IN-set witness or None)
+        if counter["overflow"]:
+            return 0, None
+        if pos == len(order):
+            return 1, in_so_far
+        scc_idx = order[pos]
+        scc = cond.sccs[scc_idx]
+        forced_out = frozenset(tgt for (src, tgt) in cross_in[scc_idx] if src in in_so_far)
+        exts = _brute_force_stable(_scc_framework(scc, forced_out))
+        if not exts:
+            return 0, None
+        total = 0
+        found_witness: Optional[frozenset[str]] = None
+        for ext in exts:
+            counter["branches"] += 1
+            if counter["branches"] > _EXACT_COUNT_LEAF_CAP:
+                counter["overflow"] = True
+                return total, found_witness
+            sub_count, sub_w = rec(pos + 1, in_so_far | ext, want_count_here)
+            if sub_count:
+                total += sub_count
+                if found_witness is None:
+                    found_witness = sub_w
+                if not want_count_here:
+                    return total, found_witness  # short-circuit: one witness is enough
+        return total, found_witness
+
+    total, witness = rec(0, frozenset(), want_count)
+    if counter["overflow"]:
+        # exhausted the cap: existence/witness are still valid if we found one; count unknown
+        return _ExactSearchResult(exists=witness is not None, witness=witness, count=None)
+    return _ExactSearchResult(
+        exists=total > 0,
+        witness=witness,
+        count=(total if want_count else None),
+    )
 
 
 def _exact_stable_count(cond: Condensation, cross_in: dict[int, list[tuple[str, str]]]) -> Optional[int]:
@@ -621,18 +729,14 @@ def credulous_accepts(
 ) -> bool:
     """Is ``node`` in *some* extension of the given semantics?
 
-    ``semantics="stable"``: SCC divide-and-conquer + z3 with ``require_in``. ``node`` is
-    credulously accepted under stable semantics iff there is a stable extension of the
-    whole AF containing it. By the condensation argument that is: (a) every *other* SCC
-    has a stable extension (so the global stable extension exists), and (b) the SCC
-    containing ``node`` -- with the forced-OUT context induced by some global choice --
-    has a stable extension with ``node`` IN. We test (b) directly with z3's ``require_in``
-    on that SCC's residual AF, using the *empty* upstream-IN context first (most permissive
-    for forcing ``node`` IN is actually the context where as few of ``node``'s SCC-internal
-    rivals are pre-OUT as possible -- but ``node`` IN also requires ``node``'s attackers
-    OUT, and an upstream IN attacker would make ``node`` impossible). We therefore require
-    no upstream attacker of ``node``'s SCC-internal-or-not attackers ... -- pragmatically:
-    fix the global stable witness, then check the SCC residual with ``require_in=node``.
+    ``semantics="stable"``: ``node`` is credulously accepted iff some stable extension of
+    the whole AF contains it. A fast SCC-decomposed ``stable_exists`` check rules out the
+    trivial-no case; otherwise the question is answered *exactly* by a single monolithic z3
+    call ``find_stable_extension(whole_af, require_in=node)``. (An SCC-local check is not
+    sound here: changing one SCC's IN-set changes the forced-OUT context of its downstream
+    SCCs, so a stable extension of one SCC's residual need not extend to a global one --
+    the credulous question is genuinely cross-SCC.) z3 decides the ~18k-node OEWN Kernel AF
+    in seconds; on the full ~160k-node graph this is slower but still a single SAT call.
     ``semantics="grounded"``: ``node`` in the (unique) grounded extension.
     """
     if nodes is None:
@@ -644,26 +748,9 @@ def credulous_accepts(
         return node in grounded(adjacency, nodes)
     if semantics != "stable":
         raise ValueError(f"unsupported semantics: {semantics!r}")
-    res = dispatch_stable(adjacency, nodes, want_witness=True, want_structural_count=False)
-    if not res.stable_exists:
+    if not stable_exists(adjacency, nodes):
         return False
-    cond = res.condensation
-    scc = cond.scc_for(node)
-    if scc.is_self_loop:
-        return False
-    if scc.is_trivial_singleton:
-        # node IN unless attacked by an IN node upstream; use the global witness
-        attackers = {src for src, tgts in adjacency.items() if node in tgts and src in nodes}
-        return not (attackers & (res.stable_witness or frozenset()))
-    # forced-OUT context for this SCC under the global witness
-    w = res.stable_witness or frozenset()
-    forced_out = frozenset(
-        n for n in scc.nodes
-        if any(src in w and n in tgts for src, tgts in adjacency.items() if src in nodes and src not in scc.nodes)
-    )
-    if node in forced_out:
-        return False
-    af = _scc_framework(scc, forced_out)
+    af = dung_attack_framework(nodes, adjacency)
     return find_stable_extension(af, require_in=node) is not None
 
 
@@ -673,12 +760,14 @@ def skeptical_accepts(
     """Is ``node`` in *every* extension of the given semantics?
 
     ``semantics="stable"``: skeptically accepted iff a stable extension exists *and* no
-    stable extension leaves ``node`` OUT -- tested with z3 ``require_out=node`` on
-    ``node``'s SCC residual (if that is UNSAT and a global stable extension exists, ``node``
-    is in every stable extension). If *no* stable extension exists at all, skeptical
-    acceptance is vacuously ``True`` for every node (empty set of extensions) -- we return
-    ``False`` here instead, treating "no stable extension" as "nothing is skeptically
-    accepted", which is the operationally useful reading; callers wanting the vacuous-truth
+    stable extension leaves ``node`` OUT. A fast SCC-decomposed ``stable_exists`` check
+    rules out the trivial case; otherwise the question is answered *exactly* by a single
+    monolithic z3 call -- ``node`` is skeptically accepted iff
+    ``find_stable_extension(whole_af, require_out=node)`` is UNSAT (no stable extension
+    with ``node`` OUT). If *no* stable extension exists at all, skeptical acceptance is
+    vacuously ``True`` for every node (empty set of extensions) -- we return ``False``
+    here instead, treating "no stable extension" as "nothing is skeptically accepted",
+    which is the operationally useful reading; callers wanting the vacuous-truth
     convention can check :func:`stable_exists` first.
     ``semantics="grounded"``: same as credulous (grounded extension is unique).
     """
@@ -691,34 +780,9 @@ def skeptical_accepts(
         return node in grounded(adjacency, nodes)
     if semantics != "stable":
         raise ValueError(f"unsupported semantics: {semantics!r}")
-    res = dispatch_stable(adjacency, nodes, want_witness=True, want_structural_count=False)
-    if not res.stable_exists:
+    if not stable_exists(adjacency, nodes):
         return False
-    cond = res.condensation
-    scc = cond.scc_for(node)
-    if scc.is_self_loop:
-        return False  # never IN in any extension
-    if scc.is_trivial_singleton:
-        attackers = {src for src, tgts in adjacency.items() if node in tgts and src in nodes}
-        # node is OUT in some stable extension iff some attacker can be IN in some stable
-        # extension. Approximate with the global witness: if no attacker is in the global
-        # witness AND node has no attackers in its own SCC (trivial), node is IN everywhere.
-        # A precise answer would enumerate; for a singleton with all attackers themselves
-        # never-IN (e.g. self-loopers) this is exact.
-        for a in attackers:
-            if credulous_accepts(a, adjacency, nodes, semantics="stable"):
-                return False
-        return True
-    w = res.stable_witness or frozenset()
-    forced_out = frozenset(
-        n for n in scc.nodes
-        if any(src in w and n in tgts for src, tgts in adjacency.items() if src in nodes and src not in scc.nodes)
-    )
-    if node in forced_out:
-        return False
-    af = _scc_framework(scc, forced_out)
-    # node skeptically accepted (within this context) iff you cannot find a stable ext of
-    # the residual with node OUT.
+    af = dung_attack_framework(nodes, adjacency)
     return find_stable_extension(af, require_out=node) is None
 
 

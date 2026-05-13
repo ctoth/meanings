@@ -70,6 +70,30 @@ Whole-Kernel stable is UNSAT, so *no* Kernel node is credulously/skeptically acc
 
 ## Caveats
 
-* `stable_exists` does a *greedy* topological sweep (takes the first stable extension of each SCC residual without backtracking). For the OEWN Kernel this is definitive -- the UNSAT SCCs (odd cycles, giant core) are UNSAT regardless of upstream context -- but on a graph where a downstream SCC is UNSAT only under *some* upstream choices, the greedy result could over-report UNSAT. The exact stable count uses a full DAG DP and does not have this issue (it only runs when every SCC residual is small enough to enumerate).
+* **`dispatch_stable` is exact, with a fast path and a fallback.** It runs a *greedy*
+  topological sweep over the SCC condensation (one stable extension per SCC, no
+  backtracking). When that sweep concludes SAT it is fast (SCC-decomposed, isomorphism-
+  cached) and the answer is returned directly. When it *cannot* conclude SAT -- some SCC's
+  residual is UNSAT under the greedy upstream choice, which may still be SAT under a
+  *different* upstream choice (e.g. forcing a node OUT of an odd cycle makes that SCC SAT)
+  -- it does **not** clamp to UNSAT. Instead it falls back to an exact decision: a
+  witness-producing **DAG dynamic program over the condensation** when every SCC residual
+  is small enough to brute-force (correct under cross-SCC context-dependence), or otherwise
+  a single **monolithic z3 `find_stable_extension`** call on the whole AF (z3 decides even
+  the ~18 k-node Kernel AF in ~8 s). Either way `stable_exists` / `stable_witness` /
+  `credulous_accepts` / `skeptical_accepts` match a monolithic `argumentation.af_sat`
+  computation. (This replaces the earlier, false claim that "the exact-count path uses full
+  DAG DP without that issue" -- the bug was that `exact_stable_count` was clamped to `0`
+  whenever the greedy sweep short-circuited, so the DAG-DP never ran in exactly the case it
+  was needed. Audit `reports/audit-new-src.md` finding 1; reproduction
+  `scratch/test_stable_exists.py`.) `credulous_accepts` / `skeptical_accepts` now answer the
+  per-node question with a monolithic z3 `require_in` / `require_out` call (after a fast
+  `stable_exists` short-circuit) -- the old SCC-local check was unsound, since changing one
+  SCC's IN-set changes the forced-OUT context of its downstream SCCs.
 * The FVS / MinSet backdoor for the giant SCC is wired (`use_backdoor=True`) but currently deferring to z3 (the giant SCC's feedback-vertex set is far larger than the enumeration cap), which decides it in ~3 s anyway. A full backdoor enumerator can slot into `_backdoor_stable`.
+
+## Re-confirmation after the finding-1 fix (2026-05-12)
+
+* **Fixed `dispatch_stable` on the OEWN Kernel still reports `stable_exists = False` (UNSAT)** -- the greedy sweep short-circuits on an UNSAT SCC, falls through (the giant 8 138-node SCC is too large to enumerate) to the monolithic z3 fallback on the whole 18 151-node Kernel AF, which returns UNSAT. `exact_stable_count = 0`.
+* **Fresh monolithic z3 `argumentation.af_sat.find_stable_extension` on the whole 18 151-node Kernel attack-AF (rebuilt from `build_paper_wordnet_graph("oewn:2024")` + `analyze_kernel` + `argumentation_bridge.kernel_attack_framework`): UNSAT** -- independently re-verifies the bridge report's claim from scratch. (Numbers / timing: `scratch/reconfirm_oewn_kernel.log`.)
 

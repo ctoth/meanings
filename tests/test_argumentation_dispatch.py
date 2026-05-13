@@ -229,6 +229,73 @@ def test_canonical_form_distinguishes_2_and_3_cycles():
     assert canonical_scc_form(a.nodes, a.edges) != canonical_scc_form(c.nodes, c.edges)
 
 
+# --- context-dependent (regression for audit finding 1) --------------------------
+
+
+# upstream 2-cycle a<->b (stable exts {a},{b}); downstream 3-cycle x->y->z->x (UNSAT in
+# isolation); cross edge b->x. The whole AF IS stable-SAT: choosing {b} forces x OUT, the
+# residual 2-path y->z is SAT ({y}), giving global stable {b,y}. The greedy sweep may pick
+# {a} first (x not forced out -> residual 3-cycle UNSAT) -- the dispatcher must NOT clamp to
+# UNSAT but fall through to the exact DAG-DP.
+CONTEXT_DEP_SAT = {"a": {"b"}, "b": {"a", "x"}, "x": {"y"}, "y": {"z"}, "z": {"x"}}
+# same upstream/downstream but NO cross edge into the cycle -> genuinely UNSAT.
+CONTEXT_DEP_UNSAT = {"a": {"b"}, "b": {"a"}, "x": {"y"}, "y": {"z"}, "z": {"x"}}
+# two upstream 2-cycles; downstream 3-cycle; either b or d (cross b->x, d->x) unblocks -> SAT.
+CONTEXT_DEP_EITHER = {
+    "a": {"b"}, "b": {"a", "x"}, "c": {"d"}, "d": {"c", "x"},
+    "x": {"y"}, "y": {"z"}, "z": {"x"},
+}
+
+
+def _is_stable_ext(adj, S):
+    nodes = set(adj)
+    for t in adj.values():
+        nodes |= set(t)
+    defeats = {(a, b) for a, tg in adj.items() for b in tg}
+    if any((a, b) in defeats for a in S for b in S):
+        return False
+    return all(any((a, x) in defeats for a in S) for x in nodes if x not in S)
+
+
+def test_context_dependent_stable_sat():
+    # ground truth via the library
+    assert _lib_has_stable(CONTEXT_DEP_SAT) is True
+    assert stable_exists(CONTEXT_DEP_SAT) is True
+    w = stable_witness(CONTEXT_DEP_SAT)
+    assert w is not None and _is_stable_ext(CONTEXT_DEP_SAT, set(w))
+    assert frozenset(w) in set(lib_stable(dung_attack_framework(set(CONTEXT_DEP_SAT), CONTEXT_DEP_SAT)))
+    res = dispatch_stable(CONTEXT_DEP_SAT)
+    assert res.stable_exists is True
+    assert res.exact_stable_count == _lib_stable_count(CONTEXT_DEP_SAT)
+
+
+def test_context_dependent_stable_genuinely_unsat():
+    assert _lib_has_stable(CONTEXT_DEP_UNSAT) is False
+    assert stable_exists(CONTEXT_DEP_UNSAT) is False
+    assert stable_witness(CONTEXT_DEP_UNSAT) is None
+    assert dispatch_stable(CONTEXT_DEP_UNSAT).exact_stable_count == 0
+
+
+def test_context_dependent_either_unblocks():
+    assert stable_exists(CONTEXT_DEP_EITHER) is True
+    w = stable_witness(CONTEXT_DEP_EITHER)
+    assert w is not None and _is_stable_ext(CONTEXT_DEP_EITHER, set(w))
+    assert dispatch_stable(CONTEXT_DEP_EITHER).exact_stable_count == _lib_stable_count(CONTEXT_DEP_EITHER)
+
+
+def test_context_dependent_credulous_skeptical_match_library():
+    for adj in (CONTEXT_DEP_SAT, CONTEXT_DEP_UNSAT, CONTEXT_DEP_EITHER):
+        exts = set(lib_stable(dung_attack_framework(set(adj), adj)))
+        nodes = set(adj)
+        for t in adj.values():
+            nodes |= set(t)
+        for n in nodes:
+            cred_expected = any(n in e for e in exts)
+            skept_expected = bool(exts) and all(n in e for e in exts)
+            assert credulous_accepts(n, adj, semantics="stable") is cred_expected, (adj, n)
+            assert skeptical_accepts(n, adj, semantics="stable") is skept_expected, (adj, n)
+
+
 def test_iso_cache_dedup_in_dispatch():
     # four identical disjoint 2-cycles -> one iso class solved, three cache hits
     g = {}
