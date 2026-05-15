@@ -33,6 +33,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 import time
 from pathlib import Path
 from typing import Any
@@ -47,6 +48,8 @@ from meanings.wordnet_pipeline import (
 GENUS_VICTIMS = ["line", "head", "break", "take", "make", "set", "run", "point"]
 LEMMA_LEVEL_KERNEL = 18151  # from synthesis section 3 / sense_ingestion_rebuild constants
 LEMMA_LEVEL_SELF_LOOPS = 3413
+SEED_METHOD = "exact-small-greedy"
+CORE_POLICY = "source-union"
 
 
 def self_loop_count(build: SenseLevelGraphBuild) -> int:
@@ -180,7 +183,7 @@ def p2_seed_payload(
         "lexicon_id": lexicon_id,
         "resolver_id": "ic_fallback_polysemy_true__sense_fvs__ic_export_p2",
         "workflow": "sense_graph_fvs_then_one_representative_ic_at_export",
-        "command": "uv run python scripts\\sense_resolver_comparison.py",
+        "argv": sys.argv,
         "graph": {
             "graph_type": "sense_ic_fallback",
             "node_count": len(build.nodes),
@@ -189,18 +192,20 @@ def p2_seed_payload(
             "resolution_stats": dict(build.resolution_stats),
         },
         "analysis": {
-            "seed_method": "exact-small-greedy",
-            "core_policy": "source-union",
+            "seed_method": SEED_METHOD,
+            "core_policy": CORE_POLICY,
             "kernel_count": len(analysis.kernel_nodes),  # type: ignore[attr-defined]
             "sense_seed_count": len(analysis.seed_nodes),  # type: ignore[attr-defined]
             "residual_cyclic_scc_count": analysis.residual_cyclic_scc_count,  # type: ignore[attr-defined]
         },
         "export": {
-            "representative_policy": "highest_in_degree_seed_sense_per_ic_tiebreak_sense_id",
+            "representative_policy": "highest_in_degree_seed_sense_per_ic_then_highest_sense_id",
             "ic_seed_count": len({row["ic_id"] for row in rows}),
         },
         "seed_ics": rows,
-        "genus_victims": genus_victim_status(build, set(analysis.kernel_nodes)),  # type: ignore[attr-defined]
+        "diagnostics": {
+            "sense_level_genus_victims": genus_victim_status(build, set(analysis.kernel_nodes)),  # type: ignore[attr-defined]
+        },
     }
 
 
@@ -372,7 +377,7 @@ def main() -> None:
     t1 = time.time()
     baseline_analysis = analyze_kernel(
         baseline_build.nodes, baseline_build.adjacency,
-        seed_method="exact-small-greedy", core_policy="source-union",
+        seed_method=SEED_METHOD, core_policy=CORE_POLICY,
     )
     baseline_analysis_runtime = time.time() - t1
     print(
@@ -394,7 +399,7 @@ def main() -> None:
     t3 = time.time()
     fallback_analysis = analyze_kernel(
         fallback_build.nodes, fallback_build.adjacency,
-        seed_method="exact-small-greedy", core_policy="source-union",
+        seed_method=SEED_METHOD, core_policy=CORE_POLICY,
     )
     fallback_analysis_runtime = time.time() - t3
     print(
@@ -409,7 +414,7 @@ def main() -> None:
     ic_nodes, ic_adj = project_to_ic(fallback_build)
     p1_analysis = analyze_kernel(
         ic_nodes, ic_adj,
-        seed_method="exact-small-greedy", core_policy="source-union",
+        seed_method=SEED_METHOD, core_policy=CORE_POLICY,
     )
     p1_runtime = time.time() - t4
     p1_seed_ics = set(p1_analysis.seed_nodes)

@@ -20,6 +20,7 @@ CSV_FIELDS = (
     "strict_lemma_seed",
     "typed_sense_seed",
     "resolver_id",
+    "typed_seed_source",
     "longman",
     "ogden",
     "high_frequency",
@@ -92,18 +93,31 @@ def read_seed_surfaces(path: Path) -> set[str]:
     return seeds
 
 
-def read_typed_seed(path: Path) -> tuple[set[str], str]:
+def read_typed_seed(path: Path) -> tuple[set[str], str, str]:
+    if not path.exists():
+        raise FileNotFoundError(
+            f"Typed seed artifact not found: {path}. "
+            "Regenerate it with: uv run python scripts\\sense_resolver_comparison.py"
+        )
     payload = read_json(path)
-    resolver_id = str(payload.get("resolver_id") or "legacy_typed_sense_seed_pre_p2")
-    if "seed_ics" in payload:
+    source = str(path)
+    if payload.get("artifact_id") == "oewn-sense-p2-ic-seed" and payload.get("schema_version") == 1:
+        resolver_id = str(payload.get("resolver_id") or "")
+        if not resolver_id:
+            raise ValueError(f"P2 typed seed artifact has no resolver_id: {path}")
         return (
             {str(row.get("ic_id")) for row in payload.get("seed_ics", []) if row.get("ic_id")},
             resolver_id,
+            source,
         )
-    return (
-        {str(row.get("ic_id")) for row in payload.get("seed_senses", []) if row.get("ic_id")},
-        resolver_id,
-    )
+    if payload.get("surface") == "strict_graph_seed_typed_sense_ic":
+        resolver_id = "legacy_typed_sense_seed_pre_p2"
+        return (
+            {str(row.get("ic_id")) for row in payload.get("seed_senses", []) if row.get("ic_id")},
+            resolver_id,
+            source,
+        )
+    raise ValueError(f"Unknown typed seed artifact schema: {path}")
 
 
 def flags_for(alias: str, aliases: list[str], tag_counts: dict[str, Any], norm_row: dict[str, float]) -> list[str]:
@@ -166,7 +180,7 @@ def best_norm_row(aliases: list[str], norms: dict[str, dict[str, float]]) -> dic
 def build_rows(args: argparse.Namespace) -> list[dict[str, Any]]:
     admission = read_json(args.admission)
     strict_seeds = read_seed_surfaces(args.seed_surfaces)
-    typed_seed_ics, resolver_id = read_typed_seed(args.typed_seed)
+    typed_seed_ics, resolver_id, typed_seed_source = read_typed_seed(args.typed_seed)
     longman = read_word_set(args.longman)
     ogden = read_word_set(args.ogden)
     norms = read_norms(args.norms)
@@ -214,6 +228,7 @@ def build_rows(args: argparse.Namespace) -> list[dict[str, Any]]:
                 "strict_lemma_seed": strict_lemma_seed,
                 "typed_sense_seed": typed_sense_seed,
                 "resolver_id": resolver_id,
+                "typed_seed_source": typed_seed_source,
                 "longman": in_longman,
                 "ogden": in_ogden,
                 "high_frequency": high_frequency,
@@ -272,6 +287,8 @@ def render_table(rows: list[dict[str, Any]], fields: list[str]) -> list[str]:
 def write_report(path: Path, rows: list[dict[str, Any]], top: int) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     flag_counts = Counter(flag for row in rows for flag in str(row["flags"]).split(";") if flag)
+    resolver_ids = sorted({str(row["resolver_id"]) for row in rows})
+    typed_seed_sources = sorted({str(row["typed_seed_source"]) for row in rows})
     lines = [
         "# Base English Candidate Workbench",
         "",
@@ -283,6 +300,8 @@ def write_report(path: Path, rows: list[dict[str, Any]], top: int) -> None:
         f"- Clean candidate rows: `{sum(1 for row in rows if row['clean_candidate'])}`",
         f"- Strict lemma-seed rows: `{sum(1 for row in rows if row['strict_lemma_seed'])}`",
         f"- Typed sense-seed rows: `{sum(1 for row in rows if row['typed_sense_seed'])}`",
+        f"- Typed seed resolver ids: `{resolver_ids}`",
+        f"- Typed seed sources: `{typed_seed_sources}`",
         f"- Longman-supported rows: `{sum(1 for row in rows if row['longman'])}`",
         f"- Ogden-supported rows: `{sum(1 for row in rows if row['ogden'])}`",
         "",
