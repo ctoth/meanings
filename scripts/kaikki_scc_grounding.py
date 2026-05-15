@@ -15,8 +15,8 @@ from collections.abc import Iterator
 from pathlib import Path
 from typing import Any
 
-from meanings.graph_analysis import cyclic_sccs, induced_subgraph
-from meanings.minset import choose_feedback_vertex, exact_feedback_vertex_set, reverse_adjacency
+from meanings.graph_analysis import induced_subgraph
+from meanings.minset import choose_feedback_vertex, cyclic_sccs, exact_feedback_vertex_set, reverse_adjacency
 from meanings.wiktextract_adapter import build_wiktextract_graph, iter_jsonl
 
 
