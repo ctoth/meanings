@@ -18,7 +18,7 @@ Build a useful, sense-aware base English: the "assembly language" beneath ordina
 
 - Read the remaining reports and notes for the live state after round 8. Done for the core synthesis, executable-workstream, graph-object, cross-language, admission, lexicality, sense-resolver, IC, cross-dictionary, kernel export, and current data artifacts.
 - Get independent subagent summaries for kernel/philosophy, pipeline/data, and multilingual/resources. Done.
-- Ask Claude for an adversarial architectural critique. First pass done; adversarial follow-up running.
+- Ask Claude for an adversarial architectural critique. Done, including adversarial follow-up.
 - Synthesize the next direction into an executable workstream with gates, data inputs, scripts, and artifacts.
 - Commit this document whenever it is materially updated.
 
@@ -61,7 +61,30 @@ Next architecture should be:
 
 ### Immediate Risks
 
-- The candidate score is a heuristic rank, not a statistical model.
+- The first candidate score was a heuristic rank, not a statistical model. The script was revised to remove the composite score and use agreement flags plus a clean-candidate filter instead.
 - Current typed sense seed data predates the full P2 export recommendation; the workbench records it as current evidence, not final truth.
 - Current psycholinguistic norms are lemma-level, so polysemous ICs inherit blunt scores.
 - The `artifact_reading_present` flag is intentionally noisy: it marks mixed ICs like `water` and `no`, not necessarily bad candidates.
+
+### Adversarial Follow-Up Result
+
+Claude's follow-up critique identified the main problem in the first generated workbench: the additive score stacked correlated signals and risked presenting a calibrated Base English ranking where we only had an evidence-agreement surface.
+
+Corrections made:
+
+- Removed the composite `score`.
+- Added `evidence_count`, `clean_candidate`, `admitted_clean`, and threshold indicators.
+- Added a visible `resolver_id` for typed-sense-seed provenance.
+- Excluded `numeric_form`, `multiword`, `artifact_reading_present`, and `technical_only` rows from the clean-candidate view instead of down-weighting them.
+- Regenerated `data/base_english_candidates.csv` and `reports/base-english-candidates.md`.
+
+Corrected workbench summary:
+
+- Candidate admitted IC rows: `58,099`
+- Clean candidate rows: `1,476`
+- Strict lemma-seed supported rows: `2,884`
+- Typed sense-seed supported rows: `759`
+- Longman-supported rows: `1,832`
+- Ogden-supported rows: `741`
+
+This is now a defensible first bench: descriptive, filter-based, and explicit about unresolved provenance. It is still not L0.
