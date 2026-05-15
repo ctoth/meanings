@@ -105,7 +105,7 @@
         }
       }
     },
-    "runtime_seconds": 1341.434501171112
+    "runtime_seconds": 500.1830656528473
   },
   "ic_fallback": {
     "label": "ic_fallback (polysemy_fallback=True)",
@@ -214,7 +214,7 @@
         }
       }
     },
-    "runtime_seconds": 1502.1481165885925
+    "runtime_seconds": 821.7245192527771
   },
   "verdict": {
     "code": "(ii)",
@@ -230,7 +230,7 @@
       "ic_kernel_size": 20984,
       "seed_size": 4122,
       "residual_cyclic_scc_count": 0,
-      "runtime_seconds": 990.1717984676361
+      "runtime_seconds": 852.2118544578552
     },
     "P2_restrict_at_export": {
       "sense_seed_size": 3040,
