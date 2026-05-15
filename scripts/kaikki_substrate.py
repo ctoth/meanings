@@ -145,7 +145,8 @@ def write_report(path: Path, payload: dict[str, Any]) -> None:
         "",
         f"- Nodes: `{graph['node_count']}`",
         f"- Edges: `{graph['edge_count']}`",
-        f"- Edge density: `{graph['edge_density']:.6f}`",
+        f"- Edges per node: `{graph['edges_per_node']:.6f}`",
+        f"- Directed edge density: `{graph['directed_edge_density']:.12f}`",
         f"- Candidate matches: `{graph['resolution_stats'].get('candidate_matches', 0)}`",
         f"- Ambiguous skipped: `{graph['resolution_stats'].get('ambiguous_skipped', 0)}`",
         f"- Missing skipped: `{graph['resolution_stats'].get('missing_skipped', 0)}`",
@@ -215,6 +216,7 @@ def main() -> None:
         progress=lambda message: emit(message, progress_log),
     )
     edge_count = sum(len(targets) for targets in build.adjacency.values())
+    directed_denominator = len(build.nodes) * max(len(build.nodes) - 1, 1)
     emit(f"Built graph: nodes={len(build.nodes)}, edges={edge_count}", progress_log)
 
     l0_ics = load_l0_ics(args.l0)
@@ -230,7 +232,8 @@ def main() -> None:
             "graph_type": build.graph_type,
             "node_count": len(build.nodes),
             "edge_count": edge_count,
-            "edge_density": edge_count / max(len(build.nodes), 1),
+            "edges_per_node": edge_count / max(len(build.nodes), 1),
+            "directed_edge_density": edge_count / directed_denominator,
             "resolution_stats": build.metadata.get("resolution_stats", {}),
         },
         "overlap": overlap_summary(build.nodes, l0_ics, clean_ics),
