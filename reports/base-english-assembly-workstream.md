@@ -268,7 +268,7 @@ Interpretation:
 
 ### Phase 4: Add A Stronger External Substrate
 
-Status: full graph-statistics run complete; kernel analysis not yet executed.
+Status: full graph-statistics and kernel-structure run complete; exact-small-greedy seed extraction timed out.
 
 Purpose: attack the lexicographer's confound with a third full-definition source, not another prescribed learner list.
 
@@ -345,17 +345,46 @@ Full result:
 - L0 overlap: `317 / 317` (`100.00%`)
 - Clean candidate overlap: `1,476 / 1,476` (`100.00%`)
 
+Kernel-only command run:
+
+```powershell
+uv run python scripts\kaikki_substrate.py --kernel-only --progress-log reports\kaikki-substrate.progress.log
+```
+
+Kernel-only result:
+
+- Kernel nodes: `135,288`
+- Kernel SCCs: `36,760`
+- Largest kernel SCC: `93,905`
+- Core nodes: `1,586`
+- Satellite nodes: `133,702`
+- Seed status: `skipped_kernel_only`
+
+Exact seed attempt:
+
+```powershell
+uv run python scripts\kaikki_substrate.py --analyze-kernel --progress-log reports\kaikki-substrate.progress.log
+```
+
+Result:
+
+- Timed out after `10,800` seconds.
+- The run reached `Solving MinSet with exact-small-greedy` after building the full graph.
+- No Kaikki exact-small-greedy seed result was produced or claimed.
+
 Runner discipline:
 
 - The Kaikki runner uses `reports/kaikki-substrate.lock` by default.
 - It logs timestamped progress to `reports/kaikki-substrate.progress.log`.
 - It streams JSONL/gz and does not require committing or expanding the multi-GB raw dump.
+- After the timeout, the runner was updated to write a kernel/core checkpoint before entering MinSet seed extraction and to avoid reporting skipped seed fields as zeroes.
 
 Interpretation:
 
 - The external-substrate path is now executable, provenance-bearing, and run on the complete current Kaikki English stream.
 - The current L0 and clean candidate surfaces are fully covered by Kaikki terms, so Kaikki can act as a real external definitional substrate for the next comparison.
-- This does not yet prove cross-resource primitive stability. The next expensive gate is `--analyze-kernel`, followed by overlap of the Kaikki emergent kernel/seed against P2/L0.
+- This does not yet prove cross-resource primitive stability. The current blocker is the exact-small-greedy seed extraction on a large `93,905`-node SCC.
+- The immediate next science move is a staged seed strategy: either run a bounded/heuristic seed to get a first Kaikki seed surface, or add component-level progress/checkpointing inside `solve_minset` before another exact-small-greedy attempt.
 
 ### Phase 5: Add Better Grounding Evidence
 
