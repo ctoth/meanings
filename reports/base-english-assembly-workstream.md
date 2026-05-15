@@ -165,6 +165,8 @@ Tasks completed:
 
 ### Phase 2: Derive L0 Candidates
 
+Status: done for the first slice.
+
 Purpose: produce the first explicit candidate set for grounded primitives, not by score but by independent evidence channels.
 
 Candidate channels:
@@ -186,6 +188,22 @@ Acceptance gate:
 - Report includes near-misses, not only admitted rows.
 - Report states whether L0 mostly collapses to Ogden/Longman; if so, the strong emergent-primitives claim fails.
 - No single channel is allowed to imply L0 membership by itself.
+
+Result:
+
+- Implemented `scripts/derive_l0.py`.
+- Generated `data/l0-grounded-primitives.json` and `reports/l0-derivation.md`.
+- Input rows: `58,099`
+- L0 candidate rows: `317`
+- Near misses: `1,155`
+- Channel counts: strict admission `55,344`, structural `3,539`, cross-list `1,020`, grounding proxy `6,973`.
+- GCIDE and sensorimotor channels are explicitly unavailable in this slice; they are not silently imputed.
+
+Interpretation:
+
+- This is the first actual L0 candidate surface, not a final primitive set.
+- It still leans on Longman/Ogden/OEWN agreement and lemma-level AoA/concreteness, so the lexicographer's confound remains active.
+- The next hardening step is either GCIDE membership export or sensorimotor norms before making any strong claim about grounded primitives.
 
 ### Phase 3: Build The Unfolding Index
 
