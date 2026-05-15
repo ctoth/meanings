@@ -7,19 +7,20 @@ This is the external full-definition substrate path for attacking the lexicograp
 - Source name: `kaikki.org English raw Wiktextract data`
 - Source URL: `https://kaikki.org/dictionary/raw-wiktextract-data.jsonl.gz`
 - Local input: ``
-- Max English entries: `5000`
+- Max English entries: `None`
 
 ## Graph
 
-- Nodes: `4177`
-- Edges: `11651`
-- Edge density: `2.789322`
-- Candidate matches: `18418`
-- Ambiguous skipped: `1746`
+- Nodes: `1389117`
+- Edges: `5462728`
+- Edges per node: `3.932518`
+- Directed edge density: `0.000002830950`
+- Candidate matches: `6552576`
+- Ambiguous skipped: `631711`
 - Missing skipped: `0`
 
 ## Base Surface Overlap
 
-- Graph IC count: `2670`
-- L0 overlap: `71 / 317` (`22.40%`)
-- Clean candidate overlap: `219 / 1476` (`14.84%`)
+- Graph IC count: `1313536`
+- L0 overlap: `317 / 317` (`100.00%`)
+- Clean candidate overlap: `1476 / 1476` (`100.00%`)
