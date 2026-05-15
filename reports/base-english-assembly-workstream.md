@@ -268,7 +268,7 @@ Interpretation:
 
 ### Phase 4: Add A Stronger External Substrate
 
-Status: executable adapter added; full-run analysis not yet executed.
+Status: full graph-statistics run complete; kernel analysis not yet executed.
 
 Purpose: attack the lexicographer's confound with a third full-definition source, not another prescribed learner list.
 
@@ -308,7 +308,7 @@ Command:
 uv run python scripts\kaikki_substrate.py --progress-log reports\kaikki-substrate.progress.log
 ```
 
-Smoke command already run against the real upstream compressed stream:
+Smoke command run against the real upstream compressed stream:
 
 ```powershell
 uv run python scripts\kaikki_substrate.py --max-entries 5000 --progress-log reports\kaikki-substrate.progress.log
@@ -325,6 +325,26 @@ Smoke result:
 - L0 overlap: `71 / 317` (`22.40%`)
 - Clean candidate overlap: `219 / 1,476` (`14.84%`)
 
+Full graph-statistics command run:
+
+```powershell
+uv run python scripts\kaikki_substrate.py --progress-log reports\kaikki-substrate.progress.log
+```
+
+Full result:
+
+- Max English entries: `None`
+- Nodes: `1,389,117`
+- Edges: `5,462,728`
+- Edges per node: `3.932518`
+- Directed edge density: `0.000002830950`
+- Candidate matches: `6,552,576`
+- Ambiguous skipped: `631,711`
+- Missing skipped: `0`
+- Graph IC count: `1,313,536`
+- L0 overlap: `317 / 317` (`100.00%`)
+- Clean candidate overlap: `1,476 / 1,476` (`100.00%`)
+
 Runner discipline:
 
 - The Kaikki runner uses `reports/kaikki-substrate.lock` by default.
@@ -333,9 +353,9 @@ Runner discipline:
 
 Interpretation:
 
-- The external-substrate path is now executable and provenance-bearing.
-- The smoke result only proves the stream/adapter/report path; it is not the cross-resource empirical result.
-- The full run remains the next expensive gate: build the complete Kaikki graph, then optionally run `--analyze-kernel` after the graph statistics are known.
+- The external-substrate path is now executable, provenance-bearing, and run on the complete current Kaikki English stream.
+- The current L0 and clean candidate surfaces are fully covered by Kaikki terms, so Kaikki can act as a real external definitional substrate for the next comparison.
+- This does not yet prove cross-resource primitive stability. The next expensive gate is `--analyze-kernel`, followed by overlap of the Kaikki emergent kernel/seed against P2/L0.
 
 ### Phase 5: Add Better Grounding Evidence
 
