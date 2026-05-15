@@ -1,69 +1,70 @@
 # Base English Candidate Workbench
 
-This is not a final Base English list. It is a ranked IC-level workbench built from existing admission, graph-seed, controlled-vocabulary, and psycholinguistic evidence.
+This is not a final Base English list. It is an agreement-filtered IC-level workbench built from existing admission, graph-seed, controlled-vocabulary, and psycholinguistic evidence. It deliberately avoids a composite score.
 
 ## Summary
 
 - Candidate IC rows: `58099`
+- Clean candidate rows: `1476`
 - Strict lemma-seed rows: `2884`
 - Typed sense-seed rows: `759`
 - Longman-supported rows: `1832`
 - Ogden-supported rows: `741`
 
-## Top Candidates
+## Clean Candidates
 
-| primary_alias | score | strict_lemma_seed | typed_sense_seed | longman | ogden | frequency | age_of_acquisition | concreteness | flags |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| water | 16.667 | True | True | True | True | 5.351738198028865 | 2.37 | 5.0 | artifact_reading_present |
-| coat | 16.319 | True | True | True | True | 4.623666186580708 | 3.58 | 4.97 |  |
-| give | 16.275 | True | True | True | True | 6.066788831224598 | 4.28 | 2.83 |  |
-| bread | 16.122 | True | True | True | True | 4.452002435102972 | 3.58 | 4.92 |  |
-| play | 16.119 | True | True | True | True | 5.549080607051831 | 4.1 | 3.24 |  |
-| yellow | 16.079 | True | True | True | True | 4.528623241553753 | 3.2 | 4.3 |  |
-| ball | 16.071 | True | True | True | True | 5.020512508995374 | 2.9 | 5.0 | artifact_reading_present |
-| place | 16.044 | True | True | True | True | 5.779495619263105 | 4.95 | 3.48 |  |
-| school | 15.972 | True | True | True | True | 5.522027521013506 | 3.89 | 4.79 | artifact_reading_present |
-| father | 15.948 | True | True | True | True | 5.743313547269322 | 4.11 | 4.52 | artifact_reading_present |
-| fruit | 15.927 | True | True | True | True | 4.33676568829362 | 3.63 | 4.81 |  |
-| full | 15.897 | True | True | True | True | 5.221916775536831 | 4.24 | 3.59 |  |
-| no | 15.867 | True | True | True | True | 6.7754927459819 | 2.715564 | 2.45 | artifact_reading_present |
-| river | 15.739 | True | True | True | True | 4.74362057766875 | 4.9 | 4.89 |  |
-| come | 15.7 | True | True | True | True | 6.496472254640901 | 3.32 | 2.72 | artifact_reading_present |
-| hole | 15.645 | True | True | True | True | 4.764590591461673 | 5.05 | 4.81 |  |
-| open | 15.61 | True | True | True | True | 5.505139348307253 | 5.0 | 3.21 |  |
-| brush | 15.531 | True | True | True | True | 4.150972439438991 | 3.78 | 4.54 |  |
-| knee | 15.457 | True | True | True | True | 4.16689540553616 | 4.42 | 5.0 |  |
-| over | 15.444 | True | True | True | True | 6.121067135292526 | 5.571640000000001 | 2.46 |  |
-| so | 15.427 | True | True | True | True | 6.627197751579461 | 5.14536 | 1.42 |  |
-| horn | 15.404 | True | True | True | True | 4.3236464134748305 | 4.84 | 5.0 |  |
-| quiet | 15.373 | True | True | True | True | 5.068462695564611 | 4.15 | 2.76 |  |
-| blood | 15.254 | True | True | True | True | 5.269237623017895 | 4.89 | 4.86 | artifact_reading_present |
-| warm | 15.172 | True | True | True | True | 4.7167157787755265 | 4.65 | 3.56 |  |
-| line | 15.139 | True | True | True | True | 5.313684719578784 | 4.85 | 4.5 | artifact_reading_present |
-| blue | 15.125 | True | True | True | True | 5.009754167981454 | 3.53 | 3.76 | artifact_reading_present |
-| powder | 15.055 | True | True | True | True | 4.2051180439048785 | 5.06 | 4.76 |  |
-| orange | 15.048 | True | True | True | True | 4.3483578662235605 | 3.26 | 4.66 | artifact_reading_present |
-| green | 15.015 | True | True | True | True | 4.859683592717567 | 3.79 | 4.1 | artifact_reading_present |
-| again | 15.006 | True | True | True | True | 5.898527141458522 | 5.784780000000001 | 2.0 |  |
-| window | 14.994 | True | True | True | True | 4.934001776549405 | 4.74 | 4.86 | artifact_reading_present |
-| group | 14.957 | True | True | True | True | 4.867368360464324 | 5.94 | 4.12 |  |
-| move | 14.936 | True | True | True | True | 5.620743547015648 | 4.62 | 3.25 | artifact_reading_present |
-| sweet | 14.896 | True | True | True | True | 5.161417849857884 | 4.53 | 4.0 | artifact_reading_present |
-| butter | 14.87 | True | True | True | True | 4.310118450570991 | 5.78 | 4.9 |  |
-| keep | 14.821 | True | True | True | True | 5.846286957993113 | 4.42 | 2.37 | artifact_reading_present |
-| point | 14.793 | True | True | True | True | 5.373325470670158 | 4.55 | 3.39 | artifact_reading_present |
-| paint | 14.736 | True | True | True | True | 4.565529730074552 | 4.45 | 4.79 | artifact_reading_present |
-| poison | 14.735 | True | True | True | True | 4.38978521313861 | 5.58 | 4.27 |  |
-| earth | 14.712 | True | True | True | True | 4.99727018872971 | 5.37 | 4.8 | artifact_reading_present |
-| change | 14.695 | True | True | True | True | 5.380289187188625 | 4.26 | 2.89 | artifact_reading_present |
-| bucket | 14.676 | True | True | True | True | 4.001104103120291 | 5.61 | 4.96 |  |
-| land | 14.62 | True | True | True | True | 4.944563838213708 | 5.22 | 4.57 | artifact_reading_present |
-| outside | 14.566 | True | True | True | False | 5.229953411338771 | 3.578781 | 4.25 |  |
-| part | 14.507 | True | True | True | True | 5.416924855227094 | 5.11 | 3.29 | artifact_reading_present |
-| early | 14.505 | True | True | True | True | 5.033064553169931 | 5.3052150000000005 | 2.25 |  |
-| slow | 14.445 | True | True | True | True | 4.880441946887147 | 4.15 | 3.28 | artifact_reading_present |
-| rough | 14.382 | True | True | True | True | 4.572412512512536 | 6.21 | 3.83 |  |
-| liquid | 14.335 | True | True | True | True | 3.8895293280699725 | 5.83 | 4.72 |  |
+| primary_alias | evidence_count | strict_lemma_seed | typed_sense_seed | longman | ogden | high_frequency | early_aoa | high_concreteness | frequency | age_of_acquisition | concreteness | flags |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| again | 7 | True | True | True | True | True | True | False | 5.898527141458522 | 5.784780000000001 | 2.0 |  |
+| back | 7 | True | False | True | True | True | True | True | 6.302422401748658 | 5.3052150000000005 | 4.33 |  |
+| body | 7 | True | False | True | True | True | True | True | 5.290659961184746 | 4.28 | 4.79 |  |
+| bread | 7 | True | True | True | True | False | True | True | 4.452002435102972 | 3.58 | 4.92 |  |
+| brush | 7 | True | True | True | True | False | True | True | 4.150972439438991 | 3.78 | 4.54 |  |
+| bucket | 7 | True | True | True | True | False | True | True | 4.001104103120291 | 5.61 | 4.96 |  |
+| butter | 7 | True | True | True | True | False | True | True | 4.310118450570991 | 5.78 | 4.9 |  |
+| coat | 7 | True | True | True | True | False | True | True | 4.623666186580708 | 3.58 | 4.97 |  |
+| early | 7 | True | True | True | True | True | True | False | 5.033064553169931 | 5.3052150000000005 | 2.25 |  |
+| face | 7 | True | False | True | True | True | True | True | 5.4605672710785385 | 3.75 | 4.87 |  |
+| floor | 7 | True | False | True | True | True | True | True | 5.002205406405222 | 4.44 | 4.8 |  |
+| fruit | 7 | True | True | True | True | False | True | True | 4.33676568829362 | 3.63 | 4.81 |  |
+| full | 7 | True | True | True | True | True | True | False | 5.221916775536831 | 4.24 | 3.59 |  |
+| give | 7 | True | True | True | True | True | True | False | 6.066788831224598 | 4.28 | 2.83 |  |
+| group | 7 | True | True | True | True | False | True | True | 4.867368360464324 | 5.94 | 4.12 |  |
+| hand | 7 | True | False | True | True | True | True | True | 5.4460450243514344 | 2.74 | 4.72 |  |
+| head | 7 | True | False | True | True | True | True | True | 5.569397518200379 | 3.42 | 4.75 |  |
+| hole | 7 | True | True | True | True | False | True | True | 4.764590591461673 | 5.05 | 4.81 |  |
+| horn | 7 | True | True | True | True | False | True | True | 4.3236464134748305 | 4.84 | 5.0 |  |
+| knee | 7 | True | True | True | True | False | True | True | 4.16689540553616 | 4.42 | 5.0 |  |
+| liquid | 7 | True | True | True | True | False | True | True | 3.8895293280699725 | 5.83 | 4.72 |  |
+| money | 7 | True | False | True | True | True | True | True | 5.806116190004838 | 5.11 | 4.54 |  |
+| mother | 7 | True | False | True | True | True | True | True | 5.680592329993564 | 2.63 | 4.6 |  |
+| mouth | 7 | True | False | True | True | True | True | True | 5.018235304247382 | 3.58 | 4.74 |  |
+| music | 7 | True | False | True | True | True | True | True | 5.180294460179846 | 3.81 | 4.31 |  |
+| open | 7 | True | True | True | True | True | True | False | 5.505139348307253 | 5.0 | 3.21 |  |
+| over | 7 | True | True | True | True | True | True | False | 6.121067135292526 | 5.571640000000001 | 2.46 |  |
+| paper | 7 | True | False | True | True | True | True | True | 5.013809543730414 | 4.0 | 4.93 |  |
+| place | 7 | True | True | True | True | True | True | False | 5.779495619263105 | 4.95 | 3.48 |  |
+| play | 7 | True | True | True | True | True | True | False | 5.549080607051831 | 4.1 | 3.24 |  |
+| poison | 7 | True | True | True | True | False | True | True | 4.38978521313861 | 5.58 | 4.27 |  |
+| powder | 7 | True | True | True | True | False | True | True | 4.2051180439048785 | 5.06 | 4.76 |  |
+| quiet | 7 | True | True | True | True | True | True | False | 5.068462695564611 | 4.15 | 2.76 |  |
+| river | 7 | True | True | True | True | False | True | True | 4.74362057766875 | 4.9 | 4.89 |  |
+| so | 7 | True | True | True | True | True | True | False | 6.627197751579461 | 5.14536 | 1.42 |  |
+| step | 7 | True | False | True | True | True | True | True | 5.073804816057012 | 4.11 | 4.54 |  |
+| talk | 7 | True | False | True | True | True | True | True | 5.931380392596807 | 3.68 | 4.07 |  |
+| yellow | 7 | True | True | True | True | False | True | True | 4.528623241553753 | 3.2 | 4.3 |  |
+| human | 7 | True | True | True | False | True | True | True | 5.095564313119004 | 4.83 | 4.93 |  |
+| outside | 7 | True | True | True | False | True | True | True | 5.229953411338771 | 3.578781 | 4.25 |  |
+| piece | 7 | True | True | True | False | True | True | True | 5.0946078674364355 | 4.89 | 4.14 |  |
+| after | 6 | True | False | True | True | True | True | False | 5.833575592240191 | 5.997920000000001 | 2.12 |  |
+| animal | 6 | True | False | True | True | False | True | True | 4.657509282600378 | 2.89 | 4.61 |  |
+| apple | 6 | True | False | True | True | False | True | True | 4.373901076429573 | 4.15 | 5.0 |  |
+| before | 6 | True | False | True | True | True | True | False | 5.899310611470681 | 5.454413000000001 | 1.96 |  |
+| bird | 6 | False | True | True | True | False | True | True | 4.657134890782447 | 3.52 | 5.0 |  |
+| blade | 6 | True | True | True | True | False | False | True | 4.114002221512477 | 6.72 | 4.93 |  |
+| boat | 6 | True | False | True | True | False | True | True | 4.980787604781877 | 3.84 | 4.93 |  |
+| bone | 6 | True | False | True | True | False | True | True | 4.415685783111545 | 5.53 | 4.9 |  |
+| brain | 6 | True | False | True | True | False | True | True | 4.886116170956266 | 5.76 | 4.69 |  |
 
 ## Flag Counts
 
@@ -75,57 +76,57 @@ This is not a final Base English list. It is a ranked IC-level workbench built f
 | artifact_reading_present | 2676 |
 | numeric_form | 79 |
 
-## High-Scoring Flagged Rows
+## Flagged Rows Excluded From Clean Candidate View
 
-| primary_alias | score | strict_lemma_seed | typed_sense_seed | longman | ogden | frequency | age_of_acquisition | concreteness | flags |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| water | 16.667 | True | True | True | True | 5.351738198028865 | 2.37 | 5.0 | artifact_reading_present |
-| ball | 16.071 | True | True | True | True | 5.020512508995374 | 2.9 | 5.0 | artifact_reading_present |
-| school | 15.972 | True | True | True | True | 5.522027521013506 | 3.89 | 4.79 | artifact_reading_present |
-| father | 15.948 | True | True | True | True | 5.743313547269322 | 4.11 | 4.52 | artifact_reading_present |
-| no | 15.867 | True | True | True | True | 6.7754927459819 | 2.715564 | 2.45 | artifact_reading_present |
-| come | 15.7 | True | True | True | True | 6.496472254640901 | 3.32 | 2.72 | artifact_reading_present |
-| blood | 15.254 | True | True | True | True | 5.269237623017895 | 4.89 | 4.86 | artifact_reading_present |
-| line | 15.139 | True | True | True | True | 5.313684719578784 | 4.85 | 4.5 | artifact_reading_present |
-| blue | 15.125 | True | True | True | True | 5.009754167981454 | 3.53 | 3.76 | artifact_reading_present |
-| orange | 15.048 | True | True | True | True | 4.3483578662235605 | 3.26 | 4.66 | artifact_reading_present |
-| green | 15.015 | True | True | True | True | 4.859683592717567 | 3.79 | 4.1 | artifact_reading_present |
-| window | 14.994 | True | True | True | True | 4.934001776549405 | 4.74 | 4.86 | artifact_reading_present |
-| move | 14.936 | True | True | True | True | 5.620743547015648 | 4.62 | 3.25 | artifact_reading_present |
-| sweet | 14.896 | True | True | True | True | 5.161417849857884 | 4.53 | 4.0 | artifact_reading_present |
-| keep | 14.821 | True | True | True | True | 5.846286957993113 | 4.42 | 2.37 | artifact_reading_present |
-| point | 14.793 | True | True | True | True | 5.373325470670158 | 4.55 | 3.39 | artifact_reading_present |
-| paint | 14.736 | True | True | True | True | 4.565529730074552 | 4.45 | 4.79 | artifact_reading_present |
-| earth | 14.712 | True | True | True | True | 4.99727018872971 | 5.37 | 4.8 | artifact_reading_present |
-| change | 14.695 | True | True | True | True | 5.380289187188625 | 4.26 | 2.89 | artifact_reading_present |
-| land | 14.62 | True | True | True | True | 4.944563838213708 | 5.22 | 4.57 | artifact_reading_present |
-| part | 14.507 | True | True | True | True | 5.416924855227094 | 5.11 | 3.29 | artifact_reading_present |
-| slow | 14.445 | True | True | True | True | 4.880441946887147 | 4.15 | 3.28 | artifact_reading_present |
-| list | 14.331 | True | True | True | True | 4.905781618924809 | 5.58 | 4.43 | artifact_reading_present |
-| home | 14.01 | True | True | True | False | 5.888343270486459 | 3.8665200000000004 | 4.11 | artifact_reading_present |
-| male | 13.94 | True | True | True | True | 4.5303820298257875 | 5.63 | 4.45 | artifact_reading_present |
-| gold | 13.752 | True | True | True | True | 4.896815771751891 | 7.1 | 4.81 | artifact_reading_present |
-| silver | 13.656 | True | True | True | True | 4.501349156687091 | 6.21 | 4.52 | artifact_reading_present |
-| west | 13.557 | True | True | True | True | 4.781652050445911 | 5.89 | 3.44 | artifact_reading_present |
-| gray | 13.509 | True | True | True | True | 4.32445290299518 | 5.74 | 4.11 | artifact_reading_present |
-| game | 13.488 | True | True | True | False | 5.368365361398272 | 4.26 | 4.5 | artifact_reading_present |
-| force | 13.349 | True | True | True | True | 4.848739411199908 | 6.0 | 3.0 | artifact_reading_present |
-| good | 13.225 | True | True | True | False | 6.4160709261850934 | 3.55 | 1.64 | artifact_reading_present |
-| iron | 12.889 | True | True | True | True | 4.25372961581231 | 7.32 | 4.59 | artifact_reading_present |
-| price | 12.867 | True | True | True | True | 4.726881783484425 | 7.35 | 3.63 | artifact_reading_present |
-| east | 12.745 | True | True | True | True | 4.694611211754808 | 6.94 | 3.04 | artifact_reading_present |
-| common | 12.639 | True | True | True | True | 4.649006399867494 | 6.94 | 2.92 | artifact_reading_present |
-| drop | 12.59 | False | True | True | True | 5.115438770499618 | 3.26 | 4.21 | artifact_reading_present |
-| sure | 12.575 | True | True | True | False | 6.040735067507489 | 4.85 | 1.73 | artifact_reading_present |
-| tree | 12.527 | False | True | True | True | 4.812448664022696 | 3.57 | 5.0 | artifact_reading_present |
-| direction | 12.436 | True | True | True | True | 4.381386025030914 | 6.68 | 2.79 | artifact_reading_present |
-| form | 12.405 | True | True | True | True | 4.63048980772316 | 7.58 | 3.13 | artifact_reading_present |
-| night | 12.392 | True | False | True | True | 5.936951708951002 | 3.61 | 4.52 | artifact_reading_present |
-| picture | 12.376 | False | True | True | True | 5.140761855371538 | 4.05 | 4.52 | artifact_reading_present |
-| stop | 12.244 | True | False | True | True | 5.849004364442974 | 2.89 | 3.68 | artifact_reading_present |
-| acid | 12.124 | True | True | True | True | 3.9985519244812187 | 9.6 | 4.25 | artifact_reading_present |
-| hair | 12.086 | True | False | True | True | 5.185706820939542 | 3.17 | 4.97 | artifact_reading_present |
-| food | 11.963 | True | False | True | True | 5.188194987613777 | 3.25 | 4.8 | artifact_reading_present |
-| angle | 11.924 | True | True | True | True | 4.173789113484061 | 8.05 | 3.5 | artifact_reading_present |
-| book | 11.857 | True | False | True | True | 5.2473775846042034 | 3.68 | 4.9 | artifact_reading_present |
-| fall | 11.738 | False | True | True | True | 5.073230447341251 | 4.71 | 4.04 | artifact_reading_present |
+| primary_alias | evidence_count | strict_lemma_seed | typed_sense_seed | longman | ogden | high_frequency | early_aoa | high_concreteness | frequency | age_of_acquisition | concreteness | flags |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| least | 5 | False | True | True | True | True | False | False | 5.3170170764799085 |  | 2.36 | missing_aoa |
+| less | 5 | True | False | True | True | True | False | False | 5.045187354785956 |  | 2.77 | missing_aoa |
+| farthest | 4 | True | True | True | False | False | False | False | 2.9253025977240465 |  | 2.77 | missing_aoa |
+| broken | 4 | False | True | False | True | False | False | True | 4.852338557339516 |  | 4.11 | missing_aoa |
+| waiting | 4 | True | False | False | True | True | False | False | 5.3239691890243614 |  | 2.7 | missing_aoa |
+| already | 3 | False | False | True | False | True | False | False | 5.502607322614635 |  | 1.64 | missing_aoa |
+| anymore | 3 | False | False | True | False | True | False | False | 5.274014887740862 |  | 2.04 | missing_aoa |
+| determined | 3 | True | False | True | False | False | False | False | 4.119203415198285 |  | 1.79 | missing_aoa |
+| finally | 3 | False | False | True | False | True | False | False | 5.069260964533772 |  | 1.67 | missing_aoa |
+| lower | 3 | True | False | True | False | False | False | False | 4.443510372991508 |  | 2.76 | missing_aoa |
+| might | 3 | False | False | True | False | True | False | False | 5.71236746483796 |  | 2.32 | missing_aoa |
+| probably | 3 | False | False | True | False | True | False | False | 5.447898454484325 |  | 1.73 | missing_aoa |
+| related | 3 | True | False | True | False | False | False | False | 4.100720009504272 |  | 2.56 | missing_aoa |
+| boiling | 3 | False | False | False | True | False | False | True | 3.626287893295391 |  | 4.39 | missing_aoa |
+| driving | 3 | True | False | False | True | False | False | False | 4.869440819506996 |  | 3.96 | missing_aoa |
+| fixed | 3 | True | False | False | True | False | False | False | 4.508791349505557 |  | 2.89 | missing_aoa |
+| hanging | 3 | False | False | False | True | False | False | True | 4.7289502351925385 |  | 4.03 | missing_aoa |
+| learning | 3 | True | False | False | True | False | False | False | 4.307612898533501 |  | 3.14 | missing_aoa |
+| anywhere | 2 | False | False | True | False | False | False | False | 4.945239632808962 |  | 2.21 | missing_aoa |
+| educated | 2 | False | False | True | False | False | False | False | 3.74362057766875 |  | 2.19 | missing_aoa |
+| fairly | 2 | False | False | True | False | False | False | False | 3.9630069848595433 |  | 2.07 | missing_aoa |
+| forever | 2 | False | False | True | False | False | False | False | 4.947932344157292 |  | 1.34 | missing_aoa |
+| generally | 2 | False | False | True | False | False | False | False | 3.9202230721947715 |  | 1.65 | missing_aoa |
+| lately | 2 | False | False | True | False | False | False | False | 4.682769249247839 |  | 1.41 | missing_aoa |
+| partly | 2 | False | False | True | False | False | False | False | 3.53734680995861 |  | 2.3 | missing_aoa |
+| pointed | 2 | False | False | True | False | False | False | False | 3.880665867738667 |  | 3.57 | missing_aoa |
+| possibly | 2 | False | False | True | False | False | False | False | 4.688904692103868 |  | 1.74 | missing_aoa |
+| previously | 2 | False | False | True | False | False | False | False | 4.257506113364567 |  | 1.64 | missing_aoa |
+| publicly | 2 | False | False | True | False | False | False | False | 3.30886748144324 |  | 2.38 | missing_aoa |
+| recently | 2 | False | False | True | False | False | False | False | 4.4153591230871925 |  | 1.89 | missing_aoa |
+| seriously | 2 | False | False | True | False | False | False | False | 4.806514686269441 |  | 2.0 | missing_aoa |
+| specially | 2 | False | False | True | False | False | False | False | 4.8270016272594045 |  | 1.74 | missing_aoa |
+| upside | 2 | False | False | True | False | False | False | False | 3.9685277517693267 |  | 2.62 | missing_aoa |
+| worse | 2 | False | False | True | False | False | False | False | 4.991064645027869 |  | 1.61 | missing_aoa |
+| worst | 2 | False | False | True | False | False | False | False | 4.750471991170109 |  | 1.54 | missing_aoa |
+| yearly | 2 | False | False | True | False | False | False | False | 2.9545919738260342 |  | 3.17 | missing_aoa |
+| bent | 2 | False | False | False | True | False | False | False | 3.85886050830352 |  | 3.62 | missing_aoa |
+| mixed | 2 | False | False | False | True | False | False | False | 4.329658892732802 |  | 3.03 | missing_aoa |
+| prose | 2 | False | False | False | True | False | False | False | 2.9820302221729738 | 12.06 |  | missing_concreteness |
+| ball | 7 | True | True | True | True | True | True | True | 5.020512508995374 | 2.9 | 5.0 | artifact_reading_present |
+| blood | 7 | True | True | True | True | True | True | True | 5.269237623017895 | 4.89 | 4.86 | artifact_reading_present |
+| father | 7 | True | True | True | True | True | True | True | 5.743313547269322 | 4.11 | 4.52 | artifact_reading_present |
+| line | 7 | True | True | True | True | True | True | True | 5.313684719578784 | 4.85 | 4.5 | artifact_reading_present |
+| school | 7 | True | True | True | True | True | True | True | 5.522027521013506 | 3.89 | 4.79 | artifact_reading_present |
+| sweet | 7 | True | True | True | True | True | True | True | 5.161417849857884 | 4.53 | 4.0 | artifact_reading_present |
+| water | 7 | True | True | True | True | True | True | True | 5.351738198028865 | 2.37 | 5.0 | artifact_reading_present |
+| blue | 6 | True | True | True | True | True | True | False | 5.009754167981454 | 3.53 | 3.76 | artifact_reading_present |
+| book | 6 | True | False | True | True | True | True | True | 5.2473775846042034 | 3.68 | 4.9 | artifact_reading_present |
+| catch | 6 | True | False | True | True | True | True | True | 5.517969864618105 | 4.33 | 4.61 | artifact_reading_present |
+| change | 6 | True | True | True | True | True | True | False | 5.380289187188625 | 4.26 | 2.89 | artifact_reading_present |
