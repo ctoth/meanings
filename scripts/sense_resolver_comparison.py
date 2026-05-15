@@ -56,6 +56,16 @@ def self_loop_count(build: SenseLevelGraphBuild) -> int:
     return sum(1 for node, targets in build.adjacency.items() if node in targets)
 
 
+def emit(message: str, progress_log: Path | None = None) -> None:
+    timestamped = f"[{time.strftime('%Y-%m-%d %H:%M:%S')}] {message}"
+    print(timestamped, flush=True)
+    if progress_log is not None:
+        progress_log.parent.mkdir(parents=True, exist_ok=True)
+        with progress_log.open("a", encoding="utf-8") as handle:
+            handle.write(timestamped)
+            handle.write("\n")
+
+
 def indegree_of(build: SenseLevelGraphBuild) -> dict[str, int]:
     indeg: dict[str, int] = {node: 0 for node in build.adjacency}
     for targets in build.adjacency.values():
@@ -362,17 +372,23 @@ def main() -> None:
     parser.add_argument(
         "--p2-seed", default="data/oewn-sense-p2-ic-seed.json", type=Path
     )
+    parser.add_argument(
+        "--progress-log", default=None, type=Path,
+        help="Optional progress log for long non-interactive runs.",
+    )
     args = parser.parse_args()
+    if args.progress_log and args.progress_log.exists():
+        args.progress_log.unlink()
 
-    print("[1/4] Building baseline sense-level graph (polysemy_fallback=False)...", flush=True)
+    emit("[1/4] Building baseline sense-level graph (polysemy_fallback=False)...", args.progress_log)
     t0 = time.time()
     baseline_build = build_sense_level_paper_wordnet_graph(args.lexicon, polysemy_fallback=False)
     baseline_build_runtime = time.time() - t0
-    print(
+    emit(
         f"      build complete in {baseline_build_runtime:.1f}s -- "
         f"{len(baseline_build.nodes)} nodes, "
         f"{sum(len(t) for t in baseline_build.adjacency.values())} edges",
-        flush=True,
+        args.progress_log,
     )
     t1 = time.time()
     baseline_analysis = analyze_kernel(
@@ -380,21 +396,21 @@ def main() -> None:
         seed_method=SEED_METHOD, core_policy=CORE_POLICY,
     )
     baseline_analysis_runtime = time.time() - t1
-    print(
+    emit(
         f"      analyze_kernel complete in {baseline_analysis_runtime:.1f}s -- "
         f"Kernel {len(baseline_analysis.kernel_nodes)}",
-        flush=True,
+        args.progress_log,
     )
 
-    print("[2/4] Building IC-fallback sense-level graph (polysemy_fallback=True)...", flush=True)
+    emit("[2/4] Building IC-fallback sense-level graph (polysemy_fallback=True)...", args.progress_log)
     t2 = time.time()
     fallback_build = build_sense_level_paper_wordnet_graph(args.lexicon, polysemy_fallback=True)
     fallback_build_runtime = time.time() - t2
-    print(
+    emit(
         f"      build complete in {fallback_build_runtime:.1f}s -- "
         f"{len(fallback_build.nodes)} nodes, "
         f"{sum(len(t) for t in fallback_build.adjacency.values())} edges",
-        flush=True,
+        args.progress_log,
     )
     t3 = time.time()
     fallback_analysis = analyze_kernel(
@@ -402,13 +418,13 @@ def main() -> None:
         seed_method=SEED_METHOD, core_policy=CORE_POLICY,
     )
     fallback_analysis_runtime = time.time() - t3
-    print(
+    emit(
         f"      analyze_kernel complete in {fallback_analysis_runtime:.1f}s -- "
         f"Kernel {len(fallback_analysis.kernel_nodes)}",
-        flush=True,
+        args.progress_log,
     )
 
-    print("[3/4] IC-projection comparison...", flush=True)
+    emit("[3/4] IC-projection comparison...", args.progress_log)
     # P1: project to IC graph, then FVS
     t4 = time.time()
     ic_nodes, ic_adj = project_to_ic(fallback_build)
@@ -418,21 +434,21 @@ def main() -> None:
     )
     p1_runtime = time.time() - t4
     p1_seed_ics = set(p1_analysis.seed_nodes)
-    print(
+    emit(
         f"      P1: {len(ic_nodes)} IC nodes, "
         f"{p1_analysis.edges} edges, Kernel {len(p1_analysis.kernel_nodes)}, "
         f"seed {len(p1_analysis.seed_nodes)} in {p1_runtime:.1f}s",
-        flush=True,
+        args.progress_log,
     )
     # P2: take the sense-graph FVS seed, restrict to one rep per IC
     p2_reps = restrict_to_ic_representatives(fallback_build, fallback_analysis.seed_nodes)
     p2_seed_ics = {
         str(fallback_build.node_metadata[n]["ic_id"]) for n in p2_reps
     }
-    print(
+    emit(
         f"      P2: sense-seed {len(fallback_analysis.seed_nodes)} -> "
         f"{len(p2_reps)} IC reps ({len(p2_seed_ics)} unique ICs)",
-        flush=True,
+        args.progress_log,
     )
 
     # which ICs each path has that the other doesn't
@@ -446,7 +462,7 @@ def main() -> None:
         LEMMA_LEVEL_KERNEL,
     )
 
-    print("[4/4] Writing outputs...", flush=True)
+    emit("[4/4] Writing outputs...", args.progress_log)
     payload: dict[str, Any] = {
         "lexicon_id": args.lexicon,
         "baseline": summarize(
@@ -504,8 +520,8 @@ def main() -> None:
         json.dumps(p2_payload, indent=2, ensure_ascii=True) + "\n",
         encoding="utf-8",
     )
-    print(f"      wrote {args.json} + {args.md} + {args.p2_seed}", flush=True)
-    print(f"\nVerdict: {verdict_code} -- see {args.md}", flush=True)
+    emit(f"      wrote {args.json} + {args.md} + {args.p2_seed}", args.progress_log)
+    emit(f"Verdict: {verdict_code} -- see {args.md}", args.progress_log)
 
 
 def _ic_projection_recommendation(p1_seed: int, p2_seed: int, p1_residual: int) -> str:
