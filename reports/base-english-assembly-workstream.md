@@ -88,3 +88,170 @@ Corrected workbench summary:
 - Ogden-supported rows: `741`
 
 This is now a defensible first bench: descriptive, filter-based, and explicit about unresolved provenance. It is still not L0.
+
+## Executable Workstream
+
+### Phase 0: Candidate Workbench
+
+Status: done for the first slice.
+
+Purpose: put all existing evidence on one IC-level surface without claiming a final base list.
+
+Artifacts:
+
+- `scripts/base_english_candidates.py`
+- `data/base_english_candidates.csv`
+- `reports/base-english-candidates.md`
+
+Command:
+
+```powershell
+uv run python scripts\base_english_candidates.py
+```
+
+Acceptance gate:
+
+- The report avoids a composite score.
+- The clean-candidate view excludes numeric, multiword, artifact-mixed, and technical-only rows.
+- The report records the typed-sense seed provenance as `legacy_typed_sense_seed_pre_p2`.
+
+### Phase 1: Stabilize The Strict Sense/IC Seed
+
+Purpose: replace legacy typed-sense-seed evidence with the round-8 P2 result: sense-graph FVS first, then one representative IC at export.
+
+Tasks:
+
+- Find or add the direct export path for the P2 seed from `scripts/sense_resolver_comparison.py`.
+- Emit `data/oewn-sense-p2-ic-seed.json`.
+- Record resolver policy, graph node count, edge count, kernel count, seed count, and residual cyclic SCC count.
+- Update `scripts/base_english_candidates.py` to read the P2 seed and set `resolver_id` accordingly.
+
+Commands:
+
+```powershell
+uv run python scripts\sense_resolver_comparison.py
+uv run python scripts\base_english_candidates.py
+```
+
+Acceptance gate:
+
+- No row sourced from the sense graph has hidden resolver provenance.
+- The candidate report distinguishes old typed seed, P1, and P2 if more than one exists.
+- Genus-victim rows (`line`, `head`, `break`, `take`, `make`, `set`, `run`, `point`) are called out if their seed membership changes.
+
+### Phase 2: Derive L0 Candidates
+
+Purpose: produce the first explicit candidate set for grounded primitives, not by score but by independent evidence channels.
+
+Candidate channels:
+
+- Strict admission: admitted under the current defeasible policy.
+- Structural: in P2 sense/IC seed or strict lemma seed.
+- Cross-list: in at least two of Longman, Ogden, OEWN seed, GCIDE seed.
+- Human-grounding proxy: early AoA, high concreteness, or sensorimotor strength when Lancaster data is added.
+
+Artifacts:
+
+- `scripts/derive_l0.py`
+- `data/l0-grounded-primitives.json`
+- `reports/l0-derivation.md`
+
+Acceptance gate:
+
+- Report counts each channel separately and at the intersection.
+- Report includes near-misses, not only admitted rows.
+- Report states whether L0 mostly collapses to Ogden/Longman; if so, the strong emergent-primitives claim fails.
+- No single channel is allowed to imply L0 membership by itself.
+
+### Phase 3: Build The Unfolding Index
+
+Purpose: test whether admitted/base ICs actually act like an assembly language by measuring definition closures.
+
+Artifacts:
+
+- `scripts/build_unfolding_index.py`
+- `data/sense-unfolding-index.json`
+- `reports/unfolding-index.md`
+
+Fields:
+
+- `sense_id`
+- `ic_id`
+- `layer`
+- `direct_definiens_ic_ids`
+- `transitive_closure_ic_ids`
+- `closure_size`
+- `seed_ics_in_closure`
+- `admission_decision`
+- `rationale_ref`
+
+Acceptance gate:
+
+- Median and tail closure sizes are reported.
+- Failed or huge closures are not hidden.
+- If most closures require thousands of ICs, the assembly-language metaphor is weakened or dead for that graph.
+
+### Phase 4: Add A Stronger External Substrate
+
+Purpose: attack the lexicographer's confound with a third full-definition source, not another prescribed learner list.
+
+Preferred first source:
+
+- Kaikki/Wiktextract English Wiktionary JSONL. Current raw data page: https://kaikki.org/dictionary/rawdata.html
+
+Alternative / later source:
+
+- OpenGloss, if the resource is locally obtainable with license/provenance intact.
+
+Tasks:
+
+- Add a resource adapter that emits `LexicalGraphBuild`.
+- Keep resource-specific parsing outside `graph_analysis.py`.
+- Produce a cross-resource membership comparison, not only a seed-size comparison.
+
+Acceptance gate:
+
+- Parser provenance and license are documented.
+- Edge density and ambiguous-resolution rate are reported.
+- Cross-resource agreement is measured against clean candidates and L0, not raw MinSet only.
+
+### Phase 5: Add Better Grounding Evidence
+
+Purpose: add a signal that is less reducible to dictionary editorial practice.
+
+Data:
+
+- Lancaster Sensorimotor Norms, official site: https://www.lancaster.ac.uk/psychology/lsnorms/index.php
+- CHILDES/TalkBank for child-directed and acquisition evidence, access/citation rules: https://talkbank.org/childes/access/index.html
+
+Tasks:
+
+- Add `data/psycholinguistic/sensorimotor.csv` with provenance.
+- Extend annotations to include sensorimotor max/composite scores.
+- Re-run L0 derivation with and without sensorimotor evidence.
+
+Acceptance gate:
+
+- Sensorimotor evidence changes some boundary decisions; if it does not, report that plainly.
+- CHILDES-derived frequency is kept separate from adult subtitle/web frequency.
+
+### Phase 6: Multilingual Check
+
+Purpose: test whether the English base is an English artifact or a reusable bridge surface.
+
+Timing: after Phases 1-4. Multilingual is a design constraint now and an empirical test later.
+
+Tasks:
+
+- Add an Open Multilingual WordNet/aligned-wordnet adapter.
+- Compare aligned synset/ILI kernel participation across languages.
+- Test whether high-agreement English L0 ICs map to stable cross-language anchors.
+
+Acceptance gate:
+
+- Node policy, sense granularity, POS policy, and edge policy are documented per language.
+- No cross-language claim is made from resources with incompatible graph construction policies.
+
+## Current Next Commit-Sized Slice
+
+Implement Phase 1: emit the P2 IC seed as a first-class artifact and replace the legacy typed-sense-seed input in `scripts/base_english_candidates.py`.
