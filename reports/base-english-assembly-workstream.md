@@ -268,11 +268,15 @@ Interpretation:
 
 ### Phase 4: Add A Stronger External Substrate
 
+Status: executable adapter added; full-run analysis not yet executed.
+
 Purpose: attack the lexicographer's confound with a third full-definition source, not another prescribed learner list.
 
 Preferred first source:
 
 - Kaikki/Wiktextract English Wiktionary JSONL. Current raw data page: https://kaikki.org/dictionary/rawdata.html
+- Verified 2026-05-15: current extraction is from the `2026-05-01` enwiktionary dump, extracted on `2026-05-12`, with raw JSONL `21.4GB` or compressed gz `2.5GB`.
+- Full compressed stream URL used by the runner: `https://kaikki.org/dictionary/raw-wiktextract-data.jsonl.gz`
 
 Alternative / later source:
 
@@ -289,6 +293,49 @@ Acceptance gate:
 - Parser provenance and license are documented.
 - Edge density and ambiguous-resolution rate are reported.
 - Cross-resource agreement is measured against clean candidates and L0, not raw MinSet only.
+
+Artifacts:
+
+- `src/meanings/wiktextract_adapter.py`
+- `scripts/kaikki_substrate.py`
+- `reports/kaikki-substrate-summary.json`
+- `reports/kaikki-substrate-summary.md`
+- `reports/kaikki-substrate.progress.log` (diagnostic, not committed)
+
+Command:
+
+```powershell
+uv run python scripts\kaikki_substrate.py --progress-log reports\kaikki-substrate.progress.log
+```
+
+Smoke command already run against the real upstream compressed stream:
+
+```powershell
+uv run python scripts\kaikki_substrate.py --max-entries 5000 --progress-log reports\kaikki-substrate.progress.log
+```
+
+Smoke result:
+
+- Max English entries: `5,000`
+- Nodes: `4,177`
+- Edges: `11,651`
+- Candidate matches: `18,418`
+- Ambiguous skipped: `1,746`
+- Graph IC count: `2,670`
+- L0 overlap: `71 / 317` (`22.40%`)
+- Clean candidate overlap: `219 / 1,476` (`14.84%`)
+
+Runner discipline:
+
+- The Kaikki runner uses `reports/kaikki-substrate.lock` by default.
+- It logs timestamped progress to `reports/kaikki-substrate.progress.log`.
+- It streams JSONL/gz and does not require committing or expanding the multi-GB raw dump.
+
+Interpretation:
+
+- The external-substrate path is now executable and provenance-bearing.
+- The smoke result only proves the stream/adapter/report path; it is not the cross-resource empirical result.
+- The full run remains the next expensive gate: build the complete Kaikki graph, then optionally run `--analyze-kernel` after the graph statistics are known.
 
 ### Phase 5: Add Better Grounding Evidence
 
