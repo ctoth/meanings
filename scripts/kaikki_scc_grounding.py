@@ -212,6 +212,8 @@ def staged_seed(
     source_core_count: int,
     bounded_passes: int,
     exact_limit: int,
+    large_residual_batch_size: int,
+    large_residual_max_batches: int,
     progress_path: Path,
     progress_log: Path | None,
 ) -> tuple[list[str], list[dict[str, Any]], list[set[str]]]:
@@ -276,6 +278,47 @@ def staged_seed(
     stages.append(row)
     progress_event(progress_path, row)
     emit(f"Stage exact_small_residuals removed={removed} residual={row['residual_cyclic_scc_count']} largest={row['largest_residual_scc']}", progress_log)
+
+    for batch_index in range(1, large_residual_max_batches + 1):
+        active_graph = induced_subgraph(active, kernel_graph)
+        residual = cyclic_sccs(active, active_graph)
+        if not residual:
+            break
+        largest = max(residual, key=len)
+        if len(largest) <= exact_limit:
+            break
+        started = time.perf_counter()
+        removals = high_degree_removals(largest, active_graph, min(large_residual_batch_size, len(largest)))
+        removed = remove_nodes(active, seed, removals)
+        row = measure_stage(f"large_residual_batch_{batch_index}", active, kernel_graph, removed, time.perf_counter() - started)
+        stages.append(row)
+        progress_event(progress_path, row)
+        emit(
+            f"Stage large_residual_batch_{batch_index} removed={removed} residual={row['residual_cyclic_scc_count']} largest={row['largest_residual_scc']}",
+            progress_log,
+        )
+        if row["residual_cyclic_scc_count"] == 0:
+            break
+
+    started = time.perf_counter()
+    active_graph = induced_subgraph(active, kernel_graph)
+    residual = cyclic_sccs(active, active_graph)
+    exact_removals = []
+    skipped_large = []
+    for component in residual:
+        if len(component) > exact_limit:
+            skipped_large.append(component)
+            continue
+        exact = exact_feedback_vertex_set(component, active_graph, exact_limit)
+        if exact:
+            exact_removals.extend(exact)
+    removed = remove_nodes(active, seed, exact_removals)
+    row = measure_stage("final_exact_small_residuals", active, kernel_graph, removed, time.perf_counter() - started)
+    row["skipped_large_residual_scc_count"] = len(skipped_large)
+    row["largest_skipped_residual_scc"] = max((len(component) for component in skipped_large), default=0)
+    stages.append(row)
+    progress_event(progress_path, row)
+    emit(f"Stage final_exact_small_residuals removed={removed} residual={row['residual_cyclic_scc_count']} largest={row['largest_residual_scc']}", progress_log)
 
     final_residual = cyclic_sccs(active, induced_subgraph(active, kernel_graph))
     return seed, stages, final_residual
@@ -418,6 +461,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--source-core-count", type=int, default=1000)
     parser.add_argument("--bounded-passes", type=int, default=64)
     parser.add_argument("--exact-limit", type=int, default=12)
+    parser.add_argument("--large-residual-batch-size", type=int, default=2000)
+    parser.add_argument("--large-residual-max-batches", type=int, default=100)
     return parser
 
 
@@ -468,6 +513,8 @@ def main() -> None:
         source_core_count=args.source_core_count,
         bounded_passes=args.bounded_passes,
         exact_limit=args.exact_limit,
+        large_residual_batch_size=args.large_residual_batch_size,
+        large_residual_max_batches=args.large_residual_max_batches,
         progress_path=args.progress_jsonl,
         progress_log=args.progress_log,
     )
