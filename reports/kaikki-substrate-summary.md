@@ -32,4 +32,9 @@ This is the external full-definition substrate path for attacking the lexicograp
 - Largest kernel SCC: `93905`
 - Core nodes: `1586`
 - Satellite nodes: `133702`
-- Seed status: `skipped_kernel_only`
+- Seed status: `complete`
+- Seed nodes: `23097`
+- Residual cyclic SCCs: `2`
+- Seed IC count: `22274`
+- L0 in seed: `15 / 317` (`4.73%`)
+- Clean candidates in seed: `66 / 1476` (`4.47%`)
