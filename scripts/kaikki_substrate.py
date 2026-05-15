@@ -197,13 +197,18 @@ def write_report(path: Path, payload: dict[str, Any]) -> None:
                 f"- Core nodes: `{analysis.get('core_node_count', 0)}`",
                 f"- Satellite nodes: `{analysis.get('satellite_node_count', 0)}`",
                 f"- Seed status: `{analysis.get('seed_status', 'not_run')}`",
-                f"- Seed nodes: `{analysis.get('seed_node_count', 0)}`",
-                f"- Residual cyclic SCCs: `{analysis.get('residual_cyclic_scc_count', 0)}`",
-                f"- Seed IC count: `{seed_overlap.get('seed_ic_count', 0)}`",
-                f"- L0 in seed: `{seed_overlap.get('l0_overlap_count', 0)} / {overlap['l0_candidate_count']}` (`{seed_overlap.get('l0_overlap_fraction_of_l0', 0):.2%}`)",
-                f"- Clean candidates in seed: `{seed_overlap.get('clean_overlap_count', 0)} / {overlap['clean_candidate_count']}` (`{seed_overlap.get('clean_overlap_fraction_of_clean', 0):.2%}`)",
             ]
         )
+        if analysis.get("seed_status") == "complete":
+            lines.extend(
+                [
+                    f"- Seed nodes: `{analysis.get('seed_node_count', 0)}`",
+                    f"- Residual cyclic SCCs: `{analysis.get('residual_cyclic_scc_count', 0)}`",
+                    f"- Seed IC count: `{seed_overlap.get('seed_ic_count', 0)}`",
+                    f"- L0 in seed: `{seed_overlap.get('l0_overlap_count', 0)} / {overlap['l0_candidate_count']}` (`{seed_overlap.get('l0_overlap_fraction_of_l0', 0):.2%}`)",
+                    f"- Clean candidates in seed: `{seed_overlap.get('clean_overlap_count', 0)} / {overlap['clean_candidate_count']}` (`{seed_overlap.get('clean_overlap_fraction_of_clean', 0):.2%}`)",
+                ]
+            )
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
