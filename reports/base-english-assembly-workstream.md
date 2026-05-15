@@ -442,4 +442,4 @@ Acceptance gate:
 
 ## Current Next Commit-Sized Slice
 
-Implement Phase 1: emit the P2 IC seed as a first-class artifact and replace the legacy typed-sense-seed input in `scripts/base_english_candidates.py`.
+Add component-level progress/checkpointing inside `solve_minset` or a Kaikki-specific seed runner, then attack the `93,905`-node Kaikki SCC with a staged seed strategy instead of rerunning exact-small-greedy blindly.
