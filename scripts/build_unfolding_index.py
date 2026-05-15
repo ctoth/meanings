@@ -127,7 +127,6 @@ def build_index_rows(
     kernel_nodes: set[str],
     kernel_graph: dict[str, set[str]],
     layer_by_node: dict[str, int],
-    seed_sense_ids: set[str],
     seed_ic_ids: set[str],
     admitted_ics: set[str],
     metadata: dict[str, dict[str, object]],
@@ -138,20 +137,24 @@ def build_index_rows(
     seed_closures: dict[str, set[str]] = {}
     rows: list[dict[str, Any]] = []
     missing_predecessor_closure = 0
+    same_ic_direct_edge_count = 0
 
     for node in sorted(kernel_nodes, key=lambda item: (layer_by_node.get(item, 10**9), item)):
         meta = metadata[node]
         ic_id = str(meta["ic_id"])
         direct_sources = {source for source in reverse_kernel.get(node, set()) if source in layer_by_node}
-        direct_ic_ids = {str(metadata[source]["ic_id"]) for source in direct_sources}
+        same_ic_sources = {source for source in direct_sources if str(metadata[source]["ic_id"]) == ic_id}
+        cross_ic_sources = direct_sources - same_ic_sources
+        same_ic_direct_edge_count += len(same_ic_sources)
+        direct_ic_ids = {str(metadata[source]["ic_id"]) for source in cross_ic_sources}
 
-        if node in seed_sense_ids:
+        if ic_id in seed_ic_ids:
             all_closure = {ic_id}
-            seed_closure = {ic_id} if ic_id in seed_ic_ids else set()
+            seed_closure = {ic_id}
         else:
             all_closure = set(direct_ic_ids)
             seed_closure: set[str] = set()
-            for source in direct_sources:
+            for source in cross_ic_sources:
                 if source not in all_closures:
                     missing_predecessor_closure += 1
                     continue
@@ -171,6 +174,7 @@ def build_index_rows(
                 "pos": str(meta.get("pos", "")),
                 "layer": layer_by_node.get(node),
                 "direct_definiens_ic_ids": sorted(direct_ic_ids),
+                "same_ic_direct_definiens_count": len(same_ic_sources),
                 "transitive_closure_ic_ids": closure_ids,
                 "closure_size": len(all_closure),
                 "closure_truncated": closure_truncated,
@@ -184,6 +188,7 @@ def build_index_rows(
 
     summary = {
         "missing_predecessor_closure_count": missing_predecessor_closure,
+        "same_ic_direct_edge_count": same_ic_direct_edge_count,
         "closure_size_median": statistics.median([row["closure_size"] for row in rows]) if rows else 0,
         "closure_size_p90": percentile([row["closure_size"] for row in rows], 0.90),
         "closure_size_max": max((row["closure_size"] for row in rows), default=0),
@@ -219,8 +224,10 @@ def write_index(
         "closure_policy": {
             "graph": "IC-fallback sense graph",
             "node_scope": "kernel nodes only",
-            "seed_nodes": "all P2 source sense seeds from seed_sense_ids_for_ic, not only exported IC representatives",
+            "seed_nodes": "all kernel senses whose IC is in the exported P2 IC seed",
             "edge_direction": "source sense -> target sense; direct definers of a target are reverse-adjacency sources",
+            "same_ic_edges": "same-IC direct definition edges are counted separately and not expanded as cross-IC prerequisites",
+            "seed_closure": "a seed IC is treated as an atomic terminal whose closure is itself",
             "closure_ids": f"full closure counts retained; ID lists truncated to {max_ids} entries when larger",
         },
         "summary": summary | {
@@ -281,6 +288,7 @@ def write_report(
         f"- Indexed kernel senses: `{len(rows)}`",
         f"- Residual unlayered kernel senses: `{residual_unlayered_count}`",
         f"- Missing predecessor closure references: `{summary['missing_predecessor_closure_count']}`",
+        f"- Same-IC direct definition edges: `{summary['same_ic_direct_edge_count']}`",
         f"- Median closure size: `{summary['closure_size_median']}`",
         f"- P90 closure size: `{summary['closure_size_p90']}`",
         f"- Max closure size: `{summary['closure_size_max']}`",
@@ -347,11 +355,16 @@ def main() -> None:
     kernel_started = time.perf_counter()
     kernel_nodes = compute_kernel(build.nodes, build.adjacency)
     kernel_graph = induced_subgraph(kernel_nodes, build.adjacency)
-    layer_by_node = compute_layer_map(kernel_nodes, kernel_graph, seed_sense_ids & kernel_nodes)
+    layer_seed_nodes = {
+        node
+        for node in kernel_nodes
+        if str(build.node_metadata[node]["ic_id"]) in seed_ic_ids
+    }
+    layer_by_node = compute_layer_map(kernel_nodes, kernel_graph, layer_seed_nodes)
     residual_unlayered_count = len(kernel_nodes - set(layer_by_node))
     layer_hist = dict(sorted(Counter(layer_by_node.values()).items()))
     emit(
-        f"Computed layers in {time.perf_counter() - kernel_started:.1f}s: kernel={len(kernel_nodes)}, layered={len(layer_by_node)}, residual_unlayered={residual_unlayered_count}",
+        f"Computed layers in {time.perf_counter() - kernel_started:.1f}s: kernel={len(kernel_nodes)}, layer_seed_nodes={len(layer_seed_nodes)}, layered={len(layer_by_node)}, residual_unlayered={residual_unlayered_count}",
         progress_log,
     )
 
@@ -361,7 +374,6 @@ def main() -> None:
         kernel_nodes=kernel_nodes,
         kernel_graph=kernel_graph,
         layer_by_node=layer_by_node,
-        seed_sense_ids=seed_sense_ids,
         seed_ic_ids=seed_ic_ids,
         admitted_ics=admitted_ics,
         metadata=build.node_metadata,
