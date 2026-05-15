@@ -124,6 +124,24 @@ def overlap_summary(nodes: set[str], l0_ics: set[str], clean_ics: set[str]) -> d
     }
 
 
+def seed_overlap_summary(seed_nodes: set[str], l0_ics: set[str], clean_ics: set[str]) -> dict[str, Any]:
+    seed_ics = {ic_from_node(node) for node in seed_nodes}
+    l0_overlap = seed_ics & l0_ics
+    clean_overlap = seed_ics & clean_ics
+    return {
+        "seed_ic_count": len(seed_ics),
+        "l0_overlap_count": len(l0_overlap),
+        "clean_overlap_count": len(clean_overlap),
+        "l0_overlap_fraction_of_l0": len(l0_overlap) / max(len(l0_ics), 1),
+        "clean_overlap_fraction_of_clean": len(clean_overlap) / max(len(clean_ics), 1),
+        "l0_overlap_fraction_of_seed": len(l0_overlap) / max(len(seed_ics), 1),
+        "clean_overlap_fraction_of_seed": len(clean_overlap) / max(len(seed_ics), 1),
+        "seed_examples": sorted(seed_ics)[:50],
+        "l0_in_seed_examples": sorted(l0_overlap)[:50],
+        "clean_in_seed_examples": sorted(clean_overlap)[:50],
+    }
+
+
 def write_report(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     graph = payload["graph"]
@@ -158,6 +176,7 @@ def write_report(path: Path, payload: dict[str, Any]) -> None:
         f"- Clean candidate overlap: `{overlap['clean_overlap_count']} / {overlap['clean_candidate_count']}` (`{overlap['clean_overlap_fraction']:.2%}`)",
     ]
     if analysis is not None:
+        seed_overlap = analysis.get("seed_overlap", {})
         lines.extend(
             [
                 "",
@@ -166,6 +185,9 @@ def write_report(path: Path, payload: dict[str, Any]) -> None:
                 f"- Kernel nodes: `{analysis['kernel_node_count']}`",
                 f"- Seed nodes: `{analysis['seed_node_count']}`",
                 f"- Residual cyclic SCCs: `{analysis['residual_cyclic_scc_count']}`",
+                f"- Seed IC count: `{seed_overlap.get('seed_ic_count', 0)}`",
+                f"- L0 in seed: `{seed_overlap.get('l0_overlap_count', 0)} / {overlap['l0_candidate_count']}` (`{seed_overlap.get('l0_overlap_fraction_of_l0', 0):.2%}`)",
+                f"- Clean candidates in seed: `{seed_overlap.get('clean_overlap_count', 0)} / {overlap['clean_candidate_count']}` (`{seed_overlap.get('clean_overlap_fraction_of_clean', 0):.2%}`)",
             ]
         )
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
@@ -248,6 +270,7 @@ def main() -> None:
             "seed_node_count": len(analysis.seed_nodes),
             "residual_cyclic_scc_count": analysis.residual_cyclic_scc_count,
             "layer_histogram": {str(k): v for k, v in analysis.layer_histogram.items()},
+            "seed_overlap": seed_overlap_summary(set(analysis.seed_nodes), l0_ics, clean_ics),
         }
 
     args.json.parent.mkdir(parents=True, exist_ok=True)
