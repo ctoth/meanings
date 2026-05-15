@@ -53,7 +53,7 @@ wheels = [
 [[package]]
 name = "formal-argumentation"
 version = "0.2.0"
-source = { git = "https://github.com/ctoth/argumentation?rev=b57c5806e6f1f49cff0d79dcc20065f89ec28427#b57c5806e6f1f49cff0d79dcc20065f89ec28427" }
+source = { git = "https://github.com/ctoth/argumentation?rev=8e7247fe8e9c89636b3753a0feac5545f131c853#8e7247fe8e9c89636b3753a0feac5545f131c853" }
 
 [[package]]
 name = "gunray"
@@ -146,7 +146,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "formal-argumentation", git = "https://github.com/ctoth/argumentation?rev=b57c5806e6f1f49cff0d79dcc20065f89ec28427" },
+    { name = "formal-argumentation", git = "https://github.com/ctoth/argumentation?rev=8e7247fe8e9c89636b3753a0feac5545f131c853" },
     { name = "gunray", git = "https://github.com/ctoth/gunray?rev=df4580e1f4c3671159e057ade6d1411512196808" },
     { name = "openpyxl", specifier = ">=3.1.5" },
     { name = "pandas", specifier = ">=3.0.3" },
