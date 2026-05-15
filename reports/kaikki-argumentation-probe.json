@@ -1,0 +1,40 @@
+{
+  "argumentation_pin": "8e7247fe8e9c89636b3753a0feac5545f131c853",
+  "artifact_id": "kaikki-argumentation-probe",
+  "edges": 956937,
+  "grounded": {
+    "extension_size": 0,
+    "fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runtime_seconds": 1.3619650999899022,
+    "status": "complete"
+  },
+  "nodes": 93905,
+  "schema_version": 1,
+  "source": "data\\kaikki-largest-scc.json",
+  "source_stats": {
+    "edge_count": 956937,
+    "max_total_degree": 12001,
+    "median_total_degree": 9,
+    "node_count": 93905,
+    "p90_total_degree": 38
+  },
+  "stable": {
+    "extension_size": null,
+    "fingerprint": null,
+    "runtime_seconds": 90.7659967999789,
+    "sat_checks": [
+      {
+        "argument_count": 93905,
+        "attack_count": 956937,
+        "elapsed_ms": 2770.1128000044264,
+        "model_extension_fingerprint": null,
+        "model_extension_size": null,
+        "result": "unsat",
+        "utility_name": "stable_extension"
+      }
+    ],
+    "simplify": true,
+    "stable_exists": false,
+    "status": "complete"
+  }
+}
