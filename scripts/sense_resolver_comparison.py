@@ -139,6 +139,71 @@ def restrict_to_ic_representatives(
     return reps
 
 
+def p2_seed_payload(
+    *,
+    lexicon_id: str,
+    build: SenseLevelGraphBuild,
+    analysis: object,
+    reps: list[str],
+) -> dict[str, Any]:
+    """Export the P2 strict seed as a first-class IC artifact.
+
+    P2 is the chosen surface from the round-8 comparison: compute the FVS on
+    the sense graph, then restrict to one representative sense per IC at export.
+    """
+    indeg = indegree_of(build)
+    by_ic: dict[str, list[str]] = {}
+    for node in analysis.seed_nodes:  # type: ignore[attr-defined]
+        by_ic.setdefault(str(build.node_metadata[node]["ic_id"]), []).append(node)
+    rows: list[dict[str, Any]] = []
+    for sense_id in sorted(reps, key=lambda node: (str(build.node_metadata[node]["ic_id"]), node)):
+        meta = build.node_metadata[sense_id]
+        ic_id = str(meta["ic_id"])
+        rows.append(
+            {
+                "ic_id": ic_id,
+                "representative_sense_id": sense_id,
+                "representative_lemma": str(meta["lemma"]),
+                "representative_pos": str(meta["pos"]),
+                "representative_in_degree": indeg.get(sense_id, 0),
+                "source_synset": str(meta.get("source_synset", "")),
+                "lexicality": str(meta.get("lexicality", "")),
+                "seed_sense_count_for_ic": len(by_ic.get(ic_id, [])),
+                "seed_sense_ids_for_ic": sorted(by_ic.get(ic_id, [])),
+            }
+        )
+    return {
+        "schema_version": 1,
+        "artifact_id": "oewn-sense-p2-ic-seed",
+        "surface": "strict_graph_seed_p2_sense_ic",
+        "policy": "feedback vertex result on IC-fallback sense graph, restricted to one representative sense per IC at export",
+        "lexicon_id": lexicon_id,
+        "resolver_id": "ic_fallback_polysemy_true__sense_fvs__ic_export_p2",
+        "workflow": "sense_graph_fvs_then_one_representative_ic_at_export",
+        "command": "uv run python scripts\\sense_resolver_comparison.py",
+        "graph": {
+            "graph_type": "sense_ic_fallback",
+            "node_count": len(build.nodes),
+            "edge_count": analysis.edges,  # type: ignore[attr-defined]
+            "self_loop_count": self_loop_count(build),
+            "resolution_stats": dict(build.resolution_stats),
+        },
+        "analysis": {
+            "seed_method": "exact-small-greedy",
+            "core_policy": "source-union",
+            "kernel_count": len(analysis.kernel_nodes),  # type: ignore[attr-defined]
+            "sense_seed_count": len(analysis.seed_nodes),  # type: ignore[attr-defined]
+            "residual_cyclic_scc_count": analysis.residual_cyclic_scc_count,  # type: ignore[attr-defined]
+        },
+        "export": {
+            "representative_policy": "highest_in_degree_seed_sense_per_ic_tiebreak_sense_id",
+            "ic_seed_count": len({row["ic_id"] for row in rows}),
+        },
+        "seed_ics": rows,
+        "genus_victims": genus_victim_status(build, set(analysis.kernel_nodes)),  # type: ignore[attr-defined]
+    }
+
+
 def summarize(
     label: str,
     build: SenseLevelGraphBuild,
@@ -289,6 +354,9 @@ def main() -> None:
     parser.add_argument(
         "--md", default="reports/sense-resolver-comparison-summary.md", type=Path
     )
+    parser.add_argument(
+        "--p2-seed", default="data/oewn-sense-p2-ic-seed.json", type=Path
+    )
     args = parser.parse_args()
 
     print("[1/4] Building baseline sense-level graph (polysemy_fallback=False)...", flush=True)
@@ -420,7 +488,18 @@ def main() -> None:
         },
     }
     write_outputs(payload, args.json, args.md)
-    print(f"      wrote {args.json} + {args.md}", flush=True)
+    p2_payload = p2_seed_payload(
+        lexicon_id=args.lexicon,
+        build=fallback_build,
+        analysis=fallback_analysis,
+        reps=p2_reps,
+    )
+    args.p2_seed.parent.mkdir(parents=True, exist_ok=True)
+    args.p2_seed.write_text(
+        json.dumps(p2_payload, indent=2, ensure_ascii=True) + "\n",
+        encoding="utf-8",
+    )
+    print(f"      wrote {args.json} + {args.md} + {args.p2_seed}", flush=True)
     print(f"\nVerdict: {verdict_code} -- see {args.md}", flush=True)
 
 

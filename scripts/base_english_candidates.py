@@ -92,9 +92,18 @@ def read_seed_surfaces(path: Path) -> set[str]:
     return seeds
 
 
-def read_typed_seed_ics(path: Path) -> set[str]:
+def read_typed_seed(path: Path) -> tuple[set[str], str]:
     payload = read_json(path)
-    return {str(row.get("ic_id")) for row in payload.get("seed_senses", []) if row.get("ic_id")}
+    resolver_id = str(payload.get("resolver_id") or "legacy_typed_sense_seed_pre_p2")
+    if "seed_ics" in payload:
+        return (
+            {str(row.get("ic_id")) for row in payload.get("seed_ics", []) if row.get("ic_id")},
+            resolver_id,
+        )
+    return (
+        {str(row.get("ic_id")) for row in payload.get("seed_senses", []) if row.get("ic_id")},
+        resolver_id,
+    )
 
 
 def flags_for(alias: str, aliases: list[str], tag_counts: dict[str, Any], norm_row: dict[str, float]) -> list[str]:
@@ -157,7 +166,7 @@ def best_norm_row(aliases: list[str], norms: dict[str, dict[str, float]]) -> dic
 def build_rows(args: argparse.Namespace) -> list[dict[str, Any]]:
     admission = read_json(args.admission)
     strict_seeds = read_seed_surfaces(args.seed_surfaces)
-    typed_seed_ics = read_typed_seed_ics(args.typed_seed)
+    typed_seed_ics, resolver_id = read_typed_seed(args.typed_seed)
     longman = read_word_set(args.longman)
     ogden = read_word_set(args.ogden)
     norms = read_norms(args.norms)
@@ -204,7 +213,7 @@ def build_rows(args: argparse.Namespace) -> list[dict[str, Any]]:
                 "admitted_clean": admitted_clean,
                 "strict_lemma_seed": strict_lemma_seed,
                 "typed_sense_seed": typed_sense_seed,
-                "resolver_id": "legacy_typed_sense_seed_pre_p2",
+                "resolver_id": resolver_id,
                 "longman": in_longman,
                 "ogden": in_ogden,
                 "high_frequency": high_frequency,
@@ -311,7 +320,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Build the Base English candidate workbench from existing artifacts.")
     parser.add_argument("--admission", type=Path, default=Path("data/oewn-upgoer-admitted.json"))
     parser.add_argument("--seed-surfaces", type=Path, default=Path("data/english_seed_surfaces.csv"))
-    parser.add_argument("--typed-seed", type=Path, default=Path("data/oewn-sense-strict-seed.json"))
+    parser.add_argument("--typed-seed", type=Path, default=Path("data/oewn-sense-p2-ic-seed.json"))
     parser.add_argument("--longman", type=Path, default=Path("data/external-dictionaries/longman-defining-vocabulary.txt"))
     parser.add_argument("--ogden", type=Path, default=Path("data/external-dictionaries/ogden-basic-english-850.txt"))
     parser.add_argument(
