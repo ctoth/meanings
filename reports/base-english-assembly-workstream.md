@@ -117,6 +117,8 @@ Acceptance gate:
 
 ### Phase 1: Stabilize The Strict Sense/IC Seed
 
+Status: done for the first slice.
+
 Purpose: replace legacy typed-sense-seed evidence with the round-8 P2 result: sense-graph FVS first, then one representative IC at export.
 
 Tasks:
@@ -138,6 +140,28 @@ Acceptance gate:
 - No row sourced from the sense graph has hidden resolver provenance.
 - The candidate report distinguishes old typed seed, P1, and P2 if more than one exists.
 - Genus-victim rows (`line`, `head`, `break`, `take`, `make`, `set`, `run`, `point`) are called out if their seed membership changes.
+
+Artifacts:
+
+- `data/oewn-sense-p2-ic-seed.json`
+- `reports/sense-resolver-comparison.json`
+- `reports/sense-resolver-comparison-summary.md`
+- `reports/sense-resolver-comparison.progress.log` (diagnostic, not committed)
+
+Result:
+
+- IC-fallback sense graph: `212,478` nodes, `910,355` edges, `0` self-loops.
+- Kernel: `20,744`
+- Sense seed: `3,040`
+- P2 IC seed: `2,739`
+- Candidate workbench now uses resolver id `ic_fallback_polysemy_true__sense_fvs__ic_export_p2`.
+- P2-backed typed sense-seed rows in admitted candidates: `1,901`.
+
+Tasks completed:
+
+- Added full P2 export with per-IC representative sense provenance.
+- Added timestamped progress logging and a run lock to the resolver comparison runner.
+- Regenerated the candidate workbench from the P2 artifact.
 
 ### Phase 2: Derive L0 Candidates
 
