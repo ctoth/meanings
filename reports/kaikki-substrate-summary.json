@@ -1,4 +1,15 @@
 {
+  "analysis": {
+    "core_node_count": 1586,
+    "kernel_node_count": 135288,
+    "kernel_runtime_seconds": 14.726302800001577,
+    "kernel_scc_count": 36760,
+    "largest_kernel_scc": 93905,
+    "satellite_node_count": 133702,
+    "seed_method": "exact-small-greedy",
+    "seed_status": "skipped_kernel_only",
+    "source_scc_count": 1549
+  },
   "artifact_id": "kaikki-substrate-summary",
   "graph": {
     "directed_edge_density": 2.8309502469175847e-06,
@@ -29,7 +40,7 @@
     "l0_overlap_count": 317,
     "l0_overlap_fraction": 1.0
   },
-  "runtime_seconds": 298.27872549998574,
+  "runtime_seconds": 302.02922089997446,
   "schema_version": 1,
   "source_name": "kaikki.org English raw Wiktextract data",
   "source_url": "https://kaikki.org/dictionary/raw-wiktextract-data.jsonl.gz"

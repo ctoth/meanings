@@ -24,3 +24,12 @@ This is the external full-definition substrate path for attacking the lexicograp
 - Graph IC count: `1313536`
 - L0 overlap: `317 / 317` (`100.00%`)
 - Clean candidate overlap: `1476 / 1476` (`100.00%`)
+
+## Kernel Analysis
+
+- Kernel nodes: `135288`
+- Kernel SCCs: `36760`
+- Largest kernel SCC: `93905`
+- Core nodes: `1586`
+- Satellite nodes: `133702`
+- Seed status: `skipped_kernel_only`
