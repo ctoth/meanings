@@ -207,6 +207,8 @@ Interpretation:
 
 ### Phase 3: Build The Unfolding Index
 
+Status: done for the first kernel-only slice.
+
 Purpose: test whether admitted/base ICs actually act like an assembly language by measuring definition closures.
 
 Artifacts:
@@ -214,6 +216,7 @@ Artifacts:
 - `scripts/build_unfolding_index.py`
 - `data/sense-unfolding-index.json`
 - `reports/unfolding-index.md`
+- `reports/unfolding-index.progress.log` (diagnostic, not committed)
 
 Fields:
 
@@ -232,6 +235,36 @@ Acceptance gate:
 - Median and tail closure sizes are reported.
 - Failed or huge closures are not hidden.
 - If most closures require thousands of ICs, the assembly-language metaphor is weakened or dead for that graph.
+
+Policy:
+
+- The graph is the OEWN IC-fallback sense graph, matching the P2 seed artifact.
+- Edge direction is `source sense -> target sense`; a target's direct definiens are reverse-adjacency sources.
+- The index is kernel-only in this slice.
+- The layer-0 surface is every kernel sense whose IC is in the exported P2 IC seed, not only the representative sense and not only the original 3,040 sense-FVS nodes.
+- Same-IC direct definition edges are counted separately and are not expanded as cross-IC prerequisites.
+
+Result:
+
+- Indexed kernel senses: `20,744`
+- Layer-0 seed-IC senses: `6,293`
+- Residual unlayered kernel senses: `0`
+- Same-IC direct definition edges: `1,889`
+- Missing predecessor closure references: `0`
+- Median closure size: `6`
+- P90 closure size: `157`
+- Max closure size: `1,591`
+- Median seed-closure size: `5`
+- P90 seed-closure size: `100`
+- Max seed-closure size: `751`
+- Rows with truncated closure IDs: `433`
+- Rows with truncated seed-closure IDs: `77`
+
+Interpretation:
+
+- The P2 IC terminal surface is much more assembly-like than the stricter original sense-FVS terminal surface from the first run: the corrected median closure is small and the P90 is below two hundred ICs.
+- The tail is still real and not small. Biomedical, taxonomic, mythic, and technical entries dominate the largest closures, so the Base English surface is not yet a clean human-use primitive kernel.
+- The next "Swanson move" is to mine the tail and boundary failures as discovery signals: where large closures meet admitted/common ICs, the system is pointing at missing primitives, bad admission decisions, or resource-specific definitional conventions.
 
 ### Phase 4: Add A Stronger External Substrate
 
