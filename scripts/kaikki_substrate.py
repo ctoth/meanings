@@ -13,7 +13,16 @@ from collections.abc import Iterator
 from pathlib import Path
 from typing import Any
 
-from meanings.graph_analysis import analyze_kernel
+from meanings.graph_analysis import (
+    choose_core_nodes,
+    compute_kernel,
+    compute_layer_map,
+    induced_subgraph,
+    layer_histogram,
+    source_sccs,
+    strongly_connected_components,
+)
+from meanings.minset import solve_minset
 from meanings.wiktextract_adapter import build_wiktextract_graph, iter_jsonl
 
 
@@ -183,8 +192,13 @@ def write_report(path: Path, payload: dict[str, Any]) -> None:
                 "## Kernel Analysis",
                 "",
                 f"- Kernel nodes: `{analysis['kernel_node_count']}`",
-                f"- Seed nodes: `{analysis['seed_node_count']}`",
-                f"- Residual cyclic SCCs: `{analysis['residual_cyclic_scc_count']}`",
+                f"- Kernel SCCs: `{analysis.get('kernel_scc_count', 0)}`",
+                f"- Largest kernel SCC: `{analysis.get('largest_kernel_scc', 0)}`",
+                f"- Core nodes: `{analysis.get('core_node_count', 0)}`",
+                f"- Satellite nodes: `{analysis.get('satellite_node_count', 0)}`",
+                f"- Seed status: `{analysis.get('seed_status', 'not_run')}`",
+                f"- Seed nodes: `{analysis.get('seed_node_count', 0)}`",
+                f"- Residual cyclic SCCs: `{analysis.get('residual_cyclic_scc_count', 0)}`",
                 f"- Seed IC count: `{seed_overlap.get('seed_ic_count', 0)}`",
                 f"- L0 in seed: `{seed_overlap.get('l0_overlap_count', 0)} / {overlap['l0_candidate_count']}` (`{seed_overlap.get('l0_overlap_fraction_of_l0', 0):.2%}`)",
                 f"- Clean candidates in seed: `{seed_overlap.get('clean_overlap_count', 0)} / {overlap['clean_candidate_count']}` (`{seed_overlap.get('clean_overlap_fraction_of_clean', 0):.2%}`)",
@@ -201,6 +215,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--source-name", default="kaikki.org English raw Wiktextract data")
     parser.add_argument("--max-entries", type=int)
     parser.add_argument("--analyze-kernel", action="store_true")
+    parser.add_argument("--kernel-only", action="store_true", help="Compute kernel/core structure but skip MinSet seed extraction.")
     parser.add_argument("--seed-method", default="exact-small-greedy")
     parser.add_argument("--candidates", type=Path, default=Path("data/base_english_candidates.csv"))
     parser.add_argument("--l0", type=Path, default=Path("data/l0-grounded-primitives.json"))
@@ -209,6 +224,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--progress-log", type=Path, default=Path("reports/kaikki-substrate.progress.log"))
     parser.add_argument("--lock", type=Path, default=Path("reports/kaikki-substrate.lock"))
     return parser
+
+
+def write_outputs(json_path: Path, report_path: Path, payload: dict[str, Any]) -> None:
+    json_path.parent.mkdir(parents=True, exist_ok=True)
+    json_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    write_report(report_path, payload)
 
 
 def main() -> None:
@@ -262,20 +283,53 @@ def main() -> None:
         "runtime_seconds": time.perf_counter() - started,
     }
 
-    if args.analyze_kernel:
-        emit(f"Analyzing kernel with {args.seed_method}", progress_log)
-        analysis = analyze_kernel(build.nodes, build.adjacency, seed_method=args.seed_method, core_policy="source-union")
+    if args.analyze_kernel or args.kernel_only:
+        emit("Computing kernel structure", progress_log)
+        kernel_started = time.perf_counter()
+        kernel_nodes = compute_kernel(build.nodes, build.adjacency)
+        kernel_graph = induced_subgraph(kernel_nodes, build.adjacency)
+        kernel_sccs = strongly_connected_components(kernel_nodes, kernel_graph)
+        src_sccs = source_sccs(kernel_nodes, kernel_graph)
+        core_nodes = choose_core_nodes(kernel_sccs, src_sccs, "source-union")
         payload["analysis"] = {
-            "kernel_node_count": len(analysis.kernel_nodes),
-            "seed_node_count": len(analysis.seed_nodes),
-            "residual_cyclic_scc_count": analysis.residual_cyclic_scc_count,
-            "layer_histogram": {str(k): v for k, v in analysis.layer_histogram.items()},
-            "seed_overlap": seed_overlap_summary(set(analysis.seed_nodes), l0_ics, clean_ics),
+            "kernel_node_count": len(kernel_nodes),
+            "kernel_scc_count": len(kernel_sccs),
+            "largest_kernel_scc": max((len(component) for component in kernel_sccs), default=0),
+            "source_scc_count": len(src_sccs),
+            "core_node_count": len(core_nodes),
+            "satellite_node_count": len(kernel_nodes - core_nodes),
+            "kernel_runtime_seconds": time.perf_counter() - kernel_started,
+            "seed_method": args.seed_method,
+            "seed_status": "skipped_kernel_only" if args.kernel_only else "not_started",
         }
+        write_outputs(args.json, args.report, payload)
+        emit(
+            f"Kernel checkpoint: kernel={len(kernel_nodes)}, sccs={len(kernel_sccs)}, largest_scc={payload['analysis']['largest_kernel_scc']}",
+            progress_log,
+        )
 
-    args.json.parent.mkdir(parents=True, exist_ok=True)
-    args.json.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    write_report(args.report, payload)
+        if args.analyze_kernel and not args.kernel_only:
+            emit(f"Solving MinSet with {args.seed_method}", progress_log)
+            minset = solve_minset(kernel_nodes, kernel_graph, args.seed_method)
+            layers: dict[str, int] = {}
+            if minset.residual_cyclic_scc_count == 0 and minset.nodes:
+                emit("Computing kernel layers after seed removal", progress_log)
+                layers = compute_layer_map(kernel_nodes, kernel_graph, set(minset.nodes))
+            payload["analysis"] |= {
+                "seed_status": "complete",
+                "seed_node_count": len(minset.nodes),
+                "seed_exact": minset.exact,
+                "seed_lower_bound": minset.lower_bound,
+                "seed_upper_bound": minset.upper_bound,
+                "seed_runtime_seconds": minset.runtime_seconds,
+                "residual_cyclic_scc_count": minset.residual_cyclic_scc_count,
+                "seed_scc_exact_count": minset.scc_exact_count,
+                "seed_scc_heuristic_count": minset.scc_heuristic_count,
+                "layer_histogram": {str(k): v for k, v in layer_histogram(layers).items()},
+                "seed_overlap": seed_overlap_summary(set(minset.nodes), l0_ics, clean_ics),
+            }
+
+    write_outputs(args.json, args.report, payload)
     emit(f"Wrote {args.json} and {args.report} in {payload['runtime_seconds']:.1f}s", progress_log)
     print(json.dumps({"json": str(args.json), "report": str(args.report), "nodes": len(build.nodes), "edges": edge_count}, indent=2))
 
