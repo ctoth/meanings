@@ -14,11 +14,17 @@ CSV_FIELDS = (
     "primary_alias",
     "aliases",
     "decision",
-    "score",
+    "evidence_count",
+    "clean_candidate",
+    "admitted_clean",
     "strict_lemma_seed",
     "typed_sense_seed",
+    "resolver_id",
     "longman",
     "ogden",
+    "high_frequency",
+    "early_aoa",
+    "high_concreteness",
     "frequency",
     "age_of_acquisition",
     "concreteness",
@@ -111,41 +117,29 @@ def flags_for(alias: str, aliases: list[str], tag_counts: dict[str, Any], norm_r
     return flags
 
 
-def score_candidate(
+def evidence_count(
     *,
+    admitted_clean: bool,
     strict_lemma_seed: bool,
     typed_sense_seed: bool,
     longman: bool,
     ogden: bool,
-    norm_row: dict[str, float],
-    flags: list[str],
-) -> float:
-    score = 0.0
-    if strict_lemma_seed:
-        score += 3.0
-    if typed_sense_seed:
-        score += 4.0
-    if longman:
-        score += 2.0
-    if ogden:
-        score += 2.0
-    frequency = norm_row.get("frequency")
-    if frequency is not None:
-        score += min(max(frequency - 3.0, 0.0), 3.0)
-    age = norm_row.get("age_of_acquisition")
-    if age is not None:
-        score += max(0.0, 8.0 - age) / 2.0
-    concreteness = norm_row.get("concreteness")
-    if concreteness is not None:
-        score += max(0.0, concreteness - 2.0) / 2.0
-    if "numeric_form" in flags:
-        score -= 6.0
-    if "multiword" in flags:
-        score -= 2.0
-    if "artifact_reading_present" in flags:
-        score -= 1.0
-    score -= 0.5 * sum(1 for flag in flags if flag.startswith("missing_"))
-    return round(score, 3)
+    high_frequency: bool,
+    early_aoa: bool,
+    high_concreteness: bool,
+) -> int:
+    return sum(
+        (
+            admitted_clean,
+            strict_lemma_seed,
+            typed_sense_seed,
+            longman,
+            ogden,
+            high_frequency,
+            early_aoa,
+            high_concreteness,
+        )
+    )
 
 
 def best_norm_row(aliases: list[str], norms: dict[str, dict[str, float]]) -> dict[str, float]:
@@ -184,13 +178,20 @@ def build_rows(args: argparse.Namespace) -> list[dict[str, Any]]:
         typed_sense_seed = str(entry.get("ic_id")) in typed_seed_ics
         in_longman = bool(alias_keys & longman)
         in_ogden = bool(alias_keys & ogden)
-        score = score_candidate(
+        high_frequency = (norm_row.get("frequency") or 0.0) >= 5.0
+        early_aoa = (norm_row.get("age_of_acquisition") or 99.0) <= 6.0
+        high_concreteness = (norm_row.get("concreteness") or 0.0) >= 4.0
+        admitted_clean = not any(flag in flags for flag in ("numeric_form", "multiword", "artifact_reading_present", "technical_only"))
+        clean_candidate = admitted_clean and (in_longman or in_ogden)
+        count = evidence_count(
+            admitted_clean=admitted_clean,
             strict_lemma_seed=strict_lemma_seed,
             typed_sense_seed=typed_sense_seed,
             longman=in_longman,
             ogden=in_ogden,
-            norm_row=norm_row,
-            flags=flags,
+            high_frequency=high_frequency,
+            early_aoa=early_aoa,
+            high_concreteness=high_concreteness,
         )
         rows.append(
             {
@@ -198,11 +199,17 @@ def build_rows(args: argparse.Namespace) -> list[dict[str, Any]]:
                 "primary_alias": primary,
                 "aliases": ";".join(sorted(aliases)),
                 "decision": "admit",
-                "score": score,
+                "evidence_count": count,
+                "clean_candidate": clean_candidate,
+                "admitted_clean": admitted_clean,
                 "strict_lemma_seed": strict_lemma_seed,
                 "typed_sense_seed": typed_sense_seed,
+                "resolver_id": "legacy_typed_sense_seed_pre_p2",
                 "longman": in_longman,
                 "ogden": in_ogden,
+                "high_frequency": high_frequency,
+                "early_aoa": early_aoa,
+                "high_concreteness": high_concreteness,
                 "frequency": norm_row.get("frequency"),
                 "age_of_acquisition": norm_row.get("age_of_acquisition"),
                 "concreteness": norm_row.get("concreteness"),
@@ -212,7 +219,16 @@ def build_rows(args: argparse.Namespace) -> list[dict[str, Any]]:
                 "flags": ";".join(flags),
             }
         )
-    return sorted(rows, key=lambda row: (-float(row["score"]), row["primary_alias"]))
+    return sorted(
+        rows,
+        key=lambda row: (
+            not bool(row["clean_candidate"]),
+            -int(row["evidence_count"]),
+            not bool(row["longman"]),
+            not bool(row["ogden"]),
+            row["primary_alias"],
+        ),
+    )
 
 
 def csv_value(value: Any) -> Any:
@@ -250,35 +266,40 @@ def write_report(path: Path, rows: list[dict[str, Any]], top: int) -> None:
     lines = [
         "# Base English Candidate Workbench",
         "",
-        "This is not a final Base English list. It is a ranked IC-level workbench built from existing admission, graph-seed, controlled-vocabulary, and psycholinguistic evidence.",
+        "This is not a final Base English list. It is an agreement-filtered IC-level workbench built from existing admission, graph-seed, controlled-vocabulary, and psycholinguistic evidence. It deliberately avoids a composite score.",
         "",
         "## Summary",
         "",
         f"- Candidate IC rows: `{len(rows)}`",
+        f"- Clean candidate rows: `{sum(1 for row in rows if row['clean_candidate'])}`",
         f"- Strict lemma-seed rows: `{sum(1 for row in rows if row['strict_lemma_seed'])}`",
         f"- Typed sense-seed rows: `{sum(1 for row in rows if row['typed_sense_seed'])}`",
         f"- Longman-supported rows: `{sum(1 for row in rows if row['longman'])}`",
         f"- Ogden-supported rows: `{sum(1 for row in rows if row['ogden'])}`",
         "",
-        "## Top Candidates",
+        "## Clean Candidates",
         "",
     ]
     fields = [
         "primary_alias",
-        "score",
+        "evidence_count",
         "strict_lemma_seed",
         "typed_sense_seed",
         "longman",
         "ogden",
+        "high_frequency",
+        "early_aoa",
+        "high_concreteness",
         "frequency",
         "age_of_acquisition",
         "concreteness",
         "flags",
     ]
-    lines.extend(render_table(rows[:top], fields))
+    clean_rows = [row for row in rows if row["clean_candidate"]]
+    lines.extend(render_table(clean_rows[:top], fields))
     lines.extend(["", "## Flag Counts", ""])
     lines.extend(render_table([{"flag": flag, "count": count} for flag, count in flag_counts.most_common()], ["flag", "count"]))
-    lines.extend(["", "## High-Scoring Flagged Rows", ""])
+    lines.extend(["", "## Flagged Rows Excluded From Clean Candidate View", ""])
     flagged = [row for row in rows if row["flags"]]
     lines.extend(render_table(flagged[:top], fields))
     with path.open("w", encoding="utf-8") as handle:
