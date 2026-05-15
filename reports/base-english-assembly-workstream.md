@@ -372,6 +372,22 @@ Result:
 - The run reached `Solving MinSet with exact-small-greedy` after building the full graph.
 - No Kaikki exact-small-greedy seed result was produced or claimed.
 
+Bounded seed command run:
+
+```powershell
+uv run python scripts\kaikki_substrate.py --analyze-kernel --seed-method bounded-scc --progress-log reports\kaikki-substrate.progress.log
+```
+
+Bounded seed result:
+
+- Seed status: `complete`
+- Seed method: `bounded-scc`
+- Seed nodes: `23,097`
+- Seed ICs: `22,274`
+- Residual cyclic SCCs: `2`
+- L0 in bounded seed: `15 / 317` (`4.73%`)
+- Clean candidates in bounded seed: `66 / 1,476` (`4.47%`)
+
 Runner discipline:
 
 - The Kaikki runner uses `reports/kaikki-substrate.lock` by default.
@@ -384,7 +400,8 @@ Interpretation:
 - The external-substrate path is now executable, provenance-bearing, and run on the complete current Kaikki English stream.
 - The current L0 and clean candidate surfaces are fully covered by Kaikki terms, so Kaikki can act as a real external definitional substrate for the next comparison.
 - This does not yet prove cross-resource primitive stability. The current blocker is the exact-small-greedy seed extraction on a large `93,905`-node SCC.
-- The immediate next science move is a staged seed strategy: either run a bounded/heuristic seed to get a first Kaikki seed surface, or add component-level progress/checkpointing inside `solve_minset` before another exact-small-greedy attempt.
+- The bounded seed has low overlap with L0 and leaves residual cycles, so it is not the final cross-resource primitive verdict.
+- The immediate next science move is component-level progress/checkpointing inside `solve_minset`, then a targeted strategy for the `93,905`-node SCC rather than another blind exact-small-greedy run.
 
 ### Phase 5: Add Better Grounding Evidence
 
