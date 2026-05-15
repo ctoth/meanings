@@ -403,6 +403,60 @@ Interpretation:
 - The bounded seed has low overlap with L0 and leaves residual cycles, so it is not the final cross-resource primitive verdict.
 - The immediate next science move is component-level progress/checkpointing inside `solve_minset`, then a targeted strategy for the `93,905`-node SCC rather than another blind exact-small-greedy run.
 
+### Phase 4B: Kaikki SCC Grounding Strategy
+
+Status: executed.
+
+Purpose: turn the `93,905`-node Kaikki SCC from a solver blocker into an empirical object and produce a first acyclic external seed surface.
+
+Artifacts:
+
+- `scripts/kaikki_scc_grounding.py`
+- `data/kaikki-largest-scc.json`
+- `data/kaikki-staged-seed.json`
+- `reports/kaikki-minset-progress.jsonl`
+- `reports/kaikki-staged-seed-summary.md`
+- `reports/kaikki-seed-disagreement.md`
+- `reports/kaikki-scc-grounding.progress.log` (diagnostic, not committed)
+
+Command:
+
+```powershell
+uv run python scripts\kaikki_scc_grounding.py
+```
+
+Result:
+
+- Complete Kaikki graph: `1,389,117` nodes, `5,462,728` edges.
+- Kernel: `135,288` nodes, `1,280,499` kernel edges.
+- Largest original SCC: `93,905` nodes, `956,937` induced edges.
+- Initial cyclic SCC count: `22,497`.
+- Staged seed status: `acyclic`.
+- Staged seed nodes: `45,363`.
+- Staged seed ICs: `40,081`.
+- Residual cyclic SCCs: `0`.
+
+Stage highlights:
+
+- Global high-degree cut: removed `1,000`, largest residual SCC `86,608`.
+- Largest-SCC hub cut: removed `1,000`, largest residual SCC `79,618`.
+- Bounded SCC passes: reduced the residual structure to one large SCC of `79,276`.
+- Large residual batches: six batches reduced the largest residual SCC from `79,276` to `12`.
+- Final exact-small residual pass: removed `7,570` and acyclicized the kernel.
+
+Overlap:
+
+- L0 in staged seed: `314 / 317` (`99.05%`).
+- Clean candidates in staged seed: `1,359 / 1,476` (`92.07%`).
+- P2 in staged seed: `1,899 / 2,739` (`69.33%`).
+
+Decision gate:
+
+- The staged seed is a valid acyclic Kaikki external seed surface, but it is explicitly heuristic and not an exact-small-greedy optimum.
+- The high L0 overlap after acyclicization says the earlier bounded-seed low overlap was a method artifact, not strong evidence against L0.
+- The huge seed-not-L0 set (`39,767` ICs) is the next discovery queue. It is dominated by Wiktionary breadth, abbreviations, proper names, technical terms, taxa, and morphology-like entries; those are not automatically primitives.
+- The three L0 ICs missing from the staged seed are `ic:especial`, `ic:forrad`, and `ic:pardner`; these are likely lexical/register artifacts rather than core primitives.
+
 ### Phase 5: Add Better Grounding Evidence
 
 Purpose: add a signal that is less reducible to dictionary editorial practice.
@@ -442,4 +496,4 @@ Acceptance gate:
 
 ## Current Next Commit-Sized Slice
 
-Add component-level progress/checkpointing inside `solve_minset` or a Kaikki-specific seed runner, then attack the `93,905`-node Kaikki SCC with a staged seed strategy instead of rerunning exact-small-greedy blindly.
+Mine `reports/kaikki-seed-disagreement.md` into typed disagreement buckets: abbreviation/code, proper-name, taxon, technical term, morphology/register artifact, and plausible missing primitive.
