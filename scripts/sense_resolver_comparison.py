@@ -32,7 +32,9 @@ Outputs:
 from __future__ import annotations
 
 import argparse
+import atexit
 import json
+import os
 import sys
 import time
 from pathlib import Path
@@ -64,6 +66,30 @@ def emit(message: str, progress_log: Path | None = None) -> None:
         with progress_log.open("a", encoding="utf-8") as handle:
             handle.write(timestamped)
             handle.write("\n")
+
+
+def acquire_lock(lock_path: Path | None) -> None:
+    if lock_path is None:
+        return
+    if lock_path.exists():
+        raise RuntimeError(
+            f"Run lock already exists: {lock_path}. "
+            "Remove it only after confirming no resolver comparison is active."
+        )
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    lock_path.write_text(
+        json.dumps(
+            {
+                "pid": os.getpid(),
+                "started_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+                "argv": sys.argv,
+            },
+            indent=2,
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    atexit.register(lambda: lock_path.exists() and lock_path.unlink())
 
 
 def indegree_of(build: SenseLevelGraphBuild) -> dict[str, int]:
@@ -376,7 +402,14 @@ def main() -> None:
         "--progress-log", default=None, type=Path,
         help="Optional progress log for long non-interactive runs.",
     )
+    parser.add_argument(
+        "--lock", default=Path("reports/sense-resolver-comparison.lock"), type=Path,
+        help="Lock file preventing overlapping resolver comparison runs. Use --lock '' to disable.",
+    )
     args = parser.parse_args()
+    lock_arg = str(args.lock).strip().lower()
+    lock_path = None if lock_arg in {"", ".", "none", "false"} else args.lock
+    acquire_lock(lock_path)
     if args.progress_log and args.progress_log.exists():
         args.progress_log.unlink()
 
