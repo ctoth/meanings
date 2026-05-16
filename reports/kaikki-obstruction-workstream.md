@@ -318,6 +318,8 @@ The self-loop artifacts were not the whole story. After removing `10,413` self-l
 
 ## Phase 4: Build Kernel Pressure Table
 
+Status: done for the first obstruction-backed slice.
+
 Purpose: convert graph/argumentation results into a reviewable IC-level workbench.
 
 Artifacts:
@@ -383,6 +385,33 @@ Acceptance gate:
 - The report includes top rows and disagreement queues, not only pretty candidates.
 - Counts reconcile against every input artifact.
 
+Result:
+
+- Implemented `scripts/kernel_pressure_table.py`.
+- Generated `data/kernel-pressure-table.csv`.
+- Generated `data/kernel-pressure-table.json`.
+- Generated `reports/kernel-pressure-table.md`.
+- Rows: `85,137`.
+- Obstruction-core rows: `86`.
+- L0 rows: `317`.
+- Clean candidate rows: `1,476`.
+- Pressure bucket counts:
+  - `candidate_background`: `46,152`
+  - `external_substrate`: `34,541`
+  - `resource_artifact`: `4,376`
+  - `circular_dependency`: `55`
+  - `primitive_candidate`: `11`
+  - `assembler_helper`: `2`
+- Obstruction-core bucket counts:
+  - `circular_dependency`: `55`
+  - `resource_artifact`: `18`
+  - `primitive_candidate`: `11`
+  - `assembler_helper`: `2`
+
+Interpretation:
+
+The first pressure table gives us a real review bench. The obstruction core is not purely artifact and not purely primitive: it contains a small primitive-candidate slice (`animal`, `answer`, `certain`, `desire`, `express`, `helpful`, `name`, `place`, `plural`, `request`, `useful`), two assembler-helper candidates (`giving`, `office`), and a larger circular/resource queue. The next work should validate whether the primitive/helper rows actually reduce closure failures rather than just looking plausible.
+
 ## Phase 5: Define The Assembler Rules
 
 Purpose: turn candidate rows into a testable base-English assembly language.
@@ -447,6 +476,6 @@ Acceptance gate:
 
 ## Immediate Commit-Sized Slice
 
-Implement Phase 4: build `scripts/kernel_pressure_table.py` from L0, clean candidates, P2, Kaikki staged seed, typed disagreement buckets, and the self-loop-stripped obstruction core.
+Implement Phase 5: define a first `data/base-assembler-rules.yaml` and `scripts/validate_assembler_definitions.py` that can test whether selected target ICs close under L0 plus the pressure-table primitive/helper candidates.
 
-This is now the principled next slice because Phase 3B produced a real, bounded obstruction core. The pressure table should make that core reviewable by IC and explicitly separate base-like candidates from parser/resource artifacts.
+This is now the principled next slice because the pressure table is reviewable but not yet an assembler. The next gate is closure behavior: do these candidates help definitions build, or do they only decorate the obstruction core?
