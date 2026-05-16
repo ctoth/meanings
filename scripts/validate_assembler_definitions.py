@@ -35,7 +35,10 @@ ARTIFACT_BUCKET = "resource_artifact"
 CIRCULAR_BUCKET = "circular_dependency"
 EXTERNAL_BUCKET = "external_substrate"
 BACKGROUND_BUCKET = "candidate_background"
-PRIMITIVE_BUCKETS = frozenset({"primitive_candidate", "assembler_helper"})
+BASE_PROMOTABLE_BUCKETS = frozenset({"base_promotable_terminal_common"})
+PRIMITIVE_BUCKETS = (
+    frozenset({"primitive_candidate", "assembler_helper"}) | BASE_PROMOTABLE_BUCKETS
+)
 SENSITIVITY_BANDS = (50, 100, 200)
 FAILURE_PRECEDENCE = ("graph_data", "artifact", "circular", "external", "background")
 
@@ -401,8 +404,9 @@ def write_report(
     lines.append("## Bases")
     lines.append("")
     lines.append(f"- L0-only baseline size: `{len(base_l0)}`")
-    lines.append(f"- Augmented base size (L0 + primitive_candidate + assembler_helper): `{len(base_aug)}`")
-    lines.append(f"- Augmented layer size (primitive_candidate + assembler_helper): `{len(base_aug - base_l0)}`")
+    primitive_label = " + ".join(sorted(PRIMITIVE_BUCKETS))
+    lines.append(f"- Augmented base size (L0 + {primitive_label}): `{len(base_aug)}`")
+    lines.append(f"- Augmented layer size ({primitive_label}): `{len(base_aug - base_l0)}`")
     lines.append("")
     lines.append("## Closure Rate by Band")
     lines.append("")
@@ -464,7 +468,10 @@ def write_report(
     lines.append("")
     lines.append("## Augmented-Layer Marginal Usage")
     lines.append("")
-    lines.append("Marginal usage restricted to the 13 augmented-layer ICs added on top of L0.")
+    aug_layer_size = len(base_aug - base_l0)
+    lines.append(
+        f"Marginal usage restricted to the {aug_layer_size} augmented-layer ICs added on top of L0."
+    )
     lines.append("")
     aug_layer = base_aug - base_l0
     aug_usage = [

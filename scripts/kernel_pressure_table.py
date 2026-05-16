@@ -23,6 +23,11 @@ ARTIFACT_BUCKETS = frozenset(
 # even when it happens to be a common English surface form.
 COMMON_VOCABULARY_ELIGIBLE = ARTIFACT_BUCKETS - {"taxon"}
 
+# Buckets that promote a candidate_background IC into the validator's base.
+# Membership in this set is consumed by
+# scripts/validate_assembler_definitions.py via PRIMITIVE_BUCKETS.
+BASE_PROMOTABLE_BUCKETS = frozenset({"base_promotable_terminal_common"})
+
 HIGH_FREQUENCY_THRESHOLD = 5.0
 EARLY_AOA_THRESHOLD = 6.0
 HIGH_CONCRETENESS_THRESHOLD = 4.0
@@ -132,6 +137,13 @@ def pressure_bucket(row: dict[str, Any]) -> tuple[str, str]:
         return "circular_dependency", "obstruction core without clean primitive support"
     if typed_bucket == "resource_specific_tail" or bool(row["kaikki_staged_seed"]) and not bool(row["p2_seed"]):
         return "external_substrate", "Kaikki-only or resource-tail signal"
+    if (
+        bool(row.get("p2_seed"))
+        and bool(row.get("high_frequency"))
+        and bool(row.get("early_aoa"))
+        and not bool(row.get("obstruction_core"))
+    ):
+        return "base_promotable_terminal_common", "P2 terminal plus high frequency plus early AOA"
     return "candidate_background", "known candidate surface without current obstruction pressure"
 
 
