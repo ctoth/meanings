@@ -266,6 +266,8 @@ The raw stable-unsat result is even more clearly a null baseline than a semantic
 
 ## Phase 3B: Perturbation Witnesses If Unsat Cores Are Too Coarse
 
+Status: done for the first self-loop-stripped slice.
+
 Purpose: get explanatory pressure when SAT cores are too broad.
 
 Tasks:
@@ -287,6 +289,32 @@ Acceptance gate:
 
 - Every perturbation records what changed, why it was selected, runtime, and result.
 - Perturbation results are labeled as causal probes, not proofs of minimality.
+
+Self-loop-stripped result:
+
+- Added `--drop-self-loops` to `scripts/kaikki_obstruction_probe.py`.
+- Generated `reports/kaikki-obstruction-probe-no-self-loops.json`.
+- Generated `reports/kaikki-obstruction-probe-no-self-loops.md`.
+- Dropped self-loops: `10,413`.
+- Residual edges: `946,524`.
+- Tracked clause groups: `1,040,429`.
+- Runtime seconds: `131.423`.
+- Status: `unsat`.
+- Stable exists: `False`.
+- Core arguments: `86`.
+- Core attacks: `53`.
+- Coverage arguments: `40`.
+- Core bucket counts:
+  - `not_in_seed_not_l0`: `29`
+  - `resource_specific_tail`: `23`
+  - `plausible_missing_primitive`: `16`
+  - `technical_term`: `8`
+  - `abbreviation_or_code`: `6`
+  - `proper_name`: `4`
+
+Interpretation:
+
+The self-loop artifacts were not the whole story. After removing `10,413` self-loops, stable-unsat persists and the core grows into an interpretable 86-IC obstruction surface. This surface is mixed: it contains real base-like terms (`animal`, `ask`, `good`, `helpful`, `place`, `put`, `useful`) but also grammar/parser and resource artifacts (`plural`, `past_participle`, `simple_past`, `see_also`, `than`, `hundred_thousand`). This is exactly the kind of queue the kernel pressure table should consume.
 
 ## Phase 4: Build Kernel Pressure Table
 
@@ -419,6 +447,6 @@ Acceptance gate:
 
 ## Immediate Commit-Sized Slice
 
-Implement Phase 3B: rerun the obstruction probe on a self-loop-stripped or self-loop-classified surface, and report whether stable-unsat remains after the trivial self-loop certificates are removed or isolated.
+Implement Phase 4: build `scripts/kernel_pressure_table.py` from L0, clean candidates, P2, Kaikki staged seed, typed disagreement buckets, and the self-loop-stripped obstruction core.
 
-This is now the principled next slice because Phase 3 showed the raw SCC UNSAT certificate is tiny and self-loop-driven. We need to separate trivial self-loop artifacts from any broader obstruction pressure before building the kernel pressure table.
+This is now the principled next slice because Phase 3B produced a real, bounded obstruction core. The pressure table should make that core reviewable by IC and explicitly separate base-like candidates from parser/resource artifacts.
