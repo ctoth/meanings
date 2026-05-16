@@ -512,38 +512,24 @@ aggressive in marking abstract-noun common-English as `technical_term`. The
 next workstream gate is not "add more primitives" - it is
 **artifact-bucket re-audit** of the pressure table.
 
-## Phase 5B: Re-audit `resource_artifact` Classifications (next slice)
+## Phase 5B: Re-audit `resource_artifact` Classifications
 
-Status: queued.
+Status: spun out to its own workstream at
+`reports/artifact-bucket-reaudit-workstream.md`. The summary stays here so
+the parent reads coherently.
 
 Purpose: distinguish genuine resource artifacts (taxa, proper names,
-abbreviations, register markers) from common-English abstract nouns currently
-mislabelled as `technical_term` and blocking thousands of definitions.
+abbreviations, register markers) from common-English abstract nouns
+currently mislabelled as `technical_term` and blocking thousands of
+definitions.
 
-Tasks:
-
-- Inspect the top blocking ICs from `reports/base-assembler-validation.md`
-  that carry `resource_artifact` bucket; review whether the `typed_bucket`
-  reason is genuine.
-- Refine `scripts/classify_seed_disagreement.py` to keep
-  `technical_term` for true technical vocabulary and emit a new
-  `abstract_common` bucket for high-frequency abstract nouns used pervasively
-  in OEWN glosses.
-- Rebuild `data/kernel-pressure-table.csv` and re-run Phase 5A.
-
-Acceptance gate:
-
-- The set of ICs migrating out of `resource_artifact` is reviewable and
-  rule-derived.
-- After rebuild, Phase 5A's `artifact_share` at `closure_size <= 200` drops
-  by at least a measurable amount; no closed sense becomes failed.
-
-Falsifier:
-
-- If migrating these ICs out of `resource_artifact` does not improve closure
-  rate at any band, then the bottleneck is not artifact mislabelling but
-  base-too-small, and Phase 5C (rules YAML and bigger primitive layer) is the
-  next move instead.
+The child workstream phases are: Phase 1 inventory the suspect ICs
+(read-only), Phase 2 author classifier-change rules under Codex review,
+Phase 3 rebuild the pressure table, Phase 4 re-run the Phase 5A validator
+with a hard regression gate (no `closed` sense may regress) and an A/B
+impact report, Phase 5 decide whether the next slice is mirrored re-audits
+of `external_substrate` / `candidate_background` or a flip to Phase 5C
+(rules YAML / base expansion).
 
 ## Phase 6: External And Multilingual Stress Tests
 
@@ -569,11 +555,8 @@ Acceptance gate:
 
 ## Immediate Commit-Sized Slice
 
-Implement Phase 5B: re-audit `resource_artifact` classifications in
-`scripts/classify_seed_disagreement.py` so abstract-noun common-English ICs
-(`act, quality, part, event, time, energy, complete, force, power, life`,
-etc.) stop being treated as technical_term artifacts. Rebuild the kernel
-pressure table and re-run the Phase 5A validator. The decisive metric is
-`artifact_share` at `closure_size <= 200` in
-`reports/base-assembler-validation.md`; it should fall meaningfully without
-turning previously closed senses into failures.
+Execute Phase 1 of `reports/artifact-bucket-reaudit-workstream.md`: write
+`scripts/audit_artifact_bucket.py`, generate
+`reports/artifact-bucket-audit.md` and `reports/artifact-bucket-audit.json`.
+Read-only inventory over the current pressure table and validator output.
+Single commit.
