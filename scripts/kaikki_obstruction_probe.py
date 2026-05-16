@@ -122,6 +122,7 @@ def write_report(path: Path, result: dict[str, Any]) -> None:
         f"- Argumentation pin: `{result['argumentation_pin']}`",
         f"- Nodes: `{result['nodes']}`",
         f"- Edges: `{result['edges']}`",
+        f"- Dropped self-loops: `{result['dropped_self_loops']}`",
         f"- Status: `{explanation['status']}`",
         f"- Stable exists: `{explanation['stable_exists']}`",
         f"- Runtime seconds: `{explanation['runtime_seconds']:.3f}`",
@@ -156,6 +157,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--progress-log", type=Path, default=Path("reports/kaikki-obstruction-probe.progress.log"))
     parser.add_argument("--lock", type=Path, default=Path("reports/kaikki-obstruction-probe.lock"))
     parser.add_argument("--detail-limit", type=int, default=200)
+    parser.add_argument("--drop-self-loops", action="store_true")
     parser.add_argument("--no-simplify", action="store_true")
     parser.add_argument("--argumentation-pin", default=ARGUMENTATION_PIN)
     return parser
@@ -167,6 +169,12 @@ def main() -> None:
     emit(f"Loading {args.input}", args.progress_log)
     nodes, edges, stats = load_largest_scc(args.input)
     emit(f"Loaded nodes={len(nodes)} edges={len(edges)}", args.progress_log)
+    dropped_self_loops = 0
+    if args.drop_self_loops:
+        before = len(edges)
+        edges = frozenset((source, target) for source, target in edges if source != target)
+        dropped_self_loops = before - len(edges)
+        emit(f"Dropped self-loops={dropped_self_loops} residual_edges={len(edges)}", args.progress_log)
     framework = ArgumentationFramework(arguments=nodes, defeats=edges)
     typed_buckets = read_typed_buckets(args.typed_buckets)
     emit("Running explain_stable_unsat", args.progress_log)
@@ -188,6 +196,7 @@ def main() -> None:
         "argumentation_pin": args.argumentation_pin,
         "nodes": len(nodes),
         "edges": len(edges),
+        "dropped_self_loops": dropped_self_loops,
         "source_stats": stats,
         "simplify": not args.no_simplify,
         "explanation": explanation_dict,
