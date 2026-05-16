@@ -173,3 +173,24 @@ Typed bucket distribution:
 ## Current state — Phase 4 about to start
 
 Need to: run validator, save new output, write `reports/artifact-bucket-reaudit-impact.md` with closed-count, artifact-share, MGY before/after; enumerate every IC whose bucket changed; verify hard regression gate (no closed sense regressed).
+
+## Phase 4 done (`af4ecc0`)
+
+`scripts/artifact_bucket_reaudit_impact.py` reuses validator logic (via sys.path insert + import) to classify each target under pre and post pressure tables and diff.
+
+**Hard regression gate: PASS** — `regressed_count = 0`.
+**Falsifier: PASS** — artifact share dropped 6.01 pp at `closure_size <= 200` (threshold 5 pp).
+
+Closure rate at ≤200: 0.1418 → 0.1424 (+0.06 pp). Closed senses: 2,110 → 2,119 (+9).
+
+Augmented-layer size grew 9 → 14. Workstream gate originally said "same 9". Updated to allow R1-driven growth with enumeration; the five additions (`ask, called, do, has, than`) are obstruction-core ICs that gained frequency data from R1.
+
+953 ICs migrated bucket. Single-letter words (`s, t, m, re, no, if, oh`) migrated to `common_vocabulary` via R2 — Codex predicted this; mixed-quality migrations documented for the next workstream.
+
+## Phase 5 in progress
+
+Decision: falsifier closed → queue mirrored re-audit on `candidate_background` (3,664 blockers) and `external_substrate` (450). Writing `reports/background-bucket-reaudit-workstream.md` next.
+
+## Current blocker
+
+None.

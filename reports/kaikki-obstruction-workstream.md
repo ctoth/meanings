@@ -514,22 +514,28 @@ next workstream gate is not "add more primitives" - it is
 
 ## Phase 5B: Re-audit `resource_artifact` Classifications
 
-Status: spun out to its own workstream at
-`reports/artifact-bucket-reaudit-workstream.md`. The summary stays here so
-the parent reads coherently.
+Status: done 2026-05-16. Spun out to
+`reports/artifact-bucket-reaudit-workstream.md`. Falsifier closed:
+artifact share at `closure_size <= 200` dropped `-6.01 pp`,
+`regressed_count = 0`. Three data-driven rules shipped: direct norms
+join in the pressure table, `common_vocabulary` high-frequency
+override (excluding taxon), tightened short-form abbreviation
+detection.
 
-Purpose: distinguish genuine resource artifacts (taxa, proper names,
-abbreviations, register markers) from common-English abstract nouns
-currently mislabelled as `technical_term` and blocking thousands of
-definitions.
+## Phase 5D: Re-audit `candidate_background` and `external_substrate`
 
-The child workstream phases are: Phase 1 inventory the suspect ICs
-(read-only), Phase 2 author classifier-change rules under Codex review,
-Phase 3 rebuild the pressure table, Phase 4 re-run the Phase 5A validator
-with a hard regression gate (no `closed` sense may regress) and an A/B
-impact report, Phase 5 decide whether the next slice is mirrored re-audits
-of `external_substrate` / `candidate_background` or a flip to Phase 5C
-(rules YAML / base expansion).
+Status: queued at `reports/background-bucket-reaudit-workstream.md`,
+drafted 2026-05-16. The next-largest blocker bucket after Phase 5B
+closed.
+
+Purpose: of the 3,664 `candidate_background` blockers and 450
+`external_substrate` blockers at `closure_size <= 200`, identify
+which are admitted high-quality terminal ICs that should be promoted
+into the base via a data-driven rule rather than hand-authored YAML.
+
+The child workstream follows the same five-phase shape as Phase 5B
+(inventory, Codex-reviewed rules, rebuild, validator diff with hard
+regression gate, decide).
 
 ## Phase 6: External And Multilingual Stress Tests
 
@@ -555,8 +561,7 @@ Acceptance gate:
 
 ## Immediate Commit-Sized Slice
 
-Execute Phase 1 of `reports/artifact-bucket-reaudit-workstream.md`: write
-`scripts/audit_artifact_bucket.py`, generate
-`reports/artifact-bucket-audit.md` and `reports/artifact-bucket-audit.json`.
-Read-only inventory over the current pressure table and validator output.
-Single commit.
+Execute Phase 1 of `reports/background-bucket-reaudit-workstream.md`:
+write `scripts/audit_background_bucket.py`, generate
+`reports/background-bucket-audit.{md,json}`. Read-only inventory over the
+current post-rebuild pressure table.

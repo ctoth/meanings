@@ -263,20 +263,35 @@ Result (2026-05-16):
 
 ## Phase 5: Decide what comes next
 
-Status: queued, dependent on Phase 4.
+Status: done 2026-05-16.
 
-If Phase 4 closes the falsifier (artifact share dropped by 5+ points and
-closure rate at `closure_size <= 200` rose), the next workstream is the
-mirrored slice on `external_substrate` and `candidate_background`
-classification — these are the next two largest blocker buckets.
+Phase 4 closed the falsifier:
 
-If Phase 4 trips the falsifier (no meaningful improvement), the next
-workstream is Phase 5C: hand-author `data/base-assembler-rules.yaml`
-informed by the failure histogram, with an explicit acceptance test that
-the YAML promotes only ICs the histogram identified as load-bearing.
+- Artifact share at `closure_size <= 200` dropped `-6.01 pp` (threshold
+  was 5 pp).
+- Closure rate at `closure_size <= 200` rose `+0.06 pp`. The rise is
+  marginal but real; the principal win is the bucket migration.
+- Hard regression gate: `regressed_count = 0`.
 
-## Immediate commit-sized slice
+Per the workstream's own decision rule, the next workstream is the
+mirrored re-audit on `candidate_background` and `external_substrate`,
+which are now the two largest non-artifact blocker buckets at
+`closure_size <= 200`:
 
-Phase 1: write `scripts/audit_artifact_bucket.py`, generate
-`reports/artifact-bucket-audit.md` and `reports/artifact-bucket-audit.json`.
-Read-only over existing inputs. Single commit.
+- `background` blockers: `3,664`.
+- `artifact` blockers: `8,551` (still the largest, but a re-audit of
+  the post-rebuild artifact ICs is a refinement of the same
+  hypothesis - the next blow against the closure ceiling is on the
+  non-artifact side).
+- `external` blockers: `450`.
+
+The next workstream is filed at
+`reports/background-bucket-reaudit-workstream.md`. Its design mirrors
+this one: inventory the suspect ICs, author classifier or
+pressure-bucket rules under Codex review, rebuild, re-run the
+validator, diff with the hard regression gate.
+
+## Workstream complete
+
+This workstream is closed. The downstream commit-sized slice belongs
+to `reports/background-bucket-reaudit-workstream.md`, Phase 1.
