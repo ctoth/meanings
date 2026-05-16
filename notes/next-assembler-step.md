@@ -125,3 +125,51 @@ Drafted `prompts/artifact-bucket-rules.md` with 7 questions for Codex. Dispatchi
 ## Current blocker (revised)
 
 None. About to dispatch Codex pre-implementation review.
+
+## Phase 2 done (`dda6ccb`)
+
+Codex review at `5f4f26a` returned key corrections:
+- Rename `abstract_common` → `common_vocabulary`. ✓ Applied.
+- Exclude `taxon` from the high-frequency override. ✓ Applied via `COMMON_VOCABULARY_ELIGIBLE = ARTIFACT_BUCKETS - {"taxon"}`.
+- Reject the proposed Rule C verbatim — it would have broken `ic:pa` detection. Use `len <= 2 AND no candidate AND no P2` instead. ✓ Applied.
+- Do NOT add `early_aoa` to the override — `power` has AOA 7.48. ✓ Did not add.
+- Normalize surface like `base_english_candidates.py`. ✓ Duplicated `normalize_surface` exactly.
+- Impact report must list every IC that changed bucket. Pending Phase 4.
+
+Three rules shipped:
+- R1: pressure table joins norms directly from `data/psycholinguistic/*.csv`.
+- R2: `common_vocabulary` override on artifact ∩ high_frequency (excl. taxon).
+- R3: bare `len<=3` short-form clause tightened to `len<=2 AND no candidate AND no P2`.
+
+Hand-list count: zero.
+
+Pyright complains about a pre-existing `writerows` typing issue in both modified scripts. Verified pre-existing via `git stash`. Not in scope.
+
+## Phase 3 done (rebuild)
+
+Acceptance gates all clean:
+- Rows: 85,137 → 85,137 ✓
+- L0 ICs lost: 0 ✓
+- Obstruction-core ICs lost: 0 ✓
+
+Bucket changes:
+- `candidate_background`: 46,152 → 46,155 (+3)
+- `external_substrate`: 34,541 → 35,321 (+780)
+- `resource_artifact`: 4,376 → 3,425 (−951)
+- `common_vocabulary`: 0 → 165 (NEW)
+- `circular_dependency`: 55 → 53 (−2)
+- `primitive_candidate`: 11 → 11 (unchanged)
+- `assembler_helper`: 2 → 7 (+5)
+
+The 951-IC drop in `resource_artifact` is the headline; 165 went to `common_vocabulary` (high-frequency override), 780 went to `external_substrate` (R3 short-form change), 5 obstruction-core artifacts gained frequency data and became assembler_helpers.
+
+Typed bucket distribution:
+- `abbreviation_or_code` 1,114 → 328 (−786) — R3 worked
+- `resource_specific_tail` 31,212 → 31,993 (+781)
+- Others unchanged
+
+`data/kernel-pressure-table.pre.csv` and `.json`, plus `reports/base-assembler-validation.pre.{md,json}` saved as pre-state snapshots for Phase 4 diff.
+
+## Current state — Phase 4 about to start
+
+Need to: run validator, save new output, write `reports/artifact-bucket-reaudit-impact.md` with closed-count, artifact-share, MGY before/after; enumerate every IC whose bucket changed; verify hard regression gate (no closed sense regressed).

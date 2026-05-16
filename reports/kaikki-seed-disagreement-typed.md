@@ -13,68 +13,68 @@ This is a deterministic review queue over Kaikki staged-seed ICs that are not in
 
 | bucket | count |
 | --- | --- |
-| abbreviation_or_code | 1114 |
+| abbreviation_or_code | 328 |
 | proper_name | 791 |
 | taxon | 36 |
 | technical_term | 2119 |
 | morphology_register_artifact | 237 |
-| resource_specific_tail | 31212 |
-| plausible_missing_primitive | 4258 |
+| resource_specific_tail | 31993 |
+| plausible_missing_primitive | 4263 |
 
 ## abbreviation_or_code
 
 | surface | bucket | reason | in_p2 | in_clean_candidates | p2_lexicality | candidate_flags |
 | --- | --- | --- | --- | --- | --- | --- |
 | aa | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| aaa | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
 | aah | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
-| aar | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
 | ab | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| aba | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| abc | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| abo | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| abv | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| abw | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
 | ac | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
 | ace | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
-| ack | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
 | act | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
 | ad | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| add | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| ade | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| adj | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| aeb | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
 | aeon | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  | missing_aoa;missing_concreteness;artifact_reading_present |
-| aes | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
 | af | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| afk | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
 | aft | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
 | ag | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| age | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
 | ah | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| ahh | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
 | ai | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
 | aid | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
-| aim | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
 | air | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
-| aji | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| aka | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
 | ale | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
 | all | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
-| alm | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
 | am | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  | missing_aoa;artifact_reading_present |
-| ama | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| amp | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
 | ao | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| aor | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
 | ap | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| ape | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| apk | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| app | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| apt | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
 | ar | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| ara | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
-| arc | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
+| ark | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
+| arm | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
+| art | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
+| av | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
+| aw | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
+| ay | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
+| az | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
+| b | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
+| ba | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
+| bad | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
+| basic | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | abbreviation | artifact_reading_present |
+| bat | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
+| bay | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
+| bc | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
+| bed | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
+| bi | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
+| bid | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
+| bo | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
+| bog | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
+| bow | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
+| boy | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
+| br | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
+| brief | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  | artifact_reading_present |
+| bud | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
+| bus | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
+| c | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
+| ca | abbreviation_or_code | symbol/code/numeric/short-form signal | False | False |  |  |
+| can | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
+| car | abbreviation_or_code | symbol/code/numeric/short-form signal | True | False | symbol-code |  |
 
 ## proper_name
 
@@ -286,10 +286,13 @@ This is a deterministic review queue over Kaikki staged-seed ICs that are not in
 
 | surface | bucket | reason | in_p2 | in_clean_candidates | p2_lexicality | candidate_flags |
 | --- | --- | --- | --- | --- | --- | --- |
+| aaa | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
 | aalenian | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
+| aar | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
 | aarons_beard | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
 | aarons_beard_cactus | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
 | aatxe | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
+| aba | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
 | abaculus | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
 | abandon | resource_specific_tail | weak non-Kaikki support | False | False |  |  |
 | abandoned | resource_specific_tail | weak non-Kaikki support | False | False |  | missing_aoa |
@@ -308,6 +311,7 @@ This is a deterministic review queue over Kaikki staged-seed ICs that are not in
 | abbey_counter | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
 | abbr | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
 | abbrev | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
+| abc | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
 | abd_ol_masih | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
 | abderian | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
 | abdl | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
@@ -332,10 +336,6 @@ This is a deterministic review queue over Kaikki staged-seed ICs that are not in
 | abitur | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
 | abiturient | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
 | abjad | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
-| abject | resource_specific_tail | weak non-Kaikki support | False | False |  |  |
-| abjuration | resource_specific_tail | weak non-Kaikki support | False | False |  | missing_frequency;missing_concreteness |
-| abjure | resource_specific_tail | weak non-Kaikki support | False | False |  | missing_concreteness |
-| abkhazian | resource_specific_tail | Kaikki-only row with no current OEWN candidate or P2 support | False | False |  |  |
 
 ## plausible_missing_primitive
 

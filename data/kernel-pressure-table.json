@@ -8,12 +8,13 @@
   },
   "definition": "IC-level agreement and obstruction-pressure table; buckets are review queues, not calibrated scores",
   "pressure_bucket_counts": {
-    "assembler_helper": 2,
-    "candidate_background": 46152,
-    "circular_dependency": 55,
-    "external_substrate": 34541,
+    "assembler_helper": 7,
+    "candidate_background": 46155,
+    "circular_dependency": 53,
+    "common_vocabulary": 165,
+    "external_substrate": 35321,
     "primitive_candidate": 11,
-    "resource_artifact": 4376
+    "resource_artifact": 3425
   },
   "schema_version": 1,
   "sources": {
