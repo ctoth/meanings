@@ -90,6 +90,7 @@ Buckets:
 - `taxon`
 - `technical_term`
 - `morphology_register_artifact`
+- `resource_specific_tail`
 - `plausible_missing_primitive`
 
 Command:
@@ -109,6 +110,7 @@ Falsifier:
 
 - If `plausible_missing_primitive` is empty, the classifier is probably too aggressive.
 - If `plausible_missing_primitive` is more than half of seed-not-L0, the classifier is probably too weak.
+- Kaikki-only rows with no current OEWN candidate or P2 support should go to `resource_specific_tail`, not `plausible_missing_primitive`.
 
 ## Phase 2: Add Stable-Unsat Obstruction Extraction
 

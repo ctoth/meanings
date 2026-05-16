@@ -15,6 +15,7 @@ BUCKETS = (
     "taxon",
     "technical_term",
     "morphology_register_artifact",
+    "resource_specific_tail",
     "plausible_missing_primitive",
 )
 
@@ -172,6 +173,15 @@ def bucket_for(
     ):
         reasons.append("technical/domain signal")
         return "technical_term", reasons
+
+    if candidate is None and p2_row is None:
+        reasons.append("Kaikki-only row with no current OEWN candidate or P2 support")
+        return "resource_specific_tail", reasons
+
+    evidence_count = int((candidate or {}).get("evidence_count") or 0)
+    if evidence_count <= 1 and p2_row is None:
+        reasons.append("weak non-Kaikki support")
+        return "resource_specific_tail", reasons
 
     if (
         any(token in REGISTER_TOKENS for token in tokens)
