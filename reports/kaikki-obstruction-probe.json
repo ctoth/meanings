@@ -1,0 +1,131 @@
+{
+  "argumentation_pin": "9a9f4c553c7fde3ff30ef15e062c6d4ef8e672ac",
+  "artifact_id": "kaikki-obstruction-probe",
+  "core_summary": {
+    "core_argument_count": 3,
+    "core_arguments": {
+      "count": 3,
+      "items": [
+        "ablative::n",
+        "ablative_case::n",
+        "material::n"
+      ],
+      "truncated": false
+    },
+    "core_attack_count": 3,
+    "core_attack_ics": {
+      "count": 3,
+      "items": [
+        {
+          "source_ic": "ic:ablative",
+          "target_ic": "ic:ablative"
+        },
+        {
+          "source_ic": "ic:ablative_case",
+          "target_ic": "ic:ablative_case"
+        },
+        {
+          "source_ic": "ic:material",
+          "target_ic": "ic:material"
+        }
+      ],
+      "truncated": false
+    },
+    "core_attacks": {
+      "count": 3,
+      "items": [
+        {
+          "source": "ablative::n",
+          "target": "ablative::n"
+        },
+        {
+          "source": "ablative_case::n",
+          "target": "ablative_case::n"
+        },
+        {
+          "source": "material::n",
+          "target": "material::n"
+        }
+      ],
+      "truncated": false
+    },
+    "core_bucket_counts": {
+      "not_in_seed_not_l0": 1,
+      "resource_specific_tail": 2
+    },
+    "core_ic_count": 3,
+    "core_ics": {
+      "count": 3,
+      "items": [
+        "ic:ablative",
+        "ic:ablative_case",
+        "ic:material"
+      ],
+      "truncated": false
+    },
+    "coverage_argument_count": 1,
+    "coverage_ic_count": 1,
+    "coverage_ics": {
+      "count": 1,
+      "items": [
+        "ic:ablative"
+      ],
+      "truncated": false
+    }
+  },
+  "edges": 956937,
+  "explanation": {
+    "argument_count": 93905,
+    "attack_count": 956937,
+    "clause_group_count": 1050842,
+    "core_argument_ids": [
+      "ablative::n",
+      "ablative_case::n",
+      "material::n"
+    ],
+    "core_attack_ids": [
+      [
+        "ablative::n",
+        "ablative::n"
+      ],
+      [
+        "ablative_case::n",
+        "ablative_case::n"
+      ],
+      [
+        "material::n",
+        "material::n"
+      ]
+    ],
+    "coverage_argument_ids": [
+      "ablative::n"
+    ],
+    "metadata": {
+      "argumentation_pin": "9a9f4c553c7fde3ff30ef15e062c6d4ef8e672ac",
+      "source": "data\\kaikki-largest-scc.json"
+    },
+    "model_extension_fingerprint": null,
+    "model_extension_size": null,
+    "requirement_argument_ids": [],
+    "residual_argument_count": 93905,
+    "residual_attack_count": 956937,
+    "runtime_seconds": 131.16302179999184,
+    "simplification_fixed_in_count": 0,
+    "simplification_removed_out_count": 0,
+    "solver_result": "unsat",
+    "stable_exists": false,
+    "status": "unsat"
+  },
+  "nodes": 93905,
+  "schema_version": 1,
+  "simplify": true,
+  "source": "data\\kaikki-largest-scc.json",
+  "source_stats": {
+    "edge_count": 956937,
+    "max_total_degree": 12001,
+    "median_total_degree": 9,
+    "node_count": 93905,
+    "p90_total_degree": 38
+  },
+  "typed_buckets": "data\\kaikki-seed-disagreement-typed.csv"
+}
