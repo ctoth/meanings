@@ -414,43 +414,136 @@ The first pressure table gives us a real review bench. The obstruction core is n
 
 ## Phase 5: Define The Assembler Rules
 
-Purpose: turn candidate rows into a testable base-English assembly language.
+Status: done for the first closure-coverage scan; no YAML committed yet by design.
+
+Purpose: turn candidate rows into a testable base-English assembly language. The
+first commit is a measurement instrument: the implicit base is derived from
+existing pressure-table CSV columns (L0 ∪ `primitive_candidate` ∪
+`assembler_helper`), not from a hand-authored YAML. A YAML can be drafted later
+from the failure histogram, when there is evidence that this base is worth
+freezing.
+
+Phase 5A: implicit-base validator (done 2026-05-16).
 
 Artifacts:
 
-- `data/base-assembler-rules.yaml`
 - `scripts/validate_assembler_definitions.py`
-- `reports/base-assembler-rules.md`
+- `reports/base-assembler-validation.md`
+- `reports/base-assembler-validation.json`
+- `reports/base-assembler-validation.progress.log`
+- `reports/base-assembler-validation.lock`
 
-Rule surfaces:
+External-agent review of the slice before implementation:
 
-- allowed primitive ICs,
-- allowed assembler/helper ICs,
-- allowed definition operations,
-- forbidden hidden dependencies,
-- artifact exclusions,
-- closure budget policy,
-- exception policy with rationale references.
+- `prompts/next-assembler-step.md`
+- `reports/codex-next-assembler-step-report.md`
+- `reports/gemini-next-assembler-step-report.md`
 
 Validation command:
 
 ```powershell
 uv run python scripts\validate_assembler_definitions.py `
-  --rules data\base-assembler-rules.yaml `
   --unfolding data\sense-unfolding-index.json `
   --pressure-table data\kernel-pressure-table.csv `
-  --report reports\base-assembler-rules.md
+  --report reports\base-assembler-validation.md `
+  --json reports\base-assembler-validation.json `
+  --target admitted `
+  --max-closure-size 200
 ```
 
 Acceptance gate:
 
-- A definition either closes under the selected base or reports the missing ICs.
-- The validator distinguishes primitive failure, assembler-helper failure, artifact failure, and graph-data failure.
-- The report includes closure statistics and concrete failed examples.
+- Every non-truncated admitted target row is classified as
+  `closed / artifact / circular / external / background`. Truncated-closure
+  rows are reported as `graph_data` and excluded from the closure-rate
+  denominator.
+- Per-base-IC marginal usage and per-blocking-IC blocked-target counts are
+  emitted so the failure histogram drives any later rules YAML.
+- The report respects the polysemy OR-junction: an IC is groundable if any of
+  its kernel senses has every direct definiens already groundable; a fixpoint
+  iteration over the unfolding-index rows computes the closure.
+
+Three-pronged falsifier:
+
+- Closure rate under L0 + augmented layer at `closure_size <= 200` below 0.60.
+- Artifact-blocked share at `closure_size <= 200` above 0.10.
+- Marginal Grounding Yield of the augmented layer below 1.0 closure per added
+  base IC.
+
+If any threshold trips, the assembly-language-under-this-base hypothesis is
+weakened and the report says so.
+
+Result:
+
+- Implemented `scripts/validate_assembler_definitions.py`.
+- Generated `reports/base-assembler-validation.json`.
+- Generated `reports/base-assembler-validation.md`.
+- L0 base size: `317`.
+- Augmented base size: `326`.
+- Augmented layer size: `9` (`certain, desire, express, giving, helpful,
+  office, plural, request, useful`; the other four candidates - `animal,
+  answer, name, place` - were already in L0).
+- Selected admitted target rows: `15,872`.
+- Closure rate at `closure_size <= 200`: L0 `0.1366`, augmented `0.1418`.
+- Status histogram at `closure_size <= 200` (augmented): artifact `9,445`,
+  background `3,048`, closed `2,110`, external `205`, circular `77`.
+- Marginal Grounding Yield: `8.56` new closures per added base IC.
+- Falsifier verdict: `weakened` - closure rate `0.142` < `0.60` and artifact
+  share `0.635` > `0.10` both tripped; MGY passes.
+
+Interpretation:
+
+The augmented layer is not deadweight: 9 added ICs produce 77 new closures
+(MGY 8.56). But three of the nine (`express, helpful, request`) contribute
+zero closed targets, so the load-bearing additions are `certain (13), desire
+(8), office (5), giving (4), plural (3), useful (1)`.
+
+The 60% closure-rate gate was never reachable: the unfolding index terminates
+at the 2,739-IC P2 seed, while our base is 326 ICs, so most admitted senses
+fail with `closure_size = 1` because the target IC is itself a P2 terminal
+that we chose not to promote into the base.
+
+The decisive finding is the artifact share. `0.635` of `closure_size <= 200`
+failures hit ICs labelled `resource_artifact`, and the top blockers - `act,
+quality, part, event, time, energy, complete, force, power, life` - are
+clearly common English, not technical_term artifacts. The
+`scripts/classify_seed_disagreement.py` classifier appears to be too
+aggressive in marking abstract-noun common-English as `technical_term`. The
+next workstream gate is not "add more primitives" - it is
+**artifact-bucket re-audit** of the pressure table.
+
+## Phase 5B: Re-audit `resource_artifact` Classifications (next slice)
+
+Status: queued.
+
+Purpose: distinguish genuine resource artifacts (taxa, proper names,
+abbreviations, register markers) from common-English abstract nouns currently
+mislabelled as `technical_term` and blocking thousands of definitions.
+
+Tasks:
+
+- Inspect the top blocking ICs from `reports/base-assembler-validation.md`
+  that carry `resource_artifact` bucket; review whether the `typed_bucket`
+  reason is genuine.
+- Refine `scripts/classify_seed_disagreement.py` to keep
+  `technical_term` for true technical vocabulary and emit a new
+  `abstract_common` bucket for high-frequency abstract nouns used pervasively
+  in OEWN glosses.
+- Rebuild `data/kernel-pressure-table.csv` and re-run Phase 5A.
+
+Acceptance gate:
+
+- The set of ICs migrating out of `resource_artifact` is reviewable and
+  rule-derived.
+- After rebuild, Phase 5A's `artifact_share` at `closure_size <= 200` drops
+  by at least a measurable amount; no closed sense becomes failed.
 
 Falsifier:
 
-- If common target definitions require huge closures or many artifact exceptions, the assembly-language hypothesis is weakened and the report says so.
+- If migrating these ICs out of `resource_artifact` does not improve closure
+  rate at any band, then the bottleneck is not artifact mislabelling but
+  base-too-small, and Phase 5C (rules YAML and bigger primitive layer) is the
+  next move instead.
 
 ## Phase 6: External And Multilingual Stress Tests
 
@@ -476,6 +569,11 @@ Acceptance gate:
 
 ## Immediate Commit-Sized Slice
 
-Implement Phase 5: define a first `data/base-assembler-rules.yaml` and `scripts/validate_assembler_definitions.py` that can test whether selected target ICs close under L0 plus the pressure-table primitive/helper candidates.
-
-This is now the principled next slice because the pressure table is reviewable but not yet an assembler. The next gate is closure behavior: do these candidates help definitions build, or do they only decorate the obstruction core?
+Implement Phase 5B: re-audit `resource_artifact` classifications in
+`scripts/classify_seed_disagreement.py` so abstract-noun common-English ICs
+(`act, quality, part, event, time, energy, complete, force, power, life`,
+etc.) stop being treated as technical_term artifacts. Rebuild the kernel
+pressure table and re-run the Phase 5A validator. The decisive metric is
+`artifact_share` at `closure_size <= 200` in
+`reports/base-assembler-validation.md`; it should fall meaningfully without
+turning previously closed senses into failures.
