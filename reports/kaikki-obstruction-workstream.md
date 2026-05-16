@@ -8,31 +8,33 @@ Status: executable workstream notes, started 2026-05-15.
 - 2026-05-15: Ran `uv run pytest tests\test_argumentation_bridge.py tests\test_argumentation_dispatch.py`; result was `33 passed`.
 - 2026-05-15: Ran `uv run python scripts\kaikki_argumentation_probe.py --mode both` on `data\kaikki-largest-scc.json`.
 - 2026-05-15: Verified `reports\kaikki-argumentation-probe.json`: grounded extension size `0` in `1.362s`; stable extension complete in `90.766s`; stable exists `False`; SAT trace has one `unsat` stable check.
+- 2026-05-15: Claude architectural critique corrected the interpretation: the raw Dung attack reading on a large SCC with self-attacks is a useful tractability/null-baseline result, but it is not yet a rich obstruction explanation.
 
 ## What The Probe Teaches
 
-The Kaikki largest SCC is not simply too large. It is too large for the exact-small-greedy FVS/MinSet path we tried, but it is tractable as a formal argumentation object under the pushed argumentation runtime.
+The Kaikki largest SCC is not simply too large. It is too large for the exact-small-greedy FVS/MinSet path we tried, but it is tractable under the pushed argumentation runtime for the raw Dung attack-reading probe.
 
-The meaningful result is `stable_exists = False`. Under the attack reading, the whole SCC has no globally coherent stable extension: no accepted set is simultaneously conflict-free and able to attack every outside argument. Grounded semantics is also empty. This makes the SCC a semantic obstruction surface, not just a solver blocker.
+The result is a baseline negative, not a full explanation. Under the attack reading, every definition edge becomes an attack; in a strongly connected definition mesh with self-attacks, empty grounded semantics and stable-unsat are not surprising. The probe proves the runtime can decide this 93,905-node object quickly, but it does not by itself tell us which English words are primitives.
 
-The next move is not to claim a final primitive list from the stable-unsat result. The next move is to explain the unsatisfiability and join that explanation to the existing candidate surfaces: P2 OEWN seed, L0 candidates, Kaikki staged seed, clean candidates, admission policy, and unfolding closures.
+The next move is therefore not to mine the raw stable-unsat result as if it were a primitive list. The next move is to mine the already-produced disagreement queues into typed buckets, then add a richer obstruction layer that distinguishes support, ambiguity, conflict, and artifact pressure before joining it to P2 OEWN seed, L0 candidates, Kaikki staged seed, clean candidates, admission policy, and unfolding closures.
 
 ## Swanson Move
 
-Use formal argumentation to locate where the dictionary graph cannot assemble itself, then use lexical, psycholinguistic, and cross-resource evidence to decide which obstructions are primitive pressure points and which are artifacts.
+Use graph control and formal argumentation as measuring instruments, not as the base language itself. First classify what the Kaikki staged seed disagrees with. Then locate where the dictionary graph cannot assemble itself without ambiguity or artifact pressure. Finally use lexical, psycholinguistic, and cross-resource evidence to decide which pressure points are primitive candidates and which are resource artifacts.
 
 In operational terms:
 
 - FVS says which nodes can break recursive definition cycles.
-- Stable-unsat says the full conflict surface has no coherent all-covering acceptance assignment.
-- Obstruction extraction should tell us which clauses, arguments, attacks, or local subgraphs force that failure.
+- Raw stable-unsat is a null baseline for the all-edges-as-attacks reading.
+- Typed disagreement buckets tell us what kind of objects the heuristic Kaikki seed is adding beyond L0/P2.
+- Obstruction extraction should then work on a richer support/obstruction surface, not pretend that the raw Dung SCC result already explains meaning.
 - Kernel pressure ranking should convert those failures into reviewable IC rows.
 - Assembler rules should turn the reviewable rows into a testable controlled defining vocabulary.
 
 ## Non-Negotiable Boundaries
 
 - Do not call the Kaikki staged seed optimal. It is acyclic and useful, but heuristic.
-- Do not call stable-unsat a primitive list. It is an impossibility certificate target.
+- Do not call stable-unsat a primitive list. On the raw SCC it is a tractable null baseline, not a semantic primitive detector.
 - Do not collapse graph correctness and human cleaning. A graph seed can be correct and still ugly as English.
 - Do not claim sense-level or lemma-level norms are sense-grounded; current norms are blunt alias-level evidence.
 - Do not pin `meanings` to a local `../argumentation` checkout. Push argumentation first, then pin a remote SHA.
@@ -61,9 +63,56 @@ Acceptance gate:
 - JSON records node count, edge count, argumentation pin, grounded result, stable result, and SAT trace.
 - Stable check completes or times out under a stated timeout; no partial success is reported as completion.
 
-## Phase 1: Add Stable-Unsat Obstruction Extraction
+## Phase 1: Classify Kaikki Seed Disagreements
 
 Status: next implementation slice.
+
+Purpose: convert the current disagreement report into typed review queues before adding new semantics.
+
+Inputs:
+
+- `reports/kaikki-seed-disagreement.md`
+- `data/kaikki-staged-seed.json`
+- `data/l0-grounded-primitives.json`
+- `data/oewn-sense-p2-ic-seed.json`
+- `data/base_english_candidates.csv`
+
+Artifacts:
+
+- `scripts/classify_seed_disagreement.py`
+- `data/kaikki-seed-disagreement-typed.csv`
+- `reports/kaikki-seed-disagreement-typed.md`
+
+Buckets:
+
+- `abbreviation_or_code`
+- `proper_name`
+- `taxon`
+- `technical_term`
+- `morphology_register_artifact`
+- `plausible_missing_primitive`
+
+Command:
+
+```powershell
+uv run python scripts\classify_seed_disagreement.py
+```
+
+Acceptance gate:
+
+- Every IC in the seed-not-L0 queue is assigned exactly one bucket.
+- Bucket counts sum to the seed-not-L0 count from `reports\kaikki-seed-disagreement.md`.
+- The report includes examples for each bucket and a focused `plausible_missing_primitive` sample.
+- The classifier is deterministic and rule-based; no learned model or hidden scoring is introduced.
+
+Falsifier:
+
+- If `plausible_missing_primitive` is empty, the classifier is probably too aggressive.
+- If `plausible_missing_primitive` is more than half of seed-not-L0, the classifier is probably too weak.
+
+## Phase 2: Add Stable-Unsat Obstruction Extraction
+
+Status: after Phase 1.
 
 Purpose: turn `stable_exists = False` into an explanatory object.
 
@@ -112,7 +161,7 @@ Falsifier:
 
 - If tracked cores on the Kaikki SCC are too large to interpret, the phase still succeeds only if it reports that fact and provides a coarser aggregation that is deterministic and reviewable.
 
-## Phase 2: Run Kaikki Obstruction Probe
+## Phase 3: Run Kaikki Obstruction Probe
 
 Purpose: apply Phase 1 to `data\kaikki-largest-scc.json`.
 
@@ -153,7 +202,7 @@ Falsifier:
 
 - If the solver returns no useful core, the report must say `no useful core extracted` and fall back to deterministic perturbation/aggregation as a separate Phase 2B, not as a fake core.
 
-## Phase 2B: Perturbation Witnesses If Unsat Cores Are Too Coarse
+## Phase 3B: Perturbation Witnesses If Unsat Cores Are Too Coarse
 
 Purpose: get explanatory pressure when SAT cores are too broad.
 
@@ -177,7 +226,7 @@ Acceptance gate:
 - Every perturbation records what changed, why it was selected, runtime, and result.
 - Perturbation results are labeled as causal probes, not proofs of minimality.
 
-## Phase 3: Build Kernel Pressure Table
+## Phase 4: Build Kernel Pressure Table
 
 Purpose: convert graph/argumentation results into a reviewable IC-level workbench.
 
@@ -194,6 +243,7 @@ Inputs:
 - `data/l0-grounded-primitives.json`
 - `data/oewn-sense-p2-ic-seed.json`
 - `data/kaikki-staged-seed.json`
+- `data/kaikki-seed-disagreement-typed.csv`
 - `reports/kaikki-obstruction-probe.json`
 - `data/oewn-upgoer-admitted.json`
 - optional psycholinguistic norm columns already joined into the candidate workbench
@@ -243,7 +293,7 @@ Acceptance gate:
 - The report includes top rows and disagreement queues, not only pretty candidates.
 - Counts reconcile against every input artifact.
 
-## Phase 4: Define The Assembler Rules
+## Phase 5: Define The Assembler Rules
 
 Purpose: turn candidate rows into a testable base-English assembly language.
 
@@ -283,7 +333,7 @@ Falsifier:
 
 - If common target definitions require huge closures or many artifact exceptions, the assembly-language hypothesis is weakened and the report says so.
 
-## Phase 5: External And Multilingual Stress Tests
+## Phase 6: External And Multilingual Stress Tests
 
 Purpose: test whether the base is English/OEWN-specific or resource-stable.
 
@@ -307,6 +357,6 @@ Acceptance gate:
 
 ## Immediate Commit-Sized Slice
 
-Implement Phase 1 in `../argumentation`: expose a stable-unsat explanation API with tracked stable constraints, tests on small AFs, and a deterministic JSON-serializable result. Push that branch, then update the `formal-argumentation` pin in this repo. Only then implement `scripts/kaikki_obstruction_probe.py`.
+Implement Phase 1: classify `reports\kaikki-seed-disagreement.md` into typed buckets.
 
-This is the principled next slice because the current repo already knows that the Kaikki SCC is stable-unsat, but it does not yet know why.
+This is the principled next slice because the current repo already has a large disagreement queue (`39,767` seed ICs not in L0). Before adding a richer obstruction API, we need to know whether that queue is mostly abbreviation/code/proper-name/taxon/technical noise or whether a plausible missing-primitive residue remains.
