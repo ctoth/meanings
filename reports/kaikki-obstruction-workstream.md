@@ -134,7 +134,7 @@ The main Kaikki disagreement is not a hidden primitive bonanza. Most of the seed
 
 ## Phase 2: Add Stable-Unsat Obstruction Extraction
 
-Status: after Phase 1.
+Status: done for the first tracked-clause API slice.
 
 Purpose: turn `stable_exists = False` into an explanatory object.
 
@@ -183,9 +183,28 @@ Falsifier:
 
 - If tracked cores on the Kaikki SCC are too large to interpret, the phase still succeeds only if it reports that fact and provides a coarser aggregation that is deterministic and reviewable.
 
+Result:
+
+- Implemented `argumentation.af_sat.StableUnsatExplanation`.
+- Implemented `argumentation.af_sat.explain_stable_unsat`.
+- Added focused argumentation tests for:
+  - odd-cycle UNSAT,
+  - self-loop UNSAT,
+  - even-cycle SAT,
+  - context-dependent odd-cycle unblocking.
+- Verification in `../argumentation`:
+  - `uv run pytest tests\test_solver_encoding.py -q`: `61 passed`.
+  - `uv run pyright src\argumentation\af_sat.py`: `0 errors`.
+- Pushed `../argumentation` commit `9a9f4c553c7fde3ff30ef15e062c6d4ef8e672ac`.
+- Updated `meanings` dependency pin and `uv.lock`.
+- Verification in this repo:
+  - `uv run pytest tests\test_argumentation_bridge.py tests\test_argumentation_dispatch.py`: `33 passed`.
+
 ## Phase 3: Run Kaikki Obstruction Probe
 
-Purpose: apply Phase 1 to `data\kaikki-largest-scc.json`.
+Status: done for the raw SCC tracked-core slice.
+
+Purpose: apply Phase 2 to `data\kaikki-largest-scc.json`.
 
 Artifacts:
 
@@ -223,6 +242,27 @@ Acceptance gate:
 Falsifier:
 
 - If the solver returns no useful core, the report must say `no useful core extracted` and fall back to deterministic perturbation/aggregation as a separate Phase 2B, not as a fake core.
+
+Result:
+
+- Implemented `scripts/kaikki_obstruction_probe.py`.
+- Generated `reports/kaikki-obstruction-probe.json`.
+- Generated `reports/kaikki-obstruction-probe.md`.
+- Full SCC run:
+  - Nodes: `93,905`
+  - Edges: `956,937`
+  - Tracked clause groups: `1,050,842`
+  - Runtime seconds: `131.163`
+  - Status: `unsat`
+  - Stable exists: `False`
+  - Core arguments: `3`
+  - Core attacks: `3`
+  - Coverage arguments: `1`
+  - Core ICs: `ic:ablative`, `ic:ablative_case`, `ic:material`
+
+Interpretation:
+
+The raw stable-unsat result is even more clearly a null baseline than a semantic obstruction theory. A three-argument self-loop core can certify UNSAT for the entire raw Dung SCC. This is useful because it tells us the next scientific move is self-loop/artifact decomposition and richer support/obstruction modeling, not treating the raw SCC core as a primitive-pressure map.
 
 ## Phase 3B: Perturbation Witnesses If Unsat Cores Are Too Coarse
 
@@ -379,6 +419,6 @@ Acceptance gate:
 
 ## Immediate Commit-Sized Slice
 
-Implement Phase 2: add stable-unsat/support-obstruction extraction in `../argumentation` and/or `src\meanings\obstruction.py`, starting from small AF tests and a deterministic JSON-serializable result.
+Implement Phase 3B: rerun the obstruction probe on a self-loop-stripped or self-loop-classified surface, and report whether stable-unsat remains after the trivial self-loop certificates are removed or isolated.
 
-This is now the principled next slice because Phase 1 reduced the raw disagreement queue to typed surfaces. Obstruction extraction should focus on the `plausible_missing_primitive`, P2-overlap, and clean-candidate overlaps instead of the full Kaikki-only tail.
+This is now the principled next slice because Phase 3 showed the raw SCC UNSAT certificate is tiny and self-loop-driven. We need to separate trivial self-loop artifacts from any broader obstruction pressure before building the kernel pressure table.
