@@ -1,0 +1,1063 @@
+{
+  "argumentation_pin": "9a9f4c553c7fde3ff30ef15e062c6d4ef8e672ac",
+  "artifact_id": "kaikki-obstruction-probe",
+  "core_summary": {
+    "core_argument_count": 86,
+    "core_arguments": {
+      "count": 86,
+      "items": [
+        "act::n",
+        "actions::n",
+        "animal::n",
+        "animals::n",
+        "answer::v",
+        "answered::v",
+        "ask::v",
+        "beneficial::a",
+        "bodily::n",
+        "butterfly::n",
+        "call::v",
+        "called::v",
+        "cardinal_number::n",
+        "certain::n",
+        "complete::n",
+        "constitute::v",
+        "constituted::v",
+        "containing::n",
+        "contents::n",
+        "countryside::n",
+        "desire::v",
+        "desired::v",
+        "divisions::n",
+        "do::v",
+        "earth::n",
+        "earths::n",
+        "exercising::n",
+        "expectation::n",
+        "expectations::n",
+        "express::n",
+        "expresses::n",
+        "genital::n",
+        "genital_organ::n",
+        "give_place::v",
+        "given_place::v",
+        "giving::a",
+        "goal::v",
+        "good::a",
+        "ha::n",
+        "has::n",
+        "helpful::a",
+        "hundred_thousand::x",
+        "liberal_conservative::n",
+        "light_fixture::n",
+        "light_fixtures::n",
+        "locate::v",
+        "located::v",
+        "name::n",
+        "names::n",
+        "nymphalid::n",
+        "office::v",
+        "organisms::n",
+        "past_participle::n",
+        "place::v",
+        "placed::v",
+        "plural::n",
+        "position::v",
+        "practical::a",
+        "provide::v",
+        "put::v",
+        "reference::n",
+        "referred::v",
+        "referring::n",
+        "replace::v",
+        "replaced::v",
+        "request::v",
+        "requirements::n",
+        "rural::n",
+        "rustic::n",
+        "satisfactorily::r",
+        "score::v",
+        "see_also::x",
+        "sexual_intercourse::n",
+        "sexually::r",
+        "simple_past::n",
+        "someones::n",
+        "suggestion::n",
+        "surname::n",
+        "survey::n",
+        "than::n",
+        "topics::n",
+        "town::n",
+        "types::n",
+        "useful::a",
+        "views::n",
+        "village::n"
+      ],
+      "truncated": false
+    },
+    "core_attack_count": 53,
+    "core_attack_ics": {
+      "count": 53,
+      "items": [
+        {
+          "source_ic": "ic:actions",
+          "target_ic": "ic:express"
+        },
+        {
+          "source_ic": "ic:animals",
+          "target_ic": "ic:good"
+        },
+        {
+          "source_ic": "ic:answered",
+          "target_ic": "ic:ask"
+        },
+        {
+          "source_ic": "ic:beneficial",
+          "target_ic": "ic:useful"
+        },
+        {
+          "source_ic": "ic:bodily",
+          "target_ic": "ic:ha"
+        },
+        {
+          "source_ic": "ic:called",
+          "target_ic": "ic:put"
+        },
+        {
+          "source_ic": "ic:certain",
+          "target_ic": "ic:earth"
+        },
+        {
+          "source_ic": "ic:complete",
+          "target_ic": "ic:light_fixture"
+        },
+        {
+          "source_ic": "ic:constituted",
+          "target_ic": "ic:town"
+        },
+        {
+          "source_ic": "ic:containing",
+          "target_ic": "ic:reference"
+        },
+        {
+          "source_ic": "ic:desired",
+          "target_ic": "ic:provide"
+        },
+        {
+          "source_ic": "ic:desired",
+          "target_ic": "ic:score"
+        },
+        {
+          "source_ic": "ic:earths",
+          "target_ic": "ic:survey"
+        },
+        {
+          "source_ic": "ic:exercising",
+          "target_ic": "ic:suggestion"
+        },
+        {
+          "source_ic": "ic:expectations",
+          "target_ic": "ic:giving"
+        },
+        {
+          "source_ic": "ic:expresses",
+          "target_ic": "ic:cardinal_number"
+        },
+        {
+          "source_ic": "ic:genital",
+          "target_ic": "ic:sexual_intercourse"
+        },
+        {
+          "source_ic": "ic:given_place",
+          "target_ic": "ic:surname"
+        },
+        {
+          "source_ic": "ic:goal",
+          "target_ic": "ic:place"
+        },
+        {
+          "source_ic": "ic:has",
+          "target_ic": "ic:village"
+        },
+        {
+          "source_ic": "ic:helpful",
+          "target_ic": "ic:beneficial"
+        },
+        {
+          "source_ic": "ic:hundred_thousand",
+          "target_ic": "ic:town"
+        },
+        {
+          "source_ic": "ic:liberal_conservative",
+          "target_ic": "ic:act"
+        },
+        {
+          "source_ic": "ic:light_fixtures",
+          "target_ic": "ic:practical"
+        },
+        {
+          "source_ic": "ic:located",
+          "target_ic": "ic:countryside"
+        },
+        {
+          "source_ic": "ic:names",
+          "target_ic": "ic:surname"
+        },
+        {
+          "source_ic": "ic:nymphalid",
+          "target_ic": "ic:rustic"
+        },
+        {
+          "source_ic": "ic:office",
+          "target_ic": "ic:constitute"
+        },
+        {
+          "source_ic": "ic:past_participle",
+          "target_ic": "ic:referred"
+        },
+        {
+          "source_ic": "ic:placed",
+          "target_ic": "ic:butterfly"
+        },
+        {
+          "source_ic": "ic:plural",
+          "target_ic": "ic:contents"
+        },
+        {
+          "source_ic": "ic:plural",
+          "target_ic": "ic:divisions"
+        },
+        {
+          "source_ic": "ic:plural",
+          "target_ic": "ic:genital_organ"
+        },
+        {
+          "source_ic": "ic:plural",
+          "target_ic": "ic:organisms"
+        },
+        {
+          "source_ic": "ic:plural",
+          "target_ic": "ic:requirements"
+        },
+        {
+          "source_ic": "ic:plural",
+          "target_ic": "ic:topics"
+        },
+        {
+          "source_ic": "ic:plural",
+          "target_ic": "ic:views"
+        },
+        {
+          "source_ic": "ic:position",
+          "target_ic": "ic:locate"
+        },
+        {
+          "source_ic": "ic:position",
+          "target_ic": "ic:replace"
+        },
+        {
+          "source_ic": "ic:referring",
+          "target_ic": "ic:plural"
+        },
+        {
+          "source_ic": "ic:replaced",
+          "target_ic": "ic:give_place"
+        },
+        {
+          "source_ic": "ic:request",
+          "target_ic": "ic:call"
+        },
+        {
+          "source_ic": "ic:rural",
+          "target_ic": "ic:village"
+        },
+        {
+          "source_ic": "ic:satisfactorily",
+          "target_ic": "ic:answer"
+        },
+        {
+          "source_ic": "ic:see_also",
+          "target_ic": "ic:do"
+        },
+        {
+          "source_ic": "ic:sexually",
+          "target_ic": "ic:desire"
+        },
+        {
+          "source_ic": "ic:simple_past",
+          "target_ic": "ic:referred"
+        },
+        {
+          "source_ic": "ic:someones",
+          "target_ic": "ic:expectation"
+        },
+        {
+          "source_ic": "ic:surname",
+          "target_ic": "ic:than"
+        },
+        {
+          "source_ic": "ic:than",
+          "target_ic": "ic:animal"
+        },
+        {
+          "source_ic": "ic:than",
+          "target_ic": "ic:plural"
+        },
+        {
+          "source_ic": "ic:types",
+          "target_ic": "ic:name"
+        },
+        {
+          "source_ic": "ic:useful",
+          "target_ic": "ic:helpful"
+        }
+      ],
+      "truncated": false
+    },
+    "core_attacks": {
+      "count": 53,
+      "items": [
+        {
+          "source": "actions::n",
+          "target": "express::n"
+        },
+        {
+          "source": "animals::n",
+          "target": "good::a"
+        },
+        {
+          "source": "answered::v",
+          "target": "ask::v"
+        },
+        {
+          "source": "beneficial::a",
+          "target": "useful::a"
+        },
+        {
+          "source": "bodily::n",
+          "target": "ha::n"
+        },
+        {
+          "source": "called::v",
+          "target": "put::v"
+        },
+        {
+          "source": "certain::n",
+          "target": "earth::n"
+        },
+        {
+          "source": "complete::n",
+          "target": "light_fixture::n"
+        },
+        {
+          "source": "constituted::v",
+          "target": "town::n"
+        },
+        {
+          "source": "containing::n",
+          "target": "reference::n"
+        },
+        {
+          "source": "desired::v",
+          "target": "provide::v"
+        },
+        {
+          "source": "desired::v",
+          "target": "score::v"
+        },
+        {
+          "source": "earths::n",
+          "target": "survey::n"
+        },
+        {
+          "source": "exercising::n",
+          "target": "suggestion::n"
+        },
+        {
+          "source": "expectations::n",
+          "target": "giving::a"
+        },
+        {
+          "source": "expresses::n",
+          "target": "cardinal_number::n"
+        },
+        {
+          "source": "genital::n",
+          "target": "sexual_intercourse::n"
+        },
+        {
+          "source": "given_place::v",
+          "target": "surname::n"
+        },
+        {
+          "source": "goal::v",
+          "target": "place::v"
+        },
+        {
+          "source": "has::n",
+          "target": "village::n"
+        },
+        {
+          "source": "helpful::a",
+          "target": "beneficial::a"
+        },
+        {
+          "source": "hundred_thousand::x",
+          "target": "town::n"
+        },
+        {
+          "source": "liberal_conservative::n",
+          "target": "act::n"
+        },
+        {
+          "source": "light_fixtures::n",
+          "target": "practical::a"
+        },
+        {
+          "source": "located::v",
+          "target": "countryside::n"
+        },
+        {
+          "source": "names::n",
+          "target": "surname::n"
+        },
+        {
+          "source": "nymphalid::n",
+          "target": "rustic::n"
+        },
+        {
+          "source": "office::v",
+          "target": "constitute::v"
+        },
+        {
+          "source": "past_participle::n",
+          "target": "referred::v"
+        },
+        {
+          "source": "placed::v",
+          "target": "butterfly::n"
+        },
+        {
+          "source": "plural::n",
+          "target": "contents::n"
+        },
+        {
+          "source": "plural::n",
+          "target": "divisions::n"
+        },
+        {
+          "source": "plural::n",
+          "target": "genital_organ::n"
+        },
+        {
+          "source": "plural::n",
+          "target": "organisms::n"
+        },
+        {
+          "source": "plural::n",
+          "target": "requirements::n"
+        },
+        {
+          "source": "plural::n",
+          "target": "topics::n"
+        },
+        {
+          "source": "plural::n",
+          "target": "views::n"
+        },
+        {
+          "source": "position::v",
+          "target": "locate::v"
+        },
+        {
+          "source": "position::v",
+          "target": "replace::v"
+        },
+        {
+          "source": "referring::n",
+          "target": "plural::n"
+        },
+        {
+          "source": "replaced::v",
+          "target": "give_place::v"
+        },
+        {
+          "source": "request::v",
+          "target": "call::v"
+        },
+        {
+          "source": "rural::n",
+          "target": "village::n"
+        },
+        {
+          "source": "satisfactorily::r",
+          "target": "answer::v"
+        },
+        {
+          "source": "see_also::x",
+          "target": "do::v"
+        },
+        {
+          "source": "sexually::r",
+          "target": "desire::v"
+        },
+        {
+          "source": "simple_past::n",
+          "target": "referred::v"
+        },
+        {
+          "source": "someones::n",
+          "target": "expectation::n"
+        },
+        {
+          "source": "surname::n",
+          "target": "than::n"
+        },
+        {
+          "source": "than::n",
+          "target": "animal::n"
+        },
+        {
+          "source": "than::n",
+          "target": "plural::n"
+        },
+        {
+          "source": "types::n",
+          "target": "name::n"
+        },
+        {
+          "source": "useful::a",
+          "target": "helpful::a"
+        }
+      ],
+      "truncated": false
+    },
+    "core_bucket_counts": {
+      "abbreviation_or_code": 6,
+      "not_in_seed_not_l0": 29,
+      "plausible_missing_primitive": 16,
+      "proper_name": 4,
+      "resource_specific_tail": 23,
+      "technical_term": 8
+    },
+    "core_ic_count": 86,
+    "core_ics": {
+      "count": 86,
+      "items": [
+        "ic:act",
+        "ic:actions",
+        "ic:animal",
+        "ic:animals",
+        "ic:answer",
+        "ic:answered",
+        "ic:ask",
+        "ic:beneficial",
+        "ic:bodily",
+        "ic:butterfly",
+        "ic:call",
+        "ic:called",
+        "ic:cardinal_number",
+        "ic:certain",
+        "ic:complete",
+        "ic:constitute",
+        "ic:constituted",
+        "ic:containing",
+        "ic:contents",
+        "ic:countryside",
+        "ic:desire",
+        "ic:desired",
+        "ic:divisions",
+        "ic:do",
+        "ic:earth",
+        "ic:earths",
+        "ic:exercising",
+        "ic:expectation",
+        "ic:expectations",
+        "ic:express",
+        "ic:expresses",
+        "ic:genital",
+        "ic:genital_organ",
+        "ic:give_place",
+        "ic:given_place",
+        "ic:giving",
+        "ic:goal",
+        "ic:good",
+        "ic:ha",
+        "ic:has",
+        "ic:helpful",
+        "ic:hundred_thousand",
+        "ic:liberal_conservative",
+        "ic:light_fixture",
+        "ic:light_fixtures",
+        "ic:locate",
+        "ic:located",
+        "ic:name",
+        "ic:names",
+        "ic:nymphalid",
+        "ic:office",
+        "ic:organisms",
+        "ic:past_participle",
+        "ic:place",
+        "ic:placed",
+        "ic:plural",
+        "ic:position",
+        "ic:practical",
+        "ic:provide",
+        "ic:put",
+        "ic:reference",
+        "ic:referred",
+        "ic:referring",
+        "ic:replace",
+        "ic:replaced",
+        "ic:request",
+        "ic:requirements",
+        "ic:rural",
+        "ic:rustic",
+        "ic:satisfactorily",
+        "ic:score",
+        "ic:see_also",
+        "ic:sexual_intercourse",
+        "ic:sexually",
+        "ic:simple_past",
+        "ic:someones",
+        "ic:suggestion",
+        "ic:surname",
+        "ic:survey",
+        "ic:than",
+        "ic:topics",
+        "ic:town",
+        "ic:types",
+        "ic:useful",
+        "ic:views",
+        "ic:village"
+      ],
+      "truncated": false
+    },
+    "coverage_argument_count": 40,
+    "coverage_ic_count": 40,
+    "coverage_ics": {
+      "count": 40,
+      "items": [
+        "ic:actions",
+        "ic:animals",
+        "ic:answered",
+        "ic:beneficial",
+        "ic:bodily",
+        "ic:called",
+        "ic:certain",
+        "ic:complete",
+        "ic:constituted",
+        "ic:containing",
+        "ic:desired",
+        "ic:earths",
+        "ic:exercising",
+        "ic:expectations",
+        "ic:expresses",
+        "ic:genital",
+        "ic:given_place",
+        "ic:goal",
+        "ic:has",
+        "ic:helpful",
+        "ic:hundred_thousand",
+        "ic:liberal_conservative",
+        "ic:light_fixtures",
+        "ic:located",
+        "ic:names",
+        "ic:nymphalid",
+        "ic:office",
+        "ic:placed",
+        "ic:position",
+        "ic:referring",
+        "ic:replaced",
+        "ic:request",
+        "ic:rural",
+        "ic:satisfactorily",
+        "ic:see_also",
+        "ic:sexually",
+        "ic:someones",
+        "ic:than",
+        "ic:types",
+        "ic:useful"
+      ],
+      "truncated": false
+    }
+  },
+  "dropped_self_loops": 10413,
+  "edges": 946524,
+  "explanation": {
+    "argument_count": 93905,
+    "attack_count": 946524,
+    "clause_group_count": 1040429,
+    "core_argument_ids": [
+      "act::n",
+      "actions::n",
+      "animal::n",
+      "animals::n",
+      "answer::v",
+      "answered::v",
+      "ask::v",
+      "beneficial::a",
+      "bodily::n",
+      "butterfly::n",
+      "call::v",
+      "called::v",
+      "cardinal_number::n",
+      "certain::n",
+      "complete::n",
+      "constitute::v",
+      "constituted::v",
+      "containing::n",
+      "contents::n",
+      "countryside::n",
+      "desire::v",
+      "desired::v",
+      "divisions::n",
+      "do::v",
+      "earth::n",
+      "earths::n",
+      "exercising::n",
+      "expectation::n",
+      "expectations::n",
+      "express::n",
+      "expresses::n",
+      "genital::n",
+      "genital_organ::n",
+      "give_place::v",
+      "given_place::v",
+      "giving::a",
+      "goal::v",
+      "good::a",
+      "ha::n",
+      "has::n",
+      "helpful::a",
+      "hundred_thousand::x",
+      "liberal_conservative::n",
+      "light_fixture::n",
+      "light_fixtures::n",
+      "locate::v",
+      "located::v",
+      "name::n",
+      "names::n",
+      "nymphalid::n",
+      "office::v",
+      "organisms::n",
+      "past_participle::n",
+      "place::v",
+      "placed::v",
+      "plural::n",
+      "position::v",
+      "practical::a",
+      "provide::v",
+      "put::v",
+      "reference::n",
+      "referred::v",
+      "referring::n",
+      "replace::v",
+      "replaced::v",
+      "request::v",
+      "requirements::n",
+      "rural::n",
+      "rustic::n",
+      "satisfactorily::r",
+      "score::v",
+      "see_also::x",
+      "sexual_intercourse::n",
+      "sexually::r",
+      "simple_past::n",
+      "someones::n",
+      "suggestion::n",
+      "surname::n",
+      "survey::n",
+      "than::n",
+      "topics::n",
+      "town::n",
+      "types::n",
+      "useful::a",
+      "views::n",
+      "village::n"
+    ],
+    "core_attack_ids": [
+      [
+        "actions::n",
+        "express::n"
+      ],
+      [
+        "animals::n",
+        "good::a"
+      ],
+      [
+        "answered::v",
+        "ask::v"
+      ],
+      [
+        "beneficial::a",
+        "useful::a"
+      ],
+      [
+        "bodily::n",
+        "ha::n"
+      ],
+      [
+        "called::v",
+        "put::v"
+      ],
+      [
+        "certain::n",
+        "earth::n"
+      ],
+      [
+        "complete::n",
+        "light_fixture::n"
+      ],
+      [
+        "constituted::v",
+        "town::n"
+      ],
+      [
+        "containing::n",
+        "reference::n"
+      ],
+      [
+        "desired::v",
+        "provide::v"
+      ],
+      [
+        "desired::v",
+        "score::v"
+      ],
+      [
+        "earths::n",
+        "survey::n"
+      ],
+      [
+        "exercising::n",
+        "suggestion::n"
+      ],
+      [
+        "expectations::n",
+        "giving::a"
+      ],
+      [
+        "expresses::n",
+        "cardinal_number::n"
+      ],
+      [
+        "genital::n",
+        "sexual_intercourse::n"
+      ],
+      [
+        "given_place::v",
+        "surname::n"
+      ],
+      [
+        "goal::v",
+        "place::v"
+      ],
+      [
+        "has::n",
+        "village::n"
+      ],
+      [
+        "helpful::a",
+        "beneficial::a"
+      ],
+      [
+        "hundred_thousand::x",
+        "town::n"
+      ],
+      [
+        "liberal_conservative::n",
+        "act::n"
+      ],
+      [
+        "light_fixtures::n",
+        "practical::a"
+      ],
+      [
+        "located::v",
+        "countryside::n"
+      ],
+      [
+        "names::n",
+        "surname::n"
+      ],
+      [
+        "nymphalid::n",
+        "rustic::n"
+      ],
+      [
+        "office::v",
+        "constitute::v"
+      ],
+      [
+        "past_participle::n",
+        "referred::v"
+      ],
+      [
+        "placed::v",
+        "butterfly::n"
+      ],
+      [
+        "plural::n",
+        "contents::n"
+      ],
+      [
+        "plural::n",
+        "divisions::n"
+      ],
+      [
+        "plural::n",
+        "genital_organ::n"
+      ],
+      [
+        "plural::n",
+        "organisms::n"
+      ],
+      [
+        "plural::n",
+        "requirements::n"
+      ],
+      [
+        "plural::n",
+        "topics::n"
+      ],
+      [
+        "plural::n",
+        "views::n"
+      ],
+      [
+        "position::v",
+        "locate::v"
+      ],
+      [
+        "position::v",
+        "replace::v"
+      ],
+      [
+        "referring::n",
+        "plural::n"
+      ],
+      [
+        "replaced::v",
+        "give_place::v"
+      ],
+      [
+        "request::v",
+        "call::v"
+      ],
+      [
+        "rural::n",
+        "village::n"
+      ],
+      [
+        "satisfactorily::r",
+        "answer::v"
+      ],
+      [
+        "see_also::x",
+        "do::v"
+      ],
+      [
+        "sexually::r",
+        "desire::v"
+      ],
+      [
+        "simple_past::n",
+        "referred::v"
+      ],
+      [
+        "someones::n",
+        "expectation::n"
+      ],
+      [
+        "surname::n",
+        "than::n"
+      ],
+      [
+        "than::n",
+        "animal::n"
+      ],
+      [
+        "than::n",
+        "plural::n"
+      ],
+      [
+        "types::n",
+        "name::n"
+      ],
+      [
+        "useful::a",
+        "helpful::a"
+      ]
+    ],
+    "coverage_argument_ids": [
+      "actions::n",
+      "animals::n",
+      "answered::v",
+      "beneficial::a",
+      "bodily::n",
+      "called::v",
+      "certain::n",
+      "complete::n",
+      "constituted::v",
+      "containing::n",
+      "desired::v",
+      "earths::n",
+      "exercising::n",
+      "expectations::n",
+      "expresses::n",
+      "genital::n",
+      "given_place::v",
+      "goal::v",
+      "has::n",
+      "helpful::a",
+      "hundred_thousand::x",
+      "liberal_conservative::n",
+      "light_fixtures::n",
+      "located::v",
+      "names::n",
+      "nymphalid::n",
+      "office::v",
+      "placed::v",
+      "position::v",
+      "referring::n",
+      "replaced::v",
+      "request::v",
+      "rural::n",
+      "satisfactorily::r",
+      "see_also::x",
+      "sexually::r",
+      "someones::n",
+      "than::n",
+      "types::n",
+      "useful::a"
+    ],
+    "metadata": {
+      "argumentation_pin": "9a9f4c553c7fde3ff30ef15e062c6d4ef8e672ac",
+      "source": "data\\kaikki-largest-scc.json"
+    },
+    "model_extension_fingerprint": null,
+    "model_extension_size": null,
+    "requirement_argument_ids": [],
+    "residual_argument_count": 93905,
+    "residual_attack_count": 946524,
+    "runtime_seconds": 131.4226419000188,
+    "simplification_fixed_in_count": 0,
+    "simplification_removed_out_count": 0,
+    "solver_result": "unsat",
+    "stable_exists": false,
+    "status": "unsat"
+  },
+  "nodes": 93905,
+  "schema_version": 1,
+  "simplify": true,
+  "source": "data\\kaikki-largest-scc.json",
+  "source_stats": {
+    "edge_count": 956937,
+    "max_total_degree": 12001,
+    "median_total_degree": 9,
+    "node_count": 93905,
+    "p90_total_degree": 38
+  },
+  "typed_buckets": "data\\kaikki-seed-disagreement-typed.csv"
+}
