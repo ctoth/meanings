@@ -86,3 +86,18 @@ Files for this commit:
 Skip (Q's parallel work, unrelated): `data/oewn-upgoer-admitted-expanded.json`, `notes/kaikki-argumentation-next-steps.md`, `notes/p2-seed-export-review.md`.
 
 `*.log` and `*.lock` are gitignored — progress log won't be picked up.
+
+## 2026-05-16 evening — executing artifact-bucket-reaudit-workstream
+
+Phase 5A committed `b9991f3`. Workstream spinout committed `3856085`. Now executing the child workstream end-to-end on Q's instruction.
+
+Tasks created (1=Phase 1 in_progress, 2..5 blocked sequentially).
+
+Phase 1 progress:
+- Wrote `scripts/audit_artifact_bucket.py`. Read-only. Reads pressure CSV + unfolding-index. For each `resource_artifact` IC, computes containment count = admitted, non-truncated unfolding rows whose `transitive_closure_ic_ids` mentions it. Groups by `typed_bucket`. About to run.
+- Metric is "upper bound on blocker impact" — not the validator's exact blocker count (which depends on the fixpoint base). Right for Phase 1 inventory.
+- Validator JSON persists only top 50 blockers; sticking with direct containment query to keep audit self-contained.
+
+## Current blocker
+
+None. About to run the audit script.
