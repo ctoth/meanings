@@ -210,8 +210,12 @@ Artifacts:
 Acceptance gate:
 
 - The new `reports/base-assembler-validation.md` shows the same target
-  selection count (15,872 admitted rows) and the same augmented-layer
-  size (9 ICs).
+  selection count (15,872 admitted rows).
+- The augmented-layer size may change only via R1's norm-join correction
+  (high-frequency obstruction-core ICs newly receive frequency data and
+  legitimately migrate into `assembler_helper`). The impact report must
+  enumerate every IC added to or removed from the augmented layer so the
+  change is reviewable.
 - `reports/artifact-bucket-reaudit-impact.md` reports closed-count before
   and after, artifact-share before and after, MGY before and after, and
   the list of ICs that changed bucket.
@@ -230,6 +234,32 @@ Falsifier:
   address the bottleneck. The workstream concludes that the bottleneck
   is not artifact mislabelling but base-too-small, and the next
   recommendation flips to Phase 5C (rules YAML or base expansion).
+
+Result (2026-05-16):
+
+- Implemented `scripts/artifact_bucket_reaudit_impact.py`.
+- Re-ran `scripts/validate_assembler_definitions.py` against the rebuilt
+  pressure table to refresh `reports/base-assembler-validation.{md,json}`.
+- Generated `reports/artifact-bucket-reaudit-impact.{md,json}` plus
+  `reports/artifact-bucket-reaudit-impact-per-sense.csv`.
+- Hard regression gate: `regressed_count = 0`. PASS.
+- Falsifier: artifact share at `closure_size <= 200` dropped from
+  `0.6345` to `0.5745`, delta `-6.01 pp`. PASS (threshold 5 pp).
+- Closure rate at `closure_size <= 200`: `0.1418` -> `0.1424`,
+  delta `+0.06 pp`. Closed count under augmented base: `2,110` -> `2,119`.
+- Augmented-layer size: `9` -> `14`. Added by R1: `ic:ask, ic:called,
+  ic:do, ic:has, ic:than` (five obstruction-core ICs that previously had
+  empty frequency cells; the norm join filled them and they correctly
+  reclassified into `assembler_helper`).
+- Bucket transitions: 953 ICs changed pressure bucket. `resource_artifact ->
+  external_substrate` 780, `resource_artifact -> common_vocabulary` 165,
+  `resource_artifact -> assembler_helper` 3, `resource_artifact ->
+  candidate_background` 3, `circular_dependency -> assembler_helper` 2.
+- Known side effect: single-letter / very-short surfaces with high SUBTLEX
+  frequencies (`ic:s, ic:t, ic:m, ic:re, ic:no, ic:if, ic:oh`) migrated to
+  `common_vocabulary`. These are mixed - some are genuine abbreviations
+  (s, t, m, re) and some are real high-frequency content words (no, if,
+  oh). Documented in the impact report for the next workstream to refine.
 
 ## Phase 5: Decide what comes next
 

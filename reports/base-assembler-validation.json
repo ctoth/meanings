@@ -22,9 +22,9 @@
       "size": 317
     },
     "augmented": {
-      "size": 326
+      "size": 331
     },
-    "augmented_layer_size": 9
+    "augmented_layer_size": 14
   },
   "evaluation": {
     "l0_only": {
@@ -33,11 +33,11 @@
       "bands": {
         "closure_size_le_50": {
           "counts": {
-            "background": 3077,
+            "background": 3697,
             "closed": 2033,
-            "artifact": 7569,
-            "circular": 77,
-            "external": 201
+            "artifact": 6697,
+            "circular": 101,
+            "external": 429
           },
           "closure_rate": 0.15690360422937408,
           "closed": 2033,
@@ -45,11 +45,11 @@
         },
         "closure_size_le_100": {
           "counts": {
-            "background": 3077,
+            "background": 3697,
             "closed": 2033,
-            "artifact": 8712,
-            "circular": 77,
-            "external": 201
+            "artifact": 7840,
+            "circular": 101,
+            "external": 429
           },
           "closure_rate": 0.14418439716312056,
           "closed": 2033,
@@ -57,11 +57,11 @@
         },
         "closure_size_le_200": {
           "counts": {
-            "background": 3077,
+            "background": 3697,
             "closed": 2033,
-            "artifact": 9497,
-            "circular": 77,
-            "external": 201
+            "artifact": 8625,
+            "circular": 101,
+            "external": 429
           },
           "closure_rate": 0.13658045011756803,
           "closed": 2033,
@@ -69,11 +69,11 @@
         },
         "all_targets": {
           "counts": {
-            "background": 3077,
+            "background": 3697,
             "closed": 2033,
-            "artifact": 10272,
-            "circular": 77,
-            "external": 201,
+            "artifact": 9400,
+            "circular": 101,
+            "external": 429,
             "graph_data": 212
           },
           "closure_rate": 0.1298212005108557,
@@ -487,56 +487,56 @@
       ]
     },
     "augmented": {
-      "base_size": 326,
-      "groundable_ic_count": 1072,
+      "base_size": 331,
+      "groundable_ic_count": 1083,
       "bands": {
         "closure_size_le_50": {
           "counts": {
-            "background": 3048,
-            "closed": 2110,
-            "artifact": 7517,
-            "circular": 77,
-            "external": 205
+            "background": 3664,
+            "closed": 2119,
+            "artifact": 6623,
+            "circular": 101,
+            "external": 450
           },
-          "closure_rate": 0.1628463378868565,
-          "closed": 2110,
+          "closure_rate": 0.16354094311954928,
+          "closed": 2119,
           "non_truncated_total": 12957
         },
         "closure_size_le_100": {
           "counts": {
-            "background": 3048,
-            "closed": 2110,
-            "artifact": 8660,
-            "circular": 77,
-            "external": 205
+            "background": 3664,
+            "closed": 2119,
+            "artifact": 7766,
+            "circular": 101,
+            "external": 450
           },
-          "closure_rate": 0.14964539007092198,
-          "closed": 2110,
+          "closure_rate": 0.1502836879432624,
+          "closed": 2119,
           "non_truncated_total": 14100
         },
         "closure_size_le_200": {
           "counts": {
-            "background": 3048,
-            "closed": 2110,
-            "artifact": 9445,
-            "circular": 77,
-            "external": 205
+            "background": 3664,
+            "closed": 2119,
+            "artifact": 8551,
+            "circular": 101,
+            "external": 450
           },
-          "closure_rate": 0.14175344306348672,
-          "closed": 2110,
+          "closure_rate": 0.1423580786026201,
+          "closed": 2119,
           "non_truncated_total": 14885
         },
         "all_targets": {
           "counts": {
-            "background": 3048,
-            "closed": 2110,
-            "artifact": 10220,
-            "circular": 77,
-            "external": 205,
+            "background": 3664,
+            "closed": 2119,
+            "artifact": 9326,
+            "circular": 101,
+            "external": 450,
             "graph_data": 212
           },
-          "closure_rate": 0.13473818646232438,
-          "closed": 2110,
+          "closure_rate": 0.13531289910600255,
+          "closed": 2119,
           "non_truncated_total": 15660
         }
       },
@@ -947,22 +947,22 @@
     }
   },
   "marginal_grounding_yield": {
-    "added_base_size": 9,
+    "added_base_size": 14,
     "closed_l0": 2033,
-    "closed_augmented": 2110,
-    "delta_closed": 77,
-    "mgy": 8.555555555555555
+    "closed_augmented": 2119,
+    "delta_closed": 86,
+    "mgy": 6.142857142857143
   },
   "verdict": {
     "closure_rate_threshold": 0.6,
     "artifact_share_threshold": 0.1,
     "mgy_threshold": 1.0,
-    "closure_rate_at_le_200": 0.14175344306348672,
-    "artifact_share_at_le_200": 0.6345314074571716,
-    "mgy": 8.555555555555555,
+    "closure_rate_at_le_200": 0.1423580786026201,
+    "artifact_share_at_le_200": 0.5744709439032584,
+    "mgy": 6.142857142857143,
     "triggered": [
       "closure_rate 0.142 below threshold 0.600 on closure_size <= 200",
-      "artifact_share 0.635 above threshold 0.100 on closure_size <= 200"
+      "artifact_share 0.574 above threshold 0.100 on closure_size <= 200"
     ],
     "weakened": true
   }

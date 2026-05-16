@@ -12,8 +12,8 @@ Closure-coverage scan over `data/sense-unfolding-index.json` using the implicit 
 ## Bases
 
 - L0-only baseline size: `317`
-- Augmented base size (L0 + primitive_candidate + assembler_helper): `326`
-- Augmented layer size (primitive_candidate + assembler_helper): `9`
+- Augmented base size (L0 + primitive_candidate + assembler_helper): `331`
+- Augmented layer size (primitive_candidate + assembler_helper): `14`
 
 ## Closure Rate by Band
 
@@ -23,35 +23,35 @@ are reported as `graph_data` and excluded from the denominator.
 
 | band | closed_l0 | closed_aug | non_truncated_total | rate_l0 | rate_aug |
 | --- | --- | --- | --- | --- | --- |
-| closure_size_le_50 | 2033 | 2110 | 12957 | 0.1569 | 0.1628 |
-| closure_size_le_100 | 2033 | 2110 | 14100 | 0.1442 | 0.1496 |
-| closure_size_le_200 | 2033 | 2110 | 14885 | 0.1366 | 0.1418 |
-| all_targets | 2033 | 2110 | 15660 | 0.1298 | 0.1347 |
+| closure_size_le_50 | 2033 | 2119 | 12957 | 0.1569 | 0.1635 |
+| closure_size_le_100 | 2033 | 2119 | 14100 | 0.1442 | 0.1503 |
+| closure_size_le_200 | 2033 | 2119 | 14885 | 0.1366 | 0.1424 |
+| all_targets | 2033 | 2119 | 15660 | 0.1298 | 0.1353 |
 
 ## Status Histogram (augmented base, `closure_size <= 200`)
 
 | status | count |
 | --- | --- |
-| artifact | 9445 |
-| background | 3048 |
-| closed | 2110 |
-| external | 205 |
-| circular | 77 |
+| artifact | 8551 |
+| background | 3664 |
+| closed | 2119 |
+| external | 450 |
+| circular | 101 |
 
 ## Marginal Grounding Yield
 
-- Added base ICs (augmented layer): `9`
+- Added base ICs (augmented layer): `14`
 - Closed under L0 only (all targets): `2033`
-- Closed under augmented (all targets): `2110`
-- Delta closed: `77`
-- MGY = delta_closed / added_base_size: `8.5556`
+- Closed under augmented (all targets): `2119`
+- Delta closed: `86`
+- MGY = delta_closed / added_base_size: `6.1429`
 
 ## Falsifier Verdict
 
-- Closure rate at `closure_size <= 200` (augmented): `0.1418`
-- Artifact share at `closure_size <= 200` (augmented): `0.6345`
-- MGY: `8.5556`
-- Triggered: `['closure_rate 0.142 below threshold 0.600 on closure_size <= 200', 'artifact_share 0.635 above threshold 0.100 on closure_size <= 200']`
+- Closure rate at `closure_size <= 200` (augmented): `0.1424`
+- Artifact share at `closure_size <= 200` (augmented): `0.5745`
+- MGY: `6.1429`
+- Triggered: `['closure_rate 0.142 below threshold 0.600 on closure_size <= 200', 'artifact_share 0.574 above threshold 0.100 on closure_size <= 200']`
 - Hypothesis weakened: `True`
 
 ## Top Marginal Usage (augmented base)
@@ -109,13 +109,18 @@ Marginal usage restricted to the 13 augmented-layer ICs added on top of L0.
 | --- | --- | --- |
 | ic:certain | certain | 13 |
 | ic:desire | desire | 8 |
+| ic:do | do | 5 |
 | ic:office | office | 5 |
 | ic:giving | giving | 4 |
 | ic:plural | plural | 3 |
 | ic:useful | useful | 1 |
+| ic:ask | ask | 0 |
+| ic:called | called | 0 |
 | ic:express | express | 0 |
+| ic:has | has | 0 |
 | ic:helpful | helpful | 0 |
 | ic:request | request | 0 |
+| ic:than | than | 0 |
 
 ## Top Blocking ICs (augmented base)
 
@@ -123,26 +128,26 @@ Non-base ICs that prevented closure, with their pressure-bucket label.
 
 | ic_id | primary_alias | blocked_targets | pressure_bucket |
 | --- | --- | --- | --- |
-| ic:act | act | 3633 | resource_artifact |
+| ic:act | act | 3633 | common_vocabulary |
 | ic:amount | amount | 2109 | candidate_background |
 | ic:time | time | 2003 | candidate_background |
 | ic:quality | quality | 1933 | resource_artifact |
 | ic:capable | capable | 1844 | candidate_background |
 | ic:event | event | 1802 | candidate_background |
 | ic:showing | showing | 1795 | resource_artifact |
-| ic:part | part | 1758 | resource_artifact |
-| ic:can | can | 1566 | resource_artifact |
+| ic:part | part | 1758 | common_vocabulary |
+| ic:can | can | 1566 | common_vocabulary |
 | ic:property | property | 1468 | candidate_background |
 | ic:energy | energy | 1447 | resource_artifact |
 | ic:things | things | 1423 | candidate_background |
 | ic:physical | physical | 1404 | resource_artifact |
 | ic:knowledge | knowledge | 1384 | candidate_background |
-| ic:words | words | 1268 | resource_artifact |
+| ic:words | words | 1268 | common_vocabulary |
 | ic:general | general | 1235 | candidate_background |
 | ic:activity | activity | 1199 | resource_artifact |
-| ic:more | more | 1194 | resource_artifact |
+| ic:more | more | 1194 | common_vocabulary |
 | ic:complete | complete | 1192 | resource_artifact |
-| ic:life | life | 1181 | resource_artifact |
+| ic:life | life | 1181 | common_vocabulary |
 | ic:regard | regard | 1171 | candidate_background |
 | ic:marked | marked | 1164 | resource_artifact |
 | ic:position | position | 1146 | circular_dependency |
@@ -150,7 +155,7 @@ Non-base ICs that prevented closure, with their pressure-bucket label.
 | ic:done | done | 1129 | candidate_background |
 | ic:attention | attention | 1119 | candidate_background |
 | ic:force | force | 1091 | resource_artifact |
-| ic:power | power | 1084 | resource_artifact |
+| ic:power | power | 1084 | common_vocabulary |
 | ic:information | information | 1077 | candidate_background |
 | ic:characteristic | characteristic | 1045 | candidate_background |
 | ic:quantity | quantity | 1044 | resource_artifact |
@@ -202,16 +207,16 @@ Up to ten failed rows per status (augmented base, `closure_size <= 200`).
 
 | sense_id | ic_id | label | pos | closure_size | missing_preview |
 | --- | --- | --- | --- | --- | --- |
+| oewn-absorbing__5.00.00.interesting.00 | ic:absorbing | absorbing | s | 4 | ic:act,ic:attention,ic:capable,ic:holding |
 | oewn-acellular__3.00.00.. | ic:acellular | acellular | a | 4 | ic:divided,ic:parts,ic:separated |
+| oewn-addition__1.06.00.. | ic:addition | addition | n | 6 | ic:abstract,ic:component,ic:part |
+| oewn-adverbial__1.10.00.. | ic:adverbial | adverbial | n | 5 | ic:adverb,ic:word,ic:words |
+| oewn-afternoon__1.28.00.. | ic:afternoon | afternoon | n | 5 | ic:day,ic:noon,ic:part |
+| oewn-agile__5.00.00.active.01 | ic:agile | agile | s | 6 | ic:good,ic:moving,ic:quickly,ic:reason,ic:speed |
+| oewn-animation__1.26.00.. | ic:animation | animation | n | 4 | ic:alive,ic:condition,ic:life |
+| oewn-anonymous__3.00.00.. | ic:anonymous | anonymous | a | 9 | ic:identity,ic:individual,ic:known,ic:no,ic:recognised |
 | oewn-assumed__5.00.00.counterfeit.00 | ic:assumed | assumed | s | 5 | ic:acquired,ic:adopted,ic:choice,ic:deceive |
 | oewn-attachment__1.12.00.. | ic:attachment | attachment | n | 5 | ic:affection,ic:institution,ic:liking,ic:positive |
-| oewn-attentively__4.02.00.. | ic:attentively | attentively | r | 4 | ic:attention,ic:attentive |
-| oewn-beef__1.05.00.. | ic:beef | beef | n | 4 | ic:cattle,ic:food,ic:meat |
-| oewn-believing__1.09.00.. | ic:believing | believing | n | 2 | ic:cognition,ic:cognitive |
-| oewn-burst__1.11.00.. | ic:burst | burst | n | 4 | ic:event,ic:happening,ic:intense,ic:sudden |
-| oewn-case__1.11.00.. | ic:case | case | n | 2 | ic:event,ic:occurrence |
-| oewn-causally__4.02.00.. | ic:causally | causally | r | 5 | ic:causa,ic:causal,ic:causing,ic:done,ic:fashion |
-| oewn-celibacy__1.26.00.. | ic:celibacy | celibacy | n | 4 | ic:related,ic:status,ic:unmarried |
 
 ### background
 

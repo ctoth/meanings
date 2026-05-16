@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "artifact_id": "artifact-bucket-reaudit-impact",
+  "definition": "A/B impact report for Phase 4 of artifact-bucket-reaudit-workstream",
+  "inputs": {
+    "pressure_table_pre": "data\\kernel-pressure-table.pre.csv",
+    "pressure_table_post": "data\\kernel-pressure-table.csv",
+    "unfolding": "data\\sense-unfolding-index.json"
+  },
+  "augmented_layer": {
+    "pre": [
+      "ic:certain",
+      "ic:desire",
+      "ic:express",
+      "ic:giving",
+      "ic:helpful",
+      "ic:office",
+      "ic:plural",
+      "ic:request",
+      "ic:useful"
+    ],
+    "post": [
+      "ic:ask",
+      "ic:called",
+      "ic:certain",
+      "ic:desire",
+      "ic:do",
+      "ic:express",
+      "ic:giving",
+      "ic:has",
+      "ic:helpful",
+      "ic:office",
+      "ic:plural",
+      "ic:request",
+      "ic:than",
+      "ic:useful"
+    ],
+    "added": [
+      "ic:ask",
+      "ic:called",
+      "ic:do",
+      "ic:has",
+      "ic:than"
+    ],
+    "removed": []
+  },
+  "closure_size_le_200": {
+    "counts_pre_aug": {
+      "background": 3048,
+      "closed": 2110,
+      "artifact": 9445,
+      "circular": 77,
+      "external": 205
+    },
+    "counts_post_aug": {
+      "background": 3664,
+      "closed": 2119,
+      "artifact": 8551,
+      "circular": 101,
+      "external": 450
+    },
+    "closure_rate_pre": 0.14175344306348672,
+    "closure_rate_post": 0.1423580786026201,
+    "closure_rate_delta": 0.0006046355391333691,
+    "artifact_share_pre": 0.6345314074571716,
+    "artifact_share_post": 0.5744709439032584,
+    "artifact_share_delta_pp": -6.006046355391326
+  },
+  "all_targets": {
+    "counts_pre_aug": {
+      "background": 3048,
+      "closed": 2110,
+      "artifact": 10220,
+      "circular": 77,
+      "external": 205,
+      "graph_data": 212
+    },
+    "counts_post_aug": {
+      "background": 3664,
+      "closed": 2119,
+      "artifact": 9326,
+      "circular": 101,
+      "external": 450,
+      "graph_data": 212
+    },
+    "closed_pre_l0": 2033,
+    "closed_post_l0": 2033,
+    "closed_pre_aug": 2110,
+    "closed_post_aug": 2119,
+    "mgy_pre": 8.555555555555555,
+    "mgy_post": 6.142857142857143
+  },
+  "regression": {
+    "regressed_count": 0,
+    "examples": []
+  },
+  "bucket_migration": {
+    "transitions": [
+      {
+        "from": "resource_artifact",
+        "to": "external_substrate",
+        "count": 780
+      },
+      {
+        "from": "resource_artifact",
+        "to": "common_vocabulary",
+        "count": 165
+      },
+      {
+        "from": "resource_artifact",
+        "to": "assembler_helper",
+        "count": 3
+      },
+      {
+        "from": "resource_artifact",
+        "to": "candidate_background",
+        "count": 3
+      },
+      {
+        "from": "circular_dependency",
+        "to": "assembler_helper",
+        "count": 2
+      }
+    ],
+    "total_changed_ics": 953
+  }
+}
