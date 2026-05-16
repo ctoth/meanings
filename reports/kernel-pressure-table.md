@@ -13,10 +13,11 @@ This is an IC-level review table over structural, candidate, and obstruction evi
 
 | pressure_bucket | count |
 | --- | --- |
-| candidate_background | 46155 |
+| candidate_background | 46034 |
 | external_substrate | 35321 |
 | resource_artifact | 3425 |
 | common_vocabulary | 165 |
+| base_promotable_terminal_common | 121 |
 | circular_dependency | 53 |
 | primitive_candidate | 11 |
 | assembler_helper | 7 |
