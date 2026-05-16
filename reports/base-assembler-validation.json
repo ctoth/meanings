@@ -22,9 +22,9 @@
       "size": 317
     },
     "augmented": {
-      "size": 331
+      "size": 378
     },
-    "augmented_layer_size": 14
+    "augmented_layer_size": 61
   },
   "evaluation": {
     "l0_only": {
@@ -487,79 +487,119 @@
       ]
     },
     "augmented": {
-      "base_size": 331,
-      "groundable_ic_count": 1083,
+      "base_size": 378,
+      "groundable_ic_count": 1637,
       "bands": {
         "closure_size_le_50": {
           "counts": {
-            "background": 3664,
-            "closed": 2119,
-            "artifact": 6623,
-            "circular": 101,
-            "external": 450
+            "background": 3177,
+            "closed": 3044,
+            "artifact": 6219,
+            "circular": 82,
+            "external": 435
           },
-          "closure_rate": 0.16354094311954928,
-          "closed": 2119,
+          "closure_rate": 0.23493092536852667,
+          "closed": 3044,
           "non_truncated_total": 12957
         },
         "closure_size_le_100": {
           "counts": {
-            "background": 3664,
-            "closed": 2119,
-            "artifact": 7766,
-            "circular": 101,
-            "external": 450
+            "background": 3177,
+            "closed": 3044,
+            "artifact": 7362,
+            "circular": 82,
+            "external": 435
           },
-          "closure_rate": 0.1502836879432624,
-          "closed": 2119,
+          "closure_rate": 0.21588652482269505,
+          "closed": 3044,
           "non_truncated_total": 14100
         },
         "closure_size_le_200": {
           "counts": {
-            "background": 3664,
-            "closed": 2119,
-            "artifact": 8551,
-            "circular": 101,
-            "external": 450
+            "background": 3177,
+            "closed": 3044,
+            "artifact": 8147,
+            "circular": 82,
+            "external": 435
           },
-          "closure_rate": 0.1423580786026201,
-          "closed": 2119,
+          "closure_rate": 0.20450117568021497,
+          "closed": 3044,
           "non_truncated_total": 14885
         },
         "all_targets": {
           "counts": {
-            "background": 3664,
-            "closed": 2119,
-            "artifact": 9326,
-            "circular": 101,
-            "external": 450,
+            "background": 3177,
+            "closed": 3044,
+            "artifact": 8922,
+            "circular": 82,
+            "external": 435,
             "graph_data": 212
           },
-          "closure_rate": 0.13531289910600255,
-          "closed": 2119,
+          "closure_rate": 0.19438058748403575,
+          "closed": 3044,
           "non_truncated_total": 15660
         }
       },
       "marginal_usage_top": [
         [
           "ic:make",
-          46
+          55
         ],
         [
           "ic:place",
-          34
+          51
+        ],
+        [
+          "ic:time",
+          46
         ],
         [
           "ic:together",
-          22
-        ],
-        [
-          "ic:give",
-          21
+          29
         ],
         [
           "ic:body",
+          26
+        ],
+        [
+          "ic:give",
+          26
+        ],
+        [
+          "ic:line",
+          23
+        ],
+        [
+          "ic:water",
+          22
+        ],
+        [
+          "ic:certain",
+          21
+        ],
+        [
+          "ic:different",
+          20
+        ],
+        [
+          "ic:move",
+          20
+        ],
+        [
+          "ic:aright",
+          20
+        ],
+        [
+          "ic:thing",
           18
+        ],
+        [
+          "ic:causa",
+          17
+        ],
+        [
+          "ic:material",
+          17
         ],
         [
           "ic:clean",
@@ -567,6 +607,22 @@
         ],
         [
           "ic:cover",
+          16
+        ],
+        [
+          "ic:sound",
+          16
+        ],
+        [
+          "ic:group",
+          15
+        ],
+        [
+          "ic:mind",
+          15
+        ],
+        [
+          "ic:forrad",
           14
         ],
         [
@@ -574,15 +630,27 @@
           14
         ],
         [
-          "ic:sound",
+          "ic:inside",
           14
         ],
         [
-          "ic:certain",
+          "ic:strong",
+          14
+        ],
+        [
+          "ic:back",
           13
         ],
         [
-          "ic:different",
+          "ic:piece",
+          13
+        ],
+        [
+          "ic:small",
+          13
+        ],
+        [
+          "ic:solid",
           13
         ],
         [
@@ -590,11 +658,15 @@
           12
         ],
         [
-          "ic:mind",
+          "ic:open",
           12
         ],
         [
-          "ic:strong",
+          "ic:outside",
+          12
+        ],
+        [
+          "ic:soft",
           12
         ],
         [
@@ -602,27 +674,27 @@
           12
         ],
         [
+          "ic:feeling",
+          11
+        ],
+        [
           "ic:free",
           11
         ],
         [
-          "ic:inside",
+          "ic:full",
           11
         ],
         [
-          "ic:material",
+          "ic:going",
           11
         ],
         [
-          "ic:open",
+          "ic:leave",
           11
         ],
         [
-          "ic:outside",
-          11
-        ],
-        [
-          "ic:piece",
+          "ic:over",
           11
         ],
         [
@@ -630,15 +702,11 @@
           11
         ],
         [
-          "ic:small",
+          "ic:very",
           11
         ],
         [
-          "ic:solid",
-          11
-        ],
-        [
-          "ic:feeling",
+          "ic:after",
           10
         ],
         [
@@ -646,7 +714,19 @@
           10
         ],
         [
-          "ic:group",
+          "ic:found",
+          10
+        ],
+        [
+          "ic:large",
+          10
+        ],
+        [
+          "ic:liquid",
+          10
+        ],
+        [
+          "ic:number",
           10
         ],
         [
@@ -654,106 +734,18 @@
           10
         ],
         [
-          "ic:soft",
+          "ic:turn",
           10
         ],
         [
-          "ic:forrad",
-          9
-        ],
-        [
-          "ic:full",
-          9
-        ],
-        [
-          "ic:hand",
-          9
-        ],
-        [
-          "ic:liquid",
-          9
-        ],
-        [
-          "ic:back",
-          8
-        ],
-        [
-          "ic:beginning",
-          8
-        ],
-        [
-          "ic:desire",
-          8
-        ],
-        [
-          "ic:early",
-          8
-        ],
-        [
-          "ic:field",
-          8
-        ],
-        [
-          "ic:frame",
-          8
-        ],
-        [
-          "ic:hard",
-          8
-        ],
-        [
-          "ic:heat",
-          8
-        ],
-        [
-          "ic:large",
-          8
-        ],
-        [
-          "ic:short",
-          8
-        ],
-        [
-          "ic:especial",
-          8
-        ],
-        [
-          "ic:thick",
-          8
-        ],
-        [
-          "ic:bottom",
-          7
-        ],
-        [
-          "ic:branch",
-          7
-        ],
-        [
-          "ic:curve",
-          7
-        ],
-        [
-          "ic:danger",
-          7
-        ],
-        [
-          "ic:great",
-          7
+          "ic:up",
+          10
         ]
       ],
       "blocker_top": [
         [
-          "ic:act",
-          3633
-        ],
-        [
           "ic:amount",
           2109
-        ],
-        [
-          "ic:time",
-          2003
         ],
         [
           "ic:quality",
@@ -770,10 +762,6 @@
         [
           "ic:showing",
           1795
-        ],
-        [
-          "ic:part",
-          1758
         ],
         [
           "ic:can",
@@ -832,10 +820,6 @@
           1164
         ],
         [
-          "ic:position",
-          1146
-        ],
-        [
           "ic:feelings",
           1134
         ],
@@ -846,10 +830,6 @@
         [
           "ic:attention",
           1119
-        ],
-        [
-          "ic:force",
-          1091
         ],
         [
           "ic:power",
@@ -900,10 +880,6 @@
           943
         ],
         [
-          "ic:causing",
-          939
-        ],
-        [
           "ic:law",
           929
         ],
@@ -918,10 +894,6 @@
         [
           "ic:conditions",
           892
-        ],
-        [
-          "ic:condition",
-          887
         ],
         [
           "ic:writing",
@@ -942,27 +914,55 @@
         [
           "ic:total",
           848
+        ],
+        [
+          "ic:all",
+          846
+        ],
+        [
+          "ic:direction",
+          840
+        ],
+        [
+          "ic:given",
+          837
+        ],
+        [
+          "ic:values",
+          812
+        ],
+        [
+          "ic:surrounding",
+          803
+        ],
+        [
+          "ic:hope",
+          792
+        ],
+        [
+          "ic:pleasure",
+          788
         ]
       ]
     }
   },
   "marginal_grounding_yield": {
-    "added_base_size": 14,
+    "added_base_size": 61,
     "closed_l0": 2033,
-    "closed_augmented": 2119,
-    "delta_closed": 86,
-    "mgy": 6.142857142857143
+    "closed_augmented": 3044,
+    "delta_closed": 1011,
+    "mgy": 16.57377049180328
   },
   "verdict": {
     "closure_rate_threshold": 0.6,
     "artifact_share_threshold": 0.1,
     "mgy_threshold": 1.0,
-    "closure_rate_at_le_200": 0.1423580786026201,
-    "artifact_share_at_le_200": 0.5744709439032584,
-    "mgy": 6.142857142857143,
+    "closure_rate_at_le_200": 0.20450117568021497,
+    "artifact_share_at_le_200": 0.5473295263688277,
+    "mgy": 16.57377049180328,
     "triggered": [
-      "closure_rate 0.142 below threshold 0.600 on closure_size <= 200",
-      "artifact_share 0.574 above threshold 0.100 on closure_size <= 200"
+      "closure_rate 0.205 below threshold 0.600 on closure_size <= 200",
+      "artifact_share 0.547 above threshold 0.100 on closure_size <= 200"
     ],
     "weakened": true
   }

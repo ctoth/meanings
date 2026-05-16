@@ -194,3 +194,70 @@ Decision: falsifier closed → queue mirrored re-audit on `candidate_background`
 ## Current blocker
 
 None.
+
+## 2026-05-16 evening — background-bucket workstream begin
+
+Q said "Go!" for the background-bucket workstream. Phases 6-10 created.
+
+### BG Phase 1 done (`e75db6d`)
+
+`scripts/audit_background_bucket.py` mirrors artifact audit but reports two buckets and contrasts top-100 vs bottom-100 norms.
+
+**`candidate_background`** — 46,155 rows, 4,101 blocking:
+- Top-100 freq median 4.87, bot-100 2.82 (Δ 2.04) ✓
+- Top-100 AOA median 6.32, bot-100 10.42 ✓
+- Top-100 has 98 P2 seeds, bot-100 has 11 ✓
+- 33 ICs have all three norm flags; 181 HF only; 335 EA only; 629 HC only
+- Top blockers concentrate in HF+EA (not HC, because abstract nouns score low on concreteness): time, mind, body, change, make, give, over, full, together, different, small, especial(special), great, under, feeling
+
+**`external_substrate`** — 35,321 rows, 3,258 blocking:
+- Top-100 freq median 4.06, bot-100 3.36 (Δ 0.70) — modest
+- 0 P2 seeds by definition
+- Phase 2 should focus on candidate_background; treat external as secondary
+
+Falsifier holds (top-100 norms meaningfully higher than bot-100).
+
+### BG Phase 2 in progress
+
+Drafted `prompts/background-bucket-rules.md` proposing one main rule:
+
+**Rule R1**: in `pressure_bucket(row)`, route to new `base_promotable_grounded_norms` if `p2_seed AND high_frequency AND early_aoa AND NOT obstruction_core`. Excludes HC because abstract nouns underweight on concreteness; excludes obstruction_core because those are already handled.
+
+**Rule R2**: extend validator's `PRIMITIVE_BUCKETS` to include the new bucket so augmented layer auto-picks it up.
+
+Sent to Codex (background task `b7god7ozk`). 7 questions including: is HC-exclusion right, should external_substrate get a parallel rule, falsifier risk if rule footprint is too narrow.
+
+## Current state
+
+Awaiting Codex.
+
+## BG Phase 2 done (`1d321a0`)
+
+Codex review corrections applied:
+- Renamed bucket → `base_promotable_terminal_common` (cleaner: states both terminal and common claims).
+- Placed rule AFTER artifact/obstruction-core/external_substrate clauses (only catches what would otherwise be candidate_background).
+- Rejected adding `strict_admission` guard — would cut footprint 27% (loses time, change, number, cause, water, right, about, move).
+- Updated validator's hardcoded report strings (`L0 + primitive_candidate + assembler_helper` and `13 augmented-layer ICs`) to derive from `PRIMITIVE_BUCKETS` and `len(base_aug - base_l0)` per Codex's gotcha catch.
+- Did not add parallel external_substrate rule (out of scope).
+
+Rule shape:
+- BR1 in `kernel_pressure_table.py` pressure_bucket(): `p2_seed AND high_frequency AND early_aoa AND NOT obstruction_core` → `base_promotable_terminal_common`.
+- BR2 in `validate_assembler_definitions.py`: extend `PRIMITIVE_BUCKETS` to include `BASE_PROMOTABLE_BUCKETS`.
+
+Sanity check passed (positive case = `base_promotable_terminal_common`; not P2 = external_substrate; obstruction_core = assembler_helper; not HF = candidate_background).
+
+Codex measured footprint at 121 ICs with containment sum 43,913 over admitted targets. Falsifier risk: medium. 121 may not be enough to move closure rate +2 pp.
+
+## BG Phase 3 in progress
+
+Pre-state snapshotted to:
+- `data/kernel-pressure-table.bg-pre.{csv,json}`
+- `reports/base-assembler-validation.bg-pre.{md,json}`
+
+Rebuilt pressure table: 85,137 rows, 86 obstruction-core rows (unchanged).
+
+Need to verify: 0 L0 lost, 0 obstruction_core lost, and check new bucket count.
+
+## Current blocker
+
+None. About to verify Phase 3 gates.

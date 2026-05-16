@@ -12,8 +12,8 @@ Closure-coverage scan over `data/sense-unfolding-index.json` using the implicit 
 ## Bases
 
 - L0-only baseline size: `317`
-- Augmented base size (L0 + primitive_candidate + assembler_helper): `331`
-- Augmented layer size (primitive_candidate + assembler_helper): `14`
+- Augmented base size (L0 + assembler_helper + base_promotable_terminal_common + primitive_candidate): `378`
+- Augmented layer size (assembler_helper + base_promotable_terminal_common + primitive_candidate): `61`
 
 ## Closure Rate by Band
 
@@ -23,35 +23,35 @@ are reported as `graph_data` and excluded from the denominator.
 
 | band | closed_l0 | closed_aug | non_truncated_total | rate_l0 | rate_aug |
 | --- | --- | --- | --- | --- | --- |
-| closure_size_le_50 | 2033 | 2119 | 12957 | 0.1569 | 0.1635 |
-| closure_size_le_100 | 2033 | 2119 | 14100 | 0.1442 | 0.1503 |
-| closure_size_le_200 | 2033 | 2119 | 14885 | 0.1366 | 0.1424 |
-| all_targets | 2033 | 2119 | 15660 | 0.1298 | 0.1353 |
+| closure_size_le_50 | 2033 | 3044 | 12957 | 0.1569 | 0.2349 |
+| closure_size_le_100 | 2033 | 3044 | 14100 | 0.1442 | 0.2159 |
+| closure_size_le_200 | 2033 | 3044 | 14885 | 0.1366 | 0.2045 |
+| all_targets | 2033 | 3044 | 15660 | 0.1298 | 0.1944 |
 
 ## Status Histogram (augmented base, `closure_size <= 200`)
 
 | status | count |
 | --- | --- |
-| artifact | 8551 |
-| background | 3664 |
-| closed | 2119 |
-| external | 450 |
-| circular | 101 |
+| artifact | 8147 |
+| background | 3177 |
+| closed | 3044 |
+| external | 435 |
+| circular | 82 |
 
 ## Marginal Grounding Yield
 
-- Added base ICs (augmented layer): `14`
+- Added base ICs (augmented layer): `61`
 - Closed under L0 only (all targets): `2033`
-- Closed under augmented (all targets): `2119`
-- Delta closed: `86`
-- MGY = delta_closed / added_base_size: `6.1429`
+- Closed under augmented (all targets): `3044`
+- Delta closed: `1011`
+- MGY = delta_closed / added_base_size: `16.5738`
 
 ## Falsifier Verdict
 
-- Closure rate at `closure_size <= 200` (augmented): `0.1424`
-- Artifact share at `closure_size <= 200` (augmented): `0.5745`
-- MGY: `6.1429`
-- Triggered: `['closure_rate 0.142 below threshold 0.600 on closure_size <= 200', 'artifact_share 0.574 above threshold 0.100 on closure_size <= 200']`
+- Closure rate at `closure_size <= 200` (augmented): `0.2045`
+- Artifact share at `closure_size <= 200` (augmented): `0.5473`
+- MGY: `16.5738`
+- Triggered: `['closure_rate 0.205 below threshold 0.600 on closure_size <= 200', 'artifact_share 0.547 above threshold 0.100 on closure_size <= 200']`
 - Hypothesis weakened: `True`
 
 ## Top Marginal Usage (augmented base)
@@ -60,60 +60,107 @@ ICs in the augmented base ranked by number of closed target rows whose closure r
 
 | ic_id | primary_alias | closed_uses |
 | --- | --- | --- |
-| ic:make | make | 46 |
-| ic:place | place | 34 |
-| ic:together | together | 22 |
-| ic:give | give | 21 |
-| ic:body | body | 18 |
+| ic:make | make | 55 |
+| ic:place | place | 51 |
+| ic:time | time | 46 |
+| ic:together | together | 29 |
+| ic:body | body | 26 |
+| ic:give | give | 26 |
+| ic:line | line | 23 |
+| ic:water | water | 22 |
+| ic:certain | certain | 21 |
+| ic:different | different | 20 |
+| ic:move | move | 20 |
+| ic:aright | aright | 20 |
+| ic:thing | thing | 18 |
+| ic:causa | causa | 17 |
+| ic:material | material | 17 |
 | ic:clean | clean | 16 |
-| ic:cover | cover | 14 |
+| ic:cover | cover | 16 |
+| ic:sound | sound | 16 |
+| ic:group | group | 15 |
+| ic:mind | mind | 15 |
+| ic:forrad | forrad | 14 |
 | ic:head | head | 14 |
-| ic:sound | sound | 14 |
-| ic:certain | certain | 13 |
-| ic:different | different | 13 |
+| ic:inside | inside | 14 |
+| ic:strong | strong | 14 |
+| ic:back | back | 13 |
+| ic:piece | piece | 13 |
+| ic:small | small | 13 |
+| ic:solid | solid | 13 |
 | ic:high | high | 12 |
-| ic:mind | mind | 12 |
-| ic:strong | strong | 12 |
+| ic:open | open | 12 |
+| ic:outside | outside | 12 |
+| ic:soft | soft | 12 |
 | ic:taste | taste | 12 |
+| ic:feeling | feeling | 11 |
 | ic:free | free | 11 |
-| ic:inside | inside | 11 |
-| ic:material | material | 11 |
-| ic:open | open | 11 |
-| ic:outside | outside | 11 |
-| ic:piece | piece | 11 |
+| ic:full | full | 11 |
+| ic:going | going | 11 |
+| ic:leave | leave | 11 |
+| ic:over | over | 11 |
 | ic:size | size | 11 |
-| ic:small | small | 11 |
-| ic:solid | solid | 11 |
-| ic:feeling | feeling | 10 |
-| ic:first | first | 10 |
-| ic:group | group | 10 |
-| ic:play | play | 10 |
-| ic:soft | soft | 10 |
-| ic:forrad | forrad | 9 |
-| ic:full | full | 9 |
-| ic:hand | hand | 9 |
-| ic:liquid | liquid | 9 |
-| ic:back | back | 8 |
-| ic:beginning | beginning | 8 |
-| ic:desire | desire | 8 |
-| ic:early | early | 8 |
-| ic:field | field | 8 |
-| ic:frame | frame | 8 |
-| ic:hard | hard | 8 |
 
 ## Augmented-Layer Marginal Usage
 
-Marginal usage restricted to the 13 augmented-layer ICs added on top of L0.
+Marginal usage restricted to the 61 augmented-layer ICs added on top of L0.
 
 | ic_id | primary_alias | closed_uses |
 | --- | --- | --- |
-| ic:certain | certain | 13 |
+| ic:time | time | 46 |
+| ic:line | line | 23 |
+| ic:water | water | 22 |
+| ic:certain | certain | 21 |
+| ic:aright | aright | 20 |
+| ic:move | move | 20 |
+| ic:causa | causa | 17 |
+| ic:going | going | 11 |
+| ic:leave | leave | 11 |
+| ic:found | found | 10 |
+| ic:number | number | 10 |
+| ic:turn | turn | 10 |
+| ic:do | do | 9 |
+| ic:food | food | 9 |
+| ic:change | change | 8 |
+| ic:come | come | 8 |
 | ic:desire | desire | 8 |
-| ic:do | do | 5 |
+| ic:like | like | 8 |
+| ic:still | still | 8 |
+| ic:waite | waite | 8 |
+| ic:meet | meet | 7 |
+| ic:picture | picture | 7 |
+| ic:better | better | 6 |
+| ic:careful | careful | 6 |
+| ic:find | find | 6 |
+| ic:game | game | 6 |
+| ic:home | home | 6 |
+| ic:many | many | 6 |
+| ic:blood | blood | 5 |
+| ic:blue | blue | 5 |
+| ic:fight | fight | 5 |
+| ic:hair | hair | 5 |
+| ic:happen | happen | 5 |
+| ic:keep | keep | 5 |
+| ic:last | last | 5 |
+| ic:next | next | 5 |
 | ic:office | office | 5 |
+| ic:about | about | 4 |
 | ic:giving | giving | 4 |
+| ic:learn | learn | 4 |
+| ic:storey | storey | 4 |
+| ic:check | check | 3 |
+| ic:eyes | eyes | 3 |
+| ic:feel | feel | 3 |
 | ic:plural | plural | 3 |
+| ic:real | real | 3 |
+| ic:sure | sure | 3 |
+| ic:throw | throw | 3 |
+| ic:today | today | 3 |
+| ic:behind | behind | 2 |
+| ic:house | house | 2 |
+| ic:both | both | 1 |
 | ic:useful | useful | 1 |
+| ic:almost | almost | 0 |
 | ic:ask | ask | 0 |
 | ic:called | called | 0 |
 | ic:express | express | 0 |
@@ -128,14 +175,11 @@ Non-base ICs that prevented closure, with their pressure-bucket label.
 
 | ic_id | primary_alias | blocked_targets | pressure_bucket |
 | --- | --- | --- | --- |
-| ic:act | act | 3633 | common_vocabulary |
 | ic:amount | amount | 2109 | candidate_background |
-| ic:time | time | 2003 | candidate_background |
 | ic:quality | quality | 1933 | resource_artifact |
 | ic:capable | capable | 1844 | candidate_background |
 | ic:event | event | 1802 | candidate_background |
 | ic:showing | showing | 1795 | resource_artifact |
-| ic:part | part | 1758 | common_vocabulary |
 | ic:can | can | 1566 | common_vocabulary |
 | ic:property | property | 1468 | candidate_background |
 | ic:energy | energy | 1447 | resource_artifact |
@@ -150,11 +194,9 @@ Non-base ICs that prevented closure, with their pressure-bucket label.
 | ic:life | life | 1181 | common_vocabulary |
 | ic:regard | regard | 1171 | candidate_background |
 | ic:marked | marked | 1164 | resource_artifact |
-| ic:position | position | 1146 | circular_dependency |
 | ic:feelings | feelings | 1134 | candidate_background |
 | ic:done | done | 1129 | candidate_background |
 | ic:attention | attention | 1119 | candidate_background |
-| ic:force | force | 1091 | resource_artifact |
 | ic:power | power | 1084 | common_vocabulary |
 | ic:information | information | 1077 | candidate_background |
 | ic:characteristic | characteristic | 1045 | candidate_background |
@@ -167,7 +209,12 @@ Non-base ICs that prevented closure, with their pressure-bucket label.
 | ic:unit | unit | 974 | resource_artifact |
 | ic:satisfaction | satisfaction | 951 | resource_artifact |
 | ic:strength | strength | 943 | resource_artifact |
-| ic:causing | causing | 939 | candidate_background |
+| ic:law | law | 929 | common_vocabulary |
+| ic:ability | ability | 922 | candidate_background |
+| ic:relative | relative | 898 | candidate_background |
+| ic:conditions | conditions | 892 | candidate_background |
+| ic:writing | writing | 882 | resource_artifact |
+| ic:essential | essential | 878 | resource_artifact |
 
 ## Failed Target Examples
 
@@ -201,22 +248,22 @@ Up to ten failed rows per status (augmented base, `closure_size <= 200`).
 | oewn-names__1.10.00.. | ic:names | names | n | 1 | ic:names |
 | oewn-placed__5.00.00.arranged.00 | ic:placed | placed | s | 1 | ic:placed |
 | oewn-placed__5.00.00.settled.01 | ic:placed | placed | s | 1 | ic:placed |
-| oewn-position__1.04.00.. | ic:position | position | n | 1 | ic:position |
+| oewn-anatomy__1.08.00.. | ic:anatomy | anatomy | n | 4 | ic:alternative,ic:names |
 
 ### external
 
 | sense_id | ic_id | label | pos | closure_size | missing_preview |
 | --- | --- | --- | --- | --- | --- |
-| oewn-absorbing__5.00.00.interesting.00 | ic:absorbing | absorbing | s | 4 | ic:act,ic:attention,ic:capable,ic:holding |
 | oewn-acellular__3.00.00.. | ic:acellular | acellular | a | 4 | ic:divided,ic:parts,ic:separated |
-| oewn-addition__1.06.00.. | ic:addition | addition | n | 6 | ic:abstract,ic:component,ic:part |
+| oewn-addition__1.06.00.. | ic:addition | addition | n | 6 | ic:abstract,ic:component |
 | oewn-adverbial__1.10.00.. | ic:adverbial | adverbial | n | 5 | ic:adverb,ic:word,ic:words |
-| oewn-afternoon__1.28.00.. | ic:afternoon | afternoon | n | 5 | ic:day,ic:noon,ic:part |
-| oewn-agile__5.00.00.active.01 | ic:agile | agile | s | 6 | ic:good,ic:moving,ic:quickly,ic:reason,ic:speed |
-| oewn-animation__1.26.00.. | ic:animation | animation | n | 4 | ic:alive,ic:condition,ic:life |
+| oewn-afternoon__1.28.00.. | ic:afternoon | afternoon | n | 5 | ic:day,ic:noon |
+| oewn-agile__5.00.00.active.01 | ic:agile | agile | s | 6 | ic:moving,ic:quickly,ic:reason,ic:speed |
+| oewn-animation__1.26.00.. | ic:animation | animation | n | 4 | ic:alive,ic:life |
 | oewn-anonymous__3.00.00.. | ic:anonymous | anonymous | a | 9 | ic:identity,ic:individual,ic:known,ic:no,ic:recognised |
-| oewn-assumed__5.00.00.counterfeit.00 | ic:assumed | assumed | s | 5 | ic:acquired,ic:adopted,ic:choice,ic:deceive |
-| oewn-attachment__1.12.00.. | ic:attachment | attachment | n | 5 | ic:affection,ic:institution,ic:liking,ic:positive |
+| oewn-appraisal__1.09.00.. | ic:appraisal | appraisal | n | 5 | ic:classification,ic:things,ic:worth |
+| oewn-assumed__5.00.00.counterfeit.00 | ic:assumed | assumed | s | 5 | ic:acquired,ic:adopted,ic:deceive |
+| oewn-attachment__1.12.00.. | ic:attachment | attachment | n | 5 | ic:affection,ic:institution,ic:liking |
 
 ### background
 
