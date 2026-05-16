@@ -65,7 +65,7 @@ Acceptance gate:
 
 ## Phase 1: Classify Kaikki Seed Disagreements
 
-Status: next implementation slice.
+Status: done for the first deterministic slice.
 
 Purpose: convert the current disagreement report into typed review queues before adding new semantics.
 
@@ -111,6 +111,26 @@ Falsifier:
 - If `plausible_missing_primitive` is empty, the classifier is probably too aggressive.
 - If `plausible_missing_primitive` is more than half of seed-not-L0, the classifier is probably too weak.
 - Kaikki-only rows with no current OEWN candidate or P2 support should go to `resource_specific_tail`, not `plausible_missing_primitive`.
+
+Result:
+
+- Implemented `scripts/classify_seed_disagreement.py`.
+- Generated `data/kaikki-seed-disagreement-typed.csv`.
+- Generated `reports/kaikki-seed-disagreement-typed.md`.
+- Classified seed-not-L0 rows: `39,767`.
+- Bucket counts:
+  - `resource_specific_tail`: `31,212`
+  - `plausible_missing_primitive`: `4,258`
+  - `technical_term`: `2,119`
+  - `abbreviation_or_code`: `1,114`
+  - `proper_name`: `791`
+  - `morphology_register_artifact`: `237`
+  - `taxon`: `36`
+- Falsifier check: `pass`.
+
+Interpretation:
+
+The main Kaikki disagreement is not a hidden primitive bonanza. Most of the seed-not-L0 queue is Kaikki-only/resource-specific tail under current OEWN/P2/candidate evidence. The plausible residue is still large enough to be scientifically useful, but small enough to review and cross-check.
 
 ## Phase 2: Add Stable-Unsat Obstruction Extraction
 
@@ -359,6 +379,6 @@ Acceptance gate:
 
 ## Immediate Commit-Sized Slice
 
-Implement Phase 1: classify `reports\kaikki-seed-disagreement.md` into typed buckets.
+Implement Phase 2: add stable-unsat/support-obstruction extraction in `../argumentation` and/or `src\meanings\obstruction.py`, starting from small AF tests and a deterministic JSON-serializable result.
 
-This is the principled next slice because the current repo already has a large disagreement queue (`39,767` seed ICs not in L0). Before adding a richer obstruction API, we need to know whether that queue is mostly abbreviation/code/proper-name/taxon/technical noise or whether a plausible missing-primitive residue remains.
+This is now the principled next slice because Phase 1 reduced the raw disagreement queue to typed surfaces. Obstruction extraction should focus on the `plausible_missing_primitive`, P2-overlap, and clean-candidate overlaps instead of the full Kaikki-only tail.
