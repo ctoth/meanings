@@ -101,3 +101,27 @@ Phase 1 progress:
 ## Current blocker
 
 None. About to run the audit script.
+
+## Phase 1 done (`f3d49ff`)
+
+`scripts/audit_artifact_bucket.py` shipped. Numbers:
+- 4,376 `resource_artifact` rows total. 1,468 block ≥1 admitted target. 2,908 non-blockers (zero containment).
+- Top-100 typed_bucket distribution: technical_term 55, morphology_register_artifact 27, abbreviation_or_code 11, proper_name 7. Falsifier passes (82% concentration in 2 buckets).
+- Misclassification is wider than predicted: 4 buckets need addressing, not just technical_term.
+
+## Phase 2 in progress — root cause identified
+
+Read `scripts/classify_seed_disagreement.py`. The cascade rule `len(surface.replace("_", "")) <= 3` is the source of `abbreviation_or_code` over-matching `act, can, out, all, law`. Other false positives are driven by upstream Wiktionary tag_counts.
+
+Critical structural defect found: `scripts/kernel_pressure_table.py` joins psycholinguistic data ONLY via `data/base_english_candidates.csv` membership. ICs not in that CSV (e.g. `ic:act, ic:all, ic:can, ic:out, ic:law`) get empty `frequency` fields even though `data/psycholinguistic/frequency.csv` HAS them (5.04, 6.71, 6.72, 6.59, 5.07 — all high). Verified directly.
+
+Proposed three changes:
+- **A**: fix the psycholinguistic join in `kernel_pressure_table.py` to look up by surface alias directly.
+- **B**: add a new pressure_bucket `abstract_common`; if `typed_bucket ∈ ARTIFACT_BUCKETS` and `high_frequency=True`, route there instead of `resource_artifact`.
+- **C**: tighten the classifier's bare `len <= 3` short-form rule to require an additional positive abbreviation signal.
+
+Drafted `prompts/artifact-bucket-rules.md` with 7 questions for Codex. Dispatching next.
+
+## Current blocker (revised)
+
+None. About to dispatch Codex pre-implementation review.

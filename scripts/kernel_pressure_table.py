@@ -18,6 +18,47 @@ ARTIFACT_BUCKETS = frozenset(
     }
 )
 
+# Buckets eligible for the high-frequency `common_vocabulary` override.
+# `taxon` is deliberately excluded: taxonomic vocabulary is artifact pressure
+# even when it happens to be a common English surface form.
+COMMON_VOCABULARY_ELIGIBLE = ARTIFACT_BUCKETS - {"taxon"}
+
+HIGH_FREQUENCY_THRESHOLD = 5.0
+EARLY_AOA_THRESHOLD = 6.0
+HIGH_CONCRETENESS_THRESHOLD = 4.0
+
+
+def normalize_surface(value: str) -> str:
+    return value.strip().lower().replace(" ", "_").replace("-", "_").replace("'", "")
+
+
+def read_norm_file(path: Path) -> dict[str, float]:
+    if not path.exists():
+        return {}
+    with path.open(newline="", encoding="utf-8-sig") as handle:
+        reader = csv.DictReader(handle)
+        if not reader.fieldnames:
+            return {}
+        word_field = next(
+            (name for name in reader.fieldnames if name.lower() in {"word", "lemma", "term"}),
+            None,
+        )
+        if word_field is None:
+            return {}
+        value_field = next((name for name in reader.fieldnames if name != word_field), None)
+        if value_field is None:
+            return {}
+        norms: dict[str, float] = {}
+        for row in reader:
+            word = normalize_surface(row.get(word_field, "") or "")
+            if not word:
+                continue
+            try:
+                norms[word] = float(row.get(value_field, "") or "")
+            except ValueError:
+                continue
+        return norms
+
 
 def read_json(path: Path) -> dict[str, Any]:
     with path.open(encoding="utf-8") as handle:
@@ -79,6 +120,8 @@ def read_obstruction(path: Path) -> tuple[set[str], set[str], set[str]]:
 def pressure_bucket(row: dict[str, Any]) -> tuple[str, str]:
     typed_bucket = str(row.get("typed_bucket") or "")
     flags = set(str(row.get("flags") or "").split(";")) - {""}
+    if typed_bucket in COMMON_VOCABULARY_ELIGIBLE and bool(row.get("high_frequency")):
+        return "common_vocabulary", "artifact lexicality but high frequency"
     if typed_bucket in ARTIFACT_BUCKETS or flags & {"numeric_form", "multiword", "technical_only"}:
         return "resource_artifact", "artifact bucket or candidate flag"
     if bool(row["obstruction_core"]) and (bool(row["l0_candidate"]) or bool(row["clean_candidate"])):
@@ -99,14 +142,22 @@ def build_rows(args: argparse.Namespace) -> list[dict[str, Any]]:
     staged = read_staged_seed(args.staged_seed)
     typed = read_typed_buckets(args.typed_buckets)
     obstruction_core, obstruction_coverage, obstruction_attack = read_obstruction(args.obstruction)
+    frequency_norms = read_norm_file(args.frequency)
+    aoa_norms = read_norm_file(args.age_of_acquisition)
+    concreteness_norms = read_norm_file(args.concreteness)
     all_ics = set(candidates) | l0 | p2 | staged | set(typed) | obstruction_core | obstruction_coverage | obstruction_attack
 
     rows: list[dict[str, Any]] = []
     for ic_id in sorted(all_ics, key=surface_for_ic):
         candidate = candidates.get(ic_id, {})
+        primary_alias = candidate.get("primary_alias") or surface_for_ic(ic_id)
+        norm_key = normalize_surface(primary_alias)
+        freq_value = frequency_norms.get(norm_key)
+        aoa_value = aoa_norms.get(norm_key)
+        conc_value = concreteness_norms.get(norm_key)
         row: dict[str, Any] = {
             "ic_id": ic_id,
-            "primary_alias": candidate.get("primary_alias") or surface_for_ic(ic_id),
+            "primary_alias": primary_alias,
             "l0_candidate": ic_id in l0,
             "clean_candidate": boolish(candidate.get("clean_candidate", "")),
             "p2_seed": ic_id in p2,
@@ -116,12 +167,12 @@ def build_rows(args: argparse.Namespace) -> list[dict[str, Any]]:
             "obstruction_attack_endpoint": ic_id in obstruction_attack,
             "strict_admission": boolish(candidate.get("admitted_clean", "")),
             "evidence_count": candidate.get("evidence_count", ""),
-            "frequency": candidate.get("frequency", ""),
-            "age_of_acquisition": candidate.get("age_of_acquisition", ""),
-            "concreteness": candidate.get("concreteness", ""),
-            "high_frequency": boolish(candidate.get("high_frequency", "")),
-            "early_aoa": boolish(candidate.get("early_aoa", "")),
-            "high_concreteness": boolish(candidate.get("high_concreteness", "")),
+            "frequency": "" if freq_value is None else freq_value,
+            "age_of_acquisition": "" if aoa_value is None else aoa_value,
+            "concreteness": "" if conc_value is None else conc_value,
+            "high_frequency": (freq_value or 0.0) >= HIGH_FREQUENCY_THRESHOLD,
+            "early_aoa": (aoa_value if aoa_value is not None else 99.0) <= EARLY_AOA_THRESHOLD,
+            "high_concreteness": (conc_value or 0.0) >= HIGH_CONCRETENESS_THRESHOLD,
             "typed_bucket": typed.get(ic_id, ""),
             "flags": candidate.get("flags", ""),
         }
@@ -240,6 +291,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--staged-seed", type=Path, default=Path("data/kaikki-staged-seed.json"))
     parser.add_argument("--typed-buckets", type=Path, default=Path("data/kaikki-seed-disagreement-typed.csv"))
     parser.add_argument("--obstruction", type=Path, default=Path("reports/kaikki-obstruction-probe-no-self-loops.json"))
+    parser.add_argument("--frequency", type=Path, default=Path("data/psycholinguistic/frequency.csv"))
+    parser.add_argument("--age-of-acquisition", type=Path, default=Path("data/psycholinguistic/age_of_acquisition.csv"))
+    parser.add_argument("--concreteness", type=Path, default=Path("data/psycholinguistic/concreteness.csv"))
     parser.add_argument("--csv", type=Path, default=Path("data/kernel-pressure-table.csv"))
     parser.add_argument("--json", type=Path, default=Path("data/kernel-pressure-table.json"))
     parser.add_argument("--report", type=Path, default=Path("reports/kernel-pressure-table.md"))

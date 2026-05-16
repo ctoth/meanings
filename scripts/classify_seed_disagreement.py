@@ -142,7 +142,11 @@ def bucket_for(
         or "numeric_form" in flags
         or re.search(r"\d", surface)
         or surface.endswith(("_abbr", "_abbrev"))
-        or len(surface.replace("_", "")) <= 3
+        or (
+            len(surface.replace("_", "")) <= 2
+            and candidate is None
+            and p2_row is None
+        )
     ):
         reasons.append("symbol/code/numeric/short-form signal")
         return "abbreviation_or_code", reasons
