@@ -4,8 +4,13 @@ Reads `data/sense-unfolding-index.json` and `data/kernel-pressure-table.csv`.
 Defines two bases derived directly from the pressure table:
 
 - L0-only baseline: ICs with `l0_candidate == True`.
-- Augmented base: L0 ICs plus pressure-table `primitive_candidate` and
-  `assembler_helper` ICs.
+- Augmented base: L0 ICs plus pressure-table rows whose `pressure_bucket` is
+  in `PRIMITIVE_BUCKETS` (currently `primitive_candidate`, `assembler_helper`,
+  and any bucket added to `BASE_PROMOTABLE_BUCKETS`). The augmented layer
+  contents follow whatever the pressure-table builder routes into those
+  buckets, so adding a new promotion rule in
+  `scripts/kernel_pressure_table.py` automatically widens this validator's
+  base without further edits here.
 
 For each base, runs an IC-level fixpoint that respects the polysemy OR-junction:
 an IC is groundable if it is in the base or at least one of its kernel senses

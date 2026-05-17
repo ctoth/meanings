@@ -166,7 +166,9 @@ Purpose: regenerate `data/kernel-pressure-table.{csv,json}` and
 
 Acceptance gate:
 
-- Row count unchanged at `85,137`.
+- Row count in `kernel-pressure-table.csv` matches the pre-snapshot
+  row count captured in Phase 0. Absolute numbers depend on the
+  upstream graph build; this gate compares against the snapshot.
 - Zero L0 ICs lost.
 - Zero obstruction_core ICs lost.
 
@@ -189,7 +191,9 @@ Artifacts:
 
 Acceptance gate:
 
-- Same target selection count (`15,872` admitted rows).
+- Target selection count matches the pre-snapshot's selection count.
+  Absolute numbers depend on the unfolding index; this gate compares
+  against the snapshot.
 - Per-IC bucket migration enumerated.
 - Hard regression gate: `regressed_count = 0`.
 

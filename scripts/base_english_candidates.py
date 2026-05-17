@@ -9,6 +9,15 @@ from pathlib import Path
 from typing import Any
 
 
+# Psycholinguistic thresholds. Single source of truth shared with downstream
+# scripts (see `scripts/kernel_pressure_table.py`, which imports these). Change
+# a value here and the pressure-table builder picks it up via cross-script
+# import.
+HIGH_FREQUENCY_THRESHOLD = 5.0
+EARLY_AOA_THRESHOLD = 6.0
+HIGH_CONCRETENESS_THRESHOLD = 4.0
+
+
 CSV_FIELDS = (
     "ic_id",
     "primary_alias",
@@ -201,9 +210,9 @@ def build_rows(args: argparse.Namespace) -> list[dict[str, Any]]:
         typed_sense_seed = str(entry.get("ic_id")) in typed_seed_ics
         in_longman = bool(alias_keys & longman)
         in_ogden = bool(alias_keys & ogden)
-        high_frequency = (norm_row.get("frequency") or 0.0) >= 5.0
-        early_aoa = (norm_row.get("age_of_acquisition") or 99.0) <= 6.0
-        high_concreteness = (norm_row.get("concreteness") or 0.0) >= 4.0
+        high_frequency = (norm_row.get("frequency") or 0.0) >= HIGH_FREQUENCY_THRESHOLD
+        early_aoa = (norm_row.get("age_of_acquisition") or 99.0) <= EARLY_AOA_THRESHOLD
+        high_concreteness = (norm_row.get("concreteness") or 0.0) >= HIGH_CONCRETENESS_THRESHOLD
         admitted_clean = not any(flag in flags for flag in ("numeric_form", "multiword", "artifact_reading_present", "technical_only"))
         clean_candidate = admitted_clean and (in_longman or in_ogden)
         count = evidence_count(

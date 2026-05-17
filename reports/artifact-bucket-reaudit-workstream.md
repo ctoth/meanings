@@ -177,8 +177,11 @@ Tasks:
 
 Acceptance gate:
 
-- Row counts in `kernel-pressure-table.csv` match the previous version
-  (85,137).
+- Row count in `kernel-pressure-table.csv` matches the pre-snapshot
+  row count captured in Phase 0. Absolute numbers depend on the
+  upstream graph build and may drift if the unfolding-index or
+  staged-seed pipelines regenerate; this gate compares against the
+  snapshot, not a fixed integer.
 - Bucket counts reconcile against the new typed-bucket histogram in
   `reports/kaikki-seed-disagreement-typed.md`.
 
@@ -210,7 +213,9 @@ Artifacts:
 Acceptance gate:
 
 - The new `reports/base-assembler-validation.md` shows the same target
-  selection count (15,872 admitted rows).
+  selection count as the pre-snapshot's selection count. Absolute
+  numbers depend on the unfolding index; this gate compares against
+  the snapshot, not a fixed integer.
 - The augmented-layer size may change only via R1's norm-join correction
   (high-frequency obstruction-core ICs newly receive frequency data and
   legitimately migrate into `assembler_helper`). The impact report must

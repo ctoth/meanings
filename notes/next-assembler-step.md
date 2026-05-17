@@ -261,3 +261,73 @@ Need to verify: 0 L0 lost, 0 obstruction_core lost, and check new bucket count.
 ## Current blocker
 
 None. About to verify Phase 3 gates.
+
+## BG Phase 3 done (`defe0cc`)
+
+Acceptance gates clean:
+- Rows: 85,137 → 85,137 ✓
+- L0 ICs lost: 0 ✓
+- Obstruction-core ICs lost: 0 ✓
+
+Bucket migration:
+- `candidate_background`: 46,155 → 46,034 (−121)
+- `base_promotable_terminal_common`: 0 → 121 (new)
+- All other buckets unchanged
+
+Matches Codex's pre-implementation projection exactly.
+
+## BG Phase 4 done (`a880bd3`)
+
+`scripts/background_bucket_reaudit_impact.py` mirrors the artifact impact script.
+
+**Hard regression gate: PASS** — `regressed_count = 0`.
+**Falsifier: PASS by 3x** — closure rate Δ = +6.21 pp (threshold +2 pp).
+
+Numbers:
+- Closure rate at ≤200: 0.1424 → 0.2045 (+6.21 pp)
+- Artifact share at ≤200: −2.71 pp (bonus)
+- Background share at ≤200: −3.27 pp
+- Closed senses (augmented): 2,119 → 3,044 (+925)
+- MGY: 6.14 → 16.57
+- Augmented layer: 14 → 61 (+47; 121 promoted but 74 already in L0)
+
+## BG Phase 5 done (`e529f11`)
+
+Falsifier closed dramatically. Per the workstream rule, next is "circular_dependency re-audit OR deeper validator extension". I added a third option that I think dominates both: a second-pass loosening of BR1, since BR1 captured only 121 of 1,668 P2-seed background blockers (7%).
+
+Drafted `reports/background-bucket-second-pass-workstream.md`. Three variants in Phase 1 (HF-only, EA-only, AOA<=8). Cumulative regression gate. If Phase 4 trips, recommendation flips to hand-authored YAML (the long-deferred Phase 5C).
+
+Parent workstream (kaikki-obstruction) updated: Phase 5D done, Phase 5E queued.
+
+## Current state
+
+The background-bucket workstream is fully executed end-to-end (Phases 1–5).
+
+Cumulative arc across all completed workstreams:
+- Phase 5A (validator first commit): closure rate 0.1418
+- Phase 5B (artifact re-audit): closure rate 0.1424 (+0.06 pp), artifact share −6.01 pp
+- Phase 5D (background re-audit): closure rate 0.2045 (+6.21 pp), 925 more senses closed
+
+Total closure-rate gain across workstreams: +6.27 pp (0.1418 → 0.2045). Closed senses: 2,110 → 3,044 (+934, ~+44%).
+
+## Current blocker
+
+None. Waiting on Q's call: continue to second-pass workstream, or hold here.
+
+## 2026-05-16 — Q asked for "anything else hardcoded?" audit
+
+Surveyed and reported 5 items. Q asked me to fix items 1, 2, and 3:
+
+1. Validator module docstring (lines 6-8 of `scripts/validate_assembler_definitions.py`) — said augmented base = L0 + primitive_candidate + assembler_helper, which became stale after BR2. **DONE.** Rewrote to derive from `PRIMITIVE_BUCKETS` + `BASE_PROMOTABLE_BUCKETS`.
+
+2. Duplicated psycholinguistic thresholds (5.0 / 6.0 / 4.0 in two places: `base_english_candidates.py:204-206` as bare literals, `kernel_pressure_table.py:31-33` as named constants). **IN PROGRESS.** Added named constants `HIGH_FREQUENCY_THRESHOLD / EARLY_AOA_THRESHOLD / HIGH_CONCRETENESS_THRESHOLD` to `base_english_candidates.py` (the natural owner — it's the source of joined norms). Updated base_english_candidates.py's threshold checks to use the constants. Added cross-script import via `sys.path.insert` in kernel_pressure_table.py — matches the pattern used by impact scripts. Removed duplicate constants from kernel_pressure_table.py.
+
+3. Workstream acceptance gates hardcode `85,137 rows` and `15,872 admitted` — should be "matches pre-snapshot" instead. **PENDING.**
+
+Pre-existing pyright errors in `base_english_candidates.py:182-185` re: `dict[str, None]` from a different function — out of scope.
+
+Pre-existing pyright errors in `kernel_pressure_table.py:229` re: CSV writerows TypedDict invariance — also pre-existing, out of scope.
+
+## Current state
+
+Mid-edit on item 2. About to verify cross-script import works at runtime, then move to item 3.

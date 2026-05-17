@@ -3,9 +3,18 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import sys
 from collections import Counter
 from pathlib import Path
 from typing import Any
+
+sys.path.insert(0, str(Path(__file__).parent))
+
+from base_english_candidates import (  # noqa: E402
+    EARLY_AOA_THRESHOLD,
+    HIGH_CONCRETENESS_THRESHOLD,
+    HIGH_FREQUENCY_THRESHOLD,
+)
 
 
 ARTIFACT_BUCKETS = frozenset(
@@ -27,10 +36,6 @@ COMMON_VOCABULARY_ELIGIBLE = ARTIFACT_BUCKETS - {"taxon"}
 # Membership in this set is consumed by
 # scripts/validate_assembler_definitions.py via PRIMITIVE_BUCKETS.
 BASE_PROMOTABLE_BUCKETS = frozenset({"base_promotable_terminal_common"})
-
-HIGH_FREQUENCY_THRESHOLD = 5.0
-EARLY_AOA_THRESHOLD = 6.0
-HIGH_CONCRETENESS_THRESHOLD = 4.0
 
 
 def normalize_surface(value: str) -> str:
