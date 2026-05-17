@@ -524,18 +524,22 @@ detection.
 
 ## Phase 5D: Re-audit `candidate_background` and `external_substrate`
 
-Status: queued at `reports/background-bucket-reaudit-workstream.md`,
-drafted 2026-05-16. The next-largest blocker bucket after Phase 5B
-closed.
+Status: done 2026-05-16. Spun out to
+`reports/background-bucket-reaudit-workstream.md`. Falsifier closed:
+closure rate at `closure_size <= 200` rose `+6.21 pp`,
+`regressed_count = 0`, closed senses `+925`. One data-driven rule
+shipped: `base_promotable_terminal_common` promotion on
+`p2_seed AND high_frequency AND early_aoa AND NOT obstruction_core`.
 
-Purpose: of the 3,664 `candidate_background` blockers and 450
-`external_substrate` blockers at `closure_size <= 200`, identify
-which are admitted high-quality terminal ICs that should be promoted
-into the base via a data-driven rule rather than hand-authored YAML.
+## Phase 5E: Second-pass background loosening
 
-The child workstream follows the same five-phase shape as Phase 5B
-(inventory, Codex-reviewed rules, rebuild, validator diff with hard
-regression gate, decide).
+Status: queued at `reports/background-bucket-second-pass-workstream.md`,
+drafted 2026-05-16. BR1 promoted 121 of 1,668 P2-seed background
+blockers. The next workstream explores three loosenings (HF-only,
+EA-only, AOA <= 8) and picks the variant with the best
+closure-rate / regression-risk tradeoff, under a cumulative
+regression gate that preserves the closed sets from both prior
+workstreams.
 
 ## Phase 6: External And Multilingual Stress Tests
 
@@ -561,7 +565,8 @@ Acceptance gate:
 
 ## Immediate Commit-Sized Slice
 
-Execute Phase 1 of `reports/background-bucket-reaudit-workstream.md`:
-write `scripts/audit_background_bucket.py`, generate
-`reports/background-bucket-audit.{md,json}`. Read-only inventory over the
-current post-rebuild pressure table.
+Execute Phase 1 of
+`reports/background-bucket-second-pass-workstream.md`: write
+`scripts/profile_background_loosening.py`, generate
+`reports/background-loosening-profile.{md,json}`. Read-only over the
+current post-BR1 pressure table.

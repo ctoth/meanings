@@ -203,18 +203,34 @@ Falsifier:
 
 ## Phase 5: Decide what comes next
 
-Status: queued, dependent on Phase 4.
+Status: done 2026-05-16.
 
-If the closure-rate falsifier closes (>= 2 pp rise), queue a similar
-mirrored re-audit on `circular_dependency` or a deeper validator-side
-extension (P2-terminal promotion via norms alone).
+BG Phase 4 closed the falsifier by 3x:
 
-If the closure-rate falsifier trips, flip to hand-authored
-`data/base-assembler-rules.yaml` informed by the failure histogram now
-available across three workstreams' worth of evidence.
+- Closure rate at `closure_size <= 200`: `0.1424 -> 0.2045`,
+  delta `+6.21 pp` (threshold was `+2 pp`).
+- Hard regression gate: `regressed_count = 0`.
+- Closed senses under augmented base: `2,119 -> 3,044` (`+925`).
+- MGY: `6.14 -> 16.57`.
+- Bonus drops: artifact share `-2.71 pp`, background share `-3.27 pp`.
 
-## Immediate commit-sized slice
+The 121-IC `base_promotable_terminal_common` promotion is the largest
+single-rule win in the workstream chain. The HF+EA+P2 conjunction is
+strict; the audit identified 1,668 P2-seed blockers in
+`candidate_background`, so 1,547 P2-seed blockers did not satisfy
+HF+EA and were not promoted. The remaining `background` count at
+`closure_size <= 200` is `3,174`; many of these failures still hit
+P2-seed blockers that have HF without EA or vice versa.
 
-Phase 1: write `scripts/audit_background_bucket.py`, generate
-`reports/background-bucket-audit.{md,json}`. Read-only over existing
-inputs.
+The next workstream is filed at
+`reports/background-bucket-second-pass-workstream.md`. It mirrors this
+workstream's shape but loosens BR1 in three measured variants
+(HF-only, EA-only, AOA <= 8) and picks the one with the best
+closure-rate / regression-risk tradeoff. The named alternatives
+(circular_dependency re-audit, deeper validator extension) are
+deferred behind it because the per-rule yield is much smaller.
+
+## Workstream complete
+
+This workstream is closed. The downstream commit-sized slice belongs
+to `reports/background-bucket-second-pass-workstream.md`, Phase 1.
