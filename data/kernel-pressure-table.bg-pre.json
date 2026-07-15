@@ -1,0 +1,28 @@
+{
+  "artifact_id": "kernel-pressure-table",
+  "counts": {
+    "clean_candidate_rows": 1476,
+    "l0_rows": 317,
+    "obstruction_core_rows": 86,
+    "rows": 85137
+  },
+  "definition": "IC-level agreement and obstruction-pressure table; buckets are review queues, not calibrated scores",
+  "pressure_bucket_counts": {
+    "assembler_helper": 7,
+    "candidate_background": 46155,
+    "circular_dependency": 53,
+    "common_vocabulary": 165,
+    "external_substrate": 35321,
+    "primitive_candidate": 11,
+    "resource_artifact": 3425
+  },
+  "schema_version": 1,
+  "sources": {
+    "candidates": "data\\base_english_candidates.csv",
+    "l0": "data\\l0-grounded-primitives.json",
+    "obstruction": "reports\\kaikki-obstruction-probe-no-self-loops.json",
+    "p2_seed": "data\\oewn-sense-p2-ic-seed.json",
+    "staged_seed": "data\\kaikki-staged-seed.json",
+    "typed_buckets": "data\\kaikki-seed-disagreement-typed.csv"
+  }
+}

@@ -28,6 +28,7 @@ import argparse
 import atexit
 import csv
 import json
+import math
 import os
 import sys
 import time
@@ -46,6 +47,13 @@ PRIMITIVE_BUCKETS = (
 )
 SENSITIVITY_BANDS = (50, 100, 200)
 FAILURE_PRECEDENCE = ("graph_data", "artifact", "circular", "external", "background")
+
+GROUNDED_CONTENT_HEADLINE_BAND = "closure_size_le_200"
+GROUNDED_CONTENT_COARSENINGS: tuple[tuple[str, dict[str, str] | None], ...] = (
+    ("fine", None),
+    ("closed_vs_not", {"closed": "closed", "*": "not-closed"}),
+    ("triage", {"closed": "closed", "artifact": "noise", "background": "noise", "*": "edge"}),
+)
 
 
 def emit(message: str, progress_log: Path | None) -> None:
@@ -260,6 +268,104 @@ def evaluate_base(
     }
 
 
+def shannon_entropy_bits(counts: dict[str, int]) -> tuple[float, int]:
+    total = sum(counts.values())
+    if total == 0:
+        return 0.0, 0
+    h = 0.0
+    for n in counts.values():
+        if n <= 0:
+            continue
+        p = n / total
+        h -= p * math.log2(p)
+    return h, total
+
+
+def coarsen_counts(counts: dict[str, int], mapping: dict[str, str] | None) -> dict[str, int]:
+    if mapping is None:
+        return dict(counts)
+    out: dict[str, int] = {}
+    default = mapping.get("*")
+    for key, n in counts.items():
+        new_key = mapping.get(key, default if default is not None else key)
+        out[new_key] = out.get(new_key, 0) + n
+    return out
+
+
+def grounded_content_for_counts(counts: dict[str, int], mapping: dict[str, str] | None) -> dict[str, Any]:
+    """G = I(X;V) for X uniform over rows and V deterministic from X (i.e. G = H(V))."""
+    coarsened = coarsen_counts(counts, mapping)
+    h, n = shannon_entropy_bits(coarsened)
+    k = len(coarsened)
+    ceiling_per_row = math.log2(k) if k > 1 else 0.0
+    return {
+        "alphabet": sorted(coarsened.keys()),
+        "K": k,
+        "ceiling_bits_per_row": ceiling_per_row,
+        "H_bits_per_row": h,
+        "G_total_bits": h * n,
+        "rows": n,
+        "saturation": (h / ceiling_per_row) if ceiling_per_row > 0 else 0.0,
+        "counts": coarsened,
+    }
+
+
+def grounded_content(
+    eval_l0: dict[str, Any],
+    eval_aug: dict[str, Any],
+    *,
+    augmented_layer_size: int,
+) -> dict[str, Any]:
+    """Compute G = I(X;V) for both bases under each coarsening, plus the
+    marginal G yield per added base entry — the direct information-theoretic
+    cousin of MGY (closures per added base entry).
+
+    Frame: X is a target row drawn uniformly from the selected target set; V
+    is the verdict the apparatus emits per row (closed/artifact/background/
+    external/circular, plus graph_data in the all_targets band). Because the
+    validator is deterministic in X, H(V|X) = 0 and I(X;V) = H(V) exactly.
+    Different coarsenings of V model different apparatus resolutions; G is
+    apparatus-relative by construction. Bounded above by log2(K) per row.
+    """
+    by_band: dict[str, dict[str, Any]] = {}
+    for band_key, l0_band in eval_l0["bands"].items():
+        aug_band = eval_aug["bands"][band_key]
+        per_coarsening: dict[str, Any] = {}
+        for name, mapping in GROUNDED_CONTENT_COARSENINGS:
+            l0_g = grounded_content_for_counts(l0_band["counts"], mapping)
+            aug_g = grounded_content_for_counts(aug_band["counts"], mapping)
+            delta_g = aug_g["G_total_bits"] - l0_g["G_total_bits"]
+            per_entry = (delta_g / augmented_layer_size) if augmented_layer_size > 0 else 0.0
+            per_coarsening[name] = {
+                "l0_only": l0_g,
+                "augmented": aug_g,
+                "delta_G_bits": delta_g,
+                "bits_per_added_base_entry": per_entry,
+            }
+        by_band[band_key] = per_coarsening
+
+    headline_band = by_band.get(GROUNDED_CONTENT_HEADLINE_BAND, {})
+    headline_fine = headline_band.get("fine", {}) if headline_band else {}
+    return {
+        "frame": (
+            "G = I(X;V) = H(V) under deterministic apparatus; X uniform over selected target rows; "
+            "bounded above by log2(K) bits per row where K is the verdict-alphabet size."
+        ),
+        "headline_band": GROUNDED_CONTENT_HEADLINE_BAND,
+        "coarsenings": [name for name, _ in GROUNDED_CONTENT_COARSENINGS],
+        "by_band": by_band,
+        "headline": {
+            "band": GROUNDED_CONTENT_HEADLINE_BAND,
+            "coarsening": "fine",
+            "augmented_G_total_bits": headline_fine.get("augmented", {}).get("G_total_bits", 0.0),
+            "augmented_H_bits_per_row": headline_fine.get("augmented", {}).get("H_bits_per_row", 0.0),
+            "augmented_saturation": headline_fine.get("augmented", {}).get("saturation", 0.0),
+            "delta_G_bits": headline_fine.get("delta_G_bits", 0.0),
+            "bits_per_added_base_entry": headline_fine.get("bits_per_added_base_entry", 0.0),
+        },
+    }
+
+
 def marginal_grounding_yield(
     eval_l0: dict[str, Any], eval_aug: dict[str, Any], augmented_layer: set[str]
 ) -> dict[str, Any]:
@@ -280,16 +386,22 @@ def marginal_grounding_yield(
 def falsifier_verdict(
     eval_aug: dict[str, Any],
     mgy: dict[str, Any],
+    grounded: dict[str, Any],
     *,
     closure_rate_threshold: float,
     artifact_share_threshold: float,
     mgy_threshold: float,
+    g_bits_per_base_threshold: float,
+    g_threshold_coarsening: str,
 ) -> dict[str, Any]:
     target_band = eval_aug["bands"]["closure_size_le_200"]
     rate = target_band["closure_rate"]
     counts = target_band["counts"]
     non_truncated_total = target_band["non_truncated_total"]
     artifact_share = (counts.get("artifact", 0) / non_truncated_total) if non_truncated_total else 0.0
+    headline_band = grounded["headline_band"]
+    g_slot = grounded["by_band"][headline_band][g_threshold_coarsening]
+    g_bits_per_base = g_slot["bits_per_added_base_entry"]
     triggers: list[str] = []
     if rate < closure_rate_threshold:
         triggers.append(
@@ -304,13 +416,22 @@ def falsifier_verdict(
         triggers.append(
             f"MGY {mgy['mgy']:.3f} below threshold {mgy_threshold:.3f}"
         )
+    if g_bits_per_base < g_bits_per_base_threshold:
+        triggers.append(
+            f"G bits/base {g_bits_per_base:.3f} below threshold {g_bits_per_base_threshold:.3f}"
+            f" (coarsening={g_threshold_coarsening}, band={headline_band})"
+        )
     return {
         "closure_rate_threshold": closure_rate_threshold,
         "artifact_share_threshold": artifact_share_threshold,
         "mgy_threshold": mgy_threshold,
+        "g_bits_per_base_threshold": g_bits_per_base_threshold,
+        "g_threshold_coarsening": g_threshold_coarsening,
+        "g_threshold_band": headline_band,
         "closure_rate_at_le_200": rate,
         "artifact_share_at_le_200": artifact_share,
         "mgy": mgy["mgy"],
+        "g_bits_per_base": g_bits_per_base,
         "triggered": triggers,
         "weakened": bool(triggers),
     }
@@ -324,6 +445,7 @@ def write_json(
     eval_l0: dict[str, Any],
     eval_aug: dict[str, Any],
     mgy: dict[str, Any],
+    grounded: dict[str, Any],
     verdict: dict[str, Any],
     base_l0: set[str],
     base_aug: set[str],
@@ -368,6 +490,7 @@ def write_json(
             },
         },
         "marginal_grounding_yield": mgy,
+        "grounded_content": grounded,
         "verdict": verdict,
     }
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -385,6 +508,7 @@ def write_report(
     eval_l0: dict[str, Any],
     eval_aug: dict[str, Any],
     mgy: dict[str, Any],
+    grounded: dict[str, Any],
     verdict: dict[str, Any],
     base_l0: set[str],
     base_aug: set[str],
@@ -453,11 +577,73 @@ def write_report(
     lines.append(f"- Delta closed: `{mgy['delta_closed']}`")
     lines.append(f"- MGY = delta_closed / added_base_size: `{mgy['mgy']:.4f}`")
     lines.append("")
+    lines.append("## Grounded Content (G = I(X;V))")
+    lines.append("")
+    lines.append(
+        "Information-theoretic cousin of MGY. X is a target row drawn uniformly from the"
+        " selected target set; V is the verdict the apparatus emits per row. Because the"
+        " validator is deterministic in X, `G = H(V)` bits. Different coarsenings of V model"
+        " different apparatus resolutions; G is apparatus-relative by construction and"
+        " bounded above by `log2(K)` bits per row where K is the verdict-alphabet size."
+        " ΔG per added base entry is the direct bits/base analog of MGY's closures/base."
+    )
+    lines.append("")
+    headline_band = grounded["headline_band"]
+    lines.append(f"### Headline (band `{headline_band}`, augmented base)")
+    lines.append("")
+    headline_rows = []
+    for name in grounded["coarsenings"]:
+        slot = grounded["by_band"][headline_band][name]
+        aug_g = slot["augmented"]
+        headline_rows.append(
+            {
+                "coarsening": name,
+                "K": aug_g["K"],
+                "H_bits_per_row": f"{aug_g['H_bits_per_row']:.4f}",
+                "G_total_bits": f"{aug_g['G_total_bits']:.1f}",
+                "ceiling_bits_per_row": f"{aug_g['ceiling_bits_per_row']:.4f}",
+                "saturation": f"{aug_g['saturation']:.4f}",
+                "delta_G_bits_vs_L0": f"{slot['delta_G_bits']:.1f}",
+                "bits_per_added_base_entry": f"{slot['bits_per_added_base_entry']:.2f}",
+            }
+        )
+    lines.extend(
+        render_md_table(
+            headline_rows,
+            [
+                "coarsening",
+                "K",
+                "H_bits_per_row",
+                "G_total_bits",
+                "ceiling_bits_per_row",
+                "saturation",
+                "delta_G_bits_vs_L0",
+                "bits_per_added_base_entry",
+            ],
+        )
+    )
+    lines.append("")
+    lines.append("### All bands × coarsenings (augmented G, bits)")
+    lines.append("")
+    band_keys = list(grounded["by_band"].keys())
+    cross_rows = []
+    for band_key in band_keys:
+        row = {"band": band_key}
+        for name in grounded["coarsenings"]:
+            aug_g = grounded["by_band"][band_key][name]["augmented"]
+            row[name] = f"{aug_g['G_total_bits']:.1f}"
+        cross_rows.append(row)
+    lines.extend(render_md_table(cross_rows, ["band"] + list(grounded["coarsenings"])))
+    lines.append("")
     lines.append("## Falsifier Verdict")
     lines.append("")
-    lines.append(f"- Closure rate at `closure_size <= 200` (augmented): `{verdict['closure_rate_at_le_200']:.4f}`")
-    lines.append(f"- Artifact share at `closure_size <= 200` (augmented): `{verdict['artifact_share_at_le_200']:.4f}`")
-    lines.append(f"- MGY: `{verdict['mgy']:.4f}`")
+    lines.append(f"- Closure rate at `closure_size <= 200` (augmented): `{verdict['closure_rate_at_le_200']:.4f}` (threshold `{verdict['closure_rate_threshold']:.4f}`)")
+    lines.append(f"- Artifact share at `closure_size <= 200` (augmented): `{verdict['artifact_share_at_le_200']:.4f}` (threshold `{verdict['artifact_share_threshold']:.4f}`)")
+    lines.append(f"- MGY: `{verdict['mgy']:.4f}` (threshold `{verdict['mgy_threshold']:.4f}`)")
+    lines.append(
+        f"- G bits/base (`{verdict['g_threshold_coarsening']}` @ `{verdict['g_threshold_band']}`):"
+        f" `{verdict['g_bits_per_base']:.4f}` (threshold `{verdict['g_bits_per_base_threshold']:.4f}`)"
+    )
     lines.append(f"- Triggered: `{verdict['triggered'] or 'none'}`")
     lines.append(f"- Hypothesis weakened: `{verdict['weakened']}`")
     lines.append("")
@@ -570,6 +756,28 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--closure-rate-threshold", type=float, default=0.60)
     parser.add_argument("--artifact-share-threshold", type=float, default=0.10)
     parser.add_argument("--mgy-threshold", type=float, default=1.0)
+    parser.add_argument(
+        "--g-bits-per-base-threshold",
+        type=float,
+        default=2.0,
+        help=(
+            "Minimum information-theoretic yield (bits of G per added base entry) at the"
+            " headline band before the augmented-layer apparatus is considered weakened."
+            " 2.0 bits/base roughly corresponds to MGY=1.0 under the binary"
+            " closed_vs_not coarsening at the current closure-rate regime; calibrate as"
+            " the apparatus' verdict alphabet evolves."
+        ),
+    )
+    parser.add_argument(
+        "--g-threshold-coarsening",
+        choices=[name for name, _ in GROUNDED_CONTENT_COARSENINGS],
+        default="closed_vs_not",
+        help=(
+            "Coarsening of the verdict alphabet used for the G falsifier. closed_vs_not"
+            " is the direct cousin of MGY; fine captures resolution gains as well as"
+            " closure mass; triage sits in between."
+        ),
+    )
     return parser
 
 
@@ -607,12 +815,18 @@ def main() -> None:
     eval_aug = evaluate_base(senses_by_ic, pressure, base_aug, targets)
 
     mgy = marginal_grounding_yield(eval_l0, eval_aug, base_aug - base_l0)
+    grounded = grounded_content(
+        eval_l0, eval_aug, augmented_layer_size=len(base_aug - base_l0)
+    )
     verdict = falsifier_verdict(
         eval_aug,
         mgy,
+        grounded,
         closure_rate_threshold=args.closure_rate_threshold,
         artifact_share_threshold=args.artifact_share_threshold,
         mgy_threshold=args.mgy_threshold,
+        g_bits_per_base_threshold=args.g_bits_per_base_threshold,
+        g_threshold_coarsening=args.g_threshold_coarsening,
     )
 
     failed_examples = collect_failed_examples(
@@ -632,6 +846,7 @@ def main() -> None:
         eval_l0=eval_l0,
         eval_aug=eval_aug,
         mgy=mgy,
+        grounded=grounded,
         verdict=verdict,
         base_l0=base_l0,
         base_aug=base_aug,
@@ -647,6 +862,7 @@ def main() -> None:
         eval_l0=eval_l0,
         eval_aug=eval_aug,
         mgy=mgy,
+        grounded=grounded,
         verdict=verdict,
         base_l0=base_l0,
         base_aug=base_aug,

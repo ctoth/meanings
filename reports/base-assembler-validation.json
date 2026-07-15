@@ -953,13 +953,545 @@
     "delta_closed": 1011,
     "mgy": 16.57377049180328
   },
+  "grounded_content": {
+    "frame": "G = I(X;V) = H(V) under deterministic apparatus; X uniform over selected target rows; bounded above by log2(K) bits per row where K is the verdict-alphabet size.",
+    "headline_band": "closure_size_le_200",
+    "coarsenings": [
+      "fine",
+      "closed_vs_not",
+      "triage"
+    ],
+    "by_band": {
+      "closure_size_le_50": {
+        "fine": {
+          "l0_only": {
+            "alphabet": [
+              "artifact",
+              "background",
+              "circular",
+              "closed",
+              "external"
+            ],
+            "K": 5,
+            "ceiling_bits_per_row": 2.321928094887362,
+            "H_bits_per_row": 1.6450060154921884,
+            "G_total_bits": 21314.342942732284,
+            "rows": 12957,
+            "saturation": 0.7084655287622025,
+            "counts": {
+              "background": 3697,
+              "closed": 2033,
+              "artifact": 6697,
+              "circular": 101,
+              "external": 429
+            }
+          },
+          "augmented": {
+            "alphabet": [
+              "artifact",
+              "background",
+              "circular",
+              "closed",
+              "external"
+            ],
+            "K": 5,
+            "ceiling_bits_per_row": 2.321928094887362,
+            "H_bits_per_row": 1.7070824611839654,
+            "G_total_bits": 22118.667449560642,
+            "rows": 12957,
+            "saturation": 0.7352003987301668,
+            "counts": {
+              "background": 3177,
+              "closed": 3044,
+              "artifact": 6219,
+              "circular": 82,
+              "external": 435
+            }
+          },
+          "delta_G_bits": 804.3245068283577,
+          "bits_per_added_base_entry": 13.185647652923898
+        },
+        "closed_vs_not": {
+          "l0_only": {
+            "alphabet": [
+              "closed",
+              "not-closed"
+            ],
+            "K": 2,
+            "ceiling_bits_per_row": 1.0,
+            "H_bits_per_row": 0.6268502629919792,
+            "G_total_bits": 8122.098857587074,
+            "rows": 12957,
+            "saturation": 0.6268502629919792,
+            "counts": {
+              "not-closed": 10924,
+              "closed": 2033
+            }
+          },
+          "augmented": {
+            "alphabet": [
+              "closed",
+              "not-closed"
+            ],
+            "K": 2,
+            "ceiling_bits_per_row": 1.0,
+            "H_bits_per_row": 0.786508470611655,
+            "G_total_bits": 10190.790253715213,
+            "rows": 12957,
+            "saturation": 0.786508470611655,
+            "counts": {
+              "not-closed": 9913,
+              "closed": 3044
+            }
+          },
+          "delta_G_bits": 2068.691396128139,
+          "bits_per_added_base_entry": 33.91297370701867
+        },
+        "triage": {
+          "l0_only": {
+            "alphabet": [
+              "closed",
+              "edge",
+              "noise"
+            ],
+            "K": 3,
+            "ceiling_bits_per_row": 1.584962500721156,
+            "H_bits_per_row": 0.8629709412059957,
+            "G_total_bits": 11181.514485206086,
+            "rows": 12957,
+            "saturation": 0.5444740432744276,
+            "counts": {
+              "noise": 10394,
+              "closed": 2033,
+              "edge": 530
+            }
+          },
+          "augmented": {
+            "alphabet": [
+              "closed",
+              "edge",
+              "noise"
+            ],
+            "K": 3,
+            "ceiling_bits_per_row": 1.584962500721156,
+            "H_bits_per_row": 1.0125683060417683,
+            "G_total_bits": 13119.847541383191,
+            "rows": 12957,
+            "saturation": 0.638859471805201,
+            "counts": {
+              "noise": 9396,
+              "closed": 3044,
+              "edge": 517
+            }
+          },
+          "delta_G_bits": 1938.3330561771054,
+          "bits_per_added_base_entry": 31.775951740608285
+        }
+      },
+      "closure_size_le_100": {
+        "fine": {
+          "l0_only": {
+            "alphabet": [
+              "artifact",
+              "background",
+              "circular",
+              "closed",
+              "external"
+            ],
+            "K": 5,
+            "ceiling_bits_per_row": 2.321928094887362,
+            "H_bits_per_row": 1.5843967171864284,
+            "G_total_bits": 22339.99371232864,
+            "rows": 14100,
+            "saturation": 0.6823625247806342,
+            "counts": {
+              "background": 3697,
+              "closed": 2033,
+              "artifact": 7840,
+              "circular": 101,
+              "external": 429
+            }
+          },
+          "augmented": {
+            "alphabet": [
+              "artifact",
+              "background",
+              "circular",
+              "closed",
+              "external"
+            ],
+            "K": 5,
+            "ceiling_bits_per_row": 2.321928094887362,
+            "H_bits_per_row": 1.6494142333952277,
+            "G_total_bits": 23256.74069087271,
+            "rows": 14100,
+            "saturation": 0.710364044875921,
+            "counts": {
+              "background": 3177,
+              "closed": 3044,
+              "artifact": 7362,
+              "circular": 82,
+              "external": 435
+            }
+          },
+          "delta_G_bits": 916.7469785440699,
+          "bits_per_added_base_entry": 15.028638992525735
+        },
+        "closed_vs_not": {
+          "l0_only": {
+            "alphabet": [
+              "closed",
+              "not-closed"
+            ],
+            "K": 2,
+            "ceiling_bits_per_row": 1.0,
+            "H_bits_per_row": 0.5950933302291257,
+            "G_total_bits": 8390.815956230672,
+            "rows": 14100,
+            "saturation": 0.5950933302291257,
+            "counts": {
+              "not-closed": 12067,
+              "closed": 2033
+            }
+          },
+          "augmented": {
+            "alphabet": [
+              "closed",
+              "not-closed"
+            ],
+            "K": 2,
+            "ceiling_bits_per_row": 1.0,
+            "H_bits_per_row": 0.7525849678815055,
+            "G_total_bits": 10611.448047129228,
+            "rows": 14100,
+            "saturation": 0.7525849678815055,
+            "counts": {
+              "not-closed": 11056,
+              "closed": 3044
+            }
+          },
+          "delta_G_bits": 2220.6320908985563,
+          "bits_per_added_base_entry": 36.40380476882879
+        },
+        "triage": {
+          "l0_only": {
+            "alphabet": [
+              "closed",
+              "edge",
+              "noise"
+            ],
+            "K": 3,
+            "ceiling_bits_per_row": 1.584962500721156,
+            "H_bits_per_row": 0.8175981928931129,
+            "G_total_bits": 11528.134519792891,
+            "rows": 14100,
+            "saturation": 0.5158470263625207,
+            "counts": {
+              "noise": 11537,
+              "closed": 2033,
+              "edge": 530
+            }
+          },
+          "augmented": {
+            "alphabet": [
+              "closed",
+              "edge",
+              "noise"
+            ],
+            "K": 3,
+            "ceiling_bits_per_row": 1.584962500721156,
+            "H_bits_per_row": 0.966239670223132,
+            "G_total_bits": 13623.97935014616,
+            "rows": 14100,
+            "saturation": 0.609629357024847,
+            "counts": {
+              "noise": 10539,
+              "closed": 3044,
+              "edge": 517
+            }
+          },
+          "delta_G_bits": 2095.8448303532696,
+          "bits_per_added_base_entry": 34.35811197300442
+        }
+      },
+      "closure_size_le_200": {
+        "fine": {
+          "l0_only": {
+            "alphabet": [
+              "artifact",
+              "background",
+              "circular",
+              "closed",
+              "external"
+            ],
+            "K": 5,
+            "ceiling_bits_per_row": 2.321928094887362,
+            "H_bits_per_row": 1.5438877525892867,
+            "G_total_bits": 22980.76919729153,
+            "rows": 14885,
+            "saturation": 0.6649162633368203,
+            "counts": {
+              "background": 3697,
+              "closed": 2033,
+              "artifact": 8625,
+              "circular": 101,
+              "external": 429
+            }
+          },
+          "augmented": {
+            "alphabet": [
+              "artifact",
+              "background",
+              "circular",
+              "closed",
+              "external"
+            ],
+            "K": 5,
+            "ceiling_bits_per_row": 2.321928094887362,
+            "H_bits_per_row": 1.6100311591496586,
+            "G_total_bits": 23965.313803942667,
+            "rows": 14885,
+            "saturation": 0.6934026780134903,
+            "counts": {
+              "background": 3177,
+              "closed": 3044,
+              "artifact": 8147,
+              "circular": 82,
+              "external": 435
+            }
+          },
+          "delta_G_bits": 984.5446066511358,
+          "bits_per_added_base_entry": 16.14007551887108
+        },
+        "closed_vs_not": {
+          "l0_only": {
+            "alphabet": [
+              "closed",
+              "not-closed"
+            ],
+            "K": 2,
+            "ceiling_bits_per_row": 1.0,
+            "H_bits_per_row": 0.5752127774758904,
+            "G_total_bits": 8562.042192728628,
+            "rows": 14885,
+            "saturation": 0.5752127774758904,
+            "counts": {
+              "not-closed": 12852,
+              "closed": 2033
+            }
+          },
+          "augmented": {
+            "alphabet": [
+              "closed",
+              "not-closed"
+            ],
+            "K": 2,
+            "ceiling_bits_per_row": 1.0,
+            "H_bits_per_row": 0.7308396107483585,
+            "G_total_bits": 10878.547605989315,
+            "rows": 14885,
+            "saturation": 0.7308396107483585,
+            "counts": {
+              "not-closed": 11841,
+              "closed": 3044
+            }
+          },
+          "delta_G_bits": 2316.5054132606874,
+          "bits_per_added_base_entry": 37.97549857804405
+        },
+        "triage": {
+          "l0_only": {
+            "alphabet": [
+              "closed",
+              "edge",
+              "noise"
+            ],
+            "K": 3,
+            "ceiling_bits_per_row": 1.584962500721156,
+            "H_bits_per_row": 0.789291714440102,
+            "G_total_bits": 11748.607169440918,
+            "rows": 14885,
+            "saturation": 0.4979876268876868,
+            "counts": {
+              "noise": 12322,
+              "closed": 2033,
+              "edge": 530
+            }
+          },
+          "augmented": {
+            "alphabet": [
+              "closed",
+              "edge",
+              "noise"
+            ],
+            "K": 3,
+            "ceiling_bits_per_row": 1.584962500721156,
+            "H_bits_per_row": 0.936743981513286,
+            "G_total_bits": 13943.434164825261,
+            "rows": 14885,
+            "saturation": 0.5910196494157235,
+            "counts": {
+              "noise": 11324,
+              "closed": 3044,
+              "edge": 517
+            }
+          },
+          "delta_G_bits": 2194.826995384343,
+          "bits_per_added_base_entry": 35.980770416136764
+        }
+      },
+      "all_targets": {
+        "fine": {
+          "l0_only": {
+            "alphabet": [
+              "artifact",
+              "background",
+              "circular",
+              "closed",
+              "external",
+              "graph_data"
+            ],
+            "K": 6,
+            "ceiling_bits_per_row": 2.584962500721156,
+            "H_bits_per_row": 1.5873544683658685,
+            "G_total_bits": 25194.490121903065,
+            "rows": 15872,
+            "saturation": 0.6140725321636296,
+            "counts": {
+              "background": 3697,
+              "closed": 2033,
+              "artifact": 9400,
+              "circular": 101,
+              "external": 429,
+              "graph_data": 212
+            }
+          },
+          "augmented": {
+            "alphabet": [
+              "artifact",
+              "background",
+              "circular",
+              "closed",
+              "external",
+              "graph_data"
+            ],
+            "K": 6,
+            "ceiling_bits_per_row": 2.584962500721156,
+            "H_bits_per_row": 1.6532261531154742,
+            "G_total_bits": 26240.005502248805,
+            "rows": 15872,
+            "saturation": 0.6395551783262833,
+            "counts": {
+              "background": 3177,
+              "closed": 3044,
+              "artifact": 8922,
+              "circular": 82,
+              "external": 435,
+              "graph_data": 212
+            }
+          },
+          "delta_G_bits": 1045.5153803457397,
+          "bits_per_added_base_entry": 17.139596399110488
+        },
+        "closed_vs_not": {
+          "l0_only": {
+            "alphabet": [
+              "closed",
+              "not-closed"
+            ],
+            "K": 2,
+            "ceiling_bits_per_row": 1.0,
+            "H_bits_per_row": 0.5521688833029517,
+            "G_total_bits": 8764.02451578445,
+            "rows": 15872,
+            "saturation": 0.5521688833029517,
+            "counts": {
+              "not-closed": 13839,
+              "closed": 2033
+            }
+          },
+          "augmented": {
+            "alphabet": [
+              "closed",
+              "not-closed"
+            ],
+            "K": 2,
+            "ceiling_bits_per_row": 1.0,
+            "H_bits_per_row": 0.7051891367002423,
+            "G_total_bits": 11192.761977706246,
+            "rows": 15872,
+            "saturation": 0.7051891367002423,
+            "counts": {
+              "not-closed": 12828,
+              "closed": 3044
+            }
+          },
+          "delta_G_bits": 2428.737461921797,
+          "bits_per_added_base_entry": 39.815368228226184
+        },
+        "triage": {
+          "l0_only": {
+            "alphabet": [
+              "closed",
+              "edge",
+              "noise"
+            ],
+            "K": 3,
+            "ceiling_bits_per_row": 1.584962500721156,
+            "H_bits_per_row": 0.8151078951430516,
+            "G_total_bits": 12937.392511710515,
+            "rows": 15872,
+            "saturation": 0.5142758234167549,
+            "counts": {
+              "noise": 13097,
+              "closed": 2033,
+              "edge": 742
+            }
+          },
+          "augmented": {
+            "alphabet": [
+              "closed",
+              "edge",
+              "noise"
+            ],
+            "K": 3,
+            "ceiling_bits_per_row": 1.584962500721156,
+            "H_bits_per_row": 0.9595553869099916,
+            "G_total_bits": 15230.063101035388,
+            "rows": 15872,
+            "saturation": 0.6054120438012855,
+            "counts": {
+              "noise": 12099,
+              "closed": 3044,
+              "edge": 729
+            }
+          },
+          "delta_G_bits": 2292.6705893248727,
+          "bits_per_added_base_entry": 37.58476375942414
+        }
+      }
+    },
+    "headline": {
+      "band": "closure_size_le_200",
+      "coarsening": "fine",
+      "augmented_G_total_bits": 23965.313803942667,
+      "augmented_H_bits_per_row": 1.6100311591496586,
+      "augmented_saturation": 0.6934026780134903,
+      "delta_G_bits": 984.5446066511358,
+      "bits_per_added_base_entry": 16.14007551887108
+    }
+  },
   "verdict": {
     "closure_rate_threshold": 0.6,
     "artifact_share_threshold": 0.1,
     "mgy_threshold": 1.0,
+    "g_bits_per_base_threshold": 2.0,
+    "g_threshold_coarsening": "closed_vs_not",
+    "g_threshold_band": "closure_size_le_200",
     "closure_rate_at_le_200": 0.20450117568021497,
     "artifact_share_at_le_200": 0.5473295263688277,
     "mgy": 16.57377049180328,
+    "g_bits_per_base": 37.97549857804405,
     "triggered": [
       "closure_rate 0.205 below threshold 0.600 on closure_size <= 200",
       "artifact_share 0.547 above threshold 0.100 on closure_size <= 200"
