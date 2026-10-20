@@ -1,0 +1,237 @@
+{
+  "claim": "Exact authored numeric semantics only; no intrinsic-grounding or English-parsing claim.",
+  "exact_reference_check_passed": true,
+  "domain": "Python integers excluding bool; finite reference universe -1000..1000",
+  "split": "Development -10..10; held-out -1000..-11 and 11..1000; no fitting or tuning.",
+  "controls": "Swap greater_than/less_than bindings only; erase NOT and replace OR with AND.",
+  "interpretations": [
+    {
+      "sense_id": "oewn-even__3.00.02..",
+      "source_gloss": "divisible by two",
+      "source_synset": "oewn-00916501-a",
+      "manually_authored_expression": "Predicate(name='divisible_by', parameter=2)"
+    },
+    {
+      "sense_id": "oewn-odd__3.00.00..",
+      "source_gloss": "not divisible by two",
+      "source_synset": "oewn-00916568-a",
+      "manually_authored_expression": "Not(child=Reference(sense_id='oewn-even__3.00.02..'))"
+    },
+    {
+      "sense_id": "oewn-positive__5.00.00.plus.00",
+      "source_gloss": "greater than zero",
+      "source_synset": "oewn-01825196-s",
+      "manually_authored_expression": "Predicate(name='greater_than', parameter=0)"
+    },
+    {
+      "sense_id": "oewn-negative__5.00.00.minus.00",
+      "source_gloss": "less than zero",
+      "source_synset": "oewn-01825480-s",
+      "manually_authored_expression": "Predicate(name='less_than', parameter=0)"
+    },
+    {
+      "sense_id": "oewn-nonnegative__5.00.00.plus.00",
+      "source_gloss": "either positive or zero",
+      "source_synset": "oewn-01825096-s",
+      "manually_authored_expression": "Or(left=Reference(sense_id='oewn-positive__5.00.00.plus.00'), right=Predicate(name='equal_to', parameter=0))"
+    }
+  ],
+  "results": {
+    "development": {
+      "correct": {
+        "judgments": 105,
+        "errors": 0,
+        "unknown": 0,
+        "by_sense": {
+          "oewn-even__3.00.02..": {
+            "observations": 21,
+            "errors": 0,
+            "unknown": 0
+          },
+          "oewn-odd__3.00.00..": {
+            "observations": 21,
+            "errors": 0,
+            "unknown": 0
+          },
+          "oewn-positive__5.00.00.plus.00": {
+            "observations": 21,
+            "errors": 0,
+            "unknown": 0
+          },
+          "oewn-negative__5.00.00.minus.00": {
+            "observations": 21,
+            "errors": 0,
+            "unknown": 0
+          },
+          "oewn-nonnegative__5.00.00.plus.00": {
+            "observations": 21,
+            "errors": 0,
+            "unknown": 0
+          }
+        }
+      },
+      "wrong_binding": {
+        "judgments": 105,
+        "errors": 60,
+        "unknown": 0,
+        "by_sense": {
+          "oewn-even__3.00.02..": {
+            "observations": 21,
+            "errors": 0,
+            "unknown": 0
+          },
+          "oewn-odd__3.00.00..": {
+            "observations": 21,
+            "errors": 0,
+            "unknown": 0
+          },
+          "oewn-positive__5.00.00.plus.00": {
+            "observations": 21,
+            "errors": 20,
+            "unknown": 0
+          },
+          "oewn-negative__5.00.00.minus.00": {
+            "observations": 21,
+            "errors": 20,
+            "unknown": 0
+          },
+          "oewn-nonnegative__5.00.00.plus.00": {
+            "observations": 21,
+            "errors": 20,
+            "unknown": 0
+          }
+        }
+      },
+      "operator_erasure": {
+        "judgments": 105,
+        "errors": 32,
+        "unknown": 0,
+        "by_sense": {
+          "oewn-even__3.00.02..": {
+            "observations": 21,
+            "errors": 0,
+            "unknown": 0
+          },
+          "oewn-odd__3.00.00..": {
+            "observations": 21,
+            "errors": 21,
+            "unknown": 0
+          },
+          "oewn-positive__5.00.00.plus.00": {
+            "observations": 21,
+            "errors": 0,
+            "unknown": 0
+          },
+          "oewn-negative__5.00.00.minus.00": {
+            "observations": 21,
+            "errors": 0,
+            "unknown": 0
+          },
+          "oewn-nonnegative__5.00.00.plus.00": {
+            "observations": 21,
+            "errors": 11,
+            "unknown": 0
+          }
+        }
+      }
+    },
+    "held_out": {
+      "correct": {
+        "judgments": 9900,
+        "errors": 0,
+        "unknown": 0,
+        "by_sense": {
+          "oewn-even__3.00.02..": {
+            "observations": 1980,
+            "errors": 0,
+            "unknown": 0
+          },
+          "oewn-odd__3.00.00..": {
+            "observations": 1980,
+            "errors": 0,
+            "unknown": 0
+          },
+          "oewn-positive__5.00.00.plus.00": {
+            "observations": 1980,
+            "errors": 0,
+            "unknown": 0
+          },
+          "oewn-negative__5.00.00.minus.00": {
+            "observations": 1980,
+            "errors": 0,
+            "unknown": 0
+          },
+          "oewn-nonnegative__5.00.00.plus.00": {
+            "observations": 1980,
+            "errors": 0,
+            "unknown": 0
+          }
+        }
+      },
+      "wrong_binding": {
+        "judgments": 9900,
+        "errors": 5940,
+        "unknown": 0,
+        "by_sense": {
+          "oewn-even__3.00.02..": {
+            "observations": 1980,
+            "errors": 0,
+            "unknown": 0
+          },
+          "oewn-odd__3.00.00..": {
+            "observations": 1980,
+            "errors": 0,
+            "unknown": 0
+          },
+          "oewn-positive__5.00.00.plus.00": {
+            "observations": 1980,
+            "errors": 1980,
+            "unknown": 0
+          },
+          "oewn-negative__5.00.00.minus.00": {
+            "observations": 1980,
+            "errors": 1980,
+            "unknown": 0
+          },
+          "oewn-nonnegative__5.00.00.plus.00": {
+            "observations": 1980,
+            "errors": 1980,
+            "unknown": 0
+          }
+        }
+      },
+      "operator_erasure": {
+        "judgments": 9900,
+        "errors": 2970,
+        "unknown": 0,
+        "by_sense": {
+          "oewn-even__3.00.02..": {
+            "observations": 1980,
+            "errors": 0,
+            "unknown": 0
+          },
+          "oewn-odd__3.00.00..": {
+            "observations": 1980,
+            "errors": 1980,
+            "unknown": 0
+          },
+          "oewn-positive__5.00.00.plus.00": {
+            "observations": 1980,
+            "errors": 0,
+            "unknown": 0
+          },
+          "oewn-negative__5.00.00.minus.00": {
+            "observations": 1980,
+            "errors": 0,
+            "unknown": 0
+          },
+          "oewn-nonnegative__5.00.00.plus.00": {
+            "observations": 1980,
+            "errors": 990,
+            "unknown": 0
+          }
+        }
+      }
+    }
+  }
+}

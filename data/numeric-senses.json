@@ -1,0 +1,46 @@
+{
+  "lexicon": "oewn:2024",
+  "provenance": "Verbatim records checked against C:/Users/Q/.wn_data/wn.db using SQLite mode=ro on 2026-10-20. These are source glosses, not executable interpretations or admission verdicts.",
+  "senses": [
+    {
+      "sense_id": "oewn-even__3.00.02..",
+      "source_synset": "oewn-00916501-a",
+      "form": "even",
+      "lemma": "even",
+      "pos": "a",
+      "definition": "divisible by two"
+    },
+    {
+      "sense_id": "oewn-odd__3.00.00..",
+      "source_synset": "oewn-00916568-a",
+      "form": "odd",
+      "lemma": "odd",
+      "pos": "a",
+      "definition": "not divisible by two"
+    },
+    {
+      "sense_id": "oewn-positive__5.00.00.plus.00",
+      "source_synset": "oewn-01825196-s",
+      "form": "positive",
+      "lemma": "positive",
+      "pos": "s",
+      "definition": "greater than zero"
+    },
+    {
+      "sense_id": "oewn-negative__5.00.00.minus.00",
+      "source_synset": "oewn-01825480-s",
+      "form": "negative",
+      "lemma": "negative",
+      "pos": "s",
+      "definition": "less than zero"
+    },
+    {
+      "sense_id": "oewn-nonnegative__5.00.00.plus.00",
+      "source_synset": "oewn-01825096-s",
+      "form": "nonnegative",
+      "lemma": "nonnegative",
+      "pos": "s",
+      "definition": "either positive or zero"
+    }
+  ]
+}

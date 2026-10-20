@@ -32,3 +32,13 @@ Options of note: `--graph-type {lemma,sense,paper-wordnet}`, `--seed-method {bou
 ## Status
 
 Research scaffolding, not a product. The "paper-faithful" graph is the measuring stick; the synset graph is experimental. Large deviations from the published Vincent-Lamarre numbers are prompts for interpretation, not automatic failures — OEWN 2024 and these builders differ from the resource and preprocessing in the original work.
+
+## Numeric interpretation experiment
+
+The bounded [numeric experiment](reports/numeric-interpretation.md) executes five
+manually interpreted OEWN senses with explicit logical operators and sense
+references. Dictionary glosses remain separate from the authored expressions.
+It includes exact arithmetic references, held-out integer ranges, wrong-binding
+and operator-erasure controls, and true/false/unknown outcomes. It does not parse
+English or demonstrate intrinsic grounding. The dictionary-graph pipeline is
+unchanged. Results and reproduction commands are in the report.
