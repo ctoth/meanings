@@ -21,6 +21,12 @@ operator erasure 2,970 errors; no unknown judgments in any complete-fixture arm.
 Independent read-only database comparison: 5/5 source records matched exactly.
 Reports retain the captured JSON and explain the authored-interpretation limit.
 
+Implementation commit `e4ccf983830054a0c045a1ec0914a1f38a8cda14` was fast-forwarded
+onto this clone's master and pushed normally. `git ls-remote --symref origin HEAD
+refs/heads/master` independently confirmed both remote default HEAD and master at
+that exact commit. No PR was created and no force push was used. This closing
+update changes only the task note; code and verified results are unchanged.
+
 ## Decisions and why
 
 Smallest change: about 200-300 source lines for an explicit sense-keyed expression
@@ -37,6 +43,7 @@ avoids publishing unrelated, unverified local commits with this experiment.
 
 ## Next step
 
-Inspect intended files and captured results, commit them, integrate into a fresh
-remote master and push without force. Verify the remote commit. Do not push the
-original checkout's unpublished campaign history or modify its dirty files.
+Implementation, focused verification, experiment and code publication are complete.
+Publish this closing note and verify its remote head. No further implementation or
+physical-data acquisition is part of this task. The original checkout's unpublished
+campaign history and dirty files remain outside the published change.
